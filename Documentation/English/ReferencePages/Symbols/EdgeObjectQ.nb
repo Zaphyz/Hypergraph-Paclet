@@ -1,0 +1,110 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      3915,        101]
+NotebookOptionsPosition[      2651,         78]
+NotebookOutlinePosition[      2999,         93]
+CellTagsIndexPosition[      2956,         90]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["EdgeObjectQ", "ObjectName",ExpressionUUID->"ae3b9f87-8c38-db40-b279-f523ea8674c4"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"EdgeObjectQ", "[", "expr", "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"ac229a0a-b8f8-4b4b-a0af-5f0654291927"],
+ " ",
+ "gives True if expr is a valid Edge object, and False otherwise."
+}], "Usage",ExpressionUUID->"2fab1be2-c172-5442-99c5-9225bc581d16"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"7d89ef9b-8f1a-a74b-8162-4b64dc5a9023"],
+
+Cell["\<\
+An Edge expression that fails to be built evaluates to $Failed rather than \
+remaining as an Edge, so any surviving Edge object is in canonical form.\
+\>", "Notes",ExpressionUUID->"601c2e75-7f36-a24d-b911-addcf1533891"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"2ae1b997-1630-4347-a059-e7e6ce0e0a6d"],
+
+Cell["\<\
+{EdgeObjectQ[Edge[{1, 2}]], EdgeObjectQ[{1, 2}], EdgeObjectQ[Vertex[1]]}\
+\>", "Input",ExpressionUUID->"6cb048f5-f4c1-da4e-8f85-38ae05457aed"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"True", ",", "False", ",", "False"}], "}"}]], "Output",ExpressionUUI\
+D->"3f58d716-2f7a-1d49-b531-d2df28670d7a"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"d9a6bd4c-a22e-2241-b51c-0bbe6f765772"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypergraph.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Edges",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"9e38d34b-a10d-1148-9ef9-1bd6870e3682"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"be258da8-7510-aa41-8b21-464c4bb5c0e5"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["Edge", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "eddbcc2f-d0b8-5841-90ba-1c20a8cd5e8a"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["VertexObjectQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "7c960013-2dee-8f45-b4eb-5b2ff61afc9d"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "350df351-ee6d-9541-83b0-63d42f402950"]
+}], "SeeAlso",ExpressionUUID->"6b6ae40b-6e0f-4f4b-9c16-b18689750ad4"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 88, 0, 70, "ObjectName",ExpressionUUID->"ae3b9f87-8c38-db40-b279-f523ea8674c4"],
+Cell[645, 22, 328, 7, 70, "Usage",ExpressionUUID->"2fab1be2-c172-5442-99c5-9225bc581d16"],
+Cell[969, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"7d89ef9b-8f1a-a74b-8162-4b64dc5a9023"],
+Cell[1070, 33, 232, 3, 70, "Notes",ExpressionUUID->"601c2e75-7f36-a24d-b911-addcf1533891"],
+Cell[1302, 38, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"2ae1b997-1630-4347-a059-e7e6ce0e0a6d"],
+Cell[1402, 40, 154, 2, 70, "Input",ExpressionUUID->"6cb048f5-f4c1-da4e-8f85-38ae05457aed"],
+Cell[1557, 44, 154, 3, 70, "Output",ExpressionUUID->"3f58d716-2f7a-1d49-b531-d2df28670d7a"],
+Cell[1711, 49, 85, 0, 70, "NotesSection",ExpressionUUID->"d9a6bd4c-a22e-2241-b51c-0bbe6f765772"],
+Cell[1799, 51, 270, 9, 70, "Notes",ExpressionUUID->"9e38d34b-a10d-1148-9ef9-1bd6870e3682"],
+Cell[2063, 62, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"be258da8-7510-aa41-8b21-464c4bb5c0e5"],
+Cell[2155, 64, 504, 12, 70, "SeeAlso",ExpressionUUID->"6b6ae40b-6e0f-4f4b-9c16-b18689750ad4"]
+}
+]
+*)
+
+(* End of internal cache information *)

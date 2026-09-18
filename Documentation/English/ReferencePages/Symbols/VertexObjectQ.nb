@@ -1,0 +1,112 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      4049,        103]
+NotebookOptionsPosition[      2785,         80]
+NotebookOutlinePosition[      3133,         95]
+CellTagsIndexPosition[      3090,         92]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["VertexObjectQ", "ObjectName",ExpressionUUID->"e1ec830f-0261-3341-bca6-b2193f091146"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"VertexObjectQ", "[", "expr", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"38df4ea3-005f-ce4f-9d36-680c98c93170"],
+ " ",
+ "gives True if expr is a valid Vertex object, and False otherwise."
+}], "Usage",ExpressionUUID->"06961ec3-7c6b-e947-b959-84833d7a45f6"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"803aba51-8b91-5442-96a6-bc13356fb71d"],
+
+Cell["\<\
+The names VertexQ and EdgeQ are protected System` symbols \[LongDash] the \
+graph membership tests VertexQ[g, v] and EdgeQ[g, e] \[LongDash] so the \
+predicates of this package are named VertexObjectQ and EdgeObjectQ instead.\
+\>", "Notes",ExpressionUUID->"f471509f-b9a5-8943-97a0-f3f4a64feb3b"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"8e9a4272-94c4-694a-aeb0-e965445a7f39"],
+
+Cell["\<\
+{VertexObjectQ[Vertex[1]], VertexObjectQ[Vertex[1, \"a\"]], VertexObjectQ[1], \
+VertexObjectQ[Edge[{1, 2}]]}\
+\>", "Input",ExpressionUUID->"ed7acc49-b354-eb48-bee6-d6701080eea0"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"True", ",", "True", ",", "False", ",", "False"}], "}"}]], "Output",\
+ExpressionUUID->"f33137bd-52ed-5c45-b04d-ce912de07b31"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"4f1e46c6-abd0-384c-bca8-0fb9df6ffb7b"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypergraph.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Vertices",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"71b2c224-54f9-0e47-a3a0-f47bc44a83db"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"4e029d13-f5ef-e844-8d2b-7d23310aa91e"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["Vertex", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "7b1b3fad-cbc0-dd40-9e98-f7cf07748bdc"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["EdgeObjectQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "b9f6b28d-36b2-0547-b1ef-c5b199e1fb6b"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "688b96a7-76f5-3c4f-96a9-1d0f5582aab5"]
+}], "SeeAlso",ExpressionUUID->"22ddbc90-ab30-5642-bdeb-7cd9433a18cb"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 90, 0, 70, "ObjectName",ExpressionUUID->"e1ec830f-0261-3341-bca6-b2193f091146"],
+Cell[647, 22, 332, 7, 70, "Usage",ExpressionUUID->"06961ec3-7c6b-e947-b959-84833d7a45f6"],
+Cell[975, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"803aba51-8b91-5442-96a6-bc13356fb71d"],
+Cell[1076, 33, 309, 4, 70, "Notes",ExpressionUUID->"f471509f-b9a5-8943-97a0-f3f4a64feb3b"],
+Cell[1384, 39, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"8e9a4272-94c4-694a-aeb0-e965445a7f39"],
+Cell[1484, 41, 191, 3, 70, "Input",ExpressionUUID->"ed7acc49-b354-eb48-bee6-d6701080eea0"],
+Cell[1675, 46, 167, 3, 70, "Output",ExpressionUUID->"f33137bd-52ed-5c45-b04d-ce912de07b31"],
+Cell[1842, 51, 85, 0, 70, "NotesSection",ExpressionUUID->"4f1e46c6-abd0-384c-bca8-0fb9df6ffb7b"],
+Cell[1930, 53, 273, 9, 70, "Notes",ExpressionUUID->"71b2c224-54f9-0e47-a3a0-f47bc44a83db"],
+Cell[2197, 64, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"4e029d13-f5ef-e844-8d2b-7d23310aa91e"],
+Cell[2289, 66, 504, 12, 70, "SeeAlso",ExpressionUUID->"22ddbc90-ab30-5642-bdeb-7cd9433a18cb"]
+}
+]
+*)
+
+(* End of internal cache information *)

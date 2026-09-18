@@ -1,0 +1,457 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     18830,        448]
+NotebookOptionsPosition[     16231,        411]
+NotebookOutlinePosition[     16579,        426]
+CellTagsIndexPosition[     16536,        423]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["CanonicalHypergraph", "ObjectName",ExpressionUUID->"b044e57c-50d6-bf4e-ac4b-2b8b200da0d1"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"CanonicalHypergraph", "[", "hg", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"d6575c33-af17-f546-8607-7fd7602a1004"],
+ " ",
+ "gives a canonical representative of the isomorphism class of hg."
+}], "Usage",ExpressionUUID->"8914d675-e5c2-804c-8cc5-cfb54e7d73c5"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"72b08291-d6be-304f-b819-b005e02c91e4"],
+
+Cell["\<\
+The vertices of the result are renamed to 1, 2, ... and the labels are \
+replaced by the placeholders \[FormalL][1], \[FormalL][2], ..., since labels \
+count only up to renaming.\
+\>", "Notes",ExpressionUUID->"2d0a3ed4-a607-6648-8ddb-edda5b5a7b1c"],
+
+Cell["\<\
+Two hypergraphs are isomorphic exactly when their canonical forms are \
+identical.\
+\>", "Notes",ExpressionUUID->"7b71c9a3-3602-ce41-bcc2-3dbcef596fbd"],
+
+Cell[TextData[{
+ "With ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"\"\<Labeled\>\"", " ", "->", " ", "False"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"b0cb3e70-86de-7545-95c2-8a41dd39778e"],
+ " the skeleton is canonicalized instead, and the result carries no labels at \
+all."
+}], "Notes",ExpressionUUID->"7f5c05db-dab1-4a48-aec6-afd2039a289f"],
+
+Cell[TextData[{
+ "The setting ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"Method", " ", "->", " ", "Automatic"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"28ec221f-3e84-be42-89a8-3b0604a6fba6"],
+ " narrows the search by grouping vertices into classes that no isomorphism \
+can mix up. ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"Method", " ", "->", " ", "\"\<BruteForce\>\""}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"8c5a6cc3-b2fb-7848-a92c-a08a86f12cee"],
+ " searches every ordering of the vertices instead, and exists to cross-check \
+the default."
+}], "Notes",ExpressionUUID->"2a84e9a0-e04c-7642-b29b-f77585f33459"],
+
+Cell["\<\
+Both Method settings are functions of the isomorphism class alone, so they \
+always agree about whether two hypergraphs are isomorphic, but they settle on \
+different representatives of the same class. The two settings must therefore \
+not be mixed within a single comparison.\
+\>", "Notes",ExpressionUUID->"bbf105a0-3004-5246-96d5-65ce445dae5a"],
+
+Cell["\<\
+The search is exhaustive. When it would exceed 40320 candidate orderings the \
+message CanonicalHypergraph::large is produced and the computation proceeds.\
+\>", "Notes",ExpressionUUID->"36b7c3e6-2d9c-e24e-a594-cf2ad193d9fd"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"464df0aa-a16f-754e-93b5-146d4517ef98"],
+
+Cell["\<\
+Two spellings of the same directed path have the same canonical form:\
+\>", "ExampleText",ExpressionUUID->"a56d4efa-2592-e44c-8aab-449604810f1c"],
+
+Cell["\<\
+a = Hypergraph[{{1, 2}, {2, 3}}];
+b = Hypergraph[{{10, 20}, {20, 30}}];
+{CanonicalHypergraph[a], CanonicalHypergraph[b]}\
+\>", "Input",ExpressionUUID->"4a147666-d714-7c48-9b60-5b845fd2dba0"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   GraphicsBox[
+    NamespaceBox["Hypergraphs",
+     DynamicModuleBox[{Typeset`hg = HoldComplete[
+       WolframInstitute`Hypergraphs`Hypergraph[{
+         WolframInstitute`Hypergraphs`Vertex[1], 
+         WolframInstitute`Hypergraphs`Vertex[2], 
+         WolframInstitute`Hypergraphs`Vertex[3]}, {
+         WolframInstitute`Hypergraphs`Edge[{
+           WolframInstitute`Hypergraphs`Vertex[1], 
+           WolframInstitute`Hypergraphs`Vertex[3]}, "Directed"], 
+         WolframInstitute`Hypergraphs`Edge[{
+           WolframInstitute`Hypergraphs`Vertex[3], 
+           WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, 
+      {AbsoluteThickness[Medium], Opacity[0.5], 
+       Arrowheads[{{Medium, 0.5}}], {
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+             2.4492935982947064`*^-16}}]], {}}, 
+          {Opacity[1]}}}, 
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+          {Opacity[1]}}}}, 
+       {Opacity[1], 
+        {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+         0.95]}], 
+         DiskBox[{0., 3.6739403974420594`*^-16}, Offset[{2., 2.}, {0., 0.}]], 
+         DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]], 
+         DiskBox[{1., 2.4492935982947064`*^-16}, 
+          Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
+          ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {2., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000002}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
+          ImageScaled[{0.5, -0.5}]]}}}]],
+    Background->GrayLevel[1],
+    ImagePadding->20,
+    PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
+    PlotRangePadding->Scaled[0.02]], ",", 
+   GraphicsBox[
+    NamespaceBox["Hypergraphs",
+     DynamicModuleBox[{Typeset`hg = HoldComplete[
+       WolframInstitute`Hypergraphs`Hypergraph[{
+         WolframInstitute`Hypergraphs`Vertex[1], 
+         WolframInstitute`Hypergraphs`Vertex[2], 
+         WolframInstitute`Hypergraphs`Vertex[3]}, {
+         WolframInstitute`Hypergraphs`Edge[{
+           WolframInstitute`Hypergraphs`Vertex[1], 
+           WolframInstitute`Hypergraphs`Vertex[3]}, "Directed"], 
+         WolframInstitute`Hypergraphs`Edge[{
+           WolframInstitute`Hypergraphs`Vertex[3], 
+           WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, 
+      {AbsoluteThickness[Medium], Opacity[0.5], 
+       Arrowheads[{{Medium, 0.5}}], {
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+             2.4492935982947064`*^-16}}]], {}}, 
+          {Opacity[1]}}}, 
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+          {Opacity[1]}}}}, 
+       {Opacity[1], 
+        {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+         0.95]}], 
+         DiskBox[{0., 3.6739403974420594`*^-16}, Offset[{2., 2.}, {0., 0.}]], 
+         DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]], 
+         DiskBox[{1., 2.4492935982947064`*^-16}, 
+          Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
+          ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {2., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000002}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
+          ImageScaled[{0.5, -0.5}]]}}}]],
+    Background->GrayLevel[1],
+    ImagePadding->20,
+    PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
+    PlotRangePadding->Scaled[0.02]]}], "}"}]], "Output",ExpressionUUID->\
+"80928268-e202-214a-aa07-609f7306ab74"],
+
+Cell["CanonicalHypergraph[a] === CanonicalHypergraph[b]", "Input",ExpressionUUID->"b5c11681-1d7c-464c-8b88-09a3a572aefa"],
+
+Cell[BoxData["True"], "Output",ExpressionUUID->"68a6d112-a727-4647-b21b-97f665d4283b"],
+
+Cell["\<\
+Labels become numbered placeholders, which is what makes two hypergraphs \
+differing only by a renaming of labels reduce to the same form:\
+\>", "ExampleText",ExpressionUUID->"e5b439a4-c86f-6543-abdc-659cb6ee470a"],
+
+Cell["\<\
+h1 = Hypergraph[{Edge[{1, 2}, \"Directed\", \"a\"], Edge[{2, 3}, \
+\"Directed\", \"b\"]}];
+h2 = Hypergraph[{Edge[{4, 5}, \"Directed\", \"x\"], Edge[{5, 6}, \
+\"Directed\", \"y\"]}];
+InputForm /@ {CanonicalHypergraph[h1], CanonicalHypergraph[h2]}\
+\>", "Input",ExpressionUUID->"9b8a82a6-00f2-d541-a3ee-61209f428909"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   InterpretationBox[
+    StyleBox[
+     RowBox[{"Hypergraph", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Vertex", "[", "1", "]"}], ",", " ", 
+         RowBox[{"Vertex", "[", "2", "]"}], ",", " ", 
+         RowBox[{"Vertex", "[", "3", "]"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Edge", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Vertex", "[", "1", "]"}], ",", " ", 
+             RowBox[{"Vertex", "[", "3", "]"}]}], "}"}], ",", 
+           " ", "\"\<Directed\>\"", ",", " ", 
+           RowBox[{"\[FormalL]", "[", "1", "]"}]}], "]"}], ",", " ", 
+         RowBox[{"Edge", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Vertex", "[", "3", "]"}], ",", " ", 
+             RowBox[{"Vertex", "[", "2", "]"}]}], "}"}], ",", 
+           " ", "\"\<Directed\>\"", ",", " ", 
+           RowBox[{"\[FormalL]", "[", "2", "]"}]}], "]"}]}], "}"}]}], "]"}],
+     ShowStringCharacters->True,
+     NumberMarks->True],
+    InputForm[
+     WolframInstitute`Hypergraphs`Hypergraph[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[2], 
+       WolframInstitute`Hypergraphs`Vertex[3]}, {
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[1], 
+         WolframInstitute`Hypergraphs`Vertex[3]}, "Directed", 
+        \[FormalL][1]], 
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[3], 
+         WolframInstitute`Hypergraphs`Vertex[2]}, "Directed", 
+        \[FormalL][2]]}]],
+    AutoDelete->True,
+    Editable->True], ",", 
+   InterpretationBox[
+    StyleBox[
+     RowBox[{"Hypergraph", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Vertex", "[", "1", "]"}], ",", " ", 
+         RowBox[{"Vertex", "[", "2", "]"}], ",", " ", 
+         RowBox[{"Vertex", "[", "3", "]"}]}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"Edge", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Vertex", "[", "1", "]"}], ",", " ", 
+             RowBox[{"Vertex", "[", "3", "]"}]}], "}"}], ",", 
+           " ", "\"\<Directed\>\"", ",", " ", 
+           RowBox[{"\[FormalL]", "[", "1", "]"}]}], "]"}], ",", " ", 
+         RowBox[{"Edge", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"Vertex", "[", "3", "]"}], ",", " ", 
+             RowBox[{"Vertex", "[", "2", "]"}]}], "}"}], ",", 
+           " ", "\"\<Directed\>\"", ",", " ", 
+           RowBox[{"\[FormalL]", "[", "2", "]"}]}], "]"}]}], "}"}]}], "]"}],
+     ShowStringCharacters->True,
+     NumberMarks->True],
+    InputForm[
+     WolframInstitute`Hypergraphs`Hypergraph[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[2], 
+       WolframInstitute`Hypergraphs`Vertex[3]}, {
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[1], 
+         WolframInstitute`Hypergraphs`Vertex[3]}, "Directed", 
+        \[FormalL][1]], 
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[3], 
+         WolframInstitute`Hypergraphs`Vertex[2]}, "Directed", 
+        \[FormalL][2]]}]],
+    AutoDelete->True,
+    Editable->True]}], "}"}]], "Output",ExpressionUUID->"c14eae8d-0053-b942-\
+b14a-38d86b923fff"],
+
+Cell["Canonicalizing the skeleton instead:", "ExampleText",ExpressionUUID->"9bbaf7ba-6d4a-ca49-bea2-2307a59f4159"],
+
+Cell["InputForm @ CanonicalHypergraph[h1, \"Labeled\" -> False]", "Input",ExpressionUUID->"e978cff1-fe1e-fc4f-a978-0a755130bd96"],
+
+Cell[BoxData[
+ InterpretationBox[
+  StyleBox[
+   RowBox[{"Hypergraph", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Vertex", "[", "1", "]"}], ",", " ", 
+       RowBox[{"Vertex", "[", "2", "]"}], ",", " ", 
+       RowBox[{"Vertex", "[", "3", "]"}]}], "}"}], ",", " ", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"Edge", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Vertex", "[", "1", "]"}], ",", " ", 
+           RowBox[{"Vertex", "[", "3", "]"}]}], "}"}], ",", 
+         " ", "\"\<Directed\>\""}], "]"}], ",", " ", 
+       RowBox[{"Edge", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"Vertex", "[", "3", "]"}], ",", " ", 
+           RowBox[{"Vertex", "[", "2", "]"}]}], "}"}], ",", 
+         " ", "\"\<Directed\>\""}], "]"}]}], "}"}]}], "]"}],
+   ShowStringCharacters->True,
+   NumberMarks->True],
+  InputForm[
+   WolframInstitute`Hypergraphs`Hypergraph[{
+     WolframInstitute`Hypergraphs`Vertex[1], 
+     WolframInstitute`Hypergraphs`Vertex[2], 
+     WolframInstitute`Hypergraphs`Vertex[3]}, {
+     WolframInstitute`Hypergraphs`Edge[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[3]}, "Directed"], 
+     WolframInstitute`Hypergraphs`Edge[{
+       WolframInstitute`Hypergraphs`Vertex[3], 
+       WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]],
+  AutoDelete->True,
+  Editable->True]], "Output",ExpressionUUID->"50dffc51-e492-bd4e-a0c6-\
+beda94a9bb57"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"4702282f-f24e-124c-82d6-7931874284a0"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypergraph.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Canonical form and isomorphism",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"cbd90f10-8bc4-954a-913c-31383f0a27b8"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"307cf16a-2d5e-bf44-8c6e-f67d004d4c4b"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["IsomorphicHypergraphQ", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"7d3afc8f-30ee-124d-a56c-0aa6fe3263c2"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["FindHypergraphIsomorphism", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"340104df-5b1e-4f4e-824d-f5134f1f97ee"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphSkeleton", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"36e8c9f8-7eee-8249-b01c-29bfcd1e143a"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["Hypergraph", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "f3d5a061-f2ae-bb4e-bd84-e84c46ef66af"]
+}], "SeeAlso",ExpressionUUID->"87acce33-6d6d-0941-9aea-02243dc0fe86"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 96, 0, 70, "ObjectName",ExpressionUUID->"b044e57c-50d6-bf4e-ac4b-2b8b200da0d1"],
+Cell[653, 22, 335, 7, 70, "Usage",ExpressionUUID->"8914d675-e5c2-804c-8cc5-cfb54e7d73c5"],
+Cell[984, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"72b08291-d6be-304f-b819-b005e02c91e4"],
+Cell[1085, 33, 262, 4, 70, "Notes",ExpressionUUID->"2d0a3ed4-a607-6648-8ddb-edda5b5a7b1c"],
+Cell[1346, 39, 165, 3, 70, "Notes",ExpressionUUID->"7b71c9a3-3602-ce41-bcc2-3dbcef596fbd"],
+Cell[1511, 44, 363, 8, 70, "Notes",ExpressionUUID->"7f5c05db-dab1-4a48-aec6-afd2039a289f"],
+Cell[1869, 54, 652, 14, 70, "Notes",ExpressionUUID->"2a84e9a0-e04c-7642-b29b-f77585f33459"],
+Cell[2510, 70, 361, 5, 70, "Notes",ExpressionUUID->"bbf105a0-3004-5246-96d5-65ce445dae5a"],
+Cell[2869, 77, 238, 3, 70, "Notes",ExpressionUUID->"36b7c3e6-2d9c-e24e-a594-cf2ad193d9fd"],
+Cell[3107, 82, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"464df0aa-a16f-754e-93b5-146d4517ef98"],
+Cell[3207, 84, 157, 2, 70, "ExampleText",ExpressionUUID->"a56d4efa-2592-e44c-8aab-449604810f1c"],
+Cell[3365, 88, 204, 4, 70, "Input",ExpressionUUID->"4a147666-d714-7c48-9b60-5b845fd2dba0"],
+Cell[3568, 94, 5617, 125, 70, "Output",ExpressionUUID->"80928268-e202-214a-aa07-609f7306ab74"],
+Cell[9063, 221, 121, 0, 70, "Input",ExpressionUUID->"b5c11681-1d7c-464c-8b88-09a3a572aefa"],
+Cell[9187, 223, 86, 0, 70, "Output",ExpressionUUID->"68a6d112-a727-4647-b21b-97f665d4283b"],
+Cell[9276, 225, 227, 3, 70, "ExampleText",ExpressionUUID->"e5b439a4-c86f-6543-abdc-659cb6ee470a"],
+Cell[9503, 230, 331, 6, 70, "Input",ExpressionUUID->"9b8a82a6-00f2-d541-a3ee-61209f428909"],
+Cell[9831, 238, 3581, 91, 70, "Output",ExpressionUUID->"c14eae8d-0053-b942-b14a-38d86b923fff"],
+Cell[13324, 331, 114, 0, 70, "ExampleText",ExpressionUUID->"9bbaf7ba-6d4a-ca49-bea2-2307a59f4159"],
+Cell[13441, 333, 129, 0, 70, "Input",ExpressionUUID->"e978cff1-fe1e-fc4f-a978-0a755130bd96"],
+Cell[13573, 335, 1556, 41, 70, "Output",ExpressionUUID->"50dffc51-e492-bd4e-a0c6-beda94a9bb57"],
+Cell[15091, 378, 85, 0, 70, "NotesSection",ExpressionUUID->"4702282f-f24e-124c-82d6-7931874284a0"],
+Cell[15179, 380, 295, 9, 70, "Notes",ExpressionUUID->"cbd90f10-8bc4-954a-913c-31383f0a27b8"],
+Cell[15468, 391, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"307cf16a-2d5e-bf44-8c6e-f67d004d4c4b"],
+Cell[15560, 393, 683, 16, 70, "SeeAlso",ExpressionUUID->"87acce33-6d6d-0941-9aea-02243dc0fe86"]
+}
+]
+*)
+
+(* End of internal cache information *)

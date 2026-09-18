@@ -1,0 +1,154 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      6118,        145]
+NotebookOptionsPosition[      4105,        114]
+NotebookOutlinePosition[      4453,        129]
+CellTagsIndexPosition[      4410,        126]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["EdgeSymmetry", "ObjectName",ExpressionUUID->"858f2f0b-b733-bf48-871a-d8c9a99ff1a4"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"EdgeSymmetry", "[", "e", "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"8339435f-627c-1449-b0a9-f52463ee4c1f"],
+ " ",
+ "gives the symmetry type of the hyperedge e."
+}], "Usage",ExpressionUUID->"e778b717-bbfc-ea4f-9eda-8eb0f0386d9c"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"51a997cf-75d8-a54b-84fd-bf9e609c09b5"],
+
+Cell["The result is one of \"Directed\", \"Unordered\" or \"Cyclic\".", \
+"Notes",ExpressionUUID->"5d4e38b6-d71f-044f-8a15-af029a70ee81"],
+
+Cell["\<\
+The symmetry type governs which reorderings of the vertex list denote the \
+same hyperedge: none for \"Directed\", all of them for \"Unordered\", and the \
+rotations for \"Cyclic\".\
+\>", "Notes",ExpressionUUID->"aedcbf0e-c753-0948-903e-c5dcafb34287"],
+
+Cell["\<\
+It also governs how the edge is drawn: a directed edge carries arrowheads \
+along its sides, an unordered edge carries none, and a cyclic edge is marked \
+with a small circular arrow.\
+\>", "Notes",ExpressionUUID->"ed238f4e-0771-5d4f-ac4e-a6fe0285f7f7"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"c820797c-1eff-a24c-97b4-719ba19ef5fd"],
+
+Cell["\<\
+EdgeSymmetry /@ {Edge[{1, 2}], Edge[{1, 2}, \"Unordered\"], Edge[{1, 2}, \
+\"Cyclic\"]}\
+\>", "Input",ExpressionUUID->"cdfa8328-f429-de4b-b74e-a62940725a40"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Directed\"\>", ",", "\<\"Unordered\"\>", 
+   ",", "\<\"Cyclic\"\>"}], "}"}]], "Output",ExpressionUUID->"2605cc9e-3e4f-\
+154c-869c-8d1ae382c630"],
+
+Cell["The symmetry types of a whole hypergraph:", "ExampleText",ExpressionUUID->"7ac59e88-bed7-c04d-9b4e-7e42d6bed2c4"],
+
+Cell["\<\
+Hypergraph[{Edge[{1, 2}], Edge[{2, 3}, \"Unordered\"]}][\"EdgeSymmetries\"]\
+\>", "Input",ExpressionUUID->"aa09b845-d4d9-2446-918a-f635933be955"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Directed\"\>", ",", "\<\"Unordered\"\>"}], "}"}]], "Output",Exp\
+ressionUUID->"e5242f14-1834-fb40-aa34-a3702ec1143a"],
+
+Cell["Symmetry types are respected by the isomorphism test:", "ExampleText",ExpressionUUID->"92ab23e3-250f-4844-95b7-14e3b0b5e649"],
+
+Cell["\<\
+IsomorphicHypergraphQ[Hypergraph[{Edge[{1, 2}]}], Hypergraph[{Edge[{1, 2}, \
+\"Unordered\"]}]]\
+\>", "Input",ExpressionUUID->"aff342e2-ff04-4141-bc14-a39b36c287f6"],
+
+Cell[BoxData["False"], "Output",ExpressionUUID->"4bbaed31-496e-cb4c-819c-1e6ddb109795"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"450c7505-a56e-a64f-8c64-f65a6d5b8c38"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypergraph.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Edges",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"5eee79d8-e911-ec4d-a5d1-227b6bf9eb2f"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"d16c42fe-fd45-c240-aca5-e458d839df39"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["Edge", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "bb4f0fbd-5815-0643-9991-9ec6d4644228"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["EdgeVertices", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "6e83956a-e76f-f444-9c8c-c6e3ffcff6e1"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["EdgeLabel", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "c0d30fb9-fe34-6842-99c7-197fe4553f9c"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphPlot", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "8072170c-87f8-174c-90a1-8c82f71d7930"]
+}], "SeeAlso",ExpressionUUID->"017859ea-796f-244d-977d-4378112dd21d"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 89, 0, 70, "ObjectName",ExpressionUUID->"858f2f0b-b733-bf48-871a-d8c9a99ff1a4"],
+Cell[646, 22, 306, 7, 70, "Usage",ExpressionUUID->"e778b717-bbfc-ea4f-9eda-8eb0f0386d9c"],
+Cell[948, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"51a997cf-75d8-a54b-84fd-bf9e609c09b5"],
+Cell[1049, 33, 138, 1, 70, "Notes",ExpressionUUID->"5d4e38b6-d71f-044f-8a15-af029a70ee81"],
+Cell[1189, 36, 265, 4, 70, "Notes",ExpressionUUID->"aedcbf0e-c753-0948-903e-c5dcafb34287"],
+Cell[1453, 42, 267, 4, 70, "Notes",ExpressionUUID->"ed238f4e-0771-5d4f-ac4e-a6fe0285f7f7"],
+Cell[1719, 48, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"c820797c-1eff-a24c-97b4-719ba19ef5fd"],
+Cell[1819, 50, 170, 3, 70, "Input",ExpressionUUID->"cdfa8328-f429-de4b-b74e-a62940725a40"],
+Cell[1989, 55, 192, 4, 70, "Output",ExpressionUUID->"2605cc9e-3e4f-154c-869c-8d1ae382c630"],
+Cell[2180, 61, 119, 0, 70, "ExampleText",ExpressionUUID->"7ac59e88-bed7-c04d-9b4e-7e42d6bed2c4"],
+Cell[2302, 63, 157, 2, 70, "Input",ExpressionUUID->"aa09b845-d4d9-2446-918a-f635933be955"],
+Cell[2460, 67, 164, 3, 70, "Output",ExpressionUUID->"e5242f14-1834-fb40-aa34-a3702ec1143a"],
+Cell[2624, 72, 131, 0, 70, "ExampleText",ExpressionUUID->"92ab23e3-250f-4844-95b7-14e3b0b5e649"],
+Cell[2758, 74, 177, 3, 70, "Input",ExpressionUUID->"aff342e2-ff04-4141-bc14-a39b36c287f6"],
+Cell[2935, 79, 87, 0, 70, "Output",ExpressionUUID->"4bbaed31-496e-cb4c-819c-1e6ddb109795"],
+Cell[3025, 81, 85, 0, 70, "NotesSection",ExpressionUUID->"450c7505-a56e-a64f-8c64-f65a6d5b8c38"],
+Cell[3113, 83, 270, 9, 70, "Notes",ExpressionUUID->"5eee79d8-e911-ec4d-a5d1-227b6bf9eb2f"],
+Cell[3377, 94, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"d16c42fe-fd45-c240-aca5-e458d839df39"],
+Cell[3469, 96, 648, 16, 70, "SeeAlso",ExpressionUUID->"017859ea-796f-244d-977d-4378112dd21d"]
+}
+]
+*)
+
+(* End of internal cache information *)

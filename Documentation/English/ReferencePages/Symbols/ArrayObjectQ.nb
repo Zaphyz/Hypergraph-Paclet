@@ -1,0 +1,123 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      4458,        114]
+NotebookOptionsPosition[      3102,         90]
+NotebookOutlinePosition[      3450,        105]
+CellTagsIndexPosition[      3407,        102]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["ArrayObjectQ", "ObjectName",ExpressionUUID->"3b11d5a2-f704-2e4e-8204-5caa65503e96"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArrayObjectQ", "[", "expr", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"3a86f3f9-d6ba-2040-833a-b823fbdc85df"],
+ " ",
+ "gives True if expr is a valid NumericalArray or SymbolicArray, and False \
+otherwise."
+}], "Usage",ExpressionUUID->"154624b8-ed85-6245-9242-bcc7edfa297b"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"f6692e1a-7e5b-6249-84f7-8a9901f4e9bd"],
+
+Cell["\<\
+A NumericalArray or SymbolicArray expression that fails to be built evaluates \
+to $Failed rather than remaining as one, so any surviving array object is in \
+canonical form.\
+\>", "Notes",ExpressionUUID->"ac5165fc-6317-9f4a-8820-d9f77e966238"],
+
+Cell["\<\
+A bare nested list is not an array object, though Hypermatrix promotes one to \
+a NumericalArray.\
+\>", "Notes",ExpressionUUID->"7f3902f3-c000-8040-8834-1601bd043d03"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"ec71dbe7-7a56-a048-b3c0-0edda5522a5b"],
+
+Cell["\<\
+{ArrayObjectQ @ NumericalArray[{1, 2}], ArrayObjectQ @ SymbolicArray[a, {2}],
+ ArrayObjectQ[{1, 2}], ArrayObjectQ[5]}\
+\>", "Input",ExpressionUUID->"565c2ed6-b0a2-8b4f-a4d2-abba678f539e"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"True", ",", "True", ",", "False", ",", "False"}], "}"}]], "Output",\
+ExpressionUUID->"ac97e8ab-0139-964b-82f7-8d716cc7c621"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"2ebeb982-e431-0c46-a5ce-e24b2a629ddb"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypermatrix.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Array accessors",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"89707abb-ad2c-2249-81ea-4212d993f652"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"8e0c8a58-9b02-8d4f-82da-3998a97d54a3"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["NumericalArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "5d2828c0-b798-864f-8b94-8d1e57db00ad"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["SymbolicArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "8adbcf8f-0907-9649-ab80-18167e3a9df7"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypermatrixQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "ba09412b-2da3-b044-9217-4fca97fbc2da"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["RegularArrayQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "0540cea0-083c-3d49-8a89-61d738cf9900"]
+}], "SeeAlso",ExpressionUUID->"fc07538e-9422-7e46-be9f-86b119aa3ec8"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 89, 0, 70, "ObjectName",ExpressionUUID->"3b11d5a2-f704-2e4e-8204-5caa65503e96"],
+Cell[646, 22, 352, 8, 70, "Usage",ExpressionUUID->"154624b8-ed85-6245-9242-bcc7edfa297b"],
+Cell[993, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"f6692e1a-7e5b-6249-84f7-8a9901f4e9bd"],
+Cell[1094, 34, 258, 4, 70, "Notes",ExpressionUUID->"ac5165fc-6317-9f4a-8820-d9f77e966238"],
+Cell[1351, 40, 180, 3, 70, "Notes",ExpressionUUID->"7f3902f3-c000-8040-8834-1601bd043d03"],
+Cell[1531, 45, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"ec71dbe7-7a56-a048-b3c0-0edda5522a5b"],
+Cell[1631, 47, 200, 3, 70, "Input",ExpressionUUID->"565c2ed6-b0a2-8b4f-a4d2-abba678f539e"],
+Cell[1831, 52, 167, 3, 70, "Output",ExpressionUUID->"ac97e8ab-0139-964b-82f7-8d716cc7c621"],
+Cell[1998, 57, 85, 0, 70, "NotesSection",ExpressionUUID->"2ebeb982-e431-0c46-a5ce-e24b2a629ddb"],
+Cell[2086, 59, 281, 9, 70, "Notes",ExpressionUUID->"89707abb-ad2c-2249-81ea-4212d993f652"],
+Cell[2361, 70, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"8e0c8a58-9b02-8d4f-82da-3998a97d54a3"],
+Cell[2453, 72, 661, 16, 70, "SeeAlso",ExpressionUUID->"fc07538e-9422-7e46-be9f-86b119aa3ec8"]
+}
+]
+*)
+
+(* End of internal cache information *)

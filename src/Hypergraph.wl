@@ -506,7 +506,9 @@ Protect["WolframInstitute`Hypergraphs`*"];
 EndPackage[];
 
 
-(* Plotting and the default graphical display live in a separate file, loaded here so that a
-   single Get of this file brings in the whole package. *)
+(* The rest of the package lives in separate files, loaded here so that a single Get of this one
+   brings in everything. *)
 
 Get[FileNameJoin[{DirectoryName[$InputFileName], "HypergraphPlot.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "Hypermatrix.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "ArrayAlgebra.wl"}]];

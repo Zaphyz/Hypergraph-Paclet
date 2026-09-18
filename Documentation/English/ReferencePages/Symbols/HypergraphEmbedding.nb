@@ -1,0 +1,145 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      5415,        136]
+NotebookOptionsPosition[      3775,        109]
+NotebookOutlinePosition[      4123,        124]
+CellTagsIndexPosition[      4080,        121]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypergraphEmbedding", "ObjectName",ExpressionUUID->"ca7c8a4f-a883-234d-99cd-ffd3816d641f"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphEmbedding", "[", "hg", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"f7a5eb74-8feb-ec49-84b7-afb01c76c290"],
+ " ",
+ "gives the coordinates chosen for the vertices of hg, in the order of \
+VertexList[hg]."
+}], "Usage",ExpressionUUID->"309d4406-4a8c-9645-8f10-45ab15e6a41b"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"d71fc391-802b-a741-ac49-ed1c2dac465f"],
+
+Cell["\<\
+The coordinates are those used by HypergraphPlot, and are obtained by laying \
+out an auxiliary graph.\
+\>", "Notes",ExpressionUUID->"9c8d2082-767e-1d4a-a8ab-6f484ec42e48"],
+
+Cell["\<\
+Any option of HypergraphPlot may be given, and affects the embedding in the \
+same way.\
+\>", "Notes",ExpressionUUID->"9e9744c8-5616-3a4d-803b-78b38506bbdc"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"7a435f0e-99fa-d342-9e48-339fa4164293"],
+
+Cell["HypergraphEmbedding[Hypergraph[{{1, 2}, {2, 3}}]]", "Input",ExpressionUUID->"c3317f46-5b9c-5543-b0cc-ca51766fe041"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", "3.6739403974420594`*^-16"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"1.`", ",", "2.4492935982947064`*^-16"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2.`", ",", "0.`"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
+"c7e31af9-da99-8649-90be-854c4d3107ab"],
+
+Cell["One coordinate per vertex, in the order of the vertex list:", \
+"ExampleText",ExpressionUUID->"e7fd06b5-ceab-9545-9826-3a325cfae886"],
+
+Cell["\<\
+h = Hypergraph[{Edge[{1, 2, 3}, \"Unordered\"], Edge[{3, 4}]}];
+Thread[h[\"VertexIDs\"] -> HypergraphEmbedding[h]]\
+\>", "Input",ExpressionUUID->"3205ba1b-42d7-324d-b7eb-309336056871"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"1", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"1.9987657369935588`", ",", "1.061628456550387`"}], "}"}]}], ",", 
+   RowBox[{"2", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"1.9987444371974448`", ",", "0.`"}], "}"}]}], ",", 
+   RowBox[{"3", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"1.256851436554468`", ",", "0.5308254495580791`"}], "}"}]}], ",", 
+   RowBox[{"4", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"0.`", ",", "0.530777583334723`"}], "}"}]}]}], "}"}]], "Output",E\
+xpressionUUID->"133a3b1a-6a6e-2a46-9c1b-eac7c14106b7"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"9d94de3f-1500-6f40-9d76-11173b8fd3fc"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/HypergraphPlot.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "HypergraphPlot",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"1e989722-f500-5e40-a02b-b2912f9fab29"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"1c426026-4f4a-5d41-aa20-6277d186f69a"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphPlot", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "896de47c-b083-a14e-b639-5c2c33ccd51b"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["Hypergraph", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "a2d57377-a6b1-c948-bd26-4863ff3d94ff"]
+}], "SeeAlso",ExpressionUUID->"9d454f6c-629c-214b-b4bc-40ab6e403482"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 96, 0, 70, "ObjectName",ExpressionUUID->"ca7c8a4f-a883-234d-99cd-ffd3816d641f"],
+Cell[653, 22, 358, 8, 70, "Usage",ExpressionUUID->"309d4406-4a8c-9645-8f10-45ab15e6a41b"],
+Cell[1006, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"d71fc391-802b-a741-ac49-ed1c2dac465f"],
+Cell[1107, 34, 185, 3, 70, "Notes",ExpressionUUID->"9c8d2082-767e-1d4a-a8ab-6f484ec42e48"],
+Cell[1292, 39, 170, 3, 70, "Notes",ExpressionUUID->"9e9744c8-5616-3a4d-803b-78b38506bbdc"],
+Cell[1462, 44, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"7a435f0e-99fa-d342-9e48-339fa4164293"],
+Cell[1562, 46, 121, 0, 70, "Input",ExpressionUUID->"c3317f46-5b9c-5543-b0cc-ca51766fe041"],
+Cell[1686, 48, 350, 9, 70, "Output",ExpressionUUID->"c7e31af9-da99-8649-90be-854c4d3107ab"],
+Cell[2030, 59, 140, 1, 70, "ExampleText",ExpressionUUID->"e7fd06b5-ceab-9545-9826-3a325cfae886"],
+Cell[2172, 62, 197, 3, 70, "Input",ExpressionUUID->"3205ba1b-42d7-324d-b7eb-309336056871"],
+Cell[2369, 67, 598, 15, 70, "Output",ExpressionUUID->"133a3b1a-6a6e-2a46-9c1b-eac7c14106b7"],
+Cell[2955, 84, 85, 0, 70, "NotesSection",ExpressionUUID->"9d94de3f-1500-6f40-9d76-11173b8fd3fc"],
+Cell[3043, 86, 283, 9, 70, "Notes",ExpressionUUID->"1e989722-f500-5e40-a02b-b2912f9fab29"],
+Cell[3320, 97, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"1c426026-4f4a-5d41-aa20-6277d186f69a"],
+Cell[3412, 99, 367, 8, 70, "SeeAlso",ExpressionUUID->"9d454f6c-629c-214b-b4bc-40ab6e403482"]
+}
+]
+*)
+
+(* End of internal cache information *)

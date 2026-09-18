@@ -1,0 +1,769 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     37539,        760]
+NotebookOptionsPosition[     35035,        724]
+NotebookOutlinePosition[     35383,        739]
+CellTagsIndexPosition[     35340,        736]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["IdentityArray", "ObjectName",ExpressionUUID->"ae11d757-5bb6-cd43-b8ac-8ce899655f02"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"IdentityArray", "[", 
+    RowBox[{"n", ",", " ", "d"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"aee46407-daf4-834b-bf30-85d2db898718"],
+ " ",
+ "gives the n-array with every index of length d whose entry is one where all \
+n indices agree and zero elsewhere."
+}], "Usage",ExpressionUUID->"4f956d21-62ba-264d-988a-d66395c816d2"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"IdentityArray", "[", 
+    RowBox[{"n", ",", " ", "d", ",", " ", "dom"}], "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"c116688c-8edc-4843-bd45-ca8bf347094b"],
+ " ",
+ "gives its entries in the value domain dom."
+}], "Usage",ExpressionUUID->"d1e07391-f2bd-944e-aa2e-809956b71fb1"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"df8096df-620d-4649-90b4-a1175df52d54"],
+
+Cell["\<\
+For n equal to 2 this is the ordinary identity matrix of size d.\
+\>", "Notes",ExpressionUUID->"b76a1707-c561-214e-ac30-2aae796b3877"],
+
+Cell["\<\
+It is the generalized Kronecker delta on all n indices, and is invariant \
+under every permutation of them, so it is declared \"Symmetric\".\
+\>", "Notes",ExpressionUUID->"e5972a0a-c790-7d4c-9b46-67d499d1d3fa"],
+
+Cell["IdentityArray[n, d] is PartialIdentityArray[n, d, Range[n]].", "Notes",ExpressionUUID->"b54f272f-f141-5b44-a41f-165a616fe08d"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"06c8824d-27fe-5747-9513-abd1a2d95cab"],
+
+Cell["At order two it is the identity matrix:", "ExampleText",ExpressionUUID->"a784e7a6-8e15-814a-bda3-c1645a93935a"],
+
+Cell["Normal @ IdentityArray[2, 3]", "Input",ExpressionUUID->"8d4c4206-20f7-c846-9cbc-c169dc2fab07"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]], "Output",ExpressionUUI\
+D->"75b213c8-91e8-0a49-8771-c5483fb929f4"],
+
+Cell["At order three it is one only on the main diagonal:", "ExampleText",ExpressionUUID->"65768663-22ae-1040-948e-613ad4f2b371"],
+
+Cell["Normal @ IdentityArray[3, 2]", "Input",ExpressionUUID->"0dd4c254-d7ee-b440-bbf4-d38351f31dc3"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}], "}"}]], "Output",ExpressionUU\
+ID->"df4d9919-70fd-534a-bec3-f13246c95845"],
+
+Cell["It acts as an identity for the matrix product:", "ExampleText",ExpressionUUID->"589e5e2b-2445-fa4d-a736-af6aa6703992"],
+
+Cell["\<\
+a = {{1, 2}, {3, 4}};
+Normal @ ArrayMultiply[{Normal @ IdentityArray[2, 2], a}, \"ij,jk->ik\"]\
+\>", "Input",ExpressionUUID->"b27d680c-ed47-0140-80c4-4851f709c228"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"3", ",", "4"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
+"e144bd84-29cc-7745-a4aa-0d17bd982e6c"],
+
+Cell["Over a finite field:", "ExampleText",ExpressionUUID->"072c7ef4-3f69-da48-8b05-b7aed941fbb9"],
+
+Cell["Normal @ IdentityArray[2, 2, FiniteField[2, 1]]", "Input",ExpressionUUID->"83e492eb-e245-484e-b298-ebfbd6b7ba14"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     TemplateBox[<|"interpretation" -> InterpretationBox["", 
+         FiniteFieldElement[
+          FiniteField[2, 1 + #& , "Polynomial"], {1}]], "index" -> "1", 
+       "shortIndex" -> "1", "indexShortened" -> True, "characteristic" -> "2",
+        "shortCharacteristic" -> "2", "extensionDegree" -> "1", "field" -> 
+       InterpretationBox[
+         RowBox[{
+           TagBox["FiniteField", "SummaryHead"], "[", 
+           
+           DynamicModuleBox[{
+            Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+            TemplateBox[{
+              PaneSelectorBox[{False -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxOpener"]], 
+                    ButtonFunction :> (Typeset`open$$ = True), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}], True -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxCloser"]], 
+                    ButtonFunction :> (Typeset`open$$ = False), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox[
+                    "\"Field irreducible: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    PaneBox[
+                    RowBox[{"1", "+", "\[FormalX]"}], 
+                    ImageSize -> {{1, 500}, Automatic}, BaselinePosition -> 
+                    Baseline, ContentPadding -> False, FrameMargins -> 0, 
+                    StripOnInput -> True], "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Representation: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["\"Polynomial\"", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}]}, 
+               Dynamic[Typeset`open$$], ImageSize -> Automatic]}, 
+             "SummaryPanel"], DynamicModuleValues :> {}], "]"}], 
+         FiniteField[2, 1 + #& , "Polynomial"], Selectable -> False, Editable -> 
+         False, SelectWithContents -> True], "fieldDisplayed" -> False|>,
+      "FiniteFieldElement"], ",", 
+     TemplateBox[<|"interpretation" -> InterpretationBox["", 
+         FiniteFieldElement[
+          FiniteField[2, 1 + #& , "Polynomial"], {}]], "index" -> "0", 
+       "shortIndex" -> "0", "indexShortened" -> True, "characteristic" -> "2",
+        "shortCharacteristic" -> "2", "extensionDegree" -> "1", "field" -> 
+       InterpretationBox[
+         RowBox[{
+           TagBox["FiniteField", "SummaryHead"], "[", 
+           
+           DynamicModuleBox[{
+            Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+            TemplateBox[{
+              PaneSelectorBox[{False -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxOpener"]], 
+                    ButtonFunction :> (Typeset`open$$ = True), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}], True -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxCloser"]], 
+                    ButtonFunction :> (Typeset`open$$ = False), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox[
+                    "\"Field irreducible: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    PaneBox[
+                    RowBox[{"1", "+", "\[FormalX]"}], 
+                    ImageSize -> {{1, 500}, Automatic}, BaselinePosition -> 
+                    Baseline, ContentPadding -> False, FrameMargins -> 0, 
+                    StripOnInput -> True], "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Representation: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["\"Polynomial\"", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}]}, 
+               Dynamic[Typeset`open$$], ImageSize -> Automatic]}, 
+             "SummaryPanel"], DynamicModuleValues :> {}], "]"}], 
+         FiniteField[2, 1 + #& , "Polynomial"], Selectable -> False, Editable -> 
+         False, SelectWithContents -> True], "fieldDisplayed" -> False|>,
+      "FiniteFieldElement"]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     TemplateBox[<|"interpretation" -> InterpretationBox["", 
+         FiniteFieldElement[
+          FiniteField[2, 1 + #& , "Polynomial"], {}]], "index" -> "0", 
+       "shortIndex" -> "0", "indexShortened" -> True, "characteristic" -> "2",
+        "shortCharacteristic" -> "2", "extensionDegree" -> "1", "field" -> 
+       InterpretationBox[
+         RowBox[{
+           TagBox["FiniteField", "SummaryHead"], "[", 
+           
+           DynamicModuleBox[{
+            Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+            TemplateBox[{
+              PaneSelectorBox[{False -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxOpener"]], 
+                    ButtonFunction :> (Typeset`open$$ = True), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}], True -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxCloser"]], 
+                    ButtonFunction :> (Typeset`open$$ = False), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox[
+                    "\"Field irreducible: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    PaneBox[
+                    RowBox[{"1", "+", "\[FormalX]"}], 
+                    ImageSize -> {{1, 500}, Automatic}, BaselinePosition -> 
+                    Baseline, ContentPadding -> False, FrameMargins -> 0, 
+                    StripOnInput -> True], "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Representation: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["\"Polynomial\"", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}]}, 
+               Dynamic[Typeset`open$$], ImageSize -> Automatic]}, 
+             "SummaryPanel"], DynamicModuleValues :> {}], "]"}], 
+         FiniteField[2, 1 + #& , "Polynomial"], Selectable -> False, Editable -> 
+         False, SelectWithContents -> True], "fieldDisplayed" -> False|>,
+      "FiniteFieldElement"], ",", 
+     TemplateBox[<|"interpretation" -> InterpretationBox["", 
+         FiniteFieldElement[
+          FiniteField[2, 1 + #& , "Polynomial"], {1}]], "index" -> "1", 
+       "shortIndex" -> "1", "indexShortened" -> True, "characteristic" -> "2",
+        "shortCharacteristic" -> "2", "extensionDegree" -> "1", "field" -> 
+       InterpretationBox[
+         RowBox[{
+           TagBox["FiniteField", "SummaryHead"], "[", 
+           
+           DynamicModuleBox[{
+            Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+            TemplateBox[{
+              PaneSelectorBox[{False -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxOpener"]], 
+                    ButtonFunction :> (Typeset`open$$ = True), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}], True -> GridBox[{{
+                    PaneBox[
+                    ButtonBox[
+                    DynamicBox[
+                    FEPrivate`FrontEndResource[
+                    "FEBitmaps", "SummaryBoxCloser"]], 
+                    ButtonFunction :> (Typeset`open$$ = False), Appearance -> 
+                    None, BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+                    "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}]], 
+                    GraphicsBox[{
+                    InsetBox[
+                    FormBox[
+                    StyleBox[
+                    "\"\[DoubleStruckCapitalF]\"", FontSize -> Scaled[0.7], 
+                    StripOnInput -> False], TraditionalForm], {0.1, 0}]}, 
+                    Background -> GrayLevel[0.93], PlotRangePadding -> 
+                    Scaled[0.1], FrameStyle -> Directive[
+                    Thickness[Tiny], 
+                    GrayLevel[0.7]], PlotRange -> {{-1., 1.}, {-1., 1.}}, 
+                    Axes -> False, AspectRatio -> 1, ImageSize -> 
+                    Dynamic[{
+                    Automatic, 
+                    3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                    Magnification])}], Frame -> True, FrameTicks -> None, 
+                    FrameStyle -> Directive[
+                    Opacity[0.5], 
+                    Thickness[Tiny], 
+                    RGBColor[0.368417, 0.506779, 0.709798]]], 
+                    GridBox[{{
+                    RowBox[{
+                    TagBox["\"Characteristic: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["2", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Extension degree: \"", "SummaryItemAnnotation"],
+                     "\[InvisibleSpace]", 
+                    TagBox["1", "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox[
+                    "\"Field irreducible: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox[
+                    PaneBox[
+                    RowBox[{"1", "+", "\[FormalX]"}], 
+                    ImageSize -> {{1, 500}, Automatic}, BaselinePosition -> 
+                    Baseline, ContentPadding -> False, FrameMargins -> 0, 
+                    StripOnInput -> True], "SummaryItem"]}]}, {
+                    RowBox[{
+                    TagBox["\"Representation: \"", "SummaryItemAnnotation"], 
+                    "\[InvisibleSpace]", 
+                    TagBox["\"Polynomial\"", "SummaryItem"]}]}}, 
+                    GridBoxAlignment -> {
+                    "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, 
+                    AutoDelete -> False, 
+                    GridBoxItemSize -> {
+                    "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                    GridBoxSpacings -> {
+                    "Columns" -> {{2}}, "Rows" -> {{Automatic}}}, 
+                    BaseStyle -> {
+                    ShowStringCharacters -> False, NumberMarks -> False, 
+                    PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+                  GridBoxAlignment -> {
+                   "Columns" -> {{Left}}, "Rows" -> {{Top}}}, AutoDelete -> 
+                  False, GridBoxItemSize -> {
+                   "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+                  BaselinePosition -> {1, 1}]}, 
+               Dynamic[Typeset`open$$], ImageSize -> Automatic]}, 
+             "SummaryPanel"], DynamicModuleValues :> {}], "]"}], 
+         FiniteField[2, 1 + #& , "Polynomial"], Selectable -> False, Editable -> 
+         False, SelectWithContents -> True], "fieldDisplayed" -> False|>,
+      "FiniteFieldElement"]}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
+"b961ced8-44a9-a847-b90b-67c8dbb90f8f"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"7a5a7f30-b131-5446-8f0d-68a88e8b942e"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/ArrayAlgebra.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Special arrays",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"9e42a513-dfcd-c04d-89a1-6d79009dd658"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"305a2ccc-a685-aa4a-9444-80e45664439d"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["PartialIdentityArray", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"01774c18-ef54-b048-8ddc-ebc4aea81f88"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ZeroArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "ebd97b32-b2fc-364e-a2cb-9ac4ca252f29"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["OneArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "e545048a-5caa-394c-bde0-27f470dfa6ac"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayMultiply", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "008618fd-581d-8142-83cc-0395eb95ad2e"]
+}], "SeeAlso",ExpressionUUID->"a5f0e343-e819-7c41-b9ce-6eda09431233"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 90, 0, 70, "ObjectName",ExpressionUUID->"ae11d757-5bb6-cd43-b8ac-8ce899655f02"],
+Cell[647, 22, 409, 9, 70, "Usage",ExpressionUUID->"4f956d21-62ba-264d-988a-d66395c816d2"],
+Cell[1050, 33, 354, 8, 70, "Usage",ExpressionUUID->"d1e07391-f2bd-944e-aa2e-809956b71fb1"],
+Cell[1399, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"df8096df-620d-4649-90b4-a1175df52d54"],
+Cell[1500, 45, 146, 2, 70, "Notes",ExpressionUUID->"b76a1707-c561-214e-ac30-2aae796b3877"],
+Cell[1647, 49, 223, 3, 70, "Notes",ExpressionUUID->"e5972a0a-c790-7d4c-9b46-67d499d1d3fa"],
+Cell[1870, 54, 132, 0, 70, "Notes",ExpressionUUID->"b54f272f-f141-5b44-a41f-165a616fe08d"],
+Cell[2005, 56, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"06c8824d-27fe-5747-9513-abd1a2d95cab"],
+Cell[2105, 58, 117, 0, 70, "ExampleText",ExpressionUUID->"a784e7a6-8e15-814a-bda3-c1645a93935a"],
+Cell[2225, 60, 100, 0, 70, "Input",ExpressionUUID->"8d4c4206-20f7-c846-9cbc-c169dc2fab07"],
+Cell[2328, 62, 326, 9, 70, "Output",ExpressionUUID->"75b213c8-91e8-0a49-8771-c5483fb929f4"],
+Cell[2648, 73, 129, 0, 70, "ExampleText",ExpressionUUID->"65768663-22ae-1040-948e-613ad4f2b371"],
+Cell[2780, 75, 100, 0, 70, "Input",ExpressionUUID->"0dd4c254-d7ee-b440-bbf4-d38351f31dc3"],
+Cell[2883, 77, 455, 15, 70, "Output",ExpressionUUID->"df4d9919-70fd-534a-bec3-f13246c95845"],
+Cell[3326, 94, 124, 0, 70, "ExampleText",ExpressionUUID->"589e5e2b-2445-fa4d-a736-af6aa6703992"],
+Cell[3453, 96, 177, 3, 70, "Input",ExpressionUUID->"b27d680c-ed47-0140-80c4-4851f709c228"],
+Cell[3630, 101, 235, 7, 70, "Output",ExpressionUUID->"e144bd84-29cc-7745-a4aa-0d17bd982e6c"],
+Cell[3861, 110, 98, 0, 70, "ExampleText",ExpressionUUID->"072c7ef4-3f69-da48-8b05-b7aed941fbb9"],
+Cell[3962, 112, 119, 0, 70, "Input",ExpressionUUID->"83e492eb-e245-484e-b298-ebfbd6b7ba14"],
+Cell[4084, 114, 30421, 575, 70, "Output",ExpressionUUID->"b961ced8-44a9-a847-b90b-67c8dbb90f8f"],
+Cell[33933, 691, 85, 0, 70, "NotesSection",ExpressionUUID->"7a5a7f30-b131-5446-8f0d-68a88e8b942e"],
+Cell[34021, 693, 281, 9, 70, "Notes",ExpressionUUID->"9e42a513-dfcd-c04d-89a1-6d79009dd658"],
+Cell[34296, 704, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"305a2ccc-a685-aa4a-9444-80e45664439d"],
+Cell[34388, 706, 659, 16, 70, "SeeAlso",ExpressionUUID->"a5f0e343-e819-7c41-b9ce-6eda09431233"]
+}
+]
+*)
+
+(* End of internal cache information *)

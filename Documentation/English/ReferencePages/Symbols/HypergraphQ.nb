@@ -1,0 +1,116 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      4111,        107]
+NotebookOptionsPosition[      2847,         84]
+NotebookOutlinePosition[      3195,         99]
+CellTagsIndexPosition[      3152,         96]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypergraphQ", "ObjectName",ExpressionUUID->"50511766-b6b2-f144-97a4-84c16fc3113b"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphQ", "[", "expr", "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"42942730-17d2-7a4d-bfa9-3bdb50c5466a"],
+ " ",
+ "gives True if expr is a valid Hypergraph object, and False otherwise."
+}], "Usage",ExpressionUUID->"6197f81e-c392-f945-9173-77a2f88853c0"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"7d7553ca-ef07-9b4b-b28c-30c75257b428"],
+
+Cell["\<\
+A Hypergraph expression that fails to be built evaluates to $Failed rather \
+than remaining as a Hypergraph, so any surviving Hypergraph object is in \
+canonical form.\
+\>", "Notes",ExpressionUUID->"44b71321-dc9c-1e47-80bf-e4561c5c48ba"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"d3ff1c25-ebc0-3349-a33d-8afe30064492"],
+
+Cell["\<\
+{HypergraphQ[Hypergraph[{Edge[{1, 2}]}]], HypergraphQ[17], \
+HypergraphQ[Edge[{1, 2}]]}\
+\>", "Input",ExpressionUUID->"c940455d-5d08-4448-99e3-0419c4666684"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"True", ",", "False", ",", "False"}], "}"}]], "Output",ExpressionUUI\
+D->"dfc6c5ae-46ff-4f49-83bd-5130fd96f2e7"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"12bc76c2-4297-4e4f-ab56-c20331858a03"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypergraph.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Hypergraphs",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"7ba47ae3-97d1-b24a-8bb7-e1b02786f991"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"90b9330f-f54f-e84e-9058-2b0fa8fd26d1"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["Hypergraph", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "9876c4d4-87f8-634d-ad48-7a3eddfd674e"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["VertexObjectQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "d7d93ebe-7a3e-2049-b2b0-04d8c8bcf11f"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["EdgeObjectQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "faabecc3-c85f-ea4c-a13c-4f82e773bf9b"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphLargeQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "b7dcd4c0-f8ae-234e-aafe-18c10dfaf7ef"]
+}], "SeeAlso",ExpressionUUID->"24e15cc9-defa-af4a-84c7-a9839f57bb3a"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 88, 0, 70, "ObjectName",ExpressionUUID->"50511766-b6b2-f144-97a4-84c16fc3113b"],
+Cell[645, 22, 334, 7, 70, "Usage",ExpressionUUID->"6197f81e-c392-f945-9173-77a2f88853c0"],
+Cell[975, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"7d7553ca-ef07-9b4b-b28c-30c75257b428"],
+Cell[1076, 33, 251, 4, 70, "Notes",ExpressionUUID->"44b71321-dc9c-1e47-80bf-e4561c5c48ba"],
+Cell[1326, 39, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"d3ff1c25-ebc0-3349-a33d-8afe30064492"],
+Cell[1426, 41, 170, 3, 70, "Input",ExpressionUUID->"c940455d-5d08-4448-99e3-0419c4666684"],
+Cell[1596, 46, 154, 3, 70, "Output",ExpressionUUID->"dfc6c5ae-46ff-4f49-83bd-5130fd96f2e7"],
+Cell[1750, 51, 85, 0, 70, "NotesSection",ExpressionUUID->"12bc76c2-4297-4e4f-ab56-c20331858a03"],
+Cell[1838, 53, 276, 9, 70, "Notes",ExpressionUUID->"7ba47ae3-97d1-b24a-8bb7-e1b02786f991"],
+Cell[2108, 64, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"90b9330f-f54f-e84e-9058-2b0fa8fd26d1"],
+Cell[2200, 66, 659, 16, 70, "SeeAlso",ExpressionUUID->"24e15cc9-defa-af4a-84c7-a9839f57bb3a"]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,170 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      6796,        161]
+NotebookOptionsPosition[      4879,        131]
+NotebookOutlinePosition[      5227,        146]
+CellTagsIndexPosition[      5184,        143]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["ArraySymmetry", "ObjectName",ExpressionUUID->"1fbbe818-a298-154a-867d-c3cf4bfd48e6"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArraySymmetry", "[", "arr", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"0f698ee3-684c-424f-b357-5212303be46f"],
+ " ",
+ "gives the declared index symmetry of arr."
+}], "Usage",ExpressionUUID->"70bf485f-4929-014b-8275-edcb9c83cb3f"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"4ad71246-c210-7147-93d8-8b78e3dad9ff"],
+
+Cell["\<\
+The result is one of \"Rigid\", meaning no symmetry is claimed; \"Cyclic\", \
+meaning the entries are invariant under cyclic permutation of the indices; or \
+\"Symmetric\", meaning they are invariant under all permutations.\
+\>", "Notes",ExpressionUUID->"330fb985-187d-d24a-8a70-5c6d259ccedd"],
+
+Cell["\<\
+Only a regular array can carry a symmetry other than \"Rigid\".\
+\>", "Notes",ExpressionUUID->"9871eb37-1444-e844-a825-70ddc2f459f7"],
+
+Cell["\<\
+The symmetry is a declared property, not a computed one: ArraySymmetry \
+reports what was declared. For a numerical array the declaration is verified \
+against the entries when the array is built; for a symbolic array it is \
+honoured by construction, equivalent index tuples naming the same entry.\
+\>", "Notes",ExpressionUUID->"fb9f6873-740d-4d43-ab65-7f9a92d0039d"],
+
+Cell["\<\
+A symmetric array is also cyclic, so the same entries may be declared either \
+way. At order two the cyclic group is the symmetric group and the two \
+coincide exactly.\
+\>", "Notes",ExpressionUUID->"7b1760f5-cdaa-9f48-9afc-b0505f4b2c1c"],
+
+Cell["\<\
+Symmetry is the third criterion by which a Hypermatrix orders its arrays, \
+taking \"Symmetric\" before \"Cyclic\" before \"Rigid\".\
+\>", "Notes",ExpressionUUID->"3ccbdd69-5b6d-9349-ab11-12b9ed0f28b4"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"51af5b28-69b0-e144-ab92-23616b8ffd9a"],
+
+Cell["\<\
+ArraySymmetry @ NumericalArray[{{1, 2}, {2, 1}}, Automatic, #] & /@ \
+{\"Rigid\", \"Cyclic\", \"Symmetric\"}\
+\>", "Input",ExpressionUUID->"1689c8c9-9d09-e14e-a08a-1496db09b495"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Rigid\"\>", ",", "\<\"Cyclic\"\>", ",", "\<\"Symmetric\"\>"}], 
+  "}"}]], "Output",ExpressionUUID->"62ddd6b8-2861-e245-ba6a-54eae17eac30"],
+
+Cell["\<\
+The entries of the cyclic orbit of (1, 2, 3) are invariant under rotation but \
+not under reflection, so they are cyclic and not symmetric:\
+\>", "ExampleText",ExpressionUUID->"ea168097-f865-cd4f-a091-c169e1fe3424"],
+
+Cell["\<\
+cyc = Array[If[MemberQ[{{1, 2, 3}, {2, 3, 1}, {3, 1, 2}}, {##}], 1, 0] &, {3, \
+3, 3}];
+{ArraySymmetry @ NumericalArray[cyc, Automatic, \"Cyclic\"],
+ Quiet @ NumericalArray[cyc, Automatic, \"Symmetric\"]}\
+\>", "Input",ExpressionUUID->"41ce4688-429c-4c49-997c-e788fe46ff1d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Cyclic\"\>", ",", "$Failed"}], "}"}]], "Output",ExpressionUUID->\
+"17490ebd-dcc1-1541-a2e8-ce5bb8d3ce17"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"a2149af0-49f3-c14c-b6a9-12b77d00740d"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypermatrix.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Array accessors",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"3d3d8380-f031-9a44-9202-df26ce8c950c"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"f7213bde-0dab-1e4b-9714-deac8bd8c1b8"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["ArrayOrder", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "17cc33d0-6581-984c-b959-3361570b3d08"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayDimensions", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "cc617a99-da45-ea42-802a-2b69bc1e6d79"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["RegularArrayQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "6f16c458-3614-744f-b069-96f3dcc89693"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["NumericalArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "2b5389d6-6608-8145-af00-ca9f9cc30db3"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["SymbolicArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "3833d0ae-1cbe-d449-91b8-782308e03b42"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["Hypermatrix", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "8616ced9-fba2-9e4a-92f7-da85946df43c"]
+}], "SeeAlso",ExpressionUUID->"dc798be1-8c65-ca4c-9154-e38df334ed5a"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 90, 0, 70, "ObjectName",ExpressionUUID->"1fbbe818-a298-154a-867d-c3cf4bfd48e6"],
+Cell[647, 22, 307, 7, 70, "Usage",ExpressionUUID->"70bf485f-4929-014b-8275-edcb9c83cb3f"],
+Cell[950, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"4ad71246-c210-7147-93d8-8b78e3dad9ff"],
+Cell[1051, 33, 307, 4, 70, "Notes",ExpressionUUID->"330fb985-187d-d24a-8a70-5c6d259ccedd"],
+Cell[1357, 39, 145, 2, 70, "Notes",ExpressionUUID->"9871eb37-1444-e844-a825-70ddc2f459f7"],
+Cell[1503, 43, 383, 5, 70, "Notes",ExpressionUUID->"fb9f6873-740d-4d43-ab65-7f9a92d0039d"],
+Cell[1884, 50, 252, 4, 70, "Notes",ExpressionUUID->"7b1760f5-cdaa-9f48-9afc-b0505f4b2c1c"],
+Cell[2135, 56, 215, 3, 70, "Notes",ExpressionUUID->"3ccbdd69-5b6d-9349-ab11-12b9ed0f28b4"],
+Cell[2350, 61, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"51af5b28-69b0-e144-ab92-23616b8ffd9a"],
+Cell[2450, 63, 191, 3, 70, "Input",ExpressionUUID->"1689c8c9-9d09-e14e-a08a-1496db09b495"],
+Cell[2641, 68, 185, 3, 70, "Output",ExpressionUUID->"62ddd6b8-2861-e245-ba6a-54eae17eac30"],
+Cell[2826, 73, 228, 3, 70, "ExampleText",ExpressionUUID->"ea168097-f865-cd4f-a091-c169e1fe3424"],
+Cell[3054, 78, 289, 5, 70, "Input",ExpressionUUID->"41ce4688-429c-4c49-997c-e788fe46ff1d"],
+Cell[3341, 85, 152, 3, 70, "Output",ExpressionUUID->"17490ebd-dcc1-1541-a2e8-ce5bb8d3ce17"],
+Cell[3493, 90, 85, 0, 70, "NotesSection",ExpressionUUID->"a2149af0-49f3-c14c-b6a9-12b77d00740d"],
+Cell[3581, 92, 281, 9, 70, "Notes",ExpressionUUID->"3d3d8380-f031-9a44-9202-df26ce8c950c"],
+Cell[3856, 103, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"f7213bde-0dab-1e4b-9714-deac8bd8c1b8"],
+Cell[3948, 105, 951, 24, 70, "SeeAlso",ExpressionUUID->"dc798be1-8c65-ca4c-9154-e38df334ed5a"]
+}
+]
+*)
+
+(* End of internal cache information *)

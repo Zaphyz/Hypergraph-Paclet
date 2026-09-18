@@ -1,0 +1,179 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      6923,        170]
+NotebookOptionsPosition[      4813,        138]
+NotebookOutlinePosition[      5161,        153]
+CellTagsIndexPosition[      5118,        150]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["ZeroArray", "ObjectName",ExpressionUUID->"01684ab1-41b9-464c-bd5e-fefe534f699e"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ZeroArray", "[", 
+    RowBox[{"n", ",", " ", "d"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"dc050236-7c62-e342-92f9-e019f773bfa0"],
+ " ",
+ "gives the n-array with every index of length d and every entry zero."
+}], "Usage",ExpressionUUID->"71dc22d2-c63a-3046-abe5-b3b6a74f5f35"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ZeroArray", "[", "dims", "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"9d5f9f7e-06b8-9349-b979-e680e9b674dc"],
+ " ",
+ "gives the array of the given dimensions."
+}], "Usage",ExpressionUUID->"047b0e32-0986-d64f-8cb6-e1adf5e253aa"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ZeroArray", "[", 
+    RowBox[{"spec", ",", " ", "dom"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"1bff928c-9553-554e-a249-6d46944fd218"],
+ " ",
+ "gives its entries in the value domain dom."
+}], "Usage",ExpressionUUID->"306906c2-7999-8c4a-9552-0d24804c3e32"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"9a2f86b1-7de7-e240-b55e-0fe163599a6b"],
+
+Cell["\<\
+The domain defaults to \"Integer\". The zero of \"Boolean\" is False, and the \
+zero of FiniteField[p, n] is that field's zero element.\
+\>", "Notes",ExpressionUUID->"35f61384-f729-b041-b753-3d3b03d2b2cb"],
+
+Cell["\<\
+A constant array is invariant under every permutation of its indices, so a \
+regular one is declared \"Symmetric\". An array of unequal index lengths \
+cannot carry a symmetry and is declared \"Rigid\".\
+\>", "Notes",ExpressionUUID->"a52e01ee-c696-b340-b141-5a5213891d98"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"c65c2ee9-7aae-f941-9e46-85915c53e8be"],
+
+Cell["Normal @ ZeroArray[2, 3]", "Input",ExpressionUUID->"3b2c26eb-fbc2-374f-af2f-ba402fdb0070"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}]], "Output",ExpressionUUI\
+D->"a68502a8-1da8-2942-a9e0-f56429f9382c"],
+
+Cell["Any shape, and any domain:", "ExampleText",ExpressionUUID->"4270447b-5e75-7843-8d42-b90358be3695"],
+
+Cell["\<\
+{ArrayDimensions @ ZeroArray[{2, 3, 4}], Normal @ ZeroArray[1, 3, \"Real\"]}\
+\>", "Input",ExpressionUUID->"12abded3-1b37-3e46-b485-a399619f553b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"2", ",", "3", ",", "4"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"0.`", ",", "0.`", ",", "0.`"}], "}"}]}], "}"}]], "Output",Express\
+ionUUID->"7ae4349c-7eb7-214f-9764-323a11ae8524"],
+
+Cell["A regular constant array is symmetric:", "ExampleText",ExpressionUUID->"087c358b-7154-8a46-a694-6c6ce0e634cd"],
+
+Cell["\<\
+{ArraySymmetry @ ZeroArray[3, 2], ArraySymmetry @ ZeroArray[{2, 3}]}\
+\>", "Input",ExpressionUUID->"e94a2f95-1956-934d-8255-bf2e5bfcc28b"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Symmetric\"\>", ",", "\<\"Rigid\"\>"}], "}"}]], "Output",Expres\
+sionUUID->"449fb8b2-e03a-0c40-a3c1-679e4445c9b4"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"69e31d83-d9b1-f44a-978d-36528baf04d8"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/ArrayAlgebra.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Special arrays",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"7dcfbd91-f635-8d4c-9e20-52a16e61454f"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"70aa37a4-cbff-ef47-a5dd-413eb1c833f6"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["OneArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "c8dbb427-f390-644a-9236-9598708f1e82"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["IdentityArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "0e7076fd-9510-f44a-bc4f-d3002e7a8a15"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["PartialIdentityArray", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"4a8658be-bf6c-1c42-bb0d-047ede188787"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["NumericalArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "2cac07d6-b5ac-fd49-b8c4-daa0407e3aec"]
+}], "SeeAlso",ExpressionUUID->"b8075465-106a-2143-bf99-5a9fe01e907c"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 86, 0, 70, "ObjectName",ExpressionUUID->"01684ab1-41b9-464c-bd5e-fefe534f699e"],
+Cell[643, 22, 359, 8, 70, "Usage",ExpressionUUID->"71dc22d2-c63a-3046-abe5-b3b6a74f5f35"],
+Cell[997, 32, 303, 7, 70, "Usage",ExpressionUUID->"047b0e32-0986-d64f-8cb6-e1adf5e253aa"],
+Cell[1296, 41, 338, 8, 70, "Usage",ExpressionUUID->"306906c2-7999-8c4a-9552-0d24804c3e32"],
+Cell[1629, 51, 98, 0, 70, "NotesSection",ExpressionUUID->"9a2f86b1-7de7-e240-b55e-0fe163599a6b"],
+Cell[1730, 53, 218, 3, 70, "Notes",ExpressionUUID->"35f61384-f729-b041-b753-3d3b03d2b2cb"],
+Cell[1948, 58, 286, 4, 70, "Notes",ExpressionUUID->"a52e01ee-c696-b340-b141-5a5213891d98"],
+Cell[2233, 64, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"c65c2ee9-7aae-f941-9e46-85915c53e8be"],
+Cell[2333, 66, 96, 0, 70, "Input",ExpressionUUID->"3b2c26eb-fbc2-374f-af2f-ba402fdb0070"],
+Cell[2432, 68, 326, 9, 70, "Output",ExpressionUUID->"a68502a8-1da8-2942-a9e0-f56429f9382c"],
+Cell[2752, 79, 104, 0, 70, "ExampleText",ExpressionUUID->"4270447b-5e75-7843-8d42-b90358be3695"],
+Cell[2859, 81, 158, 2, 70, "Input",ExpressionUUID->"12abded3-1b37-3e46-b485-a399619f553b"],
+Cell[3018, 85, 261, 7, 70, "Output",ExpressionUUID->"7ae4349c-7eb7-214f-9764-323a11ae8524"],
+Cell[3275, 94, 116, 0, 70, "ExampleText",ExpressionUUID->"087c358b-7154-8a46-a694-6c6ce0e634cd"],
+Cell[3394, 96, 150, 2, 70, "Input",ExpressionUUID->"e94a2f95-1956-934d-8255-bf2e5bfcc28b"],
+Cell[3545, 100, 161, 3, 70, "Output",ExpressionUUID->"449fb8b2-e03a-0c40-a3c1-679e4445c9b4"],
+Cell[3706, 105, 85, 0, 70, "NotesSection",ExpressionUUID->"69e31d83-d9b1-f44a-978d-36528baf04d8"],
+Cell[3794, 107, 281, 9, 70, "Notes",ExpressionUUID->"7dcfbd91-f635-8d4c-9e20-52a16e61454f"],
+Cell[4069, 118, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"70aa37a4-cbff-ef47-a5dd-413eb1c833f6"],
+Cell[4161, 120, 664, 16, 70, "SeeAlso",ExpressionUUID->"b8075465-106a-2143-bf99-5a9fe01e907c"]
+}
+]
+*)
+
+(* End of internal cache information *)

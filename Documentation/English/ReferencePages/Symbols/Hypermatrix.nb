@@ -1,0 +1,439 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     18818,        430]
+NotebookOptionsPosition[     15826,        389]
+NotebookOutlinePosition[     16174,        404]
+CellTagsIndexPosition[     16131,        401]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["Hypermatrix", "ObjectName",ExpressionUUID->"a0e84003-3405-a544-86a8-0b3fa989296c"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"Hypermatrix", "[", 
+    RowBox[{"{", 
+     RowBox[{"arr1", ",", " ", "arr2", ",", " ", "..."}], "}"}], "]"}], 
+   "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "8bc254ca-e6b6-b04d-a483-a2d2183ddf92"],
+ " ",
+ "represents the given arrays as a hypermatrix, holding them in canonical \
+order."
+}], "Usage",ExpressionUUID->"fe0405e6-3dbb-fc45-8a98-fa15468e6d03"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"Hypermatrix", "[", 
+    RowBox[{"arr1", ",", " ", "arr2", ",", " ", "..."}], "]"}], 
+   "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "85d4cfc5-5cfd-2e48-ad6c-ae1f78d6f74c"],
+ " ",
+ "is equivalent."
+}], "Usage",ExpressionUUID->"a1893f0c-5c2c-ed40-b115-243606e9e9b8"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"966f2217-8c03-cb4d-b4df-4123e3968abb"],
+
+Cell["\<\
+The arrays are ordered by array order, lowest first; then by dimensions, \
+shorter first, compared term by term; then by symmetry, taking \"Symmetric\" \
+before \"Cyclic\" before \"Rigid\".\
+\>", "Notes",ExpressionUUID->"003950ed-f668-3543-ba92-f3ae27f74587"],
+
+Cell["\<\
+Two arrays alike in all three are put in the Wolfram Language's own canonical \
+order, so that a hypermatrix is a function of the set of arrays it was given \
+and of nothing else. Giving the same arrays in a different order produces the \
+identical expression.\
+\>", "Notes",ExpressionUUID->"2d12b559-6cc1-3a40-afa5-ebeff8399e71"],
+
+Cell["\<\
+An irregular array is necessarily \"Rigid\", since only a regular array can \
+carry a symmetry, so the symmetry criterion separates the regular arrays \
+among themselves.\
+\>", "Notes",ExpressionUUID->"dc6ba5c9-54f9-de4c-a8f9-e4e1fe8895f1"],
+
+Cell["\<\
+Numerical and symbolic arrays may be mixed freely. Raw entries given in place \
+of an array are promoted to a NumericalArray.\
+\>", "Notes",ExpressionUUID->"b315b875-74e3-7a4f-8d7a-dc796d7aa49c"],
+
+Cell["\<\
+Length gives the number of arrays, and Normal the entries of each of them in \
+order.\
+\>", "Notes",ExpressionUUID->"1ba4a0b0-9677-0046-bd54-7b7bf44a16ba"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"e0e3a582-5fc2-3948-9d5a-f4b44a1f72d2"],
+
+Cell["The arrays are sorted whatever order they are given in:", "ExampleText",ExpressionUUID->"803fe682-806b-e84a-b0a2-e0c7e1bd0bc7"],
+
+Cell["\<\
+hm = Hypermatrix[{
+   NumericalArray[Array[1 &, {2, 2, 2}], Automatic, \"Symmetric\"],
+   NumericalArray[{{1, 2}, {3, 4}}],
+   NumericalArray[{1, 2}],
+   NumericalArray[{1, 2, 3}],
+   NumericalArray[{{1, 2}, {2, 1}}, Automatic, \"Symmetric\"],
+   NumericalArray[{{1, 2}, {2, 1}}, Automatic, \"Cyclic\"]}]\
+\>", "Input",ExpressionUUID->"3a8e1817-8ccf-2846-bd1b-ed7f09d3a16c"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["Hypermatrix",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+    
+    TemplateBox[{
+      PaneSelectorBox[{False -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]], 
+              ButtonFunction :> (Typeset`open$$ = True), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              FaceForm[
+               Hue[0.63, 0.26, 0.89]], 
+              EdgeForm[
+               Hue[0.63, 0.7, 0.33]], {{
+                RectangleBox[{0, 0}, {0.82, 0.82}], 
+                RectangleBox[{0, -1}, {0.82, -0.18000000000000005`}], 
+                RectangleBox[{0, -2}, {0.82, -1.1800000000000002`}]}, {
+                RectangleBox[{1, 0}, {1.8199999999999998`, 0.82}], 
+                
+                RectangleBox[{1, -1}, {
+                 1.8199999999999998`, -0.18000000000000005`}], 
+                
+                RectangleBox[{1, -2}, {
+                 1.8199999999999998`, -1.1800000000000002`}]}, {
+                RectangleBox[{2, 0}, {2.82, 0.82}], 
+                RectangleBox[{2, -1}, {2.82, -0.18000000000000005`}], 
+                RectangleBox[{2, -2}, {2.82, -1.1800000000000002`}]}}}, 
+             ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.2 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], PlotRangePadding -> 0.3], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Arrays: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["6", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Orders: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    
+                    RowBox[{
+                    "1", ",", "1", ",", "2", ",", "2", ",", "2", ",", "3"}], 
+                    "}"}], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}], True -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]], 
+              ButtonFunction :> (Typeset`open$$ = False), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              FaceForm[
+               Hue[0.63, 0.26, 0.89]], 
+              EdgeForm[
+               Hue[0.63, 0.7, 0.33]], {{
+                RectangleBox[{0, 0}, {0.82, 0.82}], 
+                RectangleBox[{0, -1}, {0.82, -0.18000000000000005`}], 
+                RectangleBox[{0, -2}, {0.82, -1.1800000000000002`}]}, {
+                RectangleBox[{1, 0}, {1.8199999999999998`, 0.82}], 
+                
+                RectangleBox[{1, -1}, {
+                 1.8199999999999998`, -0.18000000000000005`}], 
+                
+                RectangleBox[{1, -2}, {
+                 1.8199999999999998`, -1.1800000000000002`}]}, {
+                RectangleBox[{2, 0}, {2.82, 0.82}], 
+                RectangleBox[{2, -1}, {2.82, -0.18000000000000005`}], 
+                RectangleBox[{2, -2}, {2.82, -1.1800000000000002`}]}}}, 
+             ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.2 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], PlotRangePadding -> 0.3], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Arrays: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["6", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Orders: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    
+                    RowBox[{
+                    "1", ",", "1", ",", "2", ",", "2", ",", "2", ",", "3"}], 
+                    "}"}], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Dimensions: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", "2", "}"}], ",", 
+                    RowBox[{"{", "3", "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2", ",", "2"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2", ",", "2"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2", ",", "2"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2", ",", "2", ",", "2"}], "}"}]}], "}"}], 
+                  "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Symmetries: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    
+                    RowBox[{
+                    "\"Rigid\"", ",", "\"Rigid\"", ",", "\"Symmetric\"", ",", 
+                    "\"Cyclic\"", ",", "\"Rigid\"", ",", "\"Symmetric\""}], 
+                    "}"}], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Domains: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    
+                    RowBox[{
+                    "\"Integer\"", ",", "\"Integer\"", ",", "\"Integer\"", 
+                    ",", "\"Integer\"", ",", "\"Integer\"", ",", 
+                    "\"Integer\""}], "}"}], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}]}, 
+       Dynamic[Typeset`open$$], ImageSize -> Automatic]},
+     "SummaryPanel"],
+    DynamicModuleValues:>{}], "]"}],
+  WolframInstitute`Hypergraphs`Hypermatrix[{
+    WolframInstitute`Hypergraphs`NumericalArray[{1, 2}, "Integer", "Rigid"], 
+    WolframInstitute`Hypergraphs`NumericalArray[{1, 2, 3}, "Integer", 
+     "Rigid"], 
+    WolframInstitute`Hypergraphs`NumericalArray[{{1, 2}, {2, 1}}, "Integer", 
+     "Symmetric"], 
+    WolframInstitute`Hypergraphs`NumericalArray[{{1, 2}, {2, 1}}, "Integer", 
+     "Cyclic"], 
+    WolframInstitute`Hypergraphs`NumericalArray[{{1, 2}, {3, 4}}, "Integer", 
+     "Rigid"], 
+    WolframInstitute`Hypergraphs`NumericalArray[{{{1, 1}, {1, 1}}, {{1, 1}, {
+     1, 1}}}, "Integer", "Symmetric"]}],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",ExpressionUUID->"d763c174-901b-464e-8aaa-\
+91b53e5a4bad"],
+
+Cell["\<\
+Lowest order first, then the shorter dimensions, then the symmetries:\
+\>", "ExampleText",ExpressionUUID->"bf5f4faf-d0de-244b-88d4-98ccd598cd3c"],
+
+Cell["{hm[\"Orders\"], hm[\"Dimensions\"], hm[\"Symmetries\"]}", "Input",ExpressionUUID->"8b0ec35f-0e8a-7a49-870b-87507f2dc9ea"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "1", ",", "2", ",", "2", ",", "2", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", "2", "}"}], ",", 
+     RowBox[{"{", "3", "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"2", ",", "2", ",", "2"}], "}"}]}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"Rigid\"\>", ",", "\<\"Rigid\"\>", ",", "\<\"Symmetric\"\>", 
+     ",", "\<\"Cyclic\"\>", ",", "\<\"Rigid\"\>", ",", "\<\"Symmetric\"\>"}], 
+    "}"}]}], "}"}]], "Output",ExpressionUUID->"6d0b72d3-d74c-1745-bbc2-\
+3e784bccba2f"],
+
+Cell["\<\
+The result does not depend on the order the arrays were given in:\
+\>", "ExampleText",ExpressionUUID->"cae657e0-e59c-4d46-8947-db9dc1d5e215"],
+
+Cell["\<\
+Hypermatrix[{NumericalArray[{1, 2}], NumericalArray[{{1, 2}, {3, 4}}]}] ===
+ Hypermatrix[{NumericalArray[{{1, 2}, {3, 4}}], NumericalArray[{1, 2}]}]\
+\>", "Input",ExpressionUUID->"120672d4-1fbe-0449-9265-6d8882942282"],
+
+Cell[BoxData["True"], "Output",ExpressionUUID->"fb9a427d-99f1-7c45-945b-bb2a6b1e81a8"],
+
+Cell["\<\
+Raw entries are promoted, and numerical and symbolic arrays may be mixed:\
+\>", "ExampleText",ExpressionUUID->"3bf62c57-bb66-d743-bc45-d5447c0944b1"],
+
+Cell["Hypermatrix[{{1, 2}, SymbolicArray[a, {2, 2}]}][\"Domains\"]", "Input",ExpressionUUID->"bd4b98a0-7fe1-8141-94ad-0814639dbb17"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Integer\"\>", ",", "\<\"Symbolic\"\>"}], "}"}]], "Output",Expre\
+ssionUUID->"358ca281-d128-494f-91c3-4c229a82f295"],
+
+Cell["The number of arrays, and their entries:", "ExampleText",ExpressionUUID->"996df5d1-fc18-974c-97be-3f7d83726b92"],
+
+Cell["\<\
+{Length[hm], Normal @ Hypermatrix[{NumericalArray[{{1, 2}, {3, 4}}], \
+NumericalArray[{1, 2}]}]}\
+\>", "Input",ExpressionUUID->"da8ffef6-b92f-e949-82cd-ce3ddc035ea4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"6", ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", "2"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1", ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"3", ",", "4"}], "}"}]}], "}"}]}], "}"}]}], "}"}]], "Output",E\
+xpressionUUID->"5fbcf54d-4b07-bf40-a3e0-41c8353d7a5b"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"02704445-e97f-aa40-b0d1-2e1e8de9d605"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Hypermatrix.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Hypermatrix",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"22523dfa-f3d3-b942-a174-2904814765ba"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"6e0d5864-5ea8-d544-a6cf-4f8b85681834"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["NumericalArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "e9f1194d-4a18-6040-8c7f-f722eaa55c1c"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["SymbolicArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "5dc07b6d-adb7-b34a-b8ba-568f83c4d43a"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypermatrixArrays", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"529e06c3-5aaf-ac45-b968-e71f71fc4459"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypermatrixQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "db05f20c-b3a4-8241-b598-9c2d08a8fb5e"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayOrder", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "f307b5e0-2739-d440-aab1-a61a4170ea90"]
+}], "SeeAlso",ExpressionUUID->"f497e2f9-24d4-0845-ae38-fe97c8e01eba"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"09f1e31b-bb75-a142-8031-d010d173fb60"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 88, 0, 70, "ObjectName",ExpressionUUID->"a0e84003-3405-a544-86a8-0b3fa989296c"],
+Cell[645, 22, 429, 11, 70, "Usage",ExpressionUUID->"fe0405e6-3dbb-fc45-8a98-fa15468e6d03"],
+Cell[1066, 35, 335, 9, 70, "Usage",ExpressionUUID->"a1893f0c-5c2c-ed40-b115-243606e9e9b8"],
+Cell[1395, 46, 98, 0, 70, "NotesSection",ExpressionUUID->"966f2217-8c03-cb4d-b4df-4123e3968abb"],
+Cell[1496, 48, 273, 4, 70, "Notes",ExpressionUUID->"003950ed-f668-3543-ba92-f3ae27f74587"],
+Cell[1768, 54, 345, 5, 70, "Notes",ExpressionUUID->"2d12b559-6cc1-3a40-afa5-ebeff8399e71"],
+Cell[2111, 61, 254, 4, 70, "Notes",ExpressionUUID->"dc6ba5c9-54f9-de4c-a8f9-e4e1fe8895f1"],
+Cell[2364, 67, 208, 3, 70, "Notes",ExpressionUUID->"b315b875-74e3-7a4f-8d7a-dc796d7aa49c"],
+Cell[2572, 72, 168, 3, 70, "Notes",ExpressionUUID->"1ba4a0b0-9677-0046-bd54-7b7bf44a16ba"],
+Cell[2740, 77, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"e0e3a582-5fc2-3948-9d5a-f4b44a1f72d2"],
+Cell[2840, 79, 133, 0, 70, "ExampleText",ExpressionUUID->"803fe682-806b-e84a-b0a2-e0c7e1bd0bc7"],
+Cell[2976, 81, 392, 8, 70, "Input",ExpressionUUID->"3a8e1817-8ccf-2846-bd1b-ed7f09d3a16c"],
+Cell[3363, 91, 8703, 186, 70, "Output",ExpressionUUID->"d763c174-901b-464e-8aaa-91b53e5a4bad"],
+Cell[11883, 279, 157, 2, 70, "ExampleText",ExpressionUUID->"bf5f4faf-d0de-244b-88d4-98ccd598cd3c"],
+Cell[12041, 283, 128, 0, 70, "Input",ExpressionUUID->"8b0ec35f-0e8a-7a49-870b-87507f2dc9ea"],
+Cell[12172, 285, 794, 21, 70, "Output",ExpressionUUID->"6d0b72d3-d74c-1745-bbc2-3e784bccba2f"],
+Cell[12948, 308, 153, 2, 70, "ExampleText",ExpressionUUID->"cae657e0-e59c-4d46-8947-db9dc1d5e215"],
+Cell[13102, 312, 231, 3, 70, "Input",ExpressionUUID->"120672d4-1fbe-0449-9265-6d8882942282"],
+Cell[13333, 317, 86, 0, 70, "Output",ExpressionUUID->"fb9a427d-99f1-7c45-945b-bb2a6b1e81a8"],
+Cell[13422, 319, 161, 2, 70, "ExampleText",ExpressionUUID->"3bf62c57-bb66-d743-bc45-d5447c0944b1"],
+Cell[13584, 323, 132, 0, 70, "Input",ExpressionUUID->"bd4b98a0-7fe1-8141-94ad-0814639dbb17"],
+Cell[13719, 325, 162, 3, 70, "Output",ExpressionUUID->"358ca281-d128-494f-91c3-4c229a82f295"],
+Cell[13881, 330, 118, 0, 70, "ExampleText",ExpressionUUID->"996df5d1-fc18-974c-97be-3f7d83726b92"],
+Cell[14002, 332, 179, 3, 70, "Input",ExpressionUUID->"da8ffef6-b92f-e949-82cd-ce3ddc035ea4"],
+Cell[14181, 337, 412, 13, 70, "Output",ExpressionUUID->"5fbcf54d-4b07-bf40-a3e0-41c8353d7a5b"],
+Cell[14583, 352, 85, 0, 70, "NotesSection",ExpressionUUID->"02704445-e97f-aa40-b0d1-2e1e8de9d605"],
+Cell[14671, 354, 277, 9, 70, "Notes",ExpressionUUID->"22523dfa-f3d3-b942-a174-2904814765ba"],
+Cell[14942, 365, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"6e0d5864-5ea8-d544-a6cf-4f8b85681834"],
+Cell[15034, 367, 808, 20, 70, "SeeAlso",ExpressionUUID->"f497e2f9-24d4-0845-ae38-fe97c8e01eba"]
+}
+]
+*)
+
+(* End of internal cache information *)

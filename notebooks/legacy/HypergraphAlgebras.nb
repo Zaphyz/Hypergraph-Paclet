@@ -1,0 +1,2304 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 14.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[    101501,       2296]
+NotebookOptionsPosition[     98582,       2240]
+NotebookOutlinePosition[     99025,       2257]
+CellTagsIndexPosition[     98982,       2254]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{"PacletInstall", "[", "\"\<https://wolfr.am/Hypergraph.paclet\>\"", 
+  "]"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "WolframInstitute`Hypergraph`"}]}], "Input",
+ CellChangeTimes->{
+  3.9296821102573395`*^9, {3.929962995545931*^9, 3.929962995877342*^9}},
+ CellLabel->"In[1]:=",ExpressionUUID->"78495105-cef8-7d42-bb90-59dee81f87d0"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "URLFetch", "invhttp", 
+   "\"A library error occurred. The raw details are: \\\"libcurl error \
+(\\!\\(\\*RowBox[{\\\"6\\\"}]\\)): \\!\\(\\*RowBox[{\\\"\\\\\\\"Could not \
+resolve host: wolfr.am\\\\\\\"\\\"}]\\)\\\"\"", 2, 1, 1, 33769235910918312150,
+    "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.929962997659477*^9},
+ CellLabel->
+  "During evaluation of \
+In[1]:=",ExpressionUUID->"3405b734-c110-2841-adc5-5d80a6c42ff6"],
+
+Cell[BoxData["$Failed"], "Output",
+ CellChangeTimes->{3.9297022070853786`*^9, 3.929962997706377*^9},
+ CellLabel->"Out[1]=",ExpressionUUID->"a33f4377-64d8-774a-8a00-41813078cd7f"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Hypergraph Algebras", "Chapter",
+ CellChangeTimes->{{3.929075462854181*^9, 
+  3.929075467269178*^9}},ExpressionUUID->"a97885d0-9896-9b49-b5f5-\
+d883130a2b66"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"OnePassRewriting", "[", 
+   RowBox[{"rule_", ",", "hypergraph_"}], "]"}], ":=", 
+  RowBox[{"Hypergraph", "[", 
+   RowBox[{
+    RowBox[{"VertexList", "[", "hypergraph", "]"}], ",", 
+    RowBox[{"Flatten", "/@", 
+     RowBox[{
+      RowBox[{"rule", "[", "hypergraph", "]"}], "[", 
+      RowBox[{"[", 
+       RowBox[{"All", ",", "\"\<NewEdges\>\""}], "]"}], "]"}]}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"VertexCoordinates", "->", 
+     RowBox[{"Thread", "[", 
+      RowBox[{
+       RowBox[{"VertexList", "[", "hypergraph", "]"}], "->", 
+       RowBox[{"HypergraphEmbedding", "[", "hypergraph", "]"}]}], "]"}]}]}], 
+   "]"}]}]], "Input",
+ CellLabel->"In[3]:=",ExpressionUUID->"045f16cd-5469-0948-b049-29977c452f0d"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"HypergraphRule", "[", 
+  RowBox[{
+   RowBox[{"Hypergraph", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", " ", "2", ",", " ", "3"}], "}"}], ",", " ", 
+     RowBox[{"Hyperedges", "[", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1", ",", " ", "2"}], "}"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", " ", "3"}], "}"}]}], "]"}], ",", " ", 
+     RowBox[{"\"\<EdgeSymmetry\>\"", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{"All", " ", "->", " ", "\"\<Directed\>\""}], "}"}]}], ",", " ",
+      "\n", "   ", 
+     RowBox[{"VertexLabels", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{"All", " ", "->", " ", "Automatic"}], "}"}]}]}], "]"}], ",", 
+   " ", 
+   RowBox[{"Hypergraph", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"1", ",", " ", "2", ",", " ", "3"}], "}"}], ",", " ", 
+     RowBox[{"Hyperedges", "[", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", " ", "3"}], "}"}], "]"}], ",", 
+     RowBox[{"\"\<EdgeSymmetry\>\"", "->", 
+      RowBox[{"{", 
+       RowBox[{"All", "->", "\"\<Directed\>\""}], "}"}]}], ",", 
+     RowBox[{"VertexLabels", " ", "->", " ", 
+      RowBox[{"{", 
+       RowBox[{"All", " ", "->", " ", "Automatic"}], "}"}]}]}], "]"}]}], 
+  "]"}]], "Input",
+ CellChangeTimes->{{3.929693363249201*^9, 3.9296933784488773`*^9}, {
+  3.929699606681095*^9, 3.929699614751079*^9}, {3.929965433989397*^9, 
+  3.929965465636057*^9}},
+ CellLabel->"In[53]:=",ExpressionUUID->"8ae7840f-32d2-314d-9711-fc3b0b2602e0"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["HypergraphRule",
+   DynamicModuleBox[{Typeset`hr = HoldComplete[
+     WolframInstitute`Hypergraph`HypergraphRule[
+      WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+       WolframInstitute`Hypergraph`Hyperedges[{1, 2}, {2, 3}], 
+       "EdgeSymmetry" -> {All -> "Directed"}, 
+       VertexLabels -> {All -> Automatic}], 
+      WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+       WolframInstitute`Hypergraph`Hyperedges[{1, 3}], 
+       "EdgeSymmetry" -> {All -> "Directed"}, 
+       VertexLabels -> {All -> Automatic}]]]}, {{}, {InsetBox[
+       GraphicsBox[
+        {AbsoluteThickness[Medium], Opacity[0.5], 
+         Arrowheads[{{Medium, 0.5}}], {
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], 
+            Arrowheads[{{0.03, 0.5}}], {
+             ArrowBox[
+              LineBox[{{0., 1.9999999999999998`}, {1., 
+               1.3333333333333333`}}]], {}}, 
+            {Opacity[1]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], 
+            Arrowheads[{{0.03, 0.5}}], {
+             ArrowBox[LineBox[{{1., 1.3333333333333333`}, {2., 0.}}]], {}}, 
+            {Opacity[1]}}}}, 
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0., 1.9999999999999998`}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{1., 1.3333333333333333`}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}}, {
+           InsetBox["1", {0., 1.9999999999999998}, 
+            ImageScaled[{1.2474093186836597, -0.16436383882991956}]], 
+           InsetBox["2", {1., 1.3333333333333333}, ImageScaled[{0.5, -0.5}]], 
+           InsetBox["3", {2., 0.}, 
+            ImageScaled[{-0.16896473162244974, 1.2432941462471663}]]}}},
+        Boxed -> False,
+        AlignmentPoint->Center,
+        AspectRatio->1,
+        Axes->False,
+        AxesLabel->None,
+        AxesOrigin->Automatic,
+        AxesStyle->{},
+        Background->None,
+        BaseStyle->{},
+        BaselinePosition->Automatic,
+        ContentSelectable->Automatic,
+        DisplayFunction->Identity,
+        Epilog->{},
+        FormatType->TraditionalForm,
+        Frame->True,
+        FrameLabel->None,
+        FrameStyle->{},
+        FrameTicks->None,
+        FrameTicksStyle->{},
+        GridLines->None,
+        GridLinesStyle->{},
+        ImageMargins->0.,
+        ImagePadding->{{3., 3.}, {3., 3.}},
+        ImageSize->Tiny,
+        LabelStyle->{},
+        PlotLabel->None,
+        PlotRange->All,
+        PlotRangeClipping->False,
+        PlotRangePadding->Scaled[0.1],
+        PlotRegion->Automatic,
+        Prolog->{},
+        RotateLabel->True,
+        Ticks->Automatic,
+        TicksStyle->{}], {52.8, -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+       BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+      InsetBox[
+       GraphicsBox[
+        {GrayLevel[0.65], 
+         FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+          0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 0.1848}, {
+          0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {1., 0.0034}, {
+          0.109, -0.8982}, {-0.1531, -0.6363}, {
+          0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+        DisplayFunction->Identity,
+        ImagePadding->{{0.02083333333333215, 0.02083333333333215}, {3., 3.}},
+        ImageSize->24], {120.39999999999998, -52.5}, 
+       ImageScaled[{0.5, 0.5}], {24, 100.},
+       BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+      InsetBox[
+       GraphicsBox[
+        {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], 
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[0.7], 
+           Arrowheads[{{0.03, 0.5}}], {
+            ArrowBox[
+             LineBox[{{0.06251, 1.0546949998000001`}, {0.06251, 
+              0.9296749998000001}}]], {}}, 
+           {Opacity[1]}}}, 
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.06251, 1.0546949998000001`}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.18752999999999997`, 1.0546949998000001`}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.06251, 0.9296749998000001}, 
+             Offset[{2., 2.}, {0., 0.}]]}}, {
+           InsetBox["1", {0.06251, 1.0546949998000001}, 
+            ImageScaled[{1.2071067811865475, -0.2071067811865478}]], 
+           InsetBox["2", {0.18752999999999997, 1.0546949998000001}, 
+            ImageScaled[{-0.39442719099991586, 0.05278640450004185}]], 
+           InsetBox["3", {0.06251, 0.9296749998000001}, 
+            ImageScaled[{0.9472135954999578, 1.394427190999916}]]}}},
+        Boxed -> False,
+        AlignmentPoint->Center,
+        AspectRatio->1,
+        Axes->False,
+        AxesLabel->None,
+        AxesOrigin->Automatic,
+        AxesStyle->{},
+        Background->None,
+        BaseStyle->{},
+        BaselinePosition->Automatic,
+        ContentSelectable->Automatic,
+        DisplayFunction->Identity,
+        Epilog->{},
+        FormatType->TraditionalForm,
+        Frame->True,
+        FrameLabel->None,
+        FrameStyle->{},
+        FrameTicks->None,
+        FrameTicksStyle->{},
+        GridLines->None,
+        GridLinesStyle->{},
+        ImageMargins->0.,
+        ImagePadding->{{3., 3.}, {3., 3.}},
+        ImageSize->Tiny,
+        LabelStyle->{},
+        PlotLabel->None,
+        PlotRange->All,
+        PlotRangeClipping->False,
+        PlotRangePadding->Scaled[0.1],
+        PlotRegion->Automatic,
+        Prolog->{},
+        RotateLabel->True,
+        Ticks->Automatic,
+        TicksStyle->{}], {188., -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+       BaseStyle->{
+        Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}}]],
+  BoxID -> "HypergraphRule281",
+  BaseStyle->{
+   GraphicsHighlightColor -> RGBColor[0, 0, 1], 
+    ComponentwiseContextMenu -> {"GraphicsBox" -> {
+        MenuItem["Draw", 
+         KernelExecute[
+          MathLink`CallFrontEnd[
+           FrontEnd`BoxReferenceReplace[
+            FE`BoxReference[
+             EvaluationNotebook[], "HypergraphRule281"], 
+            ToBoxes[
+             WolframInstitute`Hypergraph`HypergraphRuleDraw[
+              WolframInstitute`Hypergraph`HypergraphRule[
+               WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+                WolframInstitute`Hypergraph`Hyperedges[{1, 2}, {2, 3}], 
+                "EdgeSymmetry" -> {All -> "Directed"}, 
+                VertexLabels -> {All -> Automatic}], 
+               WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+                WolframInstitute`Hypergraph`Hyperedges[{1, 3}], 
+                "EdgeSymmetry" -> {All -> "Directed"}, 
+                VertexLabels -> {All -> Automatic}]]]]]]], MenuEvaluator -> 
+         Automatic]}}},
+  ImageMargins->0.,
+  ImageSize->Medium,
+  PlotRange->{{0, 240.79999999999998`}, {-105., 0}},
+  PlotRangePadding->1]], "Output",
+ CellChangeTimes->{
+  3.9296933792384357`*^9, 3.929699615813509*^9, 3.9299630128768616`*^9, {
+   3.92996545442972*^9, 3.929965467006117*^9}},
+ CellLabel->"Out[53]=",ExpressionUUID->"7c4ddc42-6040-5640-9ec5-04a4dc1420f7"]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RuleToOperation", "[", "rule_", "]"}], ":=", 
+  RowBox[{"With", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"arity", "=", 
+       RowBox[{"Length", "[", 
+        RowBox[{"EdgeList", "[", 
+         RowBox[{"rule", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "]"}], "]"}]}], ",", 
+      RowBox[{"coarity", "=", 
+       RowBox[{"Length", "[", 
+        RowBox[{"EdgeList", "[", 
+         RowBox[{"rule", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], "]"}], "]"}]}]}], "}"}], ",", 
+    "\[IndentingNewLine]", 
+    RowBox[{"With", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"args", "=", 
+        RowBox[{"Array", "[", 
+         RowBox[{"Slot", ",", "arity"}], "]"}]}], "}"}], ",", 
+      "\[IndentingNewLine]", 
+      RowBox[{
+       RowBox[{"HyperCompose", "[", "rule", "]"}], "[", "args", "]"}]}], 
+     "\[IndentingNewLine]", "]"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
+ CellChangeTimes->{{3.9296930633230743`*^9, 3.929693149603668*^9}, {
+  3.929693393705141*^9, 3.9296934352094517`*^9}, {3.929693727232077*^9, 
+  3.9296937341122913`*^9}, {3.929699534789903*^9, 3.929699578840092*^9}, {
+  3.929699804942295*^9, 3.929699842155112*^9}},
+ CellLabel->"In[5]:=",ExpressionUUID->"39d2bedb-dc1a-2448-b338-c1196348f145"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"RuleToOperation", "[", 
+  GraphicsBox[
+   NamespaceBox["HypergraphRule",
+    DynamicModuleBox[{Typeset`hr = HoldComplete[
+      WolframInstitute`Hypergraph`HypergraphRule[
+       WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+        WolframInstitute`Hypergraph`Hyperedges[{1, 2}, {2, 3}], 
+        "EdgeSymmetry" -> {All -> "Directed"}, 
+        VertexLabels -> {All -> Automatic}], 
+       WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+        WolframInstitute`Hypergraph`Hyperedges[{1, 3}]]]]}, {{}, {InsetBox[
+        GraphicsBox[
+         {AbsoluteThickness[Medium], Opacity[0.5], 
+          Arrowheads[{{Medium, 0.5}}], {
+           {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+            {Hue[0.63, 0.7, 0.5], Opacity[0.7], 
+             Arrowheads[{{0.03, 0.5}}], {
+              ArrowBox[
+               LineBox[{{0., 1.9999999999999998`}, {1., 
+                1.3333333333333333`}}]], {}}, 
+             {Opacity[1]}}}, 
+           {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+            {Hue[0.63, 0.7, 0.5], Opacity[0.7], 
+             Arrowheads[{{0.03, 0.5}}], {
+              ArrowBox[LineBox[{{1., 1.3333333333333333`}, {2., 0.}}]], {}}, 
+             {Opacity[1]}}}}, 
+          {Opacity[1], {
+            {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+             0.95]}], 
+             DiskBox[{0., 1.9999999999999998`}, Offset[{2., 2.}, {0., 0.}]]}, 
+            {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+             0.95]}], 
+             DiskBox[{1., 1.3333333333333333`}, Offset[{2., 2.}, {0., 0.}]]}, 
+            {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+             0.95]}], DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}}, {
+            InsetBox["1", {0., 1.9999999999999998}, 
+             ImageScaled[{1.2474093186836597, -0.16436383882991956}]], 
+            InsetBox["2", {1., 1.3333333333333333}, ImageScaled[{0.5, -0.5}]],
+             InsetBox["3", {2., 0.}, 
+             ImageScaled[{-0.16896473162244974, 1.2432941462471663}]]}}},
+         Boxed -> False,
+         AlignmentPoint->Center,
+         AspectRatio->1,
+         Axes->False,
+         AxesLabel->None,
+         AxesOrigin->Automatic,
+         AxesStyle->{},
+         Background->None,
+         BaseStyle->{},
+         BaselinePosition->Automatic,
+         ContentSelectable->Automatic,
+         DisplayFunction->Identity,
+         Epilog->{},
+         FormatType->TraditionalForm,
+         Frame->True,
+         FrameLabel->None,
+         FrameStyle->{},
+         FrameTicks->None,
+         FrameTicksStyle->{},
+         GridLines->None,
+         GridLinesStyle->{},
+         ImageMargins->0.,
+         ImagePadding->{{3., 3.}, {3., 3.}},
+         ImageSize->Tiny,
+         LabelStyle->{},
+         PlotLabel->None,
+         PlotRange->All,
+         PlotRangeClipping->False,
+         PlotRangePadding->Scaled[0.1],
+         PlotRegion->Automatic,
+         Prolog->{},
+         RotateLabel->True,
+         Ticks->Automatic,
+         TicksStyle->{}], {52.8, -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+       InsetBox[
+        GraphicsBox[
+         {GrayLevel[0.65], 
+          FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+           0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 
+           0.1848}, {0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {1.,
+            0.0034}, {0.109, -0.8982}, {-0.1531, -0.6363}, {
+           0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+         DisplayFunction->Identity,
+         ImagePadding->{{0.02083333333333215, 0.02083333333333215}, {3., 3.}},
+         ImageSize->24], {120.39999999999998, -52.5}, 
+        ImageScaled[{0.5, 0.5}], {24, 100.},
+        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+       InsetBox[
+        GraphicsBox[
+         {AbsoluteThickness[Medium], Opacity[0.5], 
+          Arrowheads[{{Medium, 0.5}}], 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+            LineBox[{{0.06251, 1.0546949998000001`}, {0.06251, 
+             0.9296749998000001}}], 
+            {Opacity[1]}}}, 
+          {Opacity[1], {
+            {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+             0.95]}], 
+             DiskBox[{0.06251, 1.0546949998000001`}, 
+              Offset[{2., 2.}, {0., 0.}]]}, 
+            {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+             0.95]}], 
+             DiskBox[{0.18752999999999997`, 1.0546949998000001`}, 
+              Offset[{2., 2.}, {0., 0.}]]}, 
+            {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+             0.95]}], 
+             DiskBox[{0.06251, 0.9296749998000001}, 
+              Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+         Boxed -> False,
+         AlignmentPoint->Center,
+         AspectRatio->1,
+         Axes->False,
+         AxesLabel->None,
+         AxesOrigin->Automatic,
+         AxesStyle->{},
+         Background->None,
+         BaseStyle->{},
+         BaselinePosition->Automatic,
+         ContentSelectable->Automatic,
+         DisplayFunction->Identity,
+         Epilog->{},
+         FormatType->TraditionalForm,
+         Frame->True,
+         FrameLabel->None,
+         FrameStyle->{},
+         FrameTicks->None,
+         FrameTicksStyle->{},
+         GridLines->None,
+         GridLinesStyle->{},
+         ImageMargins->0.,
+         ImagePadding->{{3., 3.}, {3., 3.}},
+         ImageSize->Tiny,
+         LabelStyle->{},
+         PlotLabel->None,
+         PlotRange->All,
+         PlotRangeClipping->False,
+         PlotRangePadding->Scaled[0.1],
+         PlotRegion->Automatic,
+         Prolog->{},
+         RotateLabel->True,
+         Ticks->Automatic,
+         TicksStyle->{}], {188., -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+        BaseStyle->{
+         Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}}]],
+   BoxID -> "HypergraphRule4168191",
+   BaseStyle->{
+    GraphicsHighlightColor -> RGBColor[0, 0, 1], 
+     ComponentwiseContextMenu -> {"GraphicsBox" -> {
+         MenuItem["Draw", 
+          KernelExecute[
+           MathLink`CallFrontEnd[
+            FrontEnd`BoxReferenceReplace[
+             FE`BoxReference[
+              EvaluationNotebook[], "HypergraphRule4168191"], 
+             ToBoxes[
+              WolframInstitute`Hypergraph`HypergraphRuleDraw[
+               WolframInstitute`Hypergraph`HypergraphRule[
+                WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+                 WolframInstitute`Hypergraph`Hyperedges[{1, 2}, {2, 3}], 
+                 "EdgeSymmetry" -> {All -> "Directed"}, 
+                 VertexLabels -> {All -> Automatic}], 
+                WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+                 WolframInstitute`Hypergraph`Hyperedges[{1, 3}]]]]]]]], 
+          MenuEvaluator -> Automatic]}}},
+   ImageMargins->0.,
+   ImageSize->Medium,
+   PlotRange->{{0, 240.79999999999998`}, {-105., 0}},
+   PlotRangePadding->1], "]"}]], "Input",
+ CellChangeTimes->{{3.9296996255035343`*^9, 3.9296996301021004`*^9}},
+ CellLabel->"In[21]:=",ExpressionUUID->"aa6d0770-9171-f84b-8dd4-9ce2c2a67936"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"HyperCompose", "[", 
+   GraphicsBox[
+    NamespaceBox["HypergraphRule",
+     DynamicModuleBox[{Typeset`hr = HoldComplete[
+       WolframInstitute`Hypergraph`HypergraphRule[
+        WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+         WolframInstitute`Hypergraph`Hyperedges[{1, 2}, {2, 3}], 
+         "EdgeSymmetry" -> {All -> "Directed"}, 
+         VertexLabels -> {All -> Automatic}], 
+        WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+         WolframInstitute`Hypergraph`Hyperedges[{1, 3}]]]]}, {{}, {InsetBox[
+         GraphicsBox[
+          {AbsoluteThickness[Medium], Opacity[0.5], 
+           Arrowheads[{{Medium, 0.5}}], {
+            {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+             {Hue[0.63, 0.7, 0.5], Opacity[0.7], 
+              Arrowheads[{{0.03, 0.5}}], {
+               ArrowBox[
+                LineBox[{{0., 1.9999999999999998`}, {1., 
+                 1.3333333333333333`}}]], {}}, 
+              {Opacity[1]}}}, 
+            {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+             {Hue[0.63, 0.7, 0.5], Opacity[0.7], 
+              Arrowheads[{{0.03, 0.5}}], {
+               ArrowBox[LineBox[{{1., 1.3333333333333333`}, {2., 0.}}]], {}}, 
+              {Opacity[1]}}}}, 
+           {Opacity[1], {
+             {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+              0.95]}], 
+              DiskBox[{0., 1.9999999999999998`}, Offset[{2., 2.}, {0., 0.}]]}, 
+             {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+              0.95]}], 
+              DiskBox[{1., 1.3333333333333333`}, Offset[{2., 2.}, {0., 0.}]]}, 
+             {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+              0.95]}], DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}}, {
+             InsetBox["1", {0., 1.9999999999999998}, 
+              ImageScaled[{1.2474093186836597, -0.16436383882991956}]], 
+             InsetBox["2", {1., 1.3333333333333333}, 
+              ImageScaled[{0.5, -0.5}]], 
+             InsetBox["3", {2., 0.}, 
+              ImageScaled[{-0.16896473162244974, 1.2432941462471663}]]}}},
+          Boxed -> False,
+          AlignmentPoint->Center,
+          AspectRatio->1,
+          Axes->False,
+          AxesLabel->None,
+          AxesOrigin->Automatic,
+          AxesStyle->{},
+          Background->None,
+          BaseStyle->{},
+          BaselinePosition->Automatic,
+          ContentSelectable->Automatic,
+          DisplayFunction->Identity,
+          Epilog->{},
+          FormatType->TraditionalForm,
+          Frame->True,
+          FrameLabel->None,
+          FrameStyle->{},
+          FrameTicks->None,
+          FrameTicksStyle->{},
+          GridLines->None,
+          GridLinesStyle->{},
+          ImageMargins->0.,
+          ImagePadding->{{3., 3.}, {3., 3.}},
+          ImageSize->Tiny,
+          LabelStyle->{},
+          PlotLabel->None,
+          PlotRange->All,
+          PlotRangeClipping->False,
+          PlotRangePadding->Scaled[0.1],
+          PlotRegion->Automatic,
+          Prolog->{},
+          RotateLabel->True,
+          Ticks->Automatic,
+          TicksStyle->{}], {52.8, -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+         BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+        InsetBox[
+         GraphicsBox[
+          {GrayLevel[0.65], 
+           FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1,
+             0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 
+            0.1848}, {0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {
+            1., 0.0034}, {0.109, -0.8982}, {-0.1531, -0.6363}, {
+            0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+          DisplayFunction->Identity,
+          ImagePadding->{{0.02083333333333215, 0.02083333333333215}, {3., 3.}},
+          ImageSize->24], {120.39999999999998, -52.5}, 
+         ImageScaled[{0.5, 0.5}], {24, 100.},
+         BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+        InsetBox[
+         GraphicsBox[
+          {AbsoluteThickness[Medium], Opacity[0.5], 
+           Arrowheads[{{Medium, 0.5}}], 
+           {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+            {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+             LineBox[{{0.06251, 1.0546949998000001`}, {0.06251, 
+              0.9296749998000001}}], 
+             {Opacity[1]}}}, 
+           {Opacity[1], {
+             {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+              0.95]}], 
+              DiskBox[{0.06251, 1.0546949998000001`}, 
+               Offset[{2., 2.}, {0., 0.}]]}, 
+             {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+              0.95]}], 
+              DiskBox[{0.18752999999999997`, 1.0546949998000001`}, 
+               Offset[{2., 2.}, {0., 0.}]]}, 
+             {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+              0.95]}], 
+              DiskBox[{0.06251, 0.9296749998000001}, 
+               Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+          Boxed -> False,
+          AlignmentPoint->Center,
+          AspectRatio->1,
+          Axes->False,
+          AxesLabel->None,
+          AxesOrigin->Automatic,
+          AxesStyle->{},
+          Background->None,
+          BaseStyle->{},
+          BaselinePosition->Automatic,
+          ContentSelectable->Automatic,
+          DisplayFunction->Identity,
+          Epilog->{},
+          FormatType->TraditionalForm,
+          Frame->True,
+          FrameLabel->None,
+          FrameStyle->{},
+          FrameTicks->None,
+          FrameTicksStyle->{},
+          GridLines->None,
+          GridLinesStyle->{},
+          ImageMargins->0.,
+          ImagePadding->{{3., 3.}, {3., 3.}},
+          ImageSize->Tiny,
+          LabelStyle->{},
+          PlotLabel->None,
+          PlotRange->All,
+          PlotRangeClipping->False,
+          PlotRangePadding->Scaled[0.1],
+          PlotRegion->Automatic,
+          Prolog->{},
+          RotateLabel->True,
+          Ticks->Automatic,
+          TicksStyle->{}], {188., -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+         BaseStyle->{
+          Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}}]],
+    BoxID -> "HypergraphRule4168194",
+    BaseStyle->{
+     GraphicsHighlightColor -> RGBColor[0, 0, 1], 
+      ComponentwiseContextMenu -> {"GraphicsBox" -> {
+          MenuItem["Draw", 
+           KernelExecute[
+            MathLink`CallFrontEnd[
+             FrontEnd`BoxReferenceReplace[
+              FE`BoxReference[
+               EvaluationNotebook[], "HypergraphRule4168194"], 
+              ToBoxes[
+               WolframInstitute`Hypergraph`HypergraphRuleDraw[
+                WolframInstitute`Hypergraph`HypergraphRule[
+                 WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+                  WolframInstitute`Hypergraph`Hyperedges[{1, 2}, {2, 3}], 
+                  "EdgeSymmetry" -> {All -> "Directed"}, 
+                  VertexLabels -> {All -> Automatic}], 
+                 WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3}, 
+                  WolframInstitute`Hypergraph`Hyperedges[{1, 3}]]]]]]]], 
+           MenuEvaluator -> Automatic]}}},
+    ImageSize->{135.75, 61.},
+    PlotRange->{{0, 240.79999999999998`}, {-105., 0}},
+    PlotRangePadding->1], "]"}], "[", 
+  RowBox[{"{", 
+   RowBox[{"#1", ",", "#2"}], "}"}], "]"}]], "Output",
+ CellChangeTimes->{3.929699630956379*^9, 3.929699823078556*^9, 
+  3.9296998532785435`*^9},
+ CellLabel->"Out[21]=",ExpressionUUID->"87cba464-1b98-544a-96b0-5ffaca2fd47f"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"SetEdgeLabel", "[", 
+   RowBox[{"label_", ",", "hyp_", ",", "edge_"}], "]"}], ":=", 
+  RowBox[{"Hypergraph", "[", 
+   RowBox[{"hyp", ",", 
+    RowBox[{"EdgeLabels", "->", 
+     RowBox[{"{", 
+      RowBox[{"edge", "->", "label"}], "}"}]}]}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"HyperCompose", "[", "rule_", "]"}], "[", "args_", "]"}], ":=", 
+  RowBox[{"If", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"ResourceFunction", "[", "\"\<AllSameBy\>\"", "]"}], "[", 
+     RowBox[{"args", ",", "VertexCount"}], "]"}], ",", "\[IndentingNewLine]", 
+    RowBox[{"If", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Length", "[", 
+        RowBox[{"EdgeList", "[", 
+         RowBox[{"rule", "[", 
+          RowBox[{"[", "1", "]"}], "]"}], "]"}], "]"}], "==", 
+       RowBox[{"Length", "[", "args", "]"}]}], ",", "\[IndentingNewLine]", 
+      RowBox[{"With", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"vars", "=", 
+           RowBox[{"ToExpression", "/@", 
+            RowBox[{"Alphabet", "[", "]"}]}]}], ",", 
+          RowBox[{"largs", "=", 
+           RowBox[{"MapThread", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"SetEdgeLabel", "[", 
+               RowBox[{"#1", ",", "#2", ",", "All"}], "]"}], "&"}], ",", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{"Array", "[", 
+                RowBox[{"\[FormalA]", ",", 
+                 RowBox[{"Length", "[", "args", "]"}]}], "]"}], ",", "args"}],
+               "}"}]}], "]"}]}]}], "}"}], ",", "\[IndentingNewLine]", 
+        RowBox[{"With", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"lrule", "=", 
+             RowBox[{"HypergraphRule", "[", 
+              RowBox[{
+               RowBox[{"Hypergraph", "[", 
+                RowBox[{
+                 RowBox[{"rule", "[", 
+                  RowBox[{"[", "1", "]"}], "]"}], ",", 
+                 RowBox[{"EdgeLabels", "->", 
+                  RowBox[{"Thread", "[", 
+                   RowBox[{
+                    RowBox[{"EdgeList", "[", 
+                    RowBox[{"rule", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "]"}], "->", 
+                    RowBox[{"Table", "[", 
+                    RowBox[{
+                    RowBox[{"vars", "[", 
+                    RowBox[{"[", "i", "]"}], "]"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"i", ",", 
+                    RowBox[{"Length", "[", 
+                    RowBox[{"EdgeList", "[", 
+                    RowBox[{"test3rule", "[", 
+                    RowBox[{"[", "1", "]"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+                    "]"}]}], "]"}]}]}], "]"}], ",", 
+               RowBox[{"rule", "[", 
+                RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}], ",", 
+            RowBox[{"lhyp", "=", 
+             RowBox[{"Plus", "@@", "largs"}]}]}], "}"}], ",", 
+          "\[IndentingNewLine]", 
+          RowBox[{"OnePassRewriting", "[", 
+           RowBox[{"lrule", ",", "lhyp"}], "]"}]}], "\[IndentingNewLine]", 
+         "]"}]}], "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+      "\"\<Non-conformable number of arguments and input edges.\>\""}], 
+     "\[IndentingNewLine]", "]"}], ",", "\[IndentingNewLine]", 
+    "\"\<Hypergraph arguments defined on different node sets.\>\""}], 
+   "\[IndentingNewLine]", "]"}]}]}], "Input",
+ CellChangeTimes->CompressedData["
+1:eJxTTMoPSmViYGCQAGIQ/UR3zRE/97eOV4S8noHoAiX/NyC6YbXYXxDtUefK
+5A+kQ1ivsILonKnTuUC0gOIHMM3yvM0ERNcs3WkOpn8edwbRFmxlASB6gt/m
+aBC94u3lWBD9I90gCUSX7A4E0wGnw6eA6Bn/Z0LohW4bwOZubNoIon32zeYM
+AOn/oc4Noitu+ImA6ANht8G0j980SRD95/sxMG3wT3kXiFZg4d4NonWaz10A
+0V+mBF4C8yM3XgPRb85I3gDRLBOdXQJB7jQJdQfRJpyBXkFAmmd5OZjmKDsX
+CaID9M1iQbRIS20uiF6w+zqY3nIhMPA8KFxKCkNAdErgvDsgesW6RfdA9J2Z
+PR9B9BOH8G8gesnEC6kXgHSC34I0EA0A5gC21w==
+  "],
+ CellLabel->"In[49]:=",ExpressionUUID->"22b8a144-bd4e-6945-b973-755d97391d9f"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"test3rule", "=", 
+  RowBox[{"HypergraphRule", "[", 
+   RowBox[{
+    RowBox[{"Hypergraph", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"1", ",", "4"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"2", ",", "4"}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"3", ",", "4"}], "}"}]}], "}"}], ",", 
+      RowBox[{"VertexLabels", "->", "Automatic"}]}], "]"}], ",", 
+    RowBox[{"Hypergraph", "[", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "2", ",", "3", ",", "4"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{
+        RowBox[{"{", "1", "}"}], ",", 
+        RowBox[{"{", "2", "}"}], ",", 
+        RowBox[{"{", "3", "}"}]}], "}"}]}], "]"}], ",", 
+    RowBox[{"VertexLabels", "->", "Automatic"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.929702262033069*^9, 3.929702343191345*^9}, 
+   3.9297026511983376`*^9, 3.9299632025560207`*^9, {3.9299646700561905`*^9, 
+   3.929964686060896*^9}},
+ CellLabel->"In[46]:=",ExpressionUUID->"3792eb0c-27ea-364f-8a5d-fb365e1654d4"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["HypergraphRule",
+   DynamicModuleBox[{Typeset`hr = HoldComplete[
+     WolframInstitute`Hypergraph`HypergraphRule[
+      WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+       WolframInstitute`Hypergraph`Hyperedges[{1, 4}, {2, 4}, {3, 4}], 
+       VertexLabels -> {All -> Automatic}, "LayoutDimension" -> 2], 
+      WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+       WolframInstitute`Hypergraph`Hyperedges[{1}, {2}, {3}], 
+       VertexLabels -> {All -> Automatic}, "LayoutDimension" -> 2]]]}, {{}, {
+      InsetBox[
+       GraphicsBox[
+        {AbsoluteThickness[Medium], Opacity[0.5], 
+         Arrowheads[{{Medium, 0.5}}], {
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+            LineBox[{{0., 2.}, {1., 0.}}], 
+            {Opacity[1]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+            LineBox[{{1., 2.}, {1., 0.}}], 
+            {Opacity[1]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+            LineBox[{{2., 2.}, {1., 0.}}], 
+            {Opacity[1]}}}}, 
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{0., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{1., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{2., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}}, {
+           InsetBox["1", {0., 2.}, 
+            ImageScaled[{1.3944271909999157, 0.05278640450004207}]], 
+           InsetBox["2", {1., 2.}, ImageScaled[{0.5, -0.5}]], 
+           InsetBox["3", {2., 2.}, 
+            ImageScaled[{-0.39442719099991586, 0.05278640450004207}]], 
+           InsetBox["4", {1., 0.}, ImageScaled[{0.5, 1.5}]]}}},
+        Boxed -> False,
+        AlignmentPoint->Center,
+        AspectRatio->1,
+        Axes->False,
+        AxesLabel->None,
+        AxesOrigin->Automatic,
+        AxesStyle->{},
+        Background->None,
+        BaseStyle->{},
+        BaselinePosition->Automatic,
+        ContentSelectable->Automatic,
+        DisplayFunction->Identity,
+        Epilog->{},
+        FormatType->TraditionalForm,
+        Frame->True,
+        FrameLabel->None,
+        FrameStyle->{},
+        FrameTicks->None,
+        FrameTicksStyle->{},
+        GridLines->None,
+        GridLinesStyle->{},
+        ImageMargins->0.,
+        ImagePadding->{{3., 3.}, {3., 3.}},
+        ImageSize->Tiny,
+        LabelStyle->{},
+        PlotLabel->None,
+        PlotRange->All,
+        PlotRangeClipping->False,
+        PlotRangePadding->Scaled[0.1],
+        PlotRegion->Automatic,
+        Prolog->{},
+        RotateLabel->True,
+        Ticks->Automatic,
+        TicksStyle->{}], {52.8, -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+       BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+      InsetBox[
+       GraphicsBox[
+        {GrayLevel[0.65], 
+         FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+          0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 0.1848}, {
+          0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {1., 0.0034}, {
+          0.109, -0.8982}, {-0.1531, -0.6363}, {
+          0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+        DisplayFunction->Identity,
+        ImagePadding->{{0.02083333333333215, 0.02083333333333215}, {3., 3.}},
+        ImageSize->24], {120.39999999999998, -52.5}, 
+       ImageScaled[{0.5, 0.5}], {24, 100.},
+       BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+      InsetBox[
+       GraphicsBox[
+        {AbsoluteThickness[Medium], Opacity[0.5], 
+         Arrowheads[{{Medium, 0.5}}], {
+          {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+           DiskBox[{0.000030000000000000004`, -0.000030000000000000004`}, 
+            Offset[11.999999999999998]], 
+           {Opacity[1]}}, 
+          {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+           DiskBox[{0.00001, -0.00001}, Offset[11.999999999999998]], 
+           {Opacity[1]}}, 
+          {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+           DiskBox[{0.00001, -0.000030000000000000004`}, Offset[
+            11.999999999999998]], 
+           {Opacity[1]}}}, 
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.000030000000000000004`, -0.000030000000000000004`}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.00001, -0.00001}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.00001, -0.000030000000000000004`}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.000030000000000000004`, -0.00001}, 
+             Offset[{2., 2.}, {0., 0.}]]}}, {
+           InsetBox["1", {0.000030000000000000004, -0.000030000000000000004}, 
+            ImageScaled[{-0.20710678118654746, 1.2071067811865475}]], 
+           InsetBox["2", {0.00001, -0.00001}, 
+            ImageScaled[{1.2071067811865475, -0.20710678118654746}]], 
+           InsetBox["3", {0.00001, -0.000030000000000000004}, 
+            ImageScaled[{1.2071067811865475, 1.2071067811865475}]], 
+           InsetBox["4", {0.000030000000000000004, -0.00001}, 
+            ImageScaled[{-0.20710678118654746, -0.20710678118654746}]]}}},
+        Boxed -> False,
+        AlignmentPoint->Center,
+        AspectRatio->1,
+        Axes->False,
+        AxesLabel->None,
+        AxesOrigin->Automatic,
+        AxesStyle->{},
+        Background->None,
+        BaseStyle->{},
+        BaselinePosition->Automatic,
+        ContentSelectable->Automatic,
+        DisplayFunction->Identity,
+        Epilog->{},
+        FormatType->TraditionalForm,
+        Frame->True,
+        FrameLabel->None,
+        FrameStyle->{},
+        FrameTicks->None,
+        FrameTicksStyle->{},
+        GridLines->None,
+        GridLinesStyle->{},
+        ImageMargins->0.,
+        ImagePadding->{{3., 3.}, {3., 3.}},
+        ImageSize->Tiny,
+        LabelStyle->{},
+        PlotLabel->None,
+        PlotRange->All,
+        PlotRangeClipping->False,
+        PlotRangePadding->Scaled[0.1],
+        PlotRegion->Automatic,
+        Prolog->{},
+        RotateLabel->True,
+        Ticks->Automatic,
+        TicksStyle->{}], {188., -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+       BaseStyle->{
+        Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}}]],
+  BoxID -> "HypergraphRule178",
+  BaseStyle->{
+   GraphicsHighlightColor -> RGBColor[0, 0, 1], 
+    ComponentwiseContextMenu -> {"GraphicsBox" -> {
+        MenuItem["Draw", 
+         KernelExecute[
+          MathLink`CallFrontEnd[
+           FrontEnd`BoxReferenceReplace[
+            FE`BoxReference[
+             EvaluationNotebook[], "HypergraphRule178"], 
+            ToBoxes[
+             WolframInstitute`Hypergraph`HypergraphRuleDraw[
+              WolframInstitute`Hypergraph`HypergraphRule[
+               WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+                
+                WolframInstitute`Hypergraph`Hyperedges[{1, 4}, {2, 4}, {3, 
+                 4}], VertexLabels -> {All -> Automatic}, "LayoutDimension" -> 
+                2], 
+               WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+                WolframInstitute`Hypergraph`Hyperedges[{1}, {2}, {3}], 
+                VertexLabels -> {All -> Automatic}, "LayoutDimension" -> 
+                2]]]]]]], MenuEvaluator -> Automatic]}}},
+  ImageSize->Medium,
+  PlotRange->{{0, 240.79999999999998`}, {-105., 0}},
+  PlotRangePadding->1]], "Output",
+ CellChangeTimes->{3.929963203907099*^9, 3.9299646871902027`*^9},
+ CellLabel->"Out[46]=",ExpressionUUID->"973003c6-7039-bf4a-b068-51ccd7bb017e"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"testlrule", "=", 
+  RowBox[{"HypergraphRule", "[", 
+   RowBox[{
+    RowBox[{"Hypergraph", "[", 
+     RowBox[{
+      RowBox[{"test3rule", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{"EdgeLabels", "->", 
+       RowBox[{"Thread", "[", 
+        RowBox[{
+         RowBox[{"EdgeList", "[", 
+          RowBox[{"test3rule", "[", 
+           RowBox[{"[", "1", "]"}], "]"}], "]"}], "->", 
+         RowBox[{"Table", "[", 
+          RowBox[{
+           RowBox[{"vars", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"i", ",", 
+             RowBox[{"Length", "[", 
+              RowBox[{"EdgeList", "[", 
+               RowBox[{"test3rule", "[", 
+                RowBox[{"[", "1", "]"}], "]"}], "]"}], "]"}]}], "}"}]}], 
+          "]"}]}], "]"}]}]}], "]"}], ",", 
+    RowBox[{"test3rule", "[", 
+     RowBox[{"[", "2", "]"}], "]"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.929963235951351*^9, 3.9299632605538864`*^9}, {
+   3.929963403714102*^9, 3.9299635149820175`*^9}, {3.9299635693343163`*^9, 
+   3.929963589185726*^9}, 3.9299637927335835`*^9, {3.929964004856249*^9, 
+   3.9299640090853367`*^9}, {3.929964357906204*^9, 3.9299644072930584`*^9}},
+ CellLabel->"In[42]:=",ExpressionUUID->"4dceac67-f907-5a43-a26f-1c8807789ff3"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["HypergraphRule",
+   DynamicModuleBox[{Typeset`hr = HoldComplete[
+     WolframInstitute`Hypergraph`HypergraphRule[
+      WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+       WolframInstitute`Hypergraph`Hyperedges[{1, 4}, {2, 4}, {3, 4}], 
+       EdgeLabels -> {{1, 4} -> $CellContext`a, {2, 4} -> $CellContext`b, {3, 
+          4} -> $CellContext`c}, "LayoutDimension" -> 2], 
+      WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+       WolframInstitute`Hypergraph`Hyperedges[{1}, {2}, {3}]]]]}, {{}, {
+      InsetBox[
+       GraphicsBox[
+        {AbsoluteThickness[Medium], Opacity[0.5], 
+         Arrowheads[{{Medium, 0.5}}], {
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+            LineBox[{{0., 2.}, {1., 0.}}], 
+            {Opacity[1], InsetBox[
+              StyleBox["a",
+               StripOnInput->False,
+               LineColor->Hue[0.63, 0.7, 0.5],
+               FrontFaceColor->Hue[0.63, 0.7, 0.5],
+               BackFaceColor->Hue[0.63, 0.7, 0.5],
+               GraphicsColor->Hue[0.63, 0.7, 0.5],
+               
+               FontColor->Hue[
+                0.63, 0.7, 
+                 0.5]], {0.5536656314599949, 1.0268328157299975}]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+            LineBox[{{1., 2.}, {1., 0.}}], 
+            {Opacity[1], InsetBox[
+              StyleBox["b",
+               StripOnInput->False,
+               LineColor->Hue[0.63, 0.7, 0.5],
+               FrontFaceColor->Hue[0.63, 0.7, 0.5],
+               BackFaceColor->Hue[0.63, 0.7, 0.5],
+               GraphicsColor->Hue[0.63, 0.7, 0.5],
+               FontColor->Hue[0.63, 0.7, 0.5]], {0.94, 1.}]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+            LineBox[{{2., 2.}, {1., 0.}}], 
+            {Opacity[1], InsetBox[
+              StyleBox["c",
+               StripOnInput->False,
+               LineColor->Hue[0.63, 0.7, 0.5],
+               FrontFaceColor->Hue[0.63, 0.7, 0.5],
+               BackFaceColor->Hue[0.63, 0.7, 0.5],
+               GraphicsColor->Hue[0.63, 0.7, 0.5],
+               
+               FontColor->Hue[
+                0.63, 0.7, 
+                 0.5]], {1.446334368540005, 1.0268328157299975}]}}}}, 
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{0., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{1., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{2., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+        Boxed -> False,
+        AlignmentPoint->Center,
+        AspectRatio->1,
+        Axes->False,
+        AxesLabel->None,
+        AxesOrigin->Automatic,
+        AxesStyle->{},
+        Background->None,
+        BaseStyle->{},
+        BaselinePosition->Automatic,
+        ContentSelectable->Automatic,
+        DisplayFunction->Identity,
+        Epilog->{},
+        FormatType->TraditionalForm,
+        Frame->True,
+        FrameLabel->None,
+        FrameStyle->{},
+        FrameTicks->None,
+        FrameTicksStyle->{},
+        GridLines->None,
+        GridLinesStyle->{},
+        ImageMargins->0.,
+        ImagePadding->{{3., 3.}, {3., 3.}},
+        ImageSize->Tiny,
+        LabelStyle->{},
+        PlotLabel->None,
+        PlotRange->All,
+        PlotRangeClipping->False,
+        PlotRangePadding->Scaled[0.1],
+        PlotRegion->Automatic,
+        Prolog->{},
+        RotateLabel->True,
+        Ticks->Automatic,
+        TicksStyle->{}], {52.8, -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+       BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+      InsetBox[
+       GraphicsBox[
+        {GrayLevel[0.65], 
+         FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+          0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 0.1848}, {
+          0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {1., 0.0034}, {
+          0.109, -0.8982}, {-0.1531, -0.6363}, {
+          0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+        DisplayFunction->Identity,
+        ImagePadding->{{0.02083333333333215, 0.02083333333333215}, {3., 3.}},
+        ImageSize->24], {120.39999999999998, -52.5}, 
+       ImageScaled[{0.5, 0.5}], {24, 100.},
+       BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+      InsetBox[
+       GraphicsBox[
+        {AbsoluteThickness[Medium], Opacity[0.5], 
+         Arrowheads[{{Medium, 0.5}}], {
+          {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+           DiskBox[{0.000030000000000000004`, -0.000030000000000000004`}, 
+            Offset[11.999999999999998]], 
+           {Opacity[1]}}, 
+          {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+           DiskBox[{0.00001, -0.00001}, Offset[11.999999999999998]], 
+           {Opacity[1]}}, 
+          {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+           DiskBox[{0.00001, -0.000030000000000000004`}, Offset[
+            11.999999999999998]], 
+           {Opacity[1]}}}, 
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.000030000000000000004`, -0.000030000000000000004`}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.00001, -0.00001}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.00001, -0.000030000000000000004`}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0.000030000000000000004`, -0.00001}, 
+             Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+        Boxed -> False,
+        AlignmentPoint->Center,
+        AspectRatio->1,
+        Axes->False,
+        AxesLabel->None,
+        AxesOrigin->Automatic,
+        AxesStyle->{},
+        Background->None,
+        BaseStyle->{},
+        BaselinePosition->Automatic,
+        ContentSelectable->Automatic,
+        DisplayFunction->Identity,
+        Epilog->{},
+        FormatType->TraditionalForm,
+        Frame->True,
+        FrameLabel->None,
+        FrameStyle->{},
+        FrameTicks->None,
+        FrameTicksStyle->{},
+        GridLines->None,
+        GridLinesStyle->{},
+        ImageMargins->0.,
+        ImagePadding->{{3., 3.}, {3., 3.}},
+        ImageSize->Tiny,
+        LabelStyle->{},
+        PlotLabel->None,
+        PlotRange->All,
+        PlotRangeClipping->False,
+        PlotRangePadding->Scaled[0.1],
+        PlotRegion->Automatic,
+        Prolog->{},
+        RotateLabel->True,
+        Ticks->Automatic,
+        TicksStyle->{}], {188., -52.5}, ImageScaled[{0.5, 0.5}], {100, 100.},
+       BaseStyle->{
+        Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}}]],
+  BoxID -> "HypergraphRule123",
+  BaseStyle->{
+   GraphicsHighlightColor -> RGBColor[0, 0, 1], 
+    ComponentwiseContextMenu -> {"GraphicsBox" -> {
+        MenuItem["Draw", 
+         KernelExecute[
+          MathLink`CallFrontEnd[
+           FrontEnd`BoxReferenceReplace[
+            FE`BoxReference[
+             EvaluationNotebook[], "HypergraphRule123"], 
+            ToBoxes[
+             WolframInstitute`Hypergraph`HypergraphRuleDraw[
+              WolframInstitute`Hypergraph`HypergraphRule[
+               WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+                
+                WolframInstitute`Hypergraph`Hyperedges[{1, 4}, {2, 4}, {3, 
+                 4}], EdgeLabels -> {{1, 4} -> $CellContext`a, {2, 
+                   4} -> $CellContext`b, {3, 4} -> $CellContext`c}, 
+                "LayoutDimension" -> 2], 
+               WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+                WolframInstitute`Hypergraph`Hyperedges[{1}, {2}, {3}]]]]]]]], 
+         MenuEvaluator -> Automatic]}}},
+  ImageSize->Medium,
+  PlotRange->{{0, 240.79999999999998`}, {-105., 0}},
+  PlotRangePadding->1]], "Output",
+ CellChangeTimes->{3.92996359102322*^9, 3.929963794622631*^9, 
+  3.9299640105012493`*^9, 3.9299644116846066`*^9},
+ CellLabel->"Out[42]=",ExpressionUUID->"973c9c86-ed4e-8b4d-a1d4-55f66588c9ca"]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"hyp1", "=", 
+   RowBox[{"Hypergraph", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", "1", "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "2"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", "3", ",", "4"}], "}"}], ",", 
+       RowBox[{"{", "2", "}"}]}], "}"}], ",", 
+     RowBox[{"VertexLabels", "->", "Automatic"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hyp2", "=", 
+   RowBox[{"Hypergraph", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"1", ",", "4"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"4", ",", "3"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", "4"}], "}"}]}], "}"}], ",", 
+     RowBox[{"VertexLabels", "->", "Automatic"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"hyp3", "=", 
+   RowBox[{"Hypergraph", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{"{", 
+        RowBox[{"2", ",", "3"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"1", ",", "2", ",", "3"}], "}"}], ",", 
+       RowBox[{"{", 
+        RowBox[{"2", ",", "3", ",", "4"}], "}"}]}], "}"}], ",", 
+     RowBox[{"VertexLabels", "->", "Automatic"}]}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.9297011579798603`*^9, 3.929701274659542*^9}, {
+  3.929702655206213*^9, 3.9297026573417873`*^9}, {3.9299636305434036`*^9, 
+  3.929963636398226*^9}, {3.929963686039133*^9, 3.929963702847481*^9}},
+ CellLabel->"In[23]:=",ExpressionUUID->"8fd10739-2001-7340-8bdb-8d412a343521"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"HyperCompose", "[", "test3rule", "]"}], "[", 
+  RowBox[{"{", 
+   RowBox[{"hyp1", ",", "hyp2", ",", "hyp3"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.929701324655901*^9, 3.929701340283346*^9}, {
+  3.929701517360747*^9, 3.929701520005392*^9}},
+ CellLabel->"In[51]:=",ExpressionUUID->"5797744d-e278-6847-b496-c575abbcc634"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["Hypergraph",
+   DynamicModuleBox[{Typeset`hg = HoldComplete[
+     WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+      WolframInstitute`Hypergraph`Hyperedges[{1, 3, 2}, {1, 2, 3}, {3, 1, 
+       2}, {3, 2, 1}, {2, 1, 3}, {2, 3, 1}, {4, 3, 1}, {4, 1, 3}, {3, 4, 1}, {
+       3, 1, 4}, {1, 4, 3}, {1, 3, 4}], 
+      VertexCoordinates -> {
+       1 -> {1.8490924426168696`, 0.010366633643375645`}, 
+        2 -> {1.1522829356884625`, 0.406114285573762}, 
+        3 -> {1.1274389216261762`, 0.9108104229079226}, 
+        4 -> {0.6769930419287677, 0.}}]]}, 
+    {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], {
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.4384795612315844`, 0.3253354534917945}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4322685577160128`, 0.4515094878253346}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2580661809839109`, 0.5504464008079313}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3804121023208837`, 0.3583144244859934}, {1.4965470201422848`, 
+          0.2923564824975956}, {1.8490924426168696`, 0.010366633643375645`}}],
+          BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.492406351131904, 0.37647250538662236`}, {1.3721307643001217`, 
+          0.5265464702640468}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2559958464787204`, 0.5925044122524445}, {1.2601365154891015`, 
+          0.5083883893634178}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3513783728655335`, 0.37480390998309276`}, {1.4384795612315844`, 
+          0.3253354534917945}, {1.5255807495976352`, 0.2758669970004962}, {
+          1.8490924426168696`, 0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.5224752478398496`, 0.3389540141672662}, {1.4322685577160128`, 
+          0.4515094878253346}, {1.342061867592176, 0.564064961483403}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2549606792261252`, 0.6135334179747013}, {1.2580661809839109`, 
+          0.5504464008079313}, {1.2611716827416968`, 0.48735938364116116`}, {
+          1.1522829356884625`, 0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3339581351923233`, 0.38469760128135244`}, {1.403639085885164, 
+          0.3451228360883138}, {1.4733200365780048`, 0.30554807089527514`}, {
+          1.5430009872708454`, 0.26597330570223654`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.5405165858646166`, 0.3164429194356526}, {1.4683512337655475`, 
+          0.4064872983621073}, {1.396185881666478, 0.49653167728856196`}, {
+          1.3240205295674088`, 0.5865760562150166}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2543395788745682`, 0.6261508214080553}, {1.2568239802807968`, 
+          0.5756812076746393}, {1.2593083816870254`, 0.5252115939412232}, {
+          1.261792783093254, 0.47474198020780717`}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.322344643410183, 0.3912933954801922}, {1.3804121023208837`, 
+          0.3583144244859934}, {1.4384795612315844`, 0.3253354534917945}, {
+          1.4965470201422848`, 0.2923564824975956}, {1.5546144790529854`, 
+          0.2593775115033967}, {1.8490924426168696`, 0.010366633643375645`}}],
+          BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.552544144547795, 0.3014355229479101}, {1.492406351131904, 
+          0.37647250538662236`}, {1.4322685577160128`, 0.4515094878253346}, {
+          1.3721307643001217`, 0.5265464702640468}, {1.3119929708842304`, 
+          0.6015834527027591}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.25392551197353, 0.634562423696958}, {1.2559958464787204`, 
+          0.5925044122524445}, {1.2580661809839109`, 0.5504464008079313}, {
+          1.2601365154891015`, 0.5083883893634178}, {1.262206849994292, 
+          0.46633037791890447`}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3140492921372258`, 0.396004677050792}, {1.3638213997749693`, 
+          0.36773698762719303`}, {1.4135935074127126`, 0.339469298203594}, {
+          1.463365615050456, 0.311201608779995}, {1.5131377226881995`, 
+          0.28293391935639595`}, {1.5629098303259428`, 0.2546662299327969}, {
+          1.8490924426168696`, 0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.5611352578929223`, 0.2907159540280941}, {1.5095885778221585`, 
+          0.35503336754699033`}, {1.4580418977513947`, 0.4193507810658865}, {
+          1.406495217680631, 0.4836681945847827}, {1.354948537609867, 
+          0.5479856081036789}, {1.3034018575391033`, 0.6123030216225751}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2536297499013598`, 0.6405707110461742}, {1.2554043223343803`, 
+          0.604520986950877}, {1.2571788947674007`, 0.5684712628555798}, {
+          1.2589534672004212`, 0.5324215387602826}, {1.2607280396334417`, 
+          0.4963718146649854}, {1.262502612066462, 0.4603220905696883}, {
+          1.1522829356884625`, 0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.2404421054983783`, 
+          0.15612116783606028`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.3530535754227304`, 0.3838237735630409}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.0600287252507048`, 0.381232115152197}, {0.6769930419287677, 
+          0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.1427671554410364`, 
+          0.15525728169911232`}, {1.33811705555572, 0.15698505397300824`}, {
+          1.8490924426168696`, 0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4131913688386215`, 0.30878679112432866`}, {1.2929157820068393`, 
+          0.45886075600175313`}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.0975658818921556`, 0.45713298372785727`}, {1.0224915686092542`, 
+          0.3053312465765368}, {0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.0939296804123655`, 
+          0.15482533863063833`}, {1.2404421054983783`, 
+          0.15612116783606028`}, {1.3869545305843909`, 
+          0.15741699704148224`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.443260265546567, 0.2712682999049726}, {1.3530535754227304`, 
+          0.3838237735630409}, {1.2628468852988937`, 0.49637924722110927`}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1163344602128809`, 0.49508341801568734`}, {1.0600287252507048`, 
+          0.381232115152197}, {1.0037229902885287`, 0.2673808122887067}, {
+          0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.064627195395163, 
+          0.15456617278955392`}, {1.1818371354639732`, 0.1556028361538915}, {
+          1.2990470755327834`, 0.15663949951822906`}, {1.4162570156015937`, 
+          0.15767616288256664`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4613016035713344`, 0.2487572051733589}, {1.389136251472265, 
+          0.3388015840998136}, {1.3169708993731957`, 0.42884596302626826`}, {
+          1.2448055472741264`, 0.518890341952723}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1275956072053162`, 0.5178536785883854}, {1.0825510192355754`, 
+          0.4267726362975931}, {1.0375064312658346`, 0.3356915940068009}, {
+          0.9924618432960937, 0.2446105517160086}, {0.6769930419287677, 
+          0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.0450922053836946`, 
+          0.15439339556216433`}, {1.1427671554410364`, 
+          0.15525728169911232`}, {1.2404421054983783`, 
+          0.15612116783606028`}, {1.33811705555572, 0.15698505397300824`}, {
+          1.435792005613062, 0.15784894010995623`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4733291622545126`, 0.23374980868561643`}, {1.4131913688386215`, 
+          0.30878679112432866`}, {1.3530535754227304`, 0.3838237735630409}, {
+          1.2929157820068393`, 0.45886075600175313`}, {1.2327779885909482`, 
+          0.5338977384404655}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1351030385336063`, 0.5330338523035174}, {1.0975658818921556`, 
+          0.45713298372785727`}, {1.0600287252507048`, 0.381232115152197}, {
+          1.0224915686092542`, 0.3053312465765368}, {0.9849544119678035, 
+          0.22943037800087657`}, {0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.0311386410897887`, 
+          0.15426998325688607`}, {1.1148600268532245`, 
+          0.15501045708855574`}, {1.1985814126166603`, 
+          0.15575093092022543`}, {1.282302798380096, 0.15649140475189513`}, {
+          1.3660241841435319`, 0.15723187858356483`}, {1.449745569906968, 
+          0.1579723524152345}, {1.8490924426168696`, 0.010366633643375645`}}],
+          BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.48192027559964, 0.2230302397658004}, {1.430373595528876, 
+          0.2873476532846966}, {1.3788269154581123`, 0.3516650668035928}, {
+          1.3272802353873485`, 0.415982480322489}, {1.2757335553165845`, 
+          0.4802998938413853}, {1.224186875245821, 0.5446173073602814}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1404654894823851`, 0.5438768335286117}, {1.108290783789713, 
+          0.4788189461780459}, {1.076116078097041, 0.41376105882748}, {
+          1.043941372404369, 0.3487031714769141}, {1.011766666711697, 
+          0.28364528412634815`}, {0.9795919610190249, 0.21858739677578232`}, {
+          0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}}, 
+     {Opacity[1], {
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{1.8490924426168696`, 0.010366633643375645`}, 
+         Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{1.1522829356884625`, 0.406114285573762}, 
+         Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{1.1274389216261762`, 0.9108104229079226}, 
+         Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{0.6769930419287677, 0.}, 
+         Offset[{2., 2.}, {0., 0.}]]}}, {}}}]],
+  Boxed -> False,
+  BoxID -> "Hypergraph279",
+  AlignmentPoint->Center,
+  AspectRatio->Automatic,
+  Axes->False,
+  AxesLabel->None,
+  AxesOrigin->Automatic,
+  AxesStyle->{},
+  Background->None,
+  BaseStyle->{
+   GraphicsHighlightColor -> RGBColor[1, 0, 0], 
+    ComponentwiseContextMenu -> {"GraphicsBox" -> {
+        MenuItem["Draw", 
+         KernelExecute[
+          MathLink`CallFrontEnd[
+           FrontEnd`BoxReferenceReplace[
+            FE`BoxReference[
+             EvaluationNotebook[], "Hypergraph279"], 
+            ToBoxes[
+             WolframInstitute`Hypergraph`HypergraphDraw[
+              WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+               
+               WolframInstitute`Hypergraph`Hyperedges[{1, 3, 2}, {1, 2, 3}, {
+                3, 1, 2}, {3, 2, 1}, {2, 1, 3}, {2, 3, 1}, {4, 3, 1}, {4, 1, 
+                3}, {3, 4, 1}, {3, 1, 4}, {1, 4, 3}, {1, 3, 4}], 
+               VertexCoordinates -> {
+                1 -> {1.8490924426168696`, 0.010366633643375645`}, 
+                 2 -> {1.1522829356884625`, 0.406114285573762}, 
+                 3 -> {1.1274389216261762`, 0.9108104229079226}, 
+                 4 -> {0.6769930419287677, 0.}}]]]]]], MenuEvaluator -> 
+         Automatic]}}},
+  BaselinePosition->Automatic,
+  ContentSelectable->Automatic,
+  Epilog->{},
+  FormatType->TraditionalForm,
+  Frame->False,
+  FrameLabel->None,
+  FrameStyle->{},
+  FrameTicks->None,
+  FrameTicksStyle->{},
+  GridLines->None,
+  GridLinesStyle->{},
+  ImageMargins->0.,
+  ImagePadding->All,
+  ImageSize->Automatic,
+  LabelStyle->{},
+  PlotLabel->None,
+  PlotRange->All,
+  PlotRangeClipping->False,
+  PlotRangePadding->Automatic,
+  PlotRegion->Automatic,
+  Prolog->{},
+  RotateLabel->True,
+  Ticks->Automatic,
+  TicksStyle->{}]], "Output",
+ CellChangeTimes->{3.929965267702194*^9, 3.9299653825362644`*^9},
+ CellLabel->"Out[51]=",ExpressionUUID->"b6dc4b6d-b528-af4d-bf18-a4342b949454"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"RuleToOperation", "[", "test3rule", "]"}], "[", 
+  RowBox[{"{", 
+   RowBox[{"hyp1", ",", "hyp2", ",", "hyp3"}], "}"}], "]"}]], "Input",
+ CellChangeTimes->{{3.9299651527882214`*^9, 3.9299651750328884`*^9}},
+ CellLabel->"In[47]:=",ExpressionUUID->"d8b6ce12-3d5c-9a45-90e6-14d68e3b59ff"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "VertexCount", "graph", 
+   "\"A graph object is expected at position \\!\\(\\*RowBox[{\\\"1\\\"}]\\) \
+in \\!\\(\\*RowBox[{\\\"VertexCount\\\", \\\"[\\\", \\\"#1\\\", \
+\\\"]\\\"}]\\).\"", 2, 47, 5, 33769235910918312150, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.929965175915682*^9},
+ CellLabel->
+  "During evaluation of \
+In[47]:=",ExpressionUUID->"7b7e5290-142a-a746-be57-1162273f37f7"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "VertexCount", "graph", 
+   "\"A graph object is expected at position \\!\\(\\*RowBox[{\\\"1\\\"}]\\) \
+in \\!\\(\\*RowBox[{\\\"VertexCount\\\", \\\"[\\\", \\\"#2\\\", \
+\\\"]\\\"}]\\).\"", 2, 47, 6, 33769235910918312150, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9299651759326363`*^9},
+ CellLabel->
+  "During evaluation of \
+In[47]:=",ExpressionUUID->"d93971f1-97ce-da4b-a15f-c2388474e89c"],
+
+Cell[BoxData[
+ RowBox[{"\<\"Hypergraph arguments defined on different node sets.\"\>", "[", 
+  RowBox[{"{", 
+   RowBox[{
+    GraphicsBox[
+     NamespaceBox["Hypergraph",
+      DynamicModuleBox[{Typeset`hg = HoldComplete[
+        WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+         WolframInstitute`Hypergraph`Hyperedges[{1}, {1, 2}, {2, 3, 4}, {2}], 
+         VertexLabels -> {All -> Automatic}]]}, 
+       {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], {
+         {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+          DiskBox[{0., 0.5306514698722115}, Offset[12.]], 
+          {Opacity[1]}}, 
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+           LineBox[{{0., 0.5306514698722115}, {1.2558159859487037`, 
+            0.5305651366279273}}], 
+           {Opacity[1]}}}, 
+         {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+          FilledCurveBox[{
+           BSplineCurve[{{1.9991277046886584`, 0.}, {2.085016481461433, 
+             0.309479132880555}, {2.5025854564392986`, 0.530523864262161}}], 
+            BSplineCurve[{{2.5025854564392986`, 0.530523864262161}, {
+             1.8991885517764442`, 0.44212041703753685`}, {1.2558159859487037`,
+              0.5305651366279273}}], 
+            BSplineCurve[{{1.2558159859487037`, 0.5305651366279273}, {
+             1.773324113838784, 0.30948945097199654`}, {1.9991277046886584`, 
+             0.}}]}], 
+          {Opacity[1]}}, 
+         {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+          DiskBox[{1.2558159859487037`, 0.5305651366279273}, Offset[12.]], 
+          {Opacity[1]}}}, 
+        {Opacity[1], {
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0., 0.5306514698722115}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{1.2558159859487037`, 0.5305651366279273}, 
+            Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{1.9991277046886584`, 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{2.5025854564392986`, 0.530523864262161}, 
+            Offset[{2., 2.}, {0., 0.}]]}}, {
+          InsetBox["1", {0., 0.5306514698722115}, 
+           ImageScaled[{1.4957761529975717, 0.40818576841602133}]], 
+          InsetBox["2", {1.2558159859487037, 0.5305651366279273}, 
+           ImageScaled[{1.310565287451552, -0.08564828590083207}]], 
+          InsetBox["3", {1.9991277046886584, 0.}, 
+           ImageScaled[{-0.3150282593542919, 1.07942120814992}]], 
+          InsetBox["4", {2.5025854564392986, 0.530523864262161}, 
+           ImageScaled[{-0.4923136348001961, 0.376251665911725}]]}}}]],
+     Boxed -> False,
+     BoxID -> "Hypergraph180",
+     AlignmentPoint->Center,
+     AspectRatio->Automatic,
+     Axes->False,
+     AxesLabel->None,
+     AxesOrigin->Automatic,
+     AxesStyle->{},
+     Background->None,
+     BaseStyle->{
+      GraphicsHighlightColor -> RGBColor[1, 0, 0], 
+       ComponentwiseContextMenu -> {"GraphicsBox" -> {
+           MenuItem["Draw", 
+            KernelExecute[
+             MathLink`CallFrontEnd[
+              FrontEnd`BoxReferenceReplace[
+               FE`BoxReference[
+                EvaluationNotebook[], "Hypergraph180"], 
+               ToBoxes[
+                WolframInstitute`Hypergraph`HypergraphDraw[
+                 WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+                  
+                  WolframInstitute`Hypergraph`Hyperedges[{1}, {1, 2}, {2, 3, 
+                   4}, {2}], VertexLabels -> {All -> Automatic}]]]]]], 
+            MenuEvaluator -> Automatic]}}},
+     BaselinePosition->Automatic,
+     ContentSelectable->Automatic,
+     Epilog->{},
+     FormatType->TraditionalForm,
+     Frame->False,
+     FrameLabel->None,
+     FrameStyle->{},
+     FrameTicks->None,
+     FrameTicksStyle->{},
+     GridLines->None,
+     GridLinesStyle->{},
+     ImageMargins->0.,
+     ImagePadding->All,
+     ImageSize->Automatic,
+     LabelStyle->{},
+     PlotLabel->None,
+     PlotRange->All,
+     PlotRangeClipping->False,
+     PlotRangePadding->Automatic,
+     PlotRegion->Automatic,
+     Prolog->{},
+     RotateLabel->True,
+     Ticks->Automatic,
+     TicksStyle->{}], ",", 
+    GraphicsBox[
+     NamespaceBox["Hypergraph",
+      DynamicModuleBox[{Typeset`hg = HoldComplete[
+        WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+         WolframInstitute`Hypergraph`Hyperedges[{1, 4}, {4, 3}, {2, 4}], 
+         VertexLabels -> {All -> Automatic}]]}, 
+       {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], {
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+           LineBox[{{0., 2.}, {1., 1.}}], 
+           {Opacity[1]}}}, 
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+           LineBox[{{1., 1.}, {1., 0.}}], 
+           {Opacity[1]}}}, 
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+           LineBox[{{1., 2.}, {1., 1.}}], 
+           {Opacity[1]}}}}, 
+        {Opacity[1], {
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], DiskBox[{0., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], DiskBox[{1., 2.}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], DiskBox[{1., 1.}, Offset[{2., 2.}, {0., 0.}]]}}, {
+          InsetBox["1", {0., 2.}, 
+           ImageScaled[{1.2071067811865475, -0.20710678118654757}]], 
+          InsetBox["2", {1., 2.}, 
+           ImageScaled[{0.18377223398316206, -0.44868329805051377}]], 
+          InsetBox["3", {1., 0.}, 
+           ImageScaled[{0.30388386486181596, 1.4805806756909203}]], 
+          InsetBox["4", {1., 1.}, 
+           ImageScaled[{-0.20710678118654746, 1.2071067811865475}]]}}}]],
+     Boxed -> False,
+     BoxID -> "Hypergraph181",
+     AlignmentPoint->Center,
+     AspectRatio->Automatic,
+     Axes->False,
+     AxesLabel->None,
+     AxesOrigin->Automatic,
+     AxesStyle->{},
+     Background->None,
+     BaseStyle->{
+      GraphicsHighlightColor -> RGBColor[1, 0, 0], 
+       ComponentwiseContextMenu -> {"GraphicsBox" -> {
+           MenuItem["Draw", 
+            KernelExecute[
+             MathLink`CallFrontEnd[
+              FrontEnd`BoxReferenceReplace[
+               FE`BoxReference[
+                EvaluationNotebook[], "Hypergraph181"], 
+               ToBoxes[
+                WolframInstitute`Hypergraph`HypergraphDraw[
+                 WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+                  
+                  WolframInstitute`Hypergraph`Hyperedges[{1, 4}, {4, 3}, {2, 
+                   4}], VertexLabels -> {All -> Automatic}]]]]]], 
+            MenuEvaluator -> Automatic]}}},
+     BaselinePosition->Automatic,
+     ContentSelectable->Automatic,
+     Epilog->{},
+     FormatType->TraditionalForm,
+     Frame->False,
+     FrameLabel->None,
+     FrameStyle->{},
+     FrameTicks->None,
+     FrameTicksStyle->{},
+     GridLines->None,
+     GridLinesStyle->{},
+     ImageMargins->0.,
+     ImagePadding->All,
+     ImageSize->Automatic,
+     LabelStyle->{},
+     PlotLabel->None,
+     PlotRange->All,
+     PlotRangeClipping->False,
+     PlotRangePadding->Automatic,
+     PlotRegion->Automatic,
+     Prolog->{},
+     RotateLabel->True,
+     Ticks->Automatic,
+     TicksStyle->{}], ",", 
+    GraphicsBox[
+     NamespaceBox["Hypergraph",
+      DynamicModuleBox[{Typeset`hg = HoldComplete[
+        WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+         WolframInstitute`Hypergraph`Hyperedges[{2, 3}, {1, 2, 3}, {2, 3, 4}],
+          VertexLabels -> {All -> Automatic}]]}, 
+       {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], {
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[0.7], Arrowheads[{{0.03, 0.5}}], 
+           BSplineCurveBox[{{0.956249665437686, 0.7050144100624793}, {
+            0.9579178748309883, 0.09409600440919602}}], 
+           {Opacity[1]}}}, 
+         {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+          FilledCurveBox[{
+           BSplineCurve[{{0.9579178748309883, 0.09409600440919602}, {
+             0.7975698084452809, 0.46604990997119733`}, {0.956249665437686, 
+             0.7050144100624793}}], 
+            BSplineCurve[{{0.956249665437686, 0.7050144100624793}, {
+             0.5580903397375339, 0.6421567647808972}, {0., 
+             0.7985234236479958}}], 
+            BSplineCurve[{{0., 0.7985234236479958}, {0.5585073920858594, 
+             0.48942716336757647`}, {0.9579178748309883, 
+             0.09409600440919597}}]}], 
+          {Opacity[1]}}, 
+         {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+          FilledCurveBox[{
+           BSplineCurve[{{0.9579178748309883, 0.09409600440919602}, {
+             1.3567036395790852`, 0.15703929308329562`}, {1.9156709939837415`,
+              0.0007925349657217362}}], 
+            BSplineCurve[{{1.9156709939837415`, 0.0007925349657217362}, {
+             1.3562865872307595`, 0.3097688944966165}, {0.956249665437686, 
+             0.7050144100624793}}], 
+            BSplineCurve[{{0.956249665437686, 0.7050144100624793}, {
+             1.1168483074425712`, 0.33309476185748504`}, {0.9579178748309883, 
+             0.09409600440919608}}]}], 
+          {Opacity[1]}}}, 
+        {Opacity[1], {
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0., 0.7985234236479958}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0.956249665437686, 0.7050144100624793}, 
+            Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0.9579178748309883, 0.09409600440919602}, 
+            Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{1.9156709939837415`, 0.0007925349657217362}, 
+            Offset[{2., 2.}, {0., 0.}]]}}, {
+          InsetBox["1", {0., 0.7985234236479958}, 
+           ImageScaled[{1.4773495366020422, 0.2883685200548533}]], 
+          InsetBox["2", {0.956249665437686, 0.7050144100624793}, 
+           ImageScaled[{0.5027306480839391, -0.499996271773571}]], 
+          InsetBox["3", {0.9579178748309883, 0.09409600440919602}, 
+           ImageScaled[{0.497269351916064, 1.499996271773571}]], 
+          InsetBox["4", {1.9156709939837415, 0.0007925349657217362}, 
+           ImageScaled[{-0.4774655747121135, 0.7110948844778523}]]}}}]],
+     Boxed -> False,
+     BoxID -> "Hypergraph182",
+     AlignmentPoint->Center,
+     AspectRatio->Automatic,
+     Axes->False,
+     AxesLabel->None,
+     AxesOrigin->Automatic,
+     AxesStyle->{},
+     Background->None,
+     BaseStyle->{
+      GraphicsHighlightColor -> RGBColor[1, 0, 0], 
+       ComponentwiseContextMenu -> {"GraphicsBox" -> {
+           MenuItem["Draw", 
+            KernelExecute[
+             MathLink`CallFrontEnd[
+              FrontEnd`BoxReferenceReplace[
+               FE`BoxReference[
+                EvaluationNotebook[], "Hypergraph182"], 
+               ToBoxes[
+                WolframInstitute`Hypergraph`HypergraphDraw[
+                 WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+                  
+                  WolframInstitute`Hypergraph`Hyperedges[{2, 3}, {1, 2, 3}, {
+                   2, 3, 4}], VertexLabels -> {All -> Automatic}]]]]]], 
+            MenuEvaluator -> Automatic]}}},
+     BaselinePosition->Automatic,
+     ContentSelectable->Automatic,
+     Epilog->{},
+     FormatType->TraditionalForm,
+     Frame->False,
+     FrameLabel->None,
+     FrameStyle->{},
+     FrameTicks->None,
+     FrameTicksStyle->{},
+     GridLines->None,
+     GridLinesStyle->{},
+     ImageMargins->0.,
+     ImagePadding->All,
+     ImageSize->Automatic,
+     LabelStyle->{},
+     PlotLabel->None,
+     PlotRange->All,
+     PlotRangeClipping->False,
+     PlotRangePadding->Automatic,
+     PlotRegion->Automatic,
+     Prolog->{},
+     RotateLabel->True,
+     Ticks->Automatic,
+     TicksStyle->{}]}], "}"}], "]"}]], "Output",
+ CellChangeTimes->{3.9299651761842575`*^9},
+ CellLabel->"Out[47]=",ExpressionUUID->"b6e18de7-73dd-d64c-bc3c-4d4b1ae10cf6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"OnePassRewriting", "[", 
+  RowBox[{"test3rule", ",", 
+   RowBox[{"Plus", "@@", 
+    RowBox[{"{", 
+     RowBox[{"hyp1", ",", "hyp2", ",", "hyp3"}], "}"}]}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.929965596207369*^9, 3.9299656187964535`*^9}},
+ CellLabel->"In[54]:=",ExpressionUUID->"d5b4a46a-92a7-c444-ab6e-ce8408b63969"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["Hypergraph",
+   DynamicModuleBox[{Typeset`hg = HoldComplete[
+     WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+      WolframInstitute`Hypergraph`Hyperedges[{1, 3, 2}, {1, 2, 3}, {3, 1, 
+       2}, {3, 2, 1}, {2, 1, 3}, {2, 3, 1}, {4, 3, 1}, {4, 1, 3}, {3, 4, 1}, {
+       3, 1, 4}, {1, 4, 3}, {1, 3, 4}], 
+      VertexCoordinates -> {
+       1 -> {1.8490924426168696`, 0.010366633643375645`}, 
+        2 -> {1.1522829356884625`, 0.406114285573762}, 
+        3 -> {1.1274389216261762`, 0.9108104229079226}, 
+        4 -> {0.6769930419287677, 0.}}]]}, 
+    {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], {
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.4384795612315844`, 0.3253354534917945}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4322685577160128`, 0.4515094878253346}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2580661809839109`, 0.5504464008079313}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3804121023208837`, 0.3583144244859934}, {1.4965470201422848`, 
+          0.2923564824975956}, {1.8490924426168696`, 0.010366633643375645`}}],
+          BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.492406351131904, 0.37647250538662236`}, {1.3721307643001217`, 
+          0.5265464702640468}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2559958464787204`, 0.5925044122524445}, {1.2601365154891015`, 
+          0.5083883893634178}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3513783728655335`, 0.37480390998309276`}, {1.4384795612315844`, 
+          0.3253354534917945}, {1.5255807495976352`, 0.2758669970004962}, {
+          1.8490924426168696`, 0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.5224752478398496`, 0.3389540141672662}, {1.4322685577160128`, 
+          0.4515094878253346}, {1.342061867592176, 0.564064961483403}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2549606792261252`, 0.6135334179747013}, {1.2580661809839109`, 
+          0.5504464008079313}, {1.2611716827416968`, 0.48735938364116116`}, {
+          1.1522829356884625`, 0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3339581351923233`, 0.38469760128135244`}, {1.403639085885164, 
+          0.3451228360883138}, {1.4733200365780048`, 0.30554807089527514`}, {
+          1.5430009872708454`, 0.26597330570223654`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.5405165858646166`, 0.3164429194356526}, {1.4683512337655475`, 
+          0.4064872983621073}, {1.396185881666478, 0.49653167728856196`}, {
+          1.3240205295674088`, 0.5865760562150166}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2543395788745682`, 0.6261508214080553}, {1.2568239802807968`, 
+          0.5756812076746393}, {1.2593083816870254`, 0.5252115939412232}, {
+          1.261792783093254, 0.47474198020780717`}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.322344643410183, 0.3912933954801922}, {1.3804121023208837`, 
+          0.3583144244859934}, {1.4384795612315844`, 0.3253354534917945}, {
+          1.4965470201422848`, 0.2923564824975956}, {1.5546144790529854`, 
+          0.2593775115033967}, {1.8490924426168696`, 0.010366633643375645`}}],
+          BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.552544144547795, 0.3014355229479101}, {1.492406351131904, 
+          0.37647250538662236`}, {1.4322685577160128`, 0.4515094878253346}, {
+          1.3721307643001217`, 0.5265464702640468}, {1.3119929708842304`, 
+          0.6015834527027591}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.25392551197353, 0.634562423696958}, {1.2559958464787204`, 
+          0.5925044122524445}, {1.2580661809839109`, 0.5504464008079313}, {
+          1.2601365154891015`, 0.5083883893634178}, {1.262206849994292, 
+          0.46633037791890447`}, {1.1522829356884625`, 
+          0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{1.1522829356884625`, 0.406114285573762}, {
+          1.3140492921372258`, 0.396004677050792}, {1.3638213997749693`, 
+          0.36773698762719303`}, {1.4135935074127126`, 0.339469298203594}, {
+          1.463365615050456, 0.311201608779995}, {1.5131377226881995`, 
+          0.28293391935639595`}, {1.5629098303259428`, 0.2546662299327969}, {
+          1.8490924426168696`, 0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.5611352578929223`, 0.2907159540280941}, {1.5095885778221585`, 
+          0.35503336754699033`}, {1.4580418977513947`, 0.4193507810658865}, {
+          1.406495217680631, 0.4836681945847827}, {1.354948537609867, 
+          0.5479856081036789}, {1.3034018575391033`, 0.6123030216225751}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.2536297499013598`, 0.6405707110461742}, {1.2554043223343803`, 
+          0.604520986950877}, {1.2571788947674007`, 0.5684712628555798}, {
+          1.2589534672004212`, 0.5324215387602826}, {1.2607280396334417`, 
+          0.4963718146649854}, {1.262502612066462, 0.4603220905696883}, {
+          1.1522829356884625`, 0.40611428557376206`}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.2404421054983783`, 
+          0.15612116783606028`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.3530535754227304`, 0.3838237735630409}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.0600287252507048`, 0.381232115152197}, {0.6769930419287677, 
+          0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.1427671554410364`, 
+          0.15525728169911232`}, {1.33811705555572, 0.15698505397300824`}, {
+          1.8490924426168696`, 0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4131913688386215`, 0.30878679112432866`}, {1.2929157820068393`, 
+          0.45886075600175313`}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.0975658818921556`, 0.45713298372785727`}, {1.0224915686092542`, 
+          0.3053312465765368}, {0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.0939296804123655`, 
+          0.15482533863063833`}, {1.2404421054983783`, 
+          0.15612116783606028`}, {1.3869545305843909`, 
+          0.15741699704148224`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.443260265546567, 0.2712682999049726}, {1.3530535754227304`, 
+          0.3838237735630409}, {1.2628468852988937`, 0.49637924722110927`}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1163344602128809`, 0.49508341801568734`}, {1.0600287252507048`, 
+          0.381232115152197}, {1.0037229902885287`, 0.2673808122887067}, {
+          0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.064627195395163, 
+          0.15456617278955392`}, {1.1818371354639732`, 0.1556028361538915}, {
+          1.2990470755327834`, 0.15663949951822906`}, {1.4162570156015937`, 
+          0.15767616288256664`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4613016035713344`, 0.2487572051733589}, {1.389136251472265, 
+          0.3388015840998136}, {1.3169708993731957`, 0.42884596302626826`}, {
+          1.2448055472741264`, 0.518890341952723}, {1.1274389216261762`, 
+          0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1275956072053162`, 0.5178536785883854}, {1.0825510192355754`, 
+          0.4267726362975931}, {1.0375064312658346`, 0.3356915940068009}, {
+          0.9924618432960937, 0.2446105517160086}, {0.6769930419287677, 
+          0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.0450922053836946`, 
+          0.15439339556216433`}, {1.1427671554410364`, 
+          0.15525728169911232`}, {1.2404421054983783`, 
+          0.15612116783606028`}, {1.33811705555572, 0.15698505397300824`}, {
+          1.435792005613062, 0.15784894010995623`}, {1.8490924426168696`, 
+          0.010366633643375645`}}], 
+         BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.4733291622545126`, 0.23374980868561643`}, {1.4131913688386215`, 
+          0.30878679112432866`}, {1.3530535754227304`, 0.3838237735630409}, {
+          1.2929157820068393`, 0.45886075600175313`}, {1.2327779885909482`, 
+          0.5338977384404655}, {1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1351030385336063`, 0.5330338523035174}, {1.0975658818921556`, 
+          0.45713298372785727`}, {1.0600287252507048`, 0.381232115152197}, {
+          1.0224915686092542`, 0.3053312465765368}, {0.9849544119678035, 
+          0.22943037800087657`}, {0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}, 
+      {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+       FilledCurveBox[{
+        BSplineCurve[{{0.6769930419287677, 0.}, {1.0311386410897887`, 
+          0.15426998325688607`}, {1.1148600268532245`, 
+          0.15501045708855574`}, {1.1985814126166603`, 
+          0.15575093092022543`}, {1.282302798380096, 0.15649140475189513`}, {
+          1.3660241841435319`, 0.15723187858356483`}, {1.449745569906968, 
+          0.1579723524152345}, {1.8490924426168696`, 0.010366633643375645`}}],
+          BSplineCurve[{{1.8490924426168696`, 0.010366633643375645`}, {
+          1.48192027559964, 0.2230302397658004}, {1.430373595528876, 
+          0.2873476532846966}, {1.3788269154581123`, 0.3516650668035928}, {
+          1.3272802353873485`, 0.415982480322489}, {1.2757335553165845`, 
+          0.4802998938413853}, {1.224186875245821, 0.5446173073602814}, {
+          1.1274389216261762`, 0.9108104229079226}}], 
+         BSplineCurve[{{1.1274389216261762`, 0.9108104229079226}, {
+          1.1404654894823851`, 0.5438768335286117}, {1.108290783789713, 
+          0.4788189461780459}, {1.076116078097041, 0.41376105882748}, {
+          1.043941372404369, 0.3487031714769141}, {1.011766666711697, 
+          0.28364528412634815`}, {0.9795919610190249, 0.21858739677578232`}, {
+          0.6769930419287677, 0.}}]}], 
+       {Opacity[1]}}}, 
+     {Opacity[1], {
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{1.8490924426168696`, 0.010366633643375645`}, 
+         Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{1.1522829356884625`, 0.406114285573762}, 
+         Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{1.1274389216261762`, 0.9108104229079226}, 
+         Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{0.6769930419287677, 0.}, 
+         Offset[{2., 2.}, {0., 0.}]]}}, {}}}]],
+  Boxed -> False,
+  BoxID -> "Hypergraph323",
+  AlignmentPoint->Center,
+  AspectRatio->Automatic,
+  Axes->False,
+  AxesLabel->None,
+  AxesOrigin->Automatic,
+  AxesStyle->{},
+  Background->None,
+  BaseStyle->{
+   GraphicsHighlightColor -> RGBColor[1, 0, 0], 
+    ComponentwiseContextMenu -> {"GraphicsBox" -> {
+        MenuItem["Draw", 
+         KernelExecute[
+          MathLink`CallFrontEnd[
+           FrontEnd`BoxReferenceReplace[
+            FE`BoxReference[
+             EvaluationNotebook[], "Hypergraph323"], 
+            ToBoxes[
+             WolframInstitute`Hypergraph`HypergraphDraw[
+              WolframInstitute`Hypergraph`Hypergraph[{1, 2, 3, 4}, 
+               
+               WolframInstitute`Hypergraph`Hyperedges[{1, 3, 2}, {1, 2, 3}, {
+                3, 1, 2}, {3, 2, 1}, {2, 1, 3}, {2, 3, 1}, {4, 3, 1}, {4, 1, 
+                3}, {3, 4, 1}, {3, 1, 4}, {1, 4, 3}, {1, 3, 4}], 
+               VertexCoordinates -> {
+                1 -> {1.8490924426168696`, 0.010366633643375645`}, 
+                 2 -> {1.1522829356884625`, 0.406114285573762}, 
+                 3 -> {1.1274389216261762`, 0.9108104229079226}, 
+                 4 -> {0.6769930419287677, 0.}}]]]]]], MenuEvaluator -> 
+         Automatic]}}},
+  BaselinePosition->Automatic,
+  ContentSelectable->Automatic,
+  Epilog->{},
+  FormatType->TraditionalForm,
+  Frame->False,
+  FrameLabel->None,
+  FrameStyle->{},
+  FrameTicks->None,
+  FrameTicksStyle->{},
+  GridLines->None,
+  GridLinesStyle->{},
+  ImageMargins->0.,
+  ImagePadding->All,
+  ImageSize->Automatic,
+  LabelStyle->{},
+  PlotLabel->None,
+  PlotRange->All,
+  PlotRangeClipping->False,
+  PlotRangePadding->Automatic,
+  PlotRegion->Automatic,
+  Prolog->{},
+  RotateLabel->True,
+  Ticks->Automatic,
+  TicksStyle->{}]], "Output",
+ CellChangeTimes->{3.9299656279917736`*^9},
+ CellLabel->"Out[54]=",ExpressionUUID->"816268e1-40d3-ae47-9235-212d28869692"]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{1080, 688.5},
+WindowMargins->{{-4.875, Automatic}, {Automatic, -4.875}},
+Magnification:>1.1 Inherited,
+FrontEndVersion->"14.0 for Microsoft Windows (64-bit) (December 12, 2023)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"a0c8063f-e5a9-de43-9e23-dae891a433ba"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 356, 6, 53, "Input",ExpressionUUID->"78495105-cef8-7d42-bb90-59dee81f87d0"],
+Cell[939, 30, 483, 11, 30, "Message",ExpressionUUID->"3405b734-c110-2841-adc5-5d80a6c42ff6"],
+Cell[1425, 43, 178, 2, 35, "Output",ExpressionUUID->"a33f4377-64d8-774a-8a00-41813078cd7f"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[1640, 50, 164, 3, 75, "Chapter",ExpressionUUID->"a97885d0-9896-9b49-b5f5-d883130a2b66"],
+Cell[1807, 55, 756, 19, 52, "Input",ExpressionUUID->"045f16cd-5469-0948-b049-29977c452f0d"],
+Cell[CellGroupData[{
+Cell[2588, 78, 1500, 38, 73, "Input",ExpressionUUID->"8ae7840f-32d2-314d-9711-fc3b0b2602e0"],
+Cell[4091, 118, 7755, 184, 215, "Output",ExpressionUUID->"7c4ddc42-6040-5640-9ec5-04a4dc1420f7"]
+}, Open  ]],
+Cell[11861, 305, 1289, 32, 115, "Input",ExpressionUUID->"39d2bedb-dc1a-2448-b338-c1196348f145"],
+Cell[CellGroupData[{
+Cell[13175, 341, 7274, 172, 190, "Input",ExpressionUUID->"aa6d0770-9171-f84b-8dd4-9ce2c2a67936"],
+Cell[20452, 515, 7539, 176, 87, "Output",ExpressionUUID->"87cba464-1b98-544a-96b0-5ffaca2fd47f"]
+}, Open  ]],
+Cell[28006, 694, 3976, 94, 342, "Input",ExpressionUUID->"22b8a144-bd4e-6945-b973-755d97391d9f"],
+Cell[CellGroupData[{
+Cell[32007, 792, 1157, 30, 52, "Input",ExpressionUUID->"3792eb0c-27ea-364f-8a5d-fb365e1654d4"],
+Cell[33167, 824, 8380, 191, 193, "Output",ExpressionUUID->"973003c6-7039-bf4a-b068-51ccd7bb017e"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[41584, 1020, 1313, 31, 94, "Input",ExpressionUUID->"4dceac67-f907-5a43-a26f-1c8807789ff3"],
+Cell[42900, 1053, 8721, 205, 193, "Output",ExpressionUUID->"973c9c86-ed4e-8b4d-a1d4-55f66588c9ca"]
+}, Open  ]],
+Cell[51636, 1261, 1583, 45, 73, "Input",ExpressionUUID->"8fd10739-2001-7340-8bdb-8d412a343521"],
+Cell[CellGroupData[{
+Cell[53244, 1310, 361, 7, 31, "Input",ExpressionUUID->"5797744d-e278-6847-b496-c575abbcc634"],
+Cell[53608, 1319, 15185, 283, 329, "Output",ExpressionUUID->"b6dc4b6d-b528-af4d-bf18-a4342b949454"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[68830, 1607, 319, 6, 31, "Input",ExpressionUUID->"d8b6ce12-3d5c-9a45-90e6-14d68e3b59ff"],
+Cell[69152, 1615, 450, 10, 30, "Message",ExpressionUUID->"7b7e5290-142a-a746-be57-1162273f37f7"],
+Cell[69605, 1627, 452, 10, 30, "Message",ExpressionUUID->"d93971f1-97ce-da4b-a15f-c2388474e89c"],
+Cell[70060, 1639, 12946, 300, 139, "Output",ExpressionUUID->"b6e18de7-73dd-d64c-bc3c-4d4b1ae10cf6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[83043, 1944, 345, 7, 31, "Input",ExpressionUUID->"d5b4a46a-92a7-c444-ab6e-ce8408b63969"],
+Cell[83391, 1953, 15163, 283, 351, "Output",ExpressionUUID->"816268e1-40d3-ae47-9235-212d28869692"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

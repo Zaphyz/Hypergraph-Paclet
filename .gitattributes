@@ -1,0 +1,11 @@
+# Line endings are decided here rather than by whatever core.autocrlf a given machine happens to
+# have. (The git bundled with GitHub Desktop sets core.autocrlf=true system-wide.)
+# Later rules override earlier ones.
+
+# Everything text-like is stored and checked out with LF; git leaves detected binaries alone.
+* text=auto eol=lf
+
+# Wolfram notebooks are large, machine-written text. Never rewrite their line endings: the
+# upstream paclets mark them -text for the same reason.
+*.nb  -text
+*.cdf -text

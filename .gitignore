@@ -1,0 +1,25 @@
+# Upstream reference clones (WolframInstitute/Hypergraph and Wolfram/Multicomputation).
+# These are read-only checkouts kept for comparison; each carries its own .git directory.
+# Re-create with:
+#   git clone https://github.com/WolframInstitute/Hypergraph.git reference/Hypergraph
+#   git clone https://github.com/WolframInstitute/Multicomputation.git reference/Multicomputation
+reference/
+
+# Paclet build products
+build/
+*.paclet
+
+# Generated documentation notebooks (the markdown is the source)
+Documentation/English/Guides/*.nb
+Documentation/English/ReferencePages/Symbols/*.nb
+Documentation/English/Tutorials/*.nb
+Documentation/English/SearchIndex/
+
+# Wolfram scratch
+*.wlnb.bak
+.MathematicaNotebookBackups/
+
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini

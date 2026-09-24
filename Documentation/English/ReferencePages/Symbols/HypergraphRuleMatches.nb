@@ -1,0 +1,209 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      8374,        200]
+NotebookOptionsPosition[      5974,        165]
+NotebookOutlinePosition[      6322,        180]
+CellTagsIndexPosition[      6279,        177]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypergraphRuleMatches", "ObjectName",ExpressionUUID->"b4175009-23c4-6d4c-8d0a-8c640b028915"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphRuleMatches", "[", 
+    RowBox[{"rule", ",", " ", "hg"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"cae967e2-9273-ad48-aa69-0aeac92f101a"],
+ " ",
+ "gives the ways the input of rule sits inside hg, without rewriting anything."
+}], "Usage",ExpressionUUID->"7b635aa9-27e8-084c-92a5-15dff62889e4"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"7e5ece58-b8a1-1843-8414-e5de40cc6f0c"],
+
+Cell["\<\
+Each match is an association with \"MatchEdgePositions\", the positions in \
+EdgeList[hg] that the input's edges lie on, and \"RuleVertexMap\", the \
+correspondence from the input's vertices to the hypergraph's.\
+\>", "Notes",ExpressionUUID->"7ddf6e53-682a-7e42-ba11-d806ad1ee5fc"],
+
+Cell["\<\
+It takes the same options as HypergraphRuleApply, and is what that function \
+matches with; asking for the matches alone is the way to see why a rule \
+applies as often as it does.\
+\>", "Notes",ExpressionUUID->"825c41e4-cc43-7240-bfde-bdf7f503f852"],
+
+Cell["\<\
+An edge of the hypergraph is used by at most one edge of the input, so a rule \
+whose input has two edges wants two of them.\
+\>", "Notes",ExpressionUUID->"73d35054-a03e-dc40-a76f-2d9783451ebe"],
+
+Cell["\<\
+A vertex of the input lying in no edge constrains nothing, and is matched to \
+each vertex not already taken in turn.\
+\>", "Notes",ExpressionUUID->"fc1d3dee-47ff-7d47-a149-9e2287ff5311"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"3e21800c-7eca-5548-9fd7-135238f00856"],
+
+Cell["\<\
+HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}],
+   Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}]]\
+\>", "Input",ExpressionUUID->"6eb3aa0b-ceeb-8e45-b0a7-2a5e19ed135d"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"MatchEdgePositions\"\>", "\[Rule]", 
+      RowBox[{"{", "1", "}"}]}], ",", 
+     RowBox[{"\<\"RuleVertexMap\"\>", "\[Rule]", 
+      RowBox[{"\[LeftAssociation]", 
+       RowBox[{
+        RowBox[{"1", "\[Rule]", "1"}], ",", 
+        RowBox[{"2", "\[Rule]", "2"}]}], "\[RightAssociation]"}]}]}], 
+    "\[RightAssociation]"}], ",", 
+   RowBox[{"\[LeftAssociation]", 
+    RowBox[{
+     RowBox[{"\<\"MatchEdgePositions\"\>", "\[Rule]", 
+      RowBox[{"{", "2", "}"}]}], ",", 
+     RowBox[{"\<\"RuleVertexMap\"\>", "\[Rule]", 
+      RowBox[{"\[LeftAssociation]", 
+       RowBox[{
+        RowBox[{"1", "\[Rule]", "2"}], ",", 
+        RowBox[{"2", "\[Rule]", "3"}]}], "\[RightAssociation]"}]}]}], 
+    "\[RightAssociation]"}]}], "}"}]], "Output",ExpressionUUID->"7592a1eb-\
+17b3-1e43-8d91-8a511a813a1a"],
+
+Cell["\<\
+An unordered edge matches in as many ways as its vertices can be ordered:\
+\>", "ExampleText",ExpressionUUID->"5181e63a-e4eb-9644-8368-558c920bdb10"],
+
+Cell["\<\
+Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2, 3}, \
+\"Unordered\"]}, {}],
+   Hypergraph[{Edge[{1, 2, 3}, \"Unordered\"]}]]\
+\>", "Input",ExpressionUUID->"7dc86bb2-ba67-4841-8217-1d646af0ba31"],
+
+Cell[BoxData["6"], "Output",ExpressionUUID->"deec7a8e-6823-b241-b343-68287321616b"],
+
+Cell["\<\
+\[Ellipsis] a cyclic one in as many ways as it can be rotated, and a directed \
+one in one way:\
+\>", "ExampleText",ExpressionUUID->"2f0dbf3e-c426-4e43-9d58-44db2344fc83"],
+
+Cell["\<\
+{Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2, 3}, \"Cyclic\"]}, \
+{}],
+    Hypergraph[{Edge[{1, 2, 3}, \"Cyclic\"]}]],
+ Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2, 3}, \
+\"Directed\"]}, {}],
+    Hypergraph[{Edge[{1, 2, 3}, \"Directed\"]}]]}\
+\>", "Input",ExpressionUUID->"33a2bf69-2051-4840-860f-1121b658b308"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"3", ",", "1"}], "}"}]], "Output",ExpressionUUID->"264704dc-5fb8-3c4d-b6e2-97ec6b9a1cc2"],
+
+Cell["\<\
+Two vertices of the input will not land on one, unless that is allowed:\
+\>", "ExampleText",ExpressionUUID->"13bac5fc-27b0-554c-84ee-cb0ea675f221"],
+
+Cell["\<\
+{HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}], Hypergraph[{Edge[{1, \
+1}]}]],
+ Length @ HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}], \
+Hypergraph[{Edge[{1, 1}]}],
+    \"DistinctVertices\" -> False]}\
+\>", "Input",ExpressionUUID->"842a98b1-b41b-994b-b317-138ad9363b71"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", "}"}], ",", "1"}], "}"}]], "Output",ExpressionUUID->"a2732af7-\
+bbb0-5848-8cc7-ef3a92217064"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"1527e208-0ff6-f14b-9b54-188b4cd53b61"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Rewriting.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Matching",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"22ca6065-4534-db44-9dde-e3074a6295c5"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"c9b6375f-7226-ef44-9086-bca58c68cd02"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"5c638399-8f93-ba44-b3c6-4dbb99881621"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "7e75c294-2c3d-f247-9e53-a65e5ee8b672"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["EdgeList", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "f2e9eefd-1b7e-9844-aa75-0c5c278fdf84"]
+}], "SeeAlso",ExpressionUUID->"2d8177c4-fd5b-5b42-9547-cff1d3f69d13"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"aae57b0f-c3fc-3c4c-9427-57379acf44b0"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 98, 0, 70, "ObjectName",ExpressionUUID->"b4175009-23c4-6d4c-8d0a-8c640b028915"],
+Cell[655, 22, 383, 8, 70, "Usage",ExpressionUUID->"7b635aa9-27e8-084c-92a5-15dff62889e4"],
+Cell[1033, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"7e5ece58-b8a1-1843-8414-e5de40cc6f0c"],
+Cell[1134, 34, 295, 4, 70, "Notes",ExpressionUUID->"7ddf6e53-682a-7e42-ba11-d806ad1ee5fc"],
+Cell[1428, 40, 264, 4, 70, "Notes",ExpressionUUID->"825c41e4-cc43-7240-bfde-bdf7f503f852"],
+Cell[1691, 46, 207, 3, 70, "Notes",ExpressionUUID->"73d35054-a03e-dc40-a76f-2d9783451ebe"],
+Cell[1898, 51, 200, 3, 70, "Notes",ExpressionUUID->"fc1d3dee-47ff-7d47-a149-9e2287ff5311"],
+Cell[2098, 56, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"3e21800c-7eca-5548-9fd7-135238f00856"],
+Cell[2198, 58, 179, 3, 70, "Input",ExpressionUUID->"6eb3aa0b-ceeb-8e45-b0a7-2a5e19ed135d"],
+Cell[2377, 63, 923, 23, 70, "Output",ExpressionUUID->"7592a1eb-17b3-1e43-8d91-8a511a813a1a"],
+Cell[3280, 88, 161, 2, 70, "ExampleText",ExpressionUUID->"5181e63a-e4eb-9644-8368-558c920bdb10"],
+Cell[3442, 92, 219, 4, 70, "Input",ExpressionUUID->"7dc86bb2-ba67-4841-8217-1d646af0ba31"],
+Cell[3660, 98, 83, 0, 70, "Output",ExpressionUUID->"deec7a8e-6823-b241-b343-68287321616b"],
+Cell[3746, 100, 184, 3, 70, "ExampleText",ExpressionUUID->"2f0dbf3e-c426-4e43-9d58-44db2344fc83"],
+Cell[3930, 105, 356, 7, 70, "Input",ExpressionUUID->"33a2bf69-2051-4840-860f-1121b658b308"],
+Cell[4282, 114, 130, 2, 70, "Output",ExpressionUUID->"264704dc-5fb8-3c4d-b6e2-97ec6b9a1cc2"],
+Cell[4413, 118, 159, 2, 70, "ExampleText",ExpressionUUID->"13bac5fc-27b0-554c-84ee-cb0ea675f221"],
+Cell[4573, 122, 297, 6, 70, "Input",ExpressionUUID->"842a98b1-b41b-994b-b317-138ad9363b71"],
+Cell[4867, 130, 153, 4, 70, "Output",ExpressionUUID->"a2732af7-bbb0-5848-8cc7-ef3a92217064"],
+Cell[5019, 136, 85, 0, 70, "NotesSection",ExpressionUUID->"1527e208-0ff6-f14b-9b54-188b4cd53b61"],
+Cell[5107, 138, 272, 9, 70, "Notes",ExpressionUUID->"22ca6065-4534-db44-9dde-e3074a6295c5"],
+Cell[5373, 149, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"c9b6375f-7226-ef44-9086-bca58c68cd02"],
+Cell[5465, 151, 517, 12, 70, "SeeAlso",ExpressionUUID->"2d8177c4-fd5b-5b42-9547-cff1d3f69d13"]
+}
+]
+*)
+
+(* End of internal cache information *)

@@ -1,0 +1,415 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     18222,        406]
+NotebookOptionsPosition[     15425,        367]
+NotebookOutlinePosition[     15773,        382]
+CellTagsIndexPosition[     15730,        379]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypergraphRule", "ObjectName",ExpressionUUID->"5ffb811b-8b32-e24e-85d1-2034478c82c1"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphRule", "[", 
+    RowBox[{"input", ",", " ", "output"}], "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"780e8777-c25a-964b-8f4f-5f0fd4a63d04"],
+ " ",
+ "represents the rewrite rule taking the hypergraph input to the hypergraph \
+output."
+}], "Usage",ExpressionUUID->"222d9937-f5e7-6c4b-8c13-7a2a0aee570b"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"e984251b-a8ce-da40-b3e2-afd6d683389c"],
+
+Cell["\<\
+Either side may be given as anything Hypergraph accepts, and is converted; a \
+side that is not a hypergraph gives HypergraphRule::hg.\
+\>", "Notes",ExpressionUUID->"9631782d-9f70-8541-82bf-bb163660eb79"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"rule", "[", "hg", "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"e34170f3-b2ba-de48-ac6b-92d8438f5bb7"],
+ " applies the rule, giving one event for every way the input matches. See ",
+ Cell[BoxData[
+  StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"1cd5e472-fc99-184d-9f03-03b8c6350b27"],
+ "."
+}], "Notes",ExpressionUUID->"fd68f271-e5b9-e846-b3ef-9430321fca84"],
+
+Cell["\<\
+A vertex of the input that the output keeps is carried through the rewrite; \
+one the output introduces is created fresh; one the output drops is \
+destroyed. \"SharedVertices\", \"NewVertices\" and \"DeletedVertices\" report \
+the three groups, read off the two sides by vertex identifier.\
+\>", "Notes",ExpressionUUID->"2ab51933-cec6-8f4c-891b-b629a32c09a2"],
+
+Cell["\<\
+Vertices correspond between the two sides by identifier, so the same name on \
+both sides means the same vertex, and a name on the output alone means a new \
+one.\
+\>", "Notes",ExpressionUUID->"9a72d107-d90f-2a4d-9562-41db3b296171"],
+
+Cell["\<\
+The shape follows the reference paclet this package grew out of, so that \
+rules written for that one read the same here.\
+\>", "Notes",ExpressionUUID->"e3ac9b99-5a28-2746-a470-493fc53ace0c"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"3b7ff8d6-18ea-714d-b9a7-e3ab2b2b3c15"],
+
+Cell["\<\
+Subdividing an edge: the two endpoints are kept, a third vertex is new.\
+\>", "ExampleText",ExpressionUUID->"2237ef0a-c0ac-8d44-8f33-463a6ac6b989"],
+
+Cell["sub = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}]", "Input",ExpressionUUID->"c331fd60-3cb0-9d45-8c77-711e7c0ea207"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["HypergraphRule",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+    
+    TemplateBox[{
+      PaneSelectorBox[{False -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]], 
+              ButtonFunction :> (Typeset`open$$ = True), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              Hue[0.63, 0.7, 0.5], 
+              Arrowheads[0.35], 
+              ArrowBox[{{-0.8, 0}, {0.8, 0}}], 
+              AbsoluteThickness[1.4]}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                2.6 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], PlotRangePadding -> 0.4], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Input: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{"2", "\" vertices, \"", "1", "\" edges\""}, 
+                   "RowDefault"], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Output: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{"3", "\" vertices, \"", "2", "\" edges\""}, 
+                   "RowDefault"], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}], True -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]], 
+              ButtonFunction :> (Typeset`open$$ = False), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              Hue[0.63, 0.7, 0.5], 
+              Arrowheads[0.35], 
+              ArrowBox[{{-0.8, 0}, {0.8, 0}}], 
+              AbsoluteThickness[1.4]}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                2.6 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], PlotRangePadding -> 0.4], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Input: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{"2", "\" vertices, \"", "1", "\" edges\""}, 
+                   "RowDefault"], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Output: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{"3", "\" vertices, \"", "2", "\" edges\""}, 
+                   "RowDefault"], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Shared: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    RowBox[{"1", ",", "2"}], "}"}], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Created: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", "3", "}"}], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Destroyed: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", "}"}], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}]}, 
+       Dynamic[Typeset`open$$], ImageSize -> Automatic]},
+     "SummaryPanel"],
+    DynamicModuleValues:>{}], "]"}],
+  WolframInstitute`Hypergraphs`HypergraphRule[
+   WolframInstitute`Hypergraphs`Hypergraph[{
+     WolframInstitute`Hypergraphs`Vertex[1], 
+     WolframInstitute`Hypergraphs`Vertex[2]}, {
+     WolframInstitute`Hypergraphs`Edge[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+   WolframInstitute`Hypergraphs`Hypergraph[{
+     WolframInstitute`Hypergraphs`Vertex[1], 
+     WolframInstitute`Hypergraphs`Vertex[2], 
+     WolframInstitute`Hypergraphs`Vertex[3]}, {
+     WolframInstitute`Hypergraphs`Edge[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[3]}, "Directed"], 
+     WolframInstitute`Hypergraphs`Edge[{
+       WolframInstitute`Hypergraphs`Vertex[3], 
+       WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",ExpressionUUID->"86f697f6-b8ac-9449-b7fd-\
+250c18e1fce5"],
+
+Cell["\<\
+{sub[\"SharedVertices\"], sub[\"NewVertices\"], sub[\"DeletedVertices\"]}\
+\>", "Input",ExpressionUUID->"e7540fac-4d6e-7749-a2e3-b92ffeb9b0db"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "2"}], "}"}], ",", 
+   RowBox[{"{", "3", "}"}], ",", 
+   RowBox[{"{", "}"}]}], "}"}]], "Output",ExpressionUUID->"fc92ef41-fcf6-eb45-\
+b070-1c78150ed617"],
+
+Cell["\<\
+A rule that destroys a vertex, by mentioning it on the left only:\
+\>", "ExampleText",ExpressionUUID->"0efc5716-1782-e047-9030-2bd15156d042"],
+
+Cell["HypergraphRule[{{1, 2}}, {{1}}][\"DeletedVertices\"]", "Input",ExpressionUUID->"dc7bdf37-e0e8-b84f-befe-fc4b280baf34"],
+
+Cell[BoxData[
+ RowBox[{"{", "2", "}"}]], "Output",ExpressionUUID->"55e0c939-54b7-974b-8e6b-708255701610"],
+
+Cell["\<\
+The sides may carry symmetry types and labels like any hypergraph:\
+\>", "ExampleText",ExpressionUUID->"c753a43f-af3f-ca43-8094-7fb01c110b36"],
+
+Cell["\<\
+HypergraphRule[{Edge[{1, 2, 3}, \"Unordered\", \"a\"]}, {Edge[{1, 2}, \
+\"Directed\"]}][\"Input\"]\
+\>", "Input",ExpressionUUID->"ed8ec932-4dc3-6647-a246-75900d5433c7"],
+
+Cell[BoxData[
+ GraphicsBox[
+  NamespaceBox["Hypergraphs",
+   DynamicModuleBox[{Typeset`hg = HoldComplete[
+     WolframInstitute`Hypergraphs`Hypergraph[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[2], 
+       WolframInstitute`Hypergraphs`Vertex[3]}, {
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[1], 
+         WolframInstitute`Hypergraphs`Vertex[2], 
+         WolframInstitute`Hypergraphs`Vertex[3]}, "Unordered", "a"]}]]}, 
+    {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], 
+     {Hue[0.63, 0.66, 0.81], Opacity[0.1], 
+      FilledCurveBox[{
+       BSplineCurve[{{0.8658339352737859, 0.}, {0.7278649513099094, 
+         0.507048462975376}, {0.8768424375680299, 0.8659683851517446}}], 
+        BSplineCurve[{{0.8768424375680299, 0.8659683851517446}, {
+         0.5140311614301921, 0.7263909167185995}, {0.010498775754916756`, 
+         0.8773698149728941}}], 
+        BSplineCurve[{{0.010498775754916756`, 0.8773698149728941}, {
+         0.511279035856631, 0.5098988204306634}, {0.8658339352737859, 0.}}]}], 
+      {Opacity[1], InsetBox[
+        StyleBox["\<\"a\"\>",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontColor->Hue[
+          0.63, 0.7, 0.5]], {0.5841666136025149, 0.5809470030753335}]}}, 
+     {Opacity[1], 
+      {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.95]}],
+        DiskBox[{0.8768424375680299, 0.8659683851517446}, 
+        Offset[{2., 2.}, {0., 0.}]], 
+       DiskBox[{0.8658339352737859, 0.}, Offset[{2., 2.}, {0., 0.}]], 
+       DiskBox[{0.010498775754916756`, 0.8773698149728941}, 
+        Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontColor->GrayLevel[0]], {0.8768424375680299, 0.8659683851517446}, 
+        ImageScaled[{-0.21634752041330263, -0.19774367069699228}]], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontColor->GrayLevel[0]], {0.8658339352737859, 0.}, 
+        ImageScaled[{0.0641145253563965, 1.4000021405500767}]], InsetBox[
+        StyleBox["3",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontColor->GrayLevel[0]], {0.010498775754916756, 0.8773698149728941},
+         ImageScaled[{1.3885864055117947, 0.04129072394420813}]]}}}]],
+  Background->GrayLevel[1],
+  ImagePadding->20,
+  PlotRange->{{0.010498775754916756`, 0.8768424375680299}, {0., 
+   0.8773698149728941}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"540d30c3-119d-\
+0b49-adab-55d358049886"],
+
+Cell["Something that is not a hypergraph is refused:", "ExampleText",ExpressionUUID->"6b28e9f2-cfe6-2d44-96fd-766d47526702"],
+
+Cell["Quiet @ HypergraphRule[{{1, 2}}, \"nope\"]", "Input",ExpressionUUID->"3eb5a2c9-eede-184b-87a7-c98d4330f8be"],
+
+Cell[BoxData["$Failed"], "Output",ExpressionUUID->"e97f3d2b-3313-774b-8b5f-0ccae1e1294f"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"ad9e045b-5b02-8c4e-be2b-4826e4bbaf1b"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Rewriting.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "The rule object",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"776ca8d5-07ef-3d4e-b83b-cb1adc804d4c"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"b4a3c956-7b7a-3f45-969c-390408a9251d"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"4777c628-83d4-6748-88af-64e8cbb0663a"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphRuleMatches", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"a7ff0ad9-aa78-364f-8afd-0eed53199b7e"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphRuleQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "7fa31d1f-95f4-6741-bdeb-c74c3118ac55"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["Hypergraph", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "daffa555-e2e0-7b4c-80a5-6e9a209e660b"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["Edge", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "da1f458c-5fc6-ad4f-b544-caeb8cda5e12"]
+}], "SeeAlso",ExpressionUUID->"29c9eae6-bd09-0e4b-ab94-6dcec7be2868"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"aae57b0f-c3fc-3c4c-9427-57379acf44b0"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 91, 0, 70, "ObjectName",ExpressionUUID->"5ffb811b-8b32-e24e-85d1-2034478c82c1"],
+Cell[648, 22, 389, 9, 70, "Usage",ExpressionUUID->"222d9937-f5e7-6c4b-8c13-7a2a0aee570b"],
+Cell[1031, 33, 98, 0, 70, "NotesSection",ExpressionUUID->"e984251b-a8ce-da40-b3e2-afd6d683389c"],
+Cell[1132, 35, 217, 3, 70, "Notes",ExpressionUUID->"9631782d-9f70-8541-82bf-bb163660eb79"],
+Cell[1349, 40, 473, 10, 70, "Notes",ExpressionUUID->"fd68f271-e5b9-e846-b3ef-9430321fca84"],
+Cell[1815, 52, 375, 5, 70, "Notes",ExpressionUUID->"2ab51933-cec6-8f4c-891b-b629a32c09a2"],
+Cell[2188, 59, 246, 4, 70, "Notes",ExpressionUUID->"9a72d107-d90f-2a4d-9562-41db3b296171"],
+Cell[2433, 65, 204, 3, 70, "Notes",ExpressionUUID->"e3ac9b99-5a28-2746-a470-493fc53ace0c"],
+Cell[2637, 70, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"3b7ff8d6-18ea-714d-b9a7-e3ab2b2b3c15"],
+Cell[2737, 72, 159, 2, 70, "ExampleText",ExpressionUUID->"2237ef0a-c0ac-8d44-8f33-463a6ac6b989"],
+Cell[2897, 76, 120, 0, 70, "Input",ExpressionUUID->"c331fd60-3cb0-9d45-8c77-711e7c0ea207"],
+Cell[3020, 78, 6692, 144, 70, "Output",ExpressionUUID->"86f697f6-b8ac-9449-b7fd-250c18e1fce5"],
+Cell[9571, 224, 155, 2, 70, "Input",ExpressionUUID->"e7540fac-4d6e-7749-a2e3-b92ffeb9b0db"],
+Cell[9727, 228, 239, 7, 70, "Output",ExpressionUUID->"fc92ef41-fcf6-eb45-b070-1c78150ed617"],
+Cell[9962, 237, 153, 2, 70, "ExampleText",ExpressionUUID->"0efc5716-1782-e047-9030-2bd15156d042"],
+Cell[10116, 241, 124, 0, 70, "Input",ExpressionUUID->"dc7bdf37-e0e8-b84f-befe-fc4b280baf34"],
+Cell[10243, 243, 106, 1, 70, "Output",ExpressionUUID->"55e0c939-54b7-974b-8e6b-708255701610"],
+Cell[10351, 246, 154, 2, 70, "ExampleText",ExpressionUUID->"c753a43f-af3f-ca43-8094-7fb01c110b36"],
+Cell[10506, 250, 181, 3, 70, "Input",ExpressionUUID->"ed8ec932-4dc3-6647-a246-75900d5433c7"],
+Cell[10687, 255, 3218, 67, 70, "Output",ExpressionUUID->"540d30c3-119d-0b49-adab-55d358049886"],
+Cell[13841, 324, 124, 0, 70, "ExampleText",ExpressionUUID->"6b28e9f2-cfe6-2d44-96fd-766d47526702"],
+Cell[13968, 326, 114, 0, 70, "Input",ExpressionUUID->"3eb5a2c9-eede-184b-87a7-c98d4330f8be"],
+Cell[14085, 328, 89, 0, 70, "Output",ExpressionUUID->"e97f3d2b-3313-774b-8b5f-0ccae1e1294f"],
+Cell[14177, 330, 85, 0, 70, "NotesSection",ExpressionUUID->"ad9e045b-5b02-8c4e-be2b-4826e4bbaf1b"],
+Cell[14265, 332, 279, 9, 70, "Notes",ExpressionUUID->"776ca8d5-07ef-3d4e-b83b-cb1adc804d4c"],
+Cell[14538, 343, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"b4a3c956-7b7a-3f45-969c-390408a9251d"],
+Cell[14630, 345, 811, 20, 70, "SeeAlso",ExpressionUUID->"29c9eae6-bd09-0e4b-ab94-6dcec7be2868"]
+}
+]
+*)
+
+(* End of internal cache information *)

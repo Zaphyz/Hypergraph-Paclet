@@ -530,3 +530,4 @@ Get[FileNameJoin[{DirectoryName[$InputFileName], "Hypermatrix.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "ArrayAlgebra.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "ArrayGraphics.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "Adjacency.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "Rewriting.wl"}]];

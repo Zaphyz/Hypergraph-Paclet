@@ -1,0 +1,106 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      3729,         97]
+NotebookOptionsPosition[      2466,         74]
+NotebookOutlinePosition[      2814,         89]
+CellTagsIndexPosition[      2771,         86]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypergraphRuleQ", "ObjectName",ExpressionUUID->"6ad33efc-a1b1-f243-ada3-e3e233512b60"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphRuleQ", "[", "expr", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"5d0cd330-5361-7246-ad6a-73833899a5ab"],
+ " ",
+ "gives True if expr is a valid HypergraphRule, and False otherwise."
+}], "Usage",ExpressionUUID->"1b9a2e09-5f04-6242-b1d1-152d7a3a2756"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"0e2b36d1-63a5-4542-87aa-cdea4ad4e046"],
+
+Cell["\<\
+A rule is valid when both of its sides are valid Hypergraph objects.\
+\>", "Notes",ExpressionUUID->"b771454d-a72e-8e48-9582-7e3af2eb7dd3"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"84b8f4bc-6a37-be49-b36d-a17f09a35ad5"],
+
+Cell["\<\
+{HypergraphRuleQ @ HypergraphRule[{{1, 2}}, {{2, 1}}],
+ HypergraphRuleQ[{{1, 2}} -> {{2, 1}}]}\
+\>", "Input",ExpressionUUID->"b700ed05-0071-1249-89e4-3a2de4437d77"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"True", ",", "False"}], "}"}]], "Output",ExpressionUUID->"8f32d5e2-\
+ec74-4348-82f5-7b8e44df7391"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"1c245a7d-577e-f047-8773-b95c64ec6ecf"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Rewriting.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "The rule object",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"afeac451-3794-7742-a564-cde5e043eddb"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"02eb4094-e0f0-544b-bbc6-ea2914388c42"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "03e4e1d1-e80f-1c49-9b6b-dd648a64e728"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "b3919ed0-eb26-4d4f-a594-f848147067c0"]
+}], "SeeAlso",ExpressionUUID->"32af36fb-33db-7d45-8924-367f68458d57"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"aae57b0f-c3fc-3c4c-9427-57379acf44b0"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 92, 0, 70, "ObjectName",ExpressionUUID->"6ad33efc-a1b1-f243-ada3-e3e233512b60"],
+Cell[649, 22, 335, 7, 70, "Usage",ExpressionUUID->"1b9a2e09-5f04-6242-b1d1-152d7a3a2756"],
+Cell[980, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"0e2b36d1-63a5-4542-87aa-cdea4ad4e046"],
+Cell[1081, 33, 150, 2, 70, "Notes",ExpressionUUID->"b771454d-a72e-8e48-9582-7e3af2eb7dd3"],
+Cell[1232, 37, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"84b8f4bc-6a37-be49-b36d-a17f09a35ad5"],
+Cell[1332, 39, 177, 3, 70, "Input",ExpressionUUID->"b700ed05-0071-1249-89e4-3a2de4437d77"],
+Cell[1509, 44, 140, 3, 70, "Output",ExpressionUUID->"8f32d5e2-ec74-4348-82f5-7b8e44df7391"],
+Cell[1649, 49, 85, 0, 70, "NotesSection",ExpressionUUID->"1c245a7d-577e-f047-8773-b95c64ec6ecf"],
+Cell[1737, 51, 279, 9, 70, "Notes",ExpressionUUID->"afeac451-3794-7742-a564-cde5e043eddb"],
+Cell[2010, 62, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"02eb4094-e0f0-544b-bbc6-ea2914388c42"],
+Cell[2102, 64, 368, 8, 70, "SeeAlso",ExpressionUUID->"32af36fb-33db-7d45-8924-367f68458d57"]
+}
+]
+*)
+
+(* End of internal cache information *)

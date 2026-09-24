@@ -150,6 +150,30 @@ Which indices go outside and which inside is a choice rather than a fact about t
 `"Nesting"` makes it. `HypermatrixGraphics` and `HypermatrixGraphics3D` draw every array of a
 hypermatrix at once.
 
+### Rewriting
+
+A rewrite rule is a pair of hypergraphs. Applying it finds the ways its input sits inside a
+hypergraph and replaces each of them by the output — one **event** per way, reported as an
+association saying not just what the new hypergraph is but what was matched, created and
+destroyed.
+
+```wolfram
+sub = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];   (* subdivide an edge *)
+events = sub[Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}]];
+
+Length[events]                                       (* 2 — one per edge *)
+First[events]["NewVertices"]                         (* the vertex it created *)
+First[events]["Hypergraph"]                          (* the result *)
+```
+
+Symmetry types must agree between a pattern edge and the edge it lies on, and the pattern is
+matched over the orderings that symmetry allows — one for a directed edge, its rotations for
+a cyclic one, every permutation for an unordered one. Labels constrain: a pattern carrying no
+label matches whatever it lies on, one carrying a label matches only the same label.
+`HypergraphRuleMatches` shows the matches without rewriting anything.
+
+The syntax follows the upstream paclet, so rules written for that one read the same here.
+
 ### From a hypergraph to a hypermatrix
 
 This is where the two halves meet. An edge has an arity and a symmetry type; an array has an
@@ -199,7 +223,7 @@ left out rather than reported alongside them.
 
 ## Documentation
 
-`Documentation/` holds a reference page for every exported symbol — 46 of them — and a
+`Documentation/` holds a reference page for every exported symbol — 50 of them — and a
 guide that groups them by subject. Open them in the front end:
 
 ```wolfram
@@ -221,11 +245,12 @@ reasoning behind each design choice.
 
 | Path | |
 | --- | --- |
-| `src/Hypergraph.wl` | `Vertex`, `Edge`, `Hypergraph`, accessors, skeletons, canonical form and isomorphism. Loads the other five at its end. |
+| `src/Hypergraph.wl` | `Vertex`, `Edge`, `Hypergraph`, accessors, skeletons, canonical form and isomorphism. Loads the other six at its end. |
 | `src/HypergraphPlot.wl` | `HypergraphPlot`, `HypergraphEmbedding`, and the default graphical display. |
 | `src/Hypermatrix.wl` | `ArrayObject`, `GenerateSymbolicArray`, `Hypermatrix` and their accessors. |
 | `src/ArrayAlgebra.wl` | Special arrays, `ArrayMultiply`, `ArrayAdd`, `ArrayTimes`, `FindArrayEquations`. |
 | `src/ArrayGraphics.wl` | `ArrayGraphics`, `ArrayGraphics3D`, `HypermatrixGraphics`, `HypermatrixGraphics3D`, `ArrayNesting`. |
+| `src/Rewriting.wl` | `HypergraphRule` and its application: the matcher, and the events a rewrite produces. |
 | `src/Adjacency.wl` | `AdjacencyHypermatrix`: the correspondence between edge symmetry types and array symmetries, counting or labelled. |
 | `PacletInfo.wl` | The paclet's description of itself: kernel root, context, and the symbols that load it. |
 | `Documentation/` | Reference pages and guide, with the script that generates them. |
@@ -257,7 +282,8 @@ The plan, in the order it is being built:
       default graphical display. *A visual editor is still to come.*
 - [x] **Hypergraphs to hypermatrices** — `AdjacencyHypermatrix`, with the edge symmetry types
       corresponding to the array symmetries. *The passage back is still to come.*
-- [ ] **Rewriting rules** — definitions, rule application, a visual interface for editing a rule.
+- [x] **Rewriting rules** — `HypergraphRule`, matching and application, with each rewrite
+      reported as an event. *A visual interface for editing a rule is still to come.*
 - [ ] **Rewriting systems and causality** — generations of states, causal graphs, causal
       dependence of events, conditions for dependence and for overlapping patterns.
 - [ ] **Plex diagrams** — hypermatrix operations specified by labelled hypergraphs, and the

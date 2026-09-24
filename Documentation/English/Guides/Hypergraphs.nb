@@ -10,57 +10,57 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     52312,       1193]
-NotebookOptionsPosition[     40103,       1052]
-NotebookOutlinePosition[     40449,       1067]
-CellTagsIndexPosition[     40406,       1064]
+NotebookDataLength[     56541,       1286]
+NotebookOptionsPosition[     43389,       1135]
+NotebookOutlinePosition[     43735,       1150]
+CellTagsIndexPosition[     43692,       1147]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["Hypergraphs", "Title",ExpressionUUID->"5f5cc8c2-4aa1-5648-9007-c545bc460f68"],
+Cell["Hypergraphs", "Title",ExpressionUUID->"21bd6ac0-e842-544b-aa63-643e60698d37"],
 
 Cell["\<\
 WolframInstitute`Hypergraphs` \[LongDash] guide to the implemented functions\
-\>", "Subtitle",ExpressionUUID->"ca4618d0-41f9-1341-8a9e-b98a69360963"],
+\>", "Subtitle",ExpressionUUID->"9173b8d1-2424-bf4c-bfbb-b3bba0eddc16"],
 
 Cell["\<\
 Hypergraphs as multisets of hyperedges, with independently labelled vertices \
 and edges, a symmetry type on every edge, a default graphical display, and \
 isomorphism testing that takes labels into account up to renaming.\
-\>", "Text",ExpressionUUID->"e594047d-b415-224b-89ad-a94eca952027"],
+\>", "Text",ExpressionUUID->"ca2c488b-ec75-7a4e-8237-98dc0d2a95ad"],
 
-Cell["Loading the package", "Section",ExpressionUUID->"d29be5ec-fed1-f644-ba17-e46a21f37cc5"],
+Cell["Loading the package", "Section",ExpressionUUID->"850d4843-6123-7647-ba6b-8184d2bd6b46"],
 
 Cell[TextData[{
  "The whole package is loaded by a single ",
  Cell[BoxData[
   StyleBox["Get", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "6c32b60e-163f-d143-ac52-0890b1031b73"],
+  "8c2f88b9-a67d-8a48-a7c5-b81fc21d4c06"],
  " of the core file, which pulls in the plotting code itself:"
-}], "Text",ExpressionUUID->"bcc7fe75-d251-ef49-b0fa-8260d3a33b9c"],
+}], "Text",ExpressionUUID->"bde37b7d-a41a-3c4b-9550-de94ae7a8c56"],
 
-Cell["Get[FileNameJoin[{\"<project>\", \"src\", \"Hypergraph.wl\"}]]", "Input",ExpressionUUID->"388f943b-0eaa-c746-9443-232a543f2af1"],
+Cell["Get[FileNameJoin[{\"<project>\", \"src\", \"Hypergraph.wl\"}]]", "Input",ExpressionUUID->"03e70f50-2df3-5d41-8ac6-1131f866fd4b"],
 
 Cell[TextData[{
  "Everything lives in the context ",
  Cell[BoxData[
   StyleBox["WolframInstitute`Hypergraphs`", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"77714452-7876-f54a-bba2-e4be8d9bba24"],
+  ExpressionUUID->"8bd3d9c8-35c7-8243-aebc-7afadb1bdc05"],
  ", deliberately distinct from the upstream paclet ",
  Cell[BoxData[
   StyleBox["WolframInstitute`Hypergraph`", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"80e488b9-4039-d742-ac51-f43d9dff7a78"],
+  ExpressionUUID->"80588cc5-5e78-354f-b60e-8f1d93e5ad42"],
  " (singular) so that both can be loaded into one kernel."
-}], "Text",ExpressionUUID->"eb3b9788-d96c-0d4e-82a1-e73da85fb50e"],
+}], "Text",ExpressionUUID->"714c82bb-0a71-0a4e-ae61-baa66b914c65"],
 
-Cell["Where the code lives", "Section",ExpressionUUID->"0076b58d-738d-0746-94b5-5651d3ab880e"],
+Cell["Where the code lives", "Section",ExpressionUUID->"d225faed-8df6-3c4c-abfa-1e75ad7623ba"],
 
 Cell["\<\
 The package proper is the files in src/. Everything else is documentation, \
 tests, or earlier research material that predates the rewrite and is kept \
 under reference/ for consultation.\
-\>", "Text",ExpressionUUID->"626f8fbb-179b-5744-a492-d8b3b7a38a0e"],
+\>", "Text",ExpressionUUID->"b127bfd0-f04e-f543-8b36-a6fae9a8556c"],
 
 Cell[TextData[{
  StyleBox["src/Hypergraph.wl",
@@ -71,7 +71,7 @@ Cell[TextData[{
 HypergraphSkeleton, and the canonical form and isomorphism functions. Loads \
 the other four files at its end, so this is the only one that has to be read \
 in."
-}], "Text",ExpressionUUID->"3abd7889-7410-ab48-a564-00fb2d0118c7"],
+}], "Text",ExpressionUUID->"da074c68-6d08-fe42-81b2-a6a9f6736b9c"],
 
 Cell[TextData[{
  StyleBox["src/HypergraphPlot.wl",
@@ -80,7 +80,7 @@ Cell[TextData[{
  " \[LongDash] ",
  "HypergraphPlot and HypergraphEmbedding, the summary-box thresholds, and the \
 MakeBoxes definition that makes a Hypergraph draw itself."
-}], "Text",ExpressionUUID->"2b55b6b7-92b9-ab4b-a2ac-e073547000ed"],
+}], "Text",ExpressionUUID->"3d0430fd-7bf3-1140-b106-f415444c87ef"],
 
 Cell[TextData[{
  StyleBox["src/Hypermatrix.wl",
@@ -89,7 +89,7 @@ Cell[TextData[{
  " \[LongDash] ",
  "ArrayObject, GenerateSymbolicArray and Hypermatrix, their accessors and \
 predicates."
-}], "Text",ExpressionUUID->"0afb1919-80d2-a943-961d-eceb70862c90"],
+}], "Text",ExpressionUUID->"7a6c7ed2-e8de-2643-8b78-2347d8b605cb"],
 
 Cell[TextData[{
  StyleBox["src/ArrayAlgebra.wl",
@@ -98,7 +98,16 @@ Cell[TextData[{
  " \[LongDash] ",
  "The special arrays, the contraction ArrayMultiply, the entry-by-entry \
 ArrayAdd and ArrayTimes, and FindArrayEquations."
-}], "Text",ExpressionUUID->"69644139-bd46-7947-9ddc-5d7e30ea0d38"],
+}], "Text",ExpressionUUID->"841d444c-362c-444b-b49f-7ae19893df67"],
+
+Cell[TextData[{
+ StyleBox["src/Rewriting.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ " \[LongDash] ",
+ "HypergraphRule and its application: the matcher, and the events a rewrite \
+produces."
+}], "Text",ExpressionUUID->"6c401b87-fd08-174f-97e8-d34881c7f60a"],
 
 Cell[TextData[{
  StyleBox["src/Adjacency.wl",
@@ -107,7 +116,7 @@ Cell[TextData[{
  " \[LongDash] ",
  "AdjacencyHypermatrix: the correspondence between edge symmetry types and \
 array symmetries, and the passage from one to the other."
-}], "Text",ExpressionUUID->"5b83eca6-d82f-6944-93b0-d6f7b9b76217"],
+}], "Text",ExpressionUUID->"fd22dc71-2284-d24c-97c2-73e6faa23372"],
 
 Cell[TextData[{
  StyleBox["src/ArrayGraphics.wl",
@@ -117,7 +126,7 @@ Cell[TextData[{
  "The two families of pictures: ArrayGraphics and HypermatrixGraphics in the \
 plane, ArrayGraphics3D and HypermatrixGraphics3D in space, with ArrayNesting \
 deciding how the indices are split between them."
-}], "Text",ExpressionUUID->"bb0870b2-bb73-8043-89ee-5037af96b4fc"],
+}], "Text",ExpressionUUID->"866e17b7-7cdd-6d4d-85e0-dd7c85cb8dff"],
 
 Cell[TextData[{
  StyleBox["tests/BasicExamples.wls",
@@ -126,7 +135,7 @@ Cell[TextData[{
  " \[LongDash] ",
  "Every hypergraph example in the documentation as an assertion, plus several \
 thousand randomized checks. Run it with wolframscript -file."
-}], "Text",ExpressionUUID->"3352ade5-fd28-424e-895b-4c531e70e177"],
+}], "Text",ExpressionUUID->"b96247b9-dfc2-ad48-9762-1106dce9255e"],
 
 Cell[TextData[{
  StyleBox["tests/HypermatrixExamples.wls",
@@ -134,7 +143,7 @@ Cell[TextData[{
   FontWeight->"Plain"],
  " \[LongDash] ",
  "The same for the array and hypermatrix objects."
-}], "Text",ExpressionUUID->"79dfd5b0-b5b2-7445-a4bb-966323f6a6c0"],
+}], "Text",ExpressionUUID->"1bc85d04-eb12-814e-bf12-c4e0f6ad7aba"],
 
 Cell[TextData[{
  StyleBox["tests/ArrayAlgebraExamples.wls",
@@ -142,7 +151,7 @@ Cell[TextData[{
   FontWeight->"Plain"],
  " \[LongDash] ",
  "The same for the special arrays, ArrayMultiply and FindArrayEquations."
-}], "Text",ExpressionUUID->"75f65a4c-6102-da4d-b175-90deeae25ed5"],
+}], "Text",ExpressionUUID->"d84e1df1-fa33-c945-aaaa-9879b02fad35"],
 
 Cell[TextData[{
  StyleBox["notebooks/HypergraphBasics.nb",
@@ -150,7 +159,7 @@ Cell[TextData[{
   FontWeight->"Plain"],
  " \[LongDash] ",
  "Worked examples with the reasoning behind each design choice."
-}], "Text",ExpressionUUID->"d3cdd416-0599-4a4e-955a-55ad101f0d3b"],
+}], "Text",ExpressionUUID->"5a4d392d-fcda-c843-975b-670a40473645"],
 
 Cell[TextData[{
  StyleBox["notebooks/HypermatrixBasics.nb",
@@ -158,7 +167,7 @@ Cell[TextData[{
   FontWeight->"Plain"],
  " \[LongDash] ",
  "The same for arrays and hypermatrices."
-}], "Text",ExpressionUUID->"08c4f8e2-a2dd-cd48-9658-2767d82df27a"],
+}], "Text",ExpressionUUID->"87cf3820-96c2-2644-895b-04a6f7302897"],
 
 Cell[TextData[{
  StyleBox["Documentation/English/ReferencePages/Symbols/",
@@ -166,7 +175,7 @@ Cell[TextData[{
   FontWeight->"Plain"],
  " \[LongDash] ",
  "One reference page per exported symbol."
-}], "Text",ExpressionUUID->"195d0346-1168-b94c-bbed-4603b908ca8a"],
+}], "Text",ExpressionUUID->"26fbcbd0-3a43-c747-a7b9-1139e9a14033"],
 
 Cell[TextData[{
  StyleBox["Documentation/English/Guides/Hypergraphs.nb",
@@ -174,7 +183,7 @@ Cell[TextData[{
   FontWeight->"Plain"],
  " \[LongDash] ",
  "This guide."
-}], "Text",ExpressionUUID->"57dd369c-0fbc-3c4d-b69e-63388ace5a86"],
+}], "Text",ExpressionUUID->"fcc19a63-ed71-7440-a63f-1c70ff36b176"],
 
 Cell[TextData[{
  StyleBox["reference/Hypergraph/, reference/Multicomputation/",
@@ -183,7 +192,7 @@ Cell[TextData[{
  " \[LongDash] ",
  "Read-only clones of the two upstream paclets, WolframInstitute/Hypergraph \
 and Wolfram/Multicomputation, kept for comparison."
-}], "Text",ExpressionUUID->"aac364a5-2b7f-fe46-97c2-86d9819154c4"],
+}], "Text",ExpressionUUID->"65c6b88c-aaa6-6e41-9a4e-956297fc63e1"],
 
 Cell[TextData[{
  StyleBox["reference/PlexAlgebra.wl, reference/Chemoids.wl, \
@@ -197,7 +206,7 @@ hypermatrix contraction and plex diagrams in PlexAlgebra.wl in particular \
 \[LongDash] together with many worked examples of what the two upstream \
 paclets could do in combination. Mostly commented out, and not part of the \
 package."
-}], "Text",ExpressionUUID->"cb2559bd-66c4-f142-8ae7-6bf80a198076"],
+}], "Text",ExpressionUUID->"1fbebb32-866d-ad41-81b3-d4fb015993b9"],
 
 Cell[TextData[{
  StyleBox["notebooks/legacy/",
@@ -205,226 +214,226 @@ Cell[TextData[{
   FontWeight->"Plain"],
  " \[LongDash] ",
  "The notebooks those exports came from."
-}], "Text",ExpressionUUID->"f0220f88-c7a6-b34d-ae19-6307cdd19787"],
+}], "Text",ExpressionUUID->"aa63e39f-e70c-4747-9fe8-b9cb317a19ba"],
 
 Cell["\<\
 A reference page names the file and the section heading its function is \
 defined under, rather than a line number, since line numbers go stale on the \
 next edit.\
-\>", "Text",ExpressionUUID->"2ff6326e-75aa-cc48-9112-7f68800e8e38"],
+\>", "Text",ExpressionUUID->"517ff790-d03a-9d45-95c0-99f01783e87b"],
 
-Cell["Vertices and edges", "Section",ExpressionUUID->"d995b7ae-4be9-094f-90a4-60e0bffd124e"],
+Cell["Vertices and edges", "Section",ExpressionUUID->"b4a214fa-0c08-d248-bd0e-887d3f4118c6"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["Vertex", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "695499f3-3f4d-0445-b71b-e8b2de4c1e83"],
+  "e212ee5f-c05c-9147-a1af-c8c7a6daf1fc"],
  " \[LongDash] ",
  "a vertex, identified by any expression and optionally labelled"
-}], "Text",ExpressionUUID->"3e88b740-00f2-b44a-8d5f-ab1998e0f3d8"],
+}], "Text",ExpressionUUID->"5281c261-07ed-2645-b1ce-4a67b9483663"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["VertexID", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "bb265924-1448-d741-9bd9-9485695ab8d5"],
+  "de7b09be-bdcf-2e40-81b7-84cda4511e7f"],
  " \[LongDash] ",
  "the identifier of a vertex"
-}], "Text",ExpressionUUID->"c0a24159-c149-0247-bdcc-d27616c63ba3"],
+}], "Text",ExpressionUUID->"b506d8e9-c42f-064d-b55c-e67a8e42d452"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["VertexLabel", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "15df34a5-b11e-3e4b-871f-ef324101d711"],
+  "b449f005-e6e1-b54f-9534-6b74b8802c72"],
  " \[LongDash] ",
  "the label of a vertex, or None"
-}], "Text",ExpressionUUID->"f245bece-62e4-224a-b9a0-cb800ccdd263"],
+}], "Text",ExpressionUUID->"600036c8-01d0-4a4b-b75e-34229996629f"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["VertexObjectQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "ceea15e7-09da-5742-8496-1b6cf5ef5cbc"],
+  "4810b74e-fafd-ba49-96fb-85a38c20c3fd"],
  " \[LongDash] ",
  "test for a valid Vertex object"
-}], "Text",ExpressionUUID->"cf319164-cd9a-354d-9154-8cdbb943e2e7"],
+}], "Text",ExpressionUUID->"7c24f81a-d25b-0043-8303-4e6db0054927"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["Edge", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "b873bc93-8caf-8a49-8e04-3efa27a64bd9"],
+  "9ba93f63-fb9c-4a43-a0ad-fb062afa7e8d"],
  " \[LongDash] ",
  "a hyperedge, with a symmetry type and an optional label"
-}], "Text",ExpressionUUID->"e752a076-d240-e543-ac17-a262de3032e5"],
+}], "Text",ExpressionUUID->"ac0dcc67-ab02-e14f-8885-4a8dd58be536"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["EdgeVertices", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "50252e43-e2d4-b842-86ab-8e872bf5947a"],
+  "ac2d4363-1d17-e045-a36e-9bd3c43437f9"],
  " \[LongDash] ",
  "the vertices of a hyperedge"
-}], "Text",ExpressionUUID->"e9c88df4-b4e1-124c-a0a6-9aa366f5997f"],
+}], "Text",ExpressionUUID->"00084dce-56d7-8d44-8fb1-dedfeff7299f"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["EdgeSymmetry", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "31eaf134-f90a-0d4e-8ed2-a766e438a4d9"],
+  "2c4aa837-86ed-1a4e-91e9-61b9ec729b92"],
  " \[LongDash] ",
  "the symmetry type of a hyperedge: \"Directed\", \"Unordered\" or \
 \"Cyclic\""
-}], "Text",ExpressionUUID->"e12a61b6-66e5-3243-8486-f34186d7559a"],
+}], "Text",ExpressionUUID->"b32015b6-b032-4742-82e7-134ceb692ad6"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["EdgeLabel", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "62b35215-1acd-d14c-97ca-d758281af1c9"],
+  "8c54f035-8e5d-c846-b343-499dbf3cd16e"],
  " \[LongDash] ",
  "the label of a hyperedge, or None"
-}], "Text",ExpressionUUID->"161d69cb-1f04-7046-8fa1-25bd01c0bd3a"],
+}], "Text",ExpressionUUID->"4546e36c-44a8-214a-8114-82187600d616"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["EdgeObjectQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "235c4257-63b3-9343-819a-982e96a98fbb"],
+  "18925f5a-81b3-bc44-8d9c-35623b200bf7"],
  " \[LongDash] ",
  "test for a valid Edge object"
-}], "Text",ExpressionUUID->"ee8ed677-e8aa-094d-985c-6095ce6b2dfe"],
+}], "Text",ExpressionUUID->"82904550-6c2d-b74b-a332-95e78db1b6b3"],
 
-Cell["Hypergraphs", "Section",ExpressionUUID->"d6cc5204-c2e9-2746-9589-6852124be58d"],
+Cell["Hypergraphs", "Section",ExpressionUUID->"0fc7f8cb-60a0-df4a-917c-f4f952e03ea7"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["Hypergraph", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "18901338-fa19-694f-8b19-bbcad982668f"],
+  "f6112023-161d-2942-9372-a4da8b96a7c1"],
  " \[LongDash] ",
  "a hypergraph, as an unordered multiset of hyperedges"
-}], "Text",ExpressionUUID->"1094f55d-b7cf-384c-8537-174dee63d748"],
+}], "Text",ExpressionUUID->"22256344-ed7d-c647-99d7-05b389efbedf"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "53a8b7d3-4a20-cf4e-9b3b-d3b596c57a0a"],
+  "95f55bb1-1518-ac48-9464-9b5ac727e804"],
  " \[LongDash] ",
  "test for a valid Hypergraph object"
-}], "Text",ExpressionUUID->"91bf1642-6597-894d-819e-1e18e234b9a0"],
+}], "Text",ExpressionUUID->"6e1e2007-e0ec-aa46-b613-27a6503c8fc0"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphSkeleton", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c3bce59c-fd78-9344-b201-e631e0ed239c"],
+  ExpressionUUID->"ce7b5abf-1878-7a46-bb5f-1fbaf63c685e"],
  " \[LongDash] ",
  "the underlying unlabelled hypergraph"
-}], "Text",ExpressionUUID->"71e723dd-d763-d542-87c1-f3b9b0703e4c"],
+}], "Text",ExpressionUUID->"83fba40f-6ba0-4549-adf2-5b078c7d65a2"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["SimpleHypergraphQ", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"ad76f067-5e67-5e43-8a1b-550fce0103ee"],
+  ExpressionUUID->"b58a9121-dbb7-8d46-a79b-f7b3112bebb3"],
  " \[LongDash] ",
  "whether no edge is repeated, labels set aside"
-}], "Text",ExpressionUUID->"16d4e11e-a87a-2943-92ee-53043fd329e7"],
+}], "Text",ExpressionUUID->"8ae0ad09-878a-b64f-bfaa-5f2d67420bb7"],
 
 Cell[TextData[{
  "The standard graph functions ",
  Cell[BoxData[
   StyleBox["VertexList", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "a158f29b-7d9d-e542-9ca3-b8e37a7c1a08"],
+  "b72f04cc-48bf-1142-bbee-7ed7eae26a3b"],
  ", ",
  Cell[BoxData[
   StyleBox["EdgeList", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "375da064-2924-f443-b1dd-03f0833017af"],
+  "0ba861d0-f28f-f84e-abbe-37c2cb617819"],
  ", ",
  Cell[BoxData[
   StyleBox["VertexCount", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "fc02d917-3b96-3b4f-8730-dc7b52b67f5b"],
+  "28f5a809-4350-d44b-9f1f-dffcd0eefa06"],
  " and ",
  Cell[BoxData[
   StyleBox["EdgeCount", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "b9565b2c-c6c8-ec46-81f1-7d515a3e1404"],
+  "4bb905eb-12c6-3c44-b266-a57bbb79556d"],
  " work directly on a Hypergraph, added as UpValues rather than redefined. \
 Further properties are read as ",
  Cell[BoxData[
   StyleBox[
    RowBox[{"hg", "[", "\"\<prop\>\"", "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"b085d836-524c-f344-a181-f3f96d63dcd7"],
+  ExpressionUUID->"fa55cebd-10ac-0949-90e2-e4d0caad5b32"],
  ", and ",
  Cell[BoxData[
   StyleBox[
    RowBox[{"hg", "[", "\"\<Properties\>\"", "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"9e77a9ae-472d-8d42-a464-3ba76bb9b274"],
+  "InlineFormula",ExpressionUUID->"25baa4b6-9bf4-3547-826e-e64e7c5e30bb"],
  " lists them."
-}], "Text",ExpressionUUID->"fc334ecf-ba33-b34a-ba9e-ce967ff6ff08"],
+}], "Text",ExpressionUUID->"4ed877f2-d5a2-d841-bcd6-75812fdfef4d"],
 
-Cell["Canonical form and isomorphism", "Section",ExpressionUUID->"e0873c6c-3e92-234a-a2fa-c899261905f3"],
+Cell["Canonical form and isomorphism", "Section",ExpressionUUID->"b34e67e1-ff60-e149-8b69-78583b252382"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["CanonicalHypergraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"e5882a16-ff9f-8744-ae13-a50add77370d"],
+  ExpressionUUID->"08bf089e-8809-5145-955b-e549e77bfb76"],
  " \[LongDash] ",
  "a canonical representative of the isomorphism class"
-}], "Text",ExpressionUUID->"16e11dec-bd3e-5c4a-9571-9116abcdaff3"],
+}], "Text",ExpressionUUID->"f4bae6a1-62f4-3740-bb3a-1f1a8059eb33"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["IsomorphicHypergraphQ", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"e389419e-3cc4-b344-909e-37ed2b5c1e9e"],
+  ExpressionUUID->"74807ac7-44d6-4b42-b1df-a9b84ae4e6ac"],
  " \[LongDash] ",
  "test two hypergraphs for isomorphism, with or without labels"
-}], "Text",ExpressionUUID->"6a3afcd1-7186-6b4e-ba23-75d81b015653"],
+}], "Text",ExpressionUUID->"ce656ca7-3445-bc4c-9943-7b4c351d5821"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["FindHypergraphIsomorphism", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"87e8f64d-f4b7-8f43-ae2f-683d7ff0aa46"],
+  ExpressionUUID->"0c0cd787-9c3e-2c49-bf96-b5656e03fe4d"],
  " \[LongDash] ",
  "the vertex renaming, and optionally the label correspondences"
-}], "Text",ExpressionUUID->"7c08d32a-0a88-c546-8a57-da6fdd5585bd"],
+}], "Text",ExpressionUUID->"1dade88d-f441-6d46-9bec-546396d2f84a"],
 
 Cell["\<\
 Labelled isomorphism matches labels up to a one-to-one correspondence rather \
 than identically, with vertex labels and edge labels corresponded \
 independently. The option \"Labeled\" -> False compares the skeletons instead.\
-\>", "Text",ExpressionUUID->"7b7179b0-aae7-a94d-85a1-eae5102299b1"],
+\>", "Text",ExpressionUUID->"efa5ca59-383b-f74b-8d35-399f924b32ed"],
 
-Cell["Drawing", "Section",ExpressionUUID->"984138c2-7d39-614f-a704-ca99a850325d"],
+Cell["Drawing", "Section",ExpressionUUID->"ac7d2711-b120-ce42-ba5b-1c6f790cc565"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphPlot", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "fb10dd82-00a6-1b42-ab51-86de2e2a6ee8"],
+  "c18d76a4-9361-b947-a1e8-4704c3e01e90"],
  " \[LongDash] ",
  "draw a hypergraph"
-}], "Text",ExpressionUUID->"b866ee33-3191-e14f-afa8-96addace1633"],
+}], "Text",ExpressionUUID->"9d85810c-99ee-804e-acd6-ebf687acaa02"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphEmbedding", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"e9ada3e4-4599-9541-ba0f-0db7b88809a0"],
+  ExpressionUUID->"9480d7b5-020a-2149-b59a-ef426f0e4c6e"],
  " \[LongDash] ",
  "the coordinates chosen for the vertices"
-}], "Text",ExpressionUUID->"5cad5998-25b5-1b41-be3c-43de7bda04f9"],
+}], "Text",ExpressionUUID->"9b6caded-f82c-4747-8145-8094ce71b7d4"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphLargeQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "66a64429-f16b-c148-942b-1507948894cf"],
+  "fb2154b4-4fd2-784c-9c6b-68d46a5e8c58"],
  " \[LongDash] ",
  "whether a hypergraph is too big to draw, and so shown as a summary box"
-}], "Text",ExpressionUUID->"e492aeb7-209f-fd45-b181-632dd7cf7d8d"],
+}], "Text",ExpressionUUID->"9ca9e5b3-41a6-6547-aa48-a1cd1e0c661d"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["SetHypergraphPlotThresholds", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c7810d10-d498-7642-87bc-5486269b238d"],
+  ExpressionUUID->"7ca97ebf-a834-4343-8c21-3630cc37c19c"],
  " \[LongDash] ",
  "change the sizes beyond which a summary box is shown"
-}], "Text",ExpressionUUID->"8f68dbe2-58fc-1c4e-b89a-135d38cfd340"],
+}], "Text",ExpressionUUID->"fb2362b3-869e-0a41-a8d4-464379aa75c9"],
 
 Cell["\<\
 A Hypergraph draws itself by default, the way a Graph does, so HypergraphPlot \
 is needed only in order to pass options.\
-\>", "Text",ExpressionUUID->"dfd402f8-bd39-474d-95b4-ce5f9e9cb2e3"],
+\>", "Text",ExpressionUUID->"ac76abce-3182-0a44-9482-a8ebc08c2bb8"],
 
-Cell["Arrays", "Section",ExpressionUUID->"c2dccfe7-4649-a742-b6f1-ddb46449c0d3"],
+Cell["Arrays", "Section",ExpressionUUID->"2225c621-70d6-3d48-9967-27ebfe662d49"],
 
 Cell["\<\
 An array is a nesting of lists, and one object holds any of them: nothing \
@@ -434,89 +443,89 @@ The order of an array is its number of indices, and an array of order n is an \
 n-array: a vector is a 1-array and a matrix is a 2-array. A scalar is the \
 0-array. An array is regular when all of its indices range over the same \
 length, and only a regular array can carry an index symmetry.\
-\>", "Text",ExpressionUUID->"cc99aada-8504-754a-a907-9d5aa6f2698b"],
+\>", "Text",ExpressionUUID->"d5b692dc-bf99-d04b-9b24-4f1c729e6424"],
 
 Cell[TextData[{
  "What an array is made of is read off its entries by ",
  Cell[BoxData[
   StyleBox["ArrayDomain", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "7ccc40ab-301b-f348-b580-3a0940e20b9e"],
+  "a5e33f89-1ffc-1740-a61b-54454a3cf8f4"],
  " rather than declared alongside them. The symmetry is the one thing it is \
 told rather than asked, being a claim about the entries that they may or may \
 not bear out."
-}], "Text",ExpressionUUID->"99aa5162-3a87-7141-bb18-b18f0cc84834"],
+}], "Text",ExpressionUUID->"b1ad0292-765a-544f-853a-549006836c94"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayObject", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "e958b67c-1b5d-474d-9f55-954ffdfb05e4"],
+  "11608571-0030-6d44-9020-72ebcfda0c52"],
  " \[LongDash] ",
  "an array, whatever its entries are"
-}], "Text",ExpressionUUID->"5fcf52e0-2fd1-4d4c-a5a5-b333cfcf986b"],
+}], "Text",ExpressionUUID->"4ef1a340-6c40-ac45-8448-e07b0471d328"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["GenerateSymbolicArray", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"88ac70f3-cb0b-9f43-a71d-58bd15568f66"],
+  ExpressionUUID->"4f0ff660-0385-8141-854b-8e37fa809404"],
  " \[LongDash] ",
  "build one whose entries are a name applied to the indices"
-}], "Text",ExpressionUUID->"652329fa-251c-fc4f-8421-90148823d065"],
+}], "Text",ExpressionUUID->"957a55cc-ee26-1748-b15f-49b3a800fe62"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayOrder", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "ce81c235-0d41-184c-bb38-ef39be8a4316"],
+  "e41e1460-f468-7e42-9b77-441bcba089a4"],
  " \[LongDash] ",
  "the number of indices"
-}], "Text",ExpressionUUID->"f14afece-fc8d-2744-97cf-c6e4b7a23378"],
+}], "Text",ExpressionUUID->"492c7dc2-df8e-0740-9e30-ecf91ddce9b0"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayDimensions", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "5b815cf5-13d3-0241-b4b1-589920222d98"],
+  "98108898-ffb1-f54a-a773-0b5706584da0"],
  " \[LongDash] ",
  "the lengths of the indices"
-}], "Text",ExpressionUUID->"664fc08d-4ac2-3d4a-be96-5e88d3c0e5c0"],
+}], "Text",ExpressionUUID->"cdb442d2-363f-c443-95b4-137dc402da59"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArraySymmetry", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "4c4826fc-7e17-4843-aacf-e262b0d1bb79"],
+  "c12441a6-35df-ec41-b2f1-5957d689a26c"],
  " \[LongDash] ",
  "the index symmetry: \"Rigid\", \"Cyclic\" or \"Symmetric\""
-}], "Text",ExpressionUUID->"55a0b838-2064-b040-869b-ce50a62c4591"],
+}], "Text",ExpressionUUID->"c0182340-4b18-f34d-8afb-493877c9a5e0"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayDomain", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "2dd1454a-835b-514d-934b-d20d8af1c38f"],
+  "573b55bd-f84c-5e4f-be67-1366d9daf11b"],
  " \[LongDash] ",
  "the value domain of the entries, or \"Expression\""
-}], "Text",ExpressionUUID->"eaea7023-4bd7-7646-affe-4c70fdf6dc1f"],
+}], "Text",ExpressionUUID->"6dd8989b-7702-264b-ab4a-20ab587f0bf4"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayEntries", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "7ea53bb5-6e60-7145-8a96-c5a21c1bb57d"],
+  "3075fe43-724d-a74c-a7b7-9b87f66d25a4"],
  " \[LongDash] ",
  "the entries, as a nested list"
-}], "Text",ExpressionUUID->"affb5705-3728-3b4c-a4b5-0ab7399224a1"],
+}], "Text",ExpressionUUID->"9781245f-4efa-1348-b657-3f89c0dd5960"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["RegularArrayQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "69cdd0c3-d55d-5b44-88fc-5914508fd1f1"],
+  "27059d95-3950-6d48-8c63-477f173684af"],
  " \[LongDash] ",
  "whether every index ranges over the same length"
-}], "Text",ExpressionUUID->"3407f9e4-c36d-1247-9038-f60b0bb814a4"],
+}], "Text",ExpressionUUID->"d7f0a1a2-2896-a849-b997-7a934e5a136e"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayObjectQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "506d165d-a1e9-8948-a2e6-8e3ff806900d"],
+  "fd3246e8-612e-3f45-879b-667aada1c2fb"],
  " \[LongDash] ",
  "test for a valid array object"
-}], "Text",ExpressionUUID->"fc4a1f9c-580f-be42-a241-8ae8fe46f1d9"],
+}], "Text",ExpressionUUID->"4c636388-c8b8-4a46-8af2-ec2ca277d0ea"],
 
 Cell[TextData[{
  "Dimensions and Normal work directly on an array object, and further \
@@ -524,60 +533,60 @@ properties are read as ",
  Cell[BoxData[
   StyleBox[
    RowBox[{"arr", "[", "\"\<prop\>\"", "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"aacbcad1-ee76-8c4c-9e0e-ebdedbd344b7"],
+  ExpressionUUID->"7572137d-0cfa-7646-ac6a-bb5ac0fe52da"],
  "."
-}], "Text",ExpressionUUID->"b1ee2fda-cfa8-0d41-a205-b68573dc39e5"],
+}], "Text",ExpressionUUID->"a692fab6-f517-ca4b-8f79-7a5ac512a4ef"],
 
-Cell["Special arrays", "Section",ExpressionUUID->"98762111-d65c-b947-942a-506459b80fe8"],
+Cell["Special arrays", "Section",ExpressionUUID->"981e32b5-7774-d24b-8c0b-17100d04bd75"],
 
 Cell["\<\
 Constant arrays and the generalized Kronecker deltas, in any order, dimension \
 and value domain. Each declares the strongest symmetry that actually holds of \
 it.\
-\>", "Text",ExpressionUUID->"3b9d54ca-8610-8640-a4eb-3a48f67edbd9"],
+\>", "Text",ExpressionUUID->"0199d5ad-ecf6-6d47-85a4-b0965302cf38"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ZeroArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "06e4532f-2bdb-1b43-b67a-08e8aac9e374"],
+  "34241514-ae69-e947-ab0e-d5225d99e4d8"],
  " \[LongDash] ",
  "every entry zero"
-}], "Text",ExpressionUUID->"ff191940-c1d5-544e-a33c-9d08e855cf8a"],
+}], "Text",ExpressionUUID->"7c5f7b88-bbe2-ba45-baa8-950f5f2ffe3a"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["OneArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "19aa2b84-d9ab-c844-beca-6d0af575f032"],
+  "da15437b-267e-a248-8406-2199b680c924"],
  " \[LongDash] ",
  "every entry one"
-}], "Text",ExpressionUUID->"159cd877-e1ae-384c-8cc6-c347e974ff09"],
+}], "Text",ExpressionUUID->"99d4878a-ab7b-f54d-99a8-4e9afc3187f0"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["IdentityArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "c905ee84-40c2-7545-8813-3e496d92d3af"],
+  "e9814374-8444-0943-a35f-e505c3141874"],
  " \[LongDash] ",
  "one where all the indices agree, zero elsewhere"
-}], "Text",ExpressionUUID->"6e717de8-340a-a34c-b9c7-906644ec3b1b"],
+}], "Text",ExpressionUUID->"86a96064-106e-8240-8ba9-899fe12d56ba"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["PartialIdentityArray", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"59430344-1652-1349-9892-9d97b49c4e83"],
+  ExpressionUUID->"61b40ae0-62a3-7f46-af8b-3819a3b3e508"],
  " \[LongDash] ",
  "one where the indices at chosen positions agree"
-}], "Text",ExpressionUUID->"e876b347-250b-5b48-b4c9-6d6302e384a3"],
+}], "Text",ExpressionUUID->"2bae8308-ebbc-924a-ab7f-705df691883d"],
 
-Cell["Contraction", "Section",ExpressionUUID->"5e41384d-d434-1843-a34f-ce78d6d565db"],
+Cell["Contraction", "Section",ExpressionUUID->"b74da89b-c892-e944-996f-ac253974c5bb"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayMultiply", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "92b2db68-514e-bc4e-a1bb-edad50b5d76e"],
+  "9500b7a4-4725-5346-9025-14720b9b2115"],
  " \[LongDash] ",
  "contract arrays by an index specification, in the manner of Einstein \
 summation"
-}], "Text",ExpressionUUID->"6023ce09-b6cb-5449-a13f-5cd825dbe066"],
+}], "Text",ExpressionUUID->"409be682-3489-1241-8b89-58c48288633b"],
 
 Cell["\<\
 The specification is written either as a string, \"ij,jk->ik\", or as a rule \
@@ -585,9 +594,9 @@ between lists of index labels. An index may occur in any number of the arrays \
 and in the output as well, so diagonals and three-way contractions are \
 expressible, not only pairwise ones. A 0-array is named by an empty group of \
 labels, and contracting every index away gives one back.\
-\>", "Text",ExpressionUUID->"25001baf-10da-e04f-8bb8-f5cdb28b9201"],
+\>", "Text",ExpressionUUID->"4d4a163b-28d7-d542-957f-c6a34a000eb8"],
 
-Cell["Drawing arrays", "Section",ExpressionUUID->"c9d5892c-9619-d546-a6af-24198d2fb137"],
+Cell["Drawing arrays", "Section",ExpressionUUID->"17ed4891-1b6e-6e4d-93a8-2301f03efcab"],
 
 Cell["\<\
 There are two families, and an array of any order may be drawn in either. The \
@@ -596,75 +605,75 @@ grid at order two, and above that a nesting of those, a grid whose cells hold \
 grids. The spatial family gives cubes arranged in space throughout: a line of \
 cubes, a plane of them, a lattice, and above that the same lattices tiled \
 through space, block beside block, all in one picture.\
-\>", "Text",ExpressionUUID->"6e84685a-33c1-ae49-bda6-42844f52116f"],
+\>", "Text",ExpressionUUID->"037bb4c8-5d46-714a-ae6b-e30144b00c2d"],
 
 Cell[TextData[{
  "Which indices go outside and which inside is a choice rather than a fact \
 about the array, and ",
  Cell[BoxData[
   StyleBox["\"\<Nesting\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "baa69efb-b937-ec4a-bfa3-236f4b5b3c80"],
+  "e81f69fa-7656-d047-ba44-e1f7dc62d5c3"],
  " makes it. A flat picture holds one or two indices at a time and a spatial \
 one holds three, so that is the only difference between the two defaults."
-}], "Text",ExpressionUUID->"9f6f0fb0-6ba5-7c43-935d-07b7376de1ce"],
+}], "Text",ExpressionUUID->"4f99e332-7b8a-354e-8e14-37ec9923d6c9"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayGraphics", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "ea8b2ea5-64d9-7845-848b-9b92828b121f"],
+  "937d3fb9-d69b-4742-b7ce-d01c2e76f718"],
  " \[LongDash] ",
  "draw an array of any order in the plane"
-}], "Text",ExpressionUUID->"ca7b19fe-5833-2a44-aefc-ac0dbe6cd6d2"],
+}], "Text",ExpressionUUID->"9e584d25-5fb5-b74b-8776-15c4a956e298"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayGraphics3D", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "6152d621-b0e5-9746-9e4b-7ec5d7c7a488"],
+  "9f288c35-8cb5-7444-9049-7b660215de0d"],
  " \[LongDash] ",
  "draw an array of any order as cubes in space"
-}], "Text",ExpressionUUID->"8502d7fe-25d2-dd40-bc80-4a0e5f1c7d26"],
+}], "Text",ExpressionUUID->"e4c93a58-9b87-8248-9d20-6db507e08bfb"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayNesting", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "340c7fa7-2bab-b142-935e-677313f99af8"],
+  "dd4800be-f064-cf44-9bc8-da7d006bbf0d"],
  " \[LongDash] ",
  "how the indices are split by default, for either family"
-}], "Text",ExpressionUUID->"df0fddf3-194c-a042-ab5a-ce41754a2207"],
+}], "Text",ExpressionUUID->"d77c9f5a-98d4-244a-9cc0-10284d4caa52"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypermatrixGraphics", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"4027e8a8-daec-814f-890d-1ebb04986b90"],
+  ExpressionUUID->"8d8b29b6-7fce-da4b-b63f-2ea1e5f670ad"],
  " \[LongDash] ",
  "draw every array of a hypermatrix, in the plane"
-}], "Text",ExpressionUUID->"dd869698-3d4a-e24c-8e18-8b6ff31c604a"],
+}], "Text",ExpressionUUID->"4fe10fce-88e9-db41-9faa-2769999ab823"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypermatrixGraphics3D", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"4acac951-fe40-cb4d-b9f7-eba8bccdc519"],
+  ExpressionUUID->"688edfac-c65f-3c47-bd71-5b204f17e4b2"],
  " \[LongDash] ",
  "the same, as cubes in space"
-}], "Text",ExpressionUUID->"4d8aec1d-9904-ae4d-ae31-fb670d1071a4"],
+}], "Text",ExpressionUUID->"aee2e88c-c177-2b4c-8913-2eab79d08b6f"],
 
-Cell["Adding and multiplying entry by entry", "Section",ExpressionUUID->"099c63dd-bfae-bf48-b879-a8a3c4f8ebf1"],
+Cell["Adding and multiplying entry by entry", "Section",ExpressionUUID->"e8c49119-3d36-4b47-a318-fc89c31cf458"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayAdd", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "5f2bb85b-df76-1741-8fe5-c27309439ad6"],
+  "a629d3ed-c78d-2641-9ac1-e75ea2becb8b"],
  " \[LongDash] ",
  "add arrays entry by entry"
-}], "Text",ExpressionUUID->"fd6b6794-b2b7-1e4a-b97f-db59f4570e8a"],
+}], "Text",ExpressionUUID->"36bf6602-5862-8e4a-a6d2-bb6e85ee1936"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayTimes", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "1b016248-b342-9044-abb8-61cec0b540ae"],
+  "6e7af2f2-c5f7-5a4c-87f3-30a944be8371"],
  " \[LongDash] ",
  "multiply arrays entry by entry"
-}], "Text",ExpressionUUID->"bb7fee53-865f-9442-a981-3a5795b69931"],
+}], "Text",ExpressionUUID->"6bb2cc05-b35e-8546-a78c-18d16961e8df"],
 
 Cell[TextData[{
  "These are the multilinear structure of arrays, as against the contraction \
@@ -673,30 +682,30 @@ ArrayMultiply. Arrays of the same dimensions combine entry by entry, and a \
 why scalar multiplication needs no name of its own. ",
  Cell[BoxData[
   StyleBox["Plus", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "f01426af-e5ac-ef4b-9bdb-a594027f4d9e"],
+  "1667e620-bc5b-524b-ac5a-b3e4100cfe8e"],
  " and ",
  Cell[BoxData[
   StyleBox["Times", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "d573140c-f859-b74e-b55b-a634d9b66db0"],
+  "e2e10675-124d-ee42-be38-b10c3ae97d8d"],
  " on array objects are the same operations, so ",
  Cell[BoxData[
   StyleBox[
    RowBox[{
     RowBox[{"2", " ", "a"}], " ", "+", " ", "b"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"9b6928cb-c947-4c4f-b96a-ed45e8261660"],
+  "InlineFormula",ExpressionUUID->"66ab86fc-9bdf-b14d-8761-0f227a3e3222"],
  " means what it looks like."
-}], "Text",ExpressionUUID->"1f7e8e3c-e86d-ca41-9c26-26a9ba16b378"],
+}], "Text",ExpressionUUID->"a95e54a2-3407-0245-98f0-0e3a12aa2337"],
 
-Cell["Equational identities", "Section",ExpressionUUID->"fad89e82-2829-3143-81f9-030ee69da67b"],
+Cell["Equational identities", "Section",ExpressionUUID->"9b4b8b47-2c22-a94e-b543-738d2d9231bf"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["FindArrayEquations", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"15f6524c-c602-284b-bbef-2f706a2d53b4"],
+  ExpressionUUID->"01206cb8-bf3b-ff41-92c7-1a58ba27e731"],
  " \[LongDash] ",
  "search for equations between all nestings of given operations over given \
 arguments"
-}], "Text",ExpressionUUID->"5412f8a9-bc86-2a45-a758-115becb413a2"],
+}], "Text",ExpressionUUID->"0571edae-212e-454d-8d94-a8c783f2a173"],
 
 Cell["\<\
 The search screens candidates on random numerical arrays first, which is \
@@ -706,9 +715,9 @@ five returns a twisted ternary associativity; the Bhattacharya-Mesner product \
 on five returns nothing. An operation of arity one may be nested, so that the \
 involutivity of a transpose is within reach, and an equation that follows \
 from the others is not reported.\
-\>", "Text",ExpressionUUID->"2d6dc025-83f9-054f-80ae-384306e847ca"],
+\>", "Text",ExpressionUUID->"2c56ac25-d437-324e-b147-ec68c95c09a7"],
 
-Cell["From hypergraphs to hypermatrices", "Section",ExpressionUUID->"38ede450-607c-7f4c-bd2f-8e653a3a4848"],
+Cell["From hypergraphs to hypermatrices", "Section",ExpressionUUID->"628f7c64-9bcc-674c-8a2b-b48ace94f95f"],
 
 Cell[TextData[{
  "The two halves of the package meet here. An edge has an arity and a \
@@ -716,38 +725,38 @@ symmetry type; an array has an order and a symmetry; and the two vocabularies \
 line up one for one \[LongDash] ",
  Cell[BoxData[
   StyleBox["\"\<Directed\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "a7cb2db5-8cfa-ae47-b2fe-dcb2da90011e"],
+  "b93e1a2e-a955-5f41-86a9-8a3dac96c2a6"],
  " with ",
  Cell[BoxData[
   StyleBox["\"\<Rigid\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "d85a413d-78af-294a-b041-8ee3418a7bf4"],
+  "221055dd-1882-2346-80dd-bccbfc093187"],
  ", ",
  Cell[BoxData[
   StyleBox["\"\<Cyclic\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "36885cf2-dc2c-3f42-be98-fd27b5b64870"],
+  "5b87e4ef-3da1-344e-86e9-fb6028fde44b"],
  " with ",
  Cell[BoxData[
   StyleBox["\"\<Cyclic\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "0c47693d-220e-b54b-9dbb-430c3dc3b14c"],
+  "898de833-dbec-894e-b210-2fc82cc3cdfc"],
  ", ",
  Cell[BoxData[
   StyleBox["\"\<Unordered\>\"", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"a2782380-296e-4244-a210-d5bc3f17036b"],
+  ExpressionUUID->"83509aa6-b6d4-d94d-9182-8294aa2bf0fb"],
  " with ",
  Cell[BoxData[
   StyleBox["\"\<Symmetric\>\"", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"8110160e-e3c0-a047-980b-0905140f44fd"],
+  ExpressionUUID->"d2383268-0963-7f44-9f52-8e7c22f4a677"],
  ". An array holds one symmetry and one order, so the edges are gathered by \
 arity and symmetry type together and each group becomes one array."
-}], "Text",ExpressionUUID->"50f087c8-7aba-e640-b8f4-0d63afbb5e54"],
+}], "Text",ExpressionUUID->"4524a4f8-2b56-c14d-b4ea-9f640b4786c5"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["AdjacencyHypermatrix", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c2a7ccb8-50d2-5e43-9be7-0131b2e2f955"],
+  ExpressionUUID->"383556ea-bfed-484b-888b-e5fece9b5ab0"],
  " \[LongDash] ",
  "the adjacency hypermatrix of a hypergraph"
-}], "Text",ExpressionUUID->"8f094500-4ef5-d744-bb80-3fb80a864ed5"],
+}], "Text",ExpressionUUID->"4fa345e1-57d3-8947-9128-50d8b7fd2b13"],
 
 Cell[TextData[{
  "Identical copies of an edge share an entry, so a repeated edge comes out as \
@@ -755,17 +764,17 @@ an integer multiple. With ",
  Cell[BoxData[
   StyleBox[
    RowBox[{"\"\<Labeled\>\"", " ", "->", " ", "True"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"6b306cf0-5ca7-9344-ba8a-36772c314f99"],
+  "InlineFormula",ExpressionUUID->"b15ff8fd-1b42-2945-aa09-dcdcfecd38de"],
  " the entries are the edge labels themselves rather than counts, which needs \
 the hypergraph to be simple \[LongDash] one entry cannot hold two labels."
-}], "Text",ExpressionUUID->"41f82b77-02ce-1c45-9884-568b8bb5e219"],
+}], "Text",ExpressionUUID->"16906e73-a354-5c4b-892e-61fc13c2f907"],
 
 Cell["\<\
 The entry at an index tuple counts the edges sitting on it, and every tuple \
 of an orbit reads the same count, which is what makes each array carry its \
 symmetry by construction. Nothing is lost in the passage: the canonical \
 entries name exactly the edges that went in.\
-\>", "Text",ExpressionUUID->"0de3ef0a-5a70-f04e-bb56-1db8624e07f8"],
+\>", "Text",ExpressionUUID->"b8b7d450-a8c3-3b4a-a315-21b49a884366"],
 
 Cell[TextData[{
  "The vertices are a set, so numbering the indices is a choice; the \
@@ -775,285 +784,359 @@ the indices \[LongDash] so for an invariant of the isomorphism class, compose \
 with ",
  Cell[BoxData[
   StyleBox["CanonicalHypergraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"912ae93f-a898-8244-9a6e-f35854874be7"],
+  ExpressionUUID->"f6b89735-de0a-ae42-b880-29e70239db75"],
  "."
-}], "Text",ExpressionUUID->"493dad11-0c13-bc48-add8-fb398f0ce300"],
+}], "Text",ExpressionUUID->"1fd9b47a-6031-4a44-a785-94c961ac6434"],
 
-Cell["Hypermatrices", "Section",ExpressionUUID->"ef5525e1-53f0-b54d-bfb7-f14dfaf9dbe5"],
+Cell["Hypermatrices", "Section",ExpressionUUID->"20a8162c-a960-0a4b-8e23-0d85c36ab5fc"],
 
 Cell["\<\
 A hypermatrix is a list of arrays held in canonical order: lowest order \
 first, then the shorter dimensions, then symmetry taking symmetric before \
 cyclic before rigid. Giving the same arrays in a different order produces the \
 identical expression.\
-\>", "Text",ExpressionUUID->"a134520a-37c8-a740-a33e-822b910337d8"],
+\>", "Text",ExpressionUUID->"14be2058-ee0b-1846-be32-8c968826706f"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["Hypermatrix", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "6498b408-bb46-1b40-895b-d5f36e2acd17"],
+  "e253ae4b-5211-5642-b0f7-e3736ea4fc71"],
  " \[LongDash] ",
  "a canonically ordered list of arrays"
-}], "Text",ExpressionUUID->"ae5d9abb-d14f-7c4b-8e58-db1727241ba4"],
+}], "Text",ExpressionUUID->"d4ec38b6-b8c8-414d-960c-657bfa433723"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypermatrixArrays", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"6073637b-9596-284e-b4be-00fafc333f02"],
+  ExpressionUUID->"70f4cf82-9f19-1a4c-8baa-d9964f4a8773"],
  " \[LongDash] ",
  "the arrays, in canonical order"
-}], "Text",ExpressionUUID->"966e5b87-2c2b-d845-a653-85f18e079bca"],
+}], "Text",ExpressionUUID->"9d45434d-7760-9342-b7a9-b0833bfcea89"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypermatrixQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "37988adc-f064-1b42-b960-dc9ad718922a"],
+  "af0218ae-1c2c-af4c-a8ca-6c8bdb3e628a"],
  " \[LongDash] ",
  "test for a valid hypermatrix object"
-}], "Text",ExpressionUUID->"969bc1ee-13fa-3c47-be3c-6e9cea2bd58a"],
+}], "Text",ExpressionUUID->"32b15d4b-a032-8c41-aef3-fa6213e05990"],
 
-Cell["Messages", "Section",ExpressionUUID->"224fa0bc-a89b-704f-bb05-1c08e16ba833"],
+Cell["Messages", "Section",ExpressionUUID->"c59b1038-9ad8-f041-9167-827a17e28833"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"Edge", "::", "sym"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"9c9699f4-d987-ae44-8744-a6f02c065732"],
+  ExpressionUUID->"2732562b-cd56-ee4b-a487-86011dfb33c6"],
  " \[LongDash] ",
  "the given edge symmetry type is not one of the three recognized ones"
-}], "Text",ExpressionUUID->"deb8e1c3-8798-e043-acb8-bcb613cd7023"],
+}], "Text",ExpressionUUID->"ebf96d8d-6b3d-e649-95d0-8468c76704f9"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"Edge", "::", "spec"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"b2264cfe-487e-3143-98e6-7edda52b931b"],
+  ExpressionUUID->"ffaa2e39-c1b6-354c-8c28-68fc4069d352"],
  " \[LongDash] ",
  "the expression is not a valid hyperedge specification"
-}], "Text",ExpressionUUID->"092082b0-2541-af4d-9fa9-300e599521ab"],
+}], "Text",ExpressionUUID->"3d0ff4e5-8ea0-834f-a969-9803f5c19311"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"Hypergraph", "::", "spec"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"71293ce3-de23-e24c-8fe7-2a582b4757dd"],
+  ExpressionUUID->"b3a72293-5089-604f-9c4e-c6a2d918c54c"],
  " \[LongDash] ",
  "the expression is not a valid hypergraph specification"
-}], "Text",ExpressionUUID->"cc728b21-d6fd-0f45-bf42-39fc86433b90"],
+}], "Text",ExpressionUUID->"36cb06f8-0129-4941-8e1b-e8e9378ba77d"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"Hypergraph", "::", "vlbl"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"e240b2a2-6282-4548-ab33-182eb6b1b9ad"],
+  ExpressionUUID->"981695b9-3029-7f44-91aa-dcf77d34484b"],
  " \[LongDash] ",
  "one vertex identifier was given more than one label"
-}], "Text",ExpressionUUID->"e60988cb-1380-a64a-9417-bb167ccf0f28"],
+}], "Text",ExpressionUUID->"9d17e362-9081-0845-bd55-45f6c84c4351"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"CanonicalHypergraph", "::", "large"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"cc34f6f5-f17f-2942-905d-c074666e6034"],
+  "InlineFormula",ExpressionUUID->"eb393aaa-bbec-6a4e-bb54-3cd569ef01dd"],
  " \[LongDash] ",
  "the isomorphism search will be slow at this size"
-}], "Text",ExpressionUUID->"bdc23b64-b795-a34b-88fa-a6262d50716a"],
+}], "Text",ExpressionUUID->"e643df72-118c-ee46-8364-231a99528edb"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayObject", "::", "nosym"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"8a28adc4-2c89-9741-8f57-84a247f6ddf9"],
+  ExpressionUUID->"ebcc581d-e012-d047-8896-c51fed0eb982"],
  " \[LongDash] ",
  "the entries are not invariant under the declared symmetry"
-}], "Text",ExpressionUUID->"c6bfe57e-c21e-b447-9a90-5fb9188d7e38"],
+}], "Text",ExpressionUUID->"29169a19-c7d0-8448-9a88-492200050afb"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayObject", "::", "irreg"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"2a5add77-af29-3143-9a9c-a07ad19cf8d9"],
+  ExpressionUUID->"f2884543-f03b-b344-936e-f2acc01b44b1"],
  " \[LongDash] ",
  "an irregular array cannot carry a symmetry"
-}], "Text",ExpressionUUID->"bc0921e6-d9c2-b24d-a60c-dc8267a64d56"],
+}], "Text",ExpressionUUID->"203e8bf8-9ada-fb4c-900f-2dd0165eb38b"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayObject", "::", "data"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"235d9313-c972-fa43-8653-91f01d25f576"],
+  ExpressionUUID->"b7523f44-8106-fb44-98f5-fda672d03ae5"],
  " \[LongDash] ",
  "the entries are not a rectangular array"
-}], "Text",ExpressionUUID->"127fedc9-7fed-6541-a6a8-bb9060bf7e3b"],
+}], "Text",ExpressionUUID->"7da6741d-f3b3-a24c-b88c-cb5495be7012"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"GenerateSymbolicArray", "::", "name"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"f7a99102-7407-f14c-81ad-396c6cab0a93"],
+  "InlineFormula",ExpressionUUID->"b56e682c-3194-c94c-a2c6-081e25bb48ea"],
  " \[LongDash] ",
  "an array name must be a symbol or a string"
-}], "Text",ExpressionUUID->"f5451aa5-99ea-b649-a6a3-c6eebe69d411"],
+}], "Text",ExpressionUUID->"73f0b2d3-2686-0a4f-b213-6cf5d1e131c1"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"Hypermatrix", "::", "arrays"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"0743c08a-a5a7-614b-a4f9-9e70be39fd46"],
+  ExpressionUUID->"bc959356-c48f-d14d-a140-bc7284cc0f3d"],
  " \[LongDash] ",
  "something given was not an array"
-}], "Text",ExpressionUUID->"bd93b622-a6ee-714b-ad97-180904f9ce5c"],
+}], "Text",ExpressionUUID->"52dcef9a-f8c5-5f49-8933-405751fb7a29"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayMultiply", "::", "rank"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"81f0bae9-bdb7-4a41-b8bd-5496644acc1a"],
+  ExpressionUUID->"2323c65f-c1fa-544a-bf9f-f46ba12be556"],
  " \[LongDash] ",
  "an array has a different number of indices from its specification"
-}], "Text",ExpressionUUID->"5d8aa9e3-70bc-3441-bace-c3ac7b65a4a3"],
+}], "Text",ExpressionUUID->"d48d6131-63ae-fe4f-9644-3c3870147c49"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayMultiply", "::", "dims"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"bcc12bba-a796-e14e-b0ef-a6885ccec0d9"],
+  ExpressionUUID->"fd2a9843-dc4e-4c4f-a3b5-135a3d495459"],
  " \[LongDash] ",
  "one index label is used with two different lengths"
-}], "Text",ExpressionUUID->"1a7354d7-3e3f-eb45-b0ce-3eb25333b3de"],
+}], "Text",ExpressionUUID->"9bd76085-db43-6441-94bf-e2b97698c580"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayMultiply", "::", "out"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c873a607-2d86-ab41-ac1e-2530184e917c"],
+  ExpressionUUID->"0364c078-203d-3d44-960d-d2dc472d7aad"],
  " \[LongDash] ",
  "an output index does not occur among the inputs"
-}], "Text",ExpressionUUID->"68a24680-b6d0-0247-a535-65325c9b891c"],
+}], "Text",ExpressionUUID->"b9b147bc-1b33-4d42-9f06-77c30574c7e1"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"FindArrayEquations", "::", "arity"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"e6126332-e78d-d844-92d3-311982c91fa3"],
+  "InlineFormula",ExpressionUUID->"b85c3e88-fb84-574b-b380-2151d33b3640"],
  " \[LongDash] ",
  "the arity of an operation could not be determined"
-}], "Text",ExpressionUUID->"2a06389d-eecc-5e45-a6a6-ad90d8684b66"],
+}], "Text",ExpressionUUID->"bc81de19-9178-5b48-8794-8d0c69cda6ed"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"FindArrayEquations", "::", "eval"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"d0d84675-ac79-dd45-9512-5cb7d7754d20"],
+  "InlineFormula",ExpressionUUID->"594e818e-75dd-1840-a534-4e1b04bf4982"],
  " \[LongDash] ",
  "no nesting evaluated on arrays of the shape used"
-}], "Text",ExpressionUUID->"a9c7c43e-a66c-d34f-a6bb-26d110070bc1"],
+}], "Text",ExpressionUUID->"b3da4cb3-9a73-eb4a-a31b-f109546b89bd"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"FindArrayEquations", "::", "shape"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"011c703f-87be-9243-876b-14d06fe29ce6"],
+  "InlineFormula",ExpressionUUID->"af150556-a8bd-0044-a03c-9db0c8a85103"],
  " \[LongDash] ",
  "no order from 1 to 5 suits every operation"
-}], "Text",ExpressionUUID->"1e91d861-1327-804f-9013-7477e513a2f2"],
+}], "Text",ExpressionUUID->"2e85b715-d19c-4b41-85a9-a05997c29fba"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"FindArrayEquations", "::", "depth"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"5dae67aa-1a77-9746-8ef9-1abfaecb3b8c"],
+  "InlineFormula",ExpressionUUID->"1ba320ff-2525-b54c-95e0-719031878157"],
  " \[LongDash] ",
  "\"UnaryDepth\" is not a non-negative integer"
-}], "Text",ExpressionUUID->"ab0e8cae-9826-d74b-b952-7db0753ec974"],
+}], "Text",ExpressionUUID->"66032b04-5b27-064d-a6d6-93a477da1db8"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayAdd", "::", "dims"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c105089f-d4a1-5247-8d3a-98cb4ab5ce69"],
+  ExpressionUUID->"119df918-0506-df47-935e-f36e0f2b01d6"],
  " \[LongDash] ",
  "the arrays are not of the same dimensions"
-}], "Text",ExpressionUUID->"4e17b929-4213-7848-b9a4-2bc1ee833f0a"],
+}], "Text",ExpressionUUID->"3843cd2d-435b-6b44-82ae-b354d4f88118"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayTimes", "::", "dims"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"9364e78b-7926-334f-a6aa-f8c7f4093dd5"],
+  ExpressionUUID->"b4f9f2ce-c141-f44c-8fd1-ec8cb4080191"],
  " \[LongDash] ",
  "the same, for multiplication entry by entry"
-}], "Text",ExpressionUUID->"b668be60-0f48-9240-90c0-cbe1d13ee9cb"],
+}], "Text",ExpressionUUID->"df0ed029-53c1-b043-8d92-bd8d46ec1e61"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayGraphics", "::", "nesting"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"2a2855b6-7917-1341-a559-180f488a3ac9"],
+  "InlineFormula",ExpressionUUID->"0d610ce6-1d46-5e46-bd0f-c21f2a2123f2"],
  " \[LongDash] ",
  "the given nesting does not account for every index"
-}], "Text",ExpressionUUID->"2dc90ece-9fc2-8d4c-a8b5-5def2abc04b3"],
+}], "Text",ExpressionUUID->"10fdb1a7-c376-b642-8862-7aa5a00d70ef"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayGraphics", "::", "block"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"5f2eff53-21aa-7f47-adf5-52f8d7a422d3"],
+  ExpressionUUID->"e544d7f1-6420-5548-98f8-2c71600cb481"],
  " \[LongDash] ",
  "a block of more than two indices has no flat picture"
-}], "Text",ExpressionUUID->"986f5a9b-3be2-6a49-ba9f-cfaa8ee9fbb6"],
+}], "Text",ExpressionUUID->"34cbd955-832b-a744-925e-9d5c15adb618"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayGraphics3D", "::", "block"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"13e966c6-b472-7d4a-81ff-9c74d7daf50d"],
+  "InlineFormula",ExpressionUUID->"8993587e-b784-5f4d-9468-ecdf88ce1c9b"],
  " \[LongDash] ",
  "a block of more than three indices has nowhere to go in space"
-}], "Text",ExpressionUUID->"09a2a22f-c3af-8548-afae-5fc6ca19c2ed"],
+}], "Text",ExpressionUUID->"6859233a-ffd3-384f-9b72-e4a495c47e6a"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"AdjacencyHypermatrix", "::", "hg"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"c0d27b12-d5b4-6246-9cb1-a08469ce241c"],
+  "InlineFormula",ExpressionUUID->"0e8795d8-6f33-f54e-8e53-54c76943ba41"],
  " \[LongDash] ",
  "the argument is not a hypergraph"
-}], "Text",ExpressionUUID->"2487858a-f67a-884a-85ce-7c8880c0bc2d"],
+}], "Text",ExpressionUUID->"3759a5de-1699-b640-9818-21d45963af75"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphRule", "::", "hg"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"40c3608c-ed0b-9f42-aac1-cbf9f915f1e6"],
+ " \[LongDash] ",
+ "a side of a rule is not a hypergraph"
+}], "Text",ExpressionUUID->"8803b1e4-7650-1644-a061-8eefd98cdde7"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphRuleApply", "::", "rule"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"f4455e62-3ad7-7549-b530-8a19553a6f94"],
+ " \[LongDash] ",
+ "what was given is not a rewrite rule"
+}], "Text",ExpressionUUID->"c5ed656b-c48a-154f-bb7b-cfd10db6677f"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"AdjacencyHypermatrix", "::", "nonsimple"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"4d9230ab-5bd0-6844-9ffa-427ba0778f33"],
+  "InlineFormula",ExpressionUUID->"04948fb5-abd2-b34a-9a88-bc5c1301f2c4"],
  " \[LongDash] ",
  "labels cannot be entries unless no edge is repeated"
-}], "Text",ExpressionUUID->"a084370e-93c3-b94e-917d-f1b76db4ebc0"],
+}], "Text",ExpressionUUID->"caee4597-4bb1-b249-b5f0-8eff8ef49ef7"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayGraphics", "::", "big"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"62f32774-de28-da4f-8897-b3c638dacc34"],
+  ExpressionUUID->"b000bff6-d491-d142-a025-f1e76965bfc9"],
  " \[LongDash] ",
  "the array has too many entries to be drawn legibly"
-}], "Text",ExpressionUUID->"61dacf01-7d45-8645-bf53-94bd55743083"],
+}], "Text",ExpressionUUID->"f3c9d86b-98b3-9a4c-8233-f62329ca9df0"],
 
-Cell["Not yet implemented", "Section",ExpressionUUID->"da9cb2a6-413b-6a41-9543-c06a8a4d317f"],
+Cell["Rewriting", "Section",ExpressionUUID->"d76755ea-6f54-2e4c-9731-092cca7cdb7d"],
 
 Cell["\<\
-The hypergraph and array halves are both in place, and the passage from a \
-hypergraph to its adjacency hypermatrix now joins them. What remains is the \
-passage back, and then the rewriting itself \[LongDash] rules, their \
-application, the generations of states and the causal graph \[LongDash] and \
-after that the plex diagrams that tie rewriting to hypermatrix algebra. A \
-visual editor, for hypergraphs and for rules, is still to come.\
-\>", "Text",ExpressionUUID->"a4a03751-c1d3-764b-9430-5f04b9a58916"]
+A rewrite rule is a pair of hypergraphs. Applying it means finding the ways \
+its input sits inside a hypergraph, and for each of them replacing what was \
+matched by the output. Each such way is an event, reported as an association \
+saying not only what the new hypergraph is but what was matched, what was \
+created and what was destroyed.\
+\>", "Text",ExpressionUUID->"6362769e-6364-9341-b12f-263f8a4b209c"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "dafcb4de-5937-8c4e-961d-eede9fd90517"],
+ " \[LongDash] ",
+ "a rewrite rule, as a pair of hypergraphs"
+}], "Text",ExpressionUUID->"05cb0298-3643-a049-99d2-72453246541d"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphRuleQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "6f3c3693-60cd-fd44-a4fe-59cfb1c26b77"],
+ " \[LongDash] ",
+ "test for a valid rule"
+}], "Text",ExpressionUUID->"4b8fa1da-bec2-564e-b116-09dcb9e2dfae"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"658dc5a8-9b08-464f-938e-b2d877c44db2"],
+ " \[LongDash] ",
+ "apply a rule, giving one event per match; rule[hg] is the same"
+}], "Text",ExpressionUUID->"1ca1f066-7b44-d041-a93b-be9b6794235f"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphRuleMatches", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"f3d0d6fa-8b74-fc48-aae3-0d6946b9734b"],
+ " \[LongDash] ",
+ "the ways the input sits inside a hypergraph, without rewriting"
+}], "Text",ExpressionUUID->"9590020e-631b-2149-b9ff-a29b212155c8"],
+
+Cell[TextData[{
+ "Symmetry types must agree between a pattern edge and the edge it lies on, \
+and the pattern is matched over the orderings that symmetry allows. Labels \
+constrain: a pattern carrying no label matches whatever it lies on, one \
+carrying a label matches only the same label, and ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"\"\<Labeled\>\"", " ", "->", " ", "False"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"53dc5330-9d29-144d-b541-a7898897bcac"],
+ " ignores them. The shape of all this follows the reference paclet, so that \
+rules written for that one read the same here."
+}], "Text",ExpressionUUID->"7913b539-82ef-6243-bee9-327cae70f65c"],
+
+Cell["Not yet implemented", "Section",ExpressionUUID->"a0c6a442-e191-ba46-976a-7564eb2868e5"],
+
+Cell["\<\
+The objects, isomorphism, the array algebra, the drawing, the adjacency \
+hypermatrix and the core of rewriting are all in place. What remains of the \
+rewriting is the machinery around it: the generations of states a rule \
+produces, the causal graph of its events, and the conditions under which two \
+events depend on one another or their matches overlap. After that come the \
+plex diagrams that tie rewriting to hypermatrix algebra, and a visual editor \
+for hypergraphs and for rules.\
+\>", "Text",ExpressionUUID->"4317e386-9e9d-114b-9dc6-2f994afdd304"]
 },
 WindowSize->{820, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Default.nb",
-ExpressionUUID->"d8aa7511-5182-ac4c-bf73-0bac3a5635f3"
+ExpressionUUID->"aae57b0f-c3fc-3c4c-9427-57379acf44b0"
 ]
 (* End of Notebook Content *)
 
@@ -1066,135 +1149,145 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 83, 0, 70, "Title",ExpressionUUID->"5f5cc8c2-4aa1-5648-9007-c545bc460f68"],
-Cell[640, 22, 161, 2, 70, "Subtitle",ExpressionUUID->"ca4618d0-41f9-1341-8a9e-b98a69360963"],
-Cell[802, 26, 305, 4, 70, "Text",ExpressionUUID->"e594047d-b415-224b-89ad-a94eca952027"],
-Cell[1106, 32, 93, 0, 70, "Section",ExpressionUUID->"d29be5ec-fed1-f644-ba17-e46a21f37cc5"],
-Cell[1202, 34, 321, 6, 70, "Text",ExpressionUUID->"bcc7fe75-d251-ef49-b0fa-8260d3a33b9c"],
-Cell[1520, 42, 134, 0, 70, "Input",ExpressionUUID->"388f943b-0eaa-c746-9443-232a543f2af1"],
-Cell[1657, 44, 543, 10, 70, "Text",ExpressionUUID->"eb3b9788-d96c-0d4e-82a1-e73da85fb50e"],
-Cell[2193, 56, 94, 0, 70, "Section",ExpressionUUID->"0076b58d-738d-0746-94b5-5651d3ab880e"],
-Cell[2290, 58, 270, 4, 70, "Text",ExpressionUUID->"626f8fbb-179b-5744-a492-d8b3b7a38a0e"],
-Cell[2559, 64, 416, 9, 70, "Text",ExpressionUUID->"3abd7889-7410-ab48-a564-00fb2d0118c7"],
-Cell[2969, 75, 330, 7, 70, "Text",ExpressionUUID->"2b55b6b7-92b9-ab4b-a2ac-e073547000ed"],
-Cell[3295, 84, 277, 7, 70, "Text",ExpressionUUID->"0afb1919-80d2-a943-961d-eceb70862c90"],
-Cell[3568, 93, 313, 7, 70, "Text",ExpressionUUID->"69644139-bd46-7947-9ddc-5d7e30ea0d38"],
-Cell[3877, 102, 321, 7, 70, "Text",ExpressionUUID->"5b83eca6-d82f-6944-93b0-d6f7b9b76217"],
-Cell[4194, 111, 399, 8, 70, "Text",ExpressionUUID->"bb0870b2-bb73-8043-89ee-5037af96b4fc"],
-Cell[4588, 121, 335, 7, 70, "Text",ExpressionUUID->"3352ade5-fd28-424e-895b-4c531e70e177"],
-Cell[4919, 130, 249, 6, 70, "Text",ExpressionUUID->"79dfd5b0-b5b2-7445-a4bb-966323f6a6c0"],
-Cell[5165, 138, 273, 6, 70, "Text",ExpressionUUID->"75f65a4c-6102-da4d-b175-90deeae25ed5"],
-Cell[5435, 146, 263, 6, 70, "Text",ExpressionUUID->"d3cdd416-0599-4a4e-955a-55ad101f0d3b"],
-Cell[5695, 154, 241, 6, 70, "Text",ExpressionUUID->"08c4f8e2-a2dd-cd48-9658-2767d82df27a"],
-Cell[5933, 162, 257, 6, 70, "Text",ExpressionUUID->"195d0346-1168-b94c-bbed-4603b908ca8a"],
-Cell[6187, 170, 227, 6, 70, "Text",ExpressionUUID->"57dd369c-0fbc-3c4d-b69e-63388ace5a86"],
-Cell[6411, 178, 350, 7, 70, "Text",ExpressionUUID->"aac364a5-2b7f-fe46-97c2-86d9819154c4"],
-Cell[6757, 187, 677, 12, 70, "Text",ExpressionUUID->"cb2559bd-66c4-f142-8ae7-6bf80a198076"],
-Cell[7425, 201, 228, 6, 70, "Text",ExpressionUUID->"f0220f88-c7a6-b34d-ae19-6307cdd19787"],
-Cell[7650, 209, 246, 4, 70, "Text",ExpressionUUID->"2ff6326e-75aa-cc48-9112-7f68800e8e38"],
-Cell[7895, 215, 92, 0, 70, "Section",ExpressionUUID->"d995b7ae-4be9-094f-90a4-60e0bffd124e"],
-Cell[7990, 217, 300, 6, 70, "Text",ExpressionUUID->"3e88b740-00f2-b44a-8d5f-ab1998e0f3d8"],
-Cell[8287, 225, 266, 6, 70, "Text",ExpressionUUID->"c0a24159-c149-0247-bdcc-d27616c63ba3"],
-Cell[8550, 233, 273, 6, 70, "Text",ExpressionUUID->"f245bece-62e4-224a-b9a0-cb800ccdd263"],
-Cell[8820, 241, 275, 6, 70, "Text",ExpressionUUID->"cf319164-cd9a-354d-9154-8cdbb943e2e7"],
-Cell[9092, 249, 291, 6, 70, "Text",ExpressionUUID->"e752a076-d240-e543-ac17-a262de3032e5"],
-Cell[9380, 257, 271, 6, 70, "Text",ExpressionUUID->"e9c88df4-b4e1-124c-a0a6-9aa366f5997f"],
-Cell[9648, 265, 322, 7, 70, "Text",ExpressionUUID->"e12a61b6-66e5-3243-8486-f34186d7559a"],
-Cell[9966, 274, 274, 6, 70, "Text",ExpressionUUID->"161d69cb-1f04-7046-8fa1-25bd01c0bd3a"],
-Cell[10237, 282, 271, 6, 70, "Text",ExpressionUUID->"ee8ed677-e8aa-094d-985c-6095ce6b2dfe"],
-Cell[10505, 290, 85, 0, 70, "Section",ExpressionUUID->"d6cc5204-c2e9-2746-9589-6852124be58d"],
-Cell[10593, 292, 294, 6, 70, "Text",ExpressionUUID->"1094f55d-b7cf-384c-8537-174dee63d748"],
-Cell[10884, 300, 277, 6, 70, "Text",ExpressionUUID->"91bf1642-6597-894d-819e-1e18e234b9a0"],
-Cell[11158, 308, 286, 6, 70, "Text",ExpressionUUID->"71e723dd-d763-d542-87c1-f3b9b0703e4c"],
-Cell[11441, 316, 294, 6, 70, "Text",ExpressionUUID->"16d4e11e-a87a-2943-92ee-53043fd329e7"],
-Cell[11732, 324, 1167, 29, 70, "Text",ExpressionUUID->"fc334ecf-ba33-b34a-ba9e-ce967ff6ff08"],
-Cell[12873, 355, 104, 0, 70, "Section",ExpressionUUID->"e0873c6c-3e92-234a-a2fa-c899261905f3"],
-Cell[12980, 357, 302, 6, 70, "Text",ExpressionUUID->"16e11dec-bd3e-5c4a-9571-9116abcdaff3"],
-Cell[13279, 365, 313, 6, 70, "Text",ExpressionUUID->"6a3afcd1-7186-6b4e-ba23-75d81b015653"],
-Cell[13589, 373, 318, 6, 70, "Text",ExpressionUUID->"7c08d32a-0a88-c546-8a57-da6fdd5585bd"],
-Cell[13904, 381, 308, 4, 70, "Text",ExpressionUUID->"7b7179b0-aae7-a94d-85a1-eae5102299b1"],
-Cell[14211, 387, 81, 0, 70, "Section",ExpressionUUID->"984138c2-7d39-614f-a704-ca99a850325d"],
-Cell[14295, 389, 263, 6, 70, "Text",ExpressionUUID->"b866ee33-3191-e14f-afa8-96addace1633"],
-Cell[14555, 397, 290, 6, 70, "Text",ExpressionUUID->"5cad5998-25b5-1b41-be3c-43de7bda04f9"],
-Cell[14842, 405, 318, 6, 70, "Text",ExpressionUUID->"e492aeb7-209f-fd45-b181-632dd7cf7d8d"],
-Cell[15157, 413, 311, 6, 70, "Text",ExpressionUUID->"8f68dbe2-58fc-1c4e-b89a-135d38cfd340"],
-Cell[15465, 421, 202, 3, 70, "Text",ExpressionUUID->"dfd402f8-bd39-474d-95b4-ce5f9e9cb2e3"],
-Cell[15667, 426, 80, 0, 70, "Section",ExpressionUUID->"c2dccfe7-4649-a742-b6f1-ddb46449c0d3"],
-Cell[15750, 428, 610, 8, 70, "Text",ExpressionUUID->"cc99aada-8504-754a-a907-9d5aa6f2698b"],
-Cell[16355, 438, 452, 8, 70, "Text",ExpressionUUID->"99aa5162-3a87-7141-bb18-b18f0cc84834"],
-Cell[16802, 448, 277, 6, 70, "Text",ExpressionUUID->"5fcf52e0-2fd1-4d4c-a5a5-b333cfcf986b"],
-Cell[17076, 456, 310, 6, 70, "Text",ExpressionUUID->"652329fa-251c-fc4f-8421-90148823d065"],
-Cell[17383, 464, 263, 6, 70, "Text",ExpressionUUID->"f14afece-fc8d-2744-97cf-c6e4b7a23378"],
-Cell[17643, 472, 273, 6, 70, "Text",ExpressionUUID->"664fc08d-4ac2-3d4a-be96-5e88d3c0e5c0"],
-Cell[17913, 480, 303, 6, 70, "Text",ExpressionUUID->"55a0b838-2064-b040-869b-ce50a62c4591"],
-Cell[18213, 488, 293, 6, 70, "Text",ExpressionUUID->"eaea7023-4bd7-7646-affe-4c70fdf6dc1f"],
-Cell[18503, 496, 273, 6, 70, "Text",ExpressionUUID->"affb5705-3728-3b4c-a4b5-0ab7399224a1"],
-Cell[18773, 504, 292, 6, 70, "Text",ExpressionUUID->"3407f9e4-c36d-1247-9038-f60b0bb814a4"],
-Cell[19062, 512, 273, 6, 70, "Text",ExpressionUUID->"fc4a1f9c-580f-be42-a241-8ae8fe46f1d9"],
-Cell[19332, 520, 358, 8, 70, "Text",ExpressionUUID->"b1ee2fda-cfa8-0d41-a205-b68573dc39e5"],
-Cell[19685, 530, 88, 0, 70, "Section",ExpressionUUID->"98762111-d65c-b947-942a-506459b80fe8"],
-Cell[19776, 532, 246, 4, 70, "Text",ExpressionUUID->"3b9d54ca-8610-8640-a4eb-3a48f67edbd9"],
-Cell[20021, 538, 257, 6, 70, "Text",ExpressionUUID->"ff191940-c1d5-544e-a33c-9d08e855cf8a"],
-Cell[20275, 546, 255, 6, 70, "Text",ExpressionUUID->"159cd877-e1ae-384c-8cc6-c347e974ff09"],
-Cell[20527, 554, 292, 6, 70, "Text",ExpressionUUID->"6e717de8-340a-a34c-b9c7-906644ec3b1b"],
-Cell[20816, 562, 299, 6, 70, "Text",ExpressionUUID->"e876b347-250b-5b48-b4c9-6d6302e384a3"],
-Cell[21112, 570, 85, 0, 70, "Section",ExpressionUUID->"5e41384d-d434-1843-a34f-ce78d6d565db"],
-Cell[21200, 572, 326, 7, 70, "Text",ExpressionUUID->"6023ce09-b6cb-5449-a13f-5cd825dbe066"],
-Cell[21522, 581, 452, 6, 70, "Text",ExpressionUUID->"25001baf-10da-e04f-8bb8-f5cdb28b9201"],
-Cell[21971, 589, 88, 0, 70, "Section",ExpressionUUID->"c9d5892c-9619-d546-a6af-24198d2fb137"],
-Cell[22062, 591, 534, 7, 70, "Text",ExpressionUUID->"6e84685a-33c1-ae49-bda6-42844f52116f"],
-Cell[22592, 600, 482, 8, 70, "Text",ExpressionUUID->"9f6f0fb0-6ba5-7c43-935d-07b7376de1ce"],
-Cell[23069, 610, 284, 6, 70, "Text",ExpressionUUID->"ca7b19fe-5833-2a44-aefc-ac0dbe6cd6d2"],
-Cell[23350, 618, 291, 6, 70, "Text",ExpressionUUID->"8502d7fe-25d2-dd40-bc80-4a0e5f1c7d26"],
-Cell[23638, 626, 299, 6, 70, "Text",ExpressionUUID->"df0fddf3-194c-a042-ab5a-ce41754a2207"],
-Cell[23934, 634, 298, 6, 70, "Text",ExpressionUUID->"dd869698-3d4a-e24c-8e18-8b6ff31c604a"],
-Cell[24229, 642, 280, 6, 70, "Text",ExpressionUUID->"4d8aec1d-9904-ae4d-ae31-fb670d1071a4"],
-Cell[24506, 650, 111, 0, 70, "Section",ExpressionUUID->"099c63dd-bfae-bf48-b879-a8a3c4f8ebf1"],
-Cell[24620, 652, 265, 6, 70, "Text",ExpressionUUID->"fd6b6794-b2b7-1e4a-b97f-db59f4570e8a"],
-Cell[24882, 660, 272, 6, 70, "Text",ExpressionUUID->"bb7fee53-865f-9442-a981-3a5795b69931"],
-Cell[25151, 668, 917, 19, 70, "Text",ExpressionUUID->"1f7e8e3c-e86d-ca41-9c26-26a9ba16b378"],
-Cell[26052, 689, 95, 0, 70, "Section",ExpressionUUID->"fad89e82-2829-3143-81f9-030ee69da67b"],
-Cell[26150, 691, 335, 7, 70, "Text",ExpressionUUID->"5412f8a9-bc86-2a45-a758-115becb413a2"],
-Cell[26481, 700, 576, 8, 70, "Text",ExpressionUUID->"2d6dc025-83f9-054f-80ae-384306e847ca"],
-Cell[27052, 710, 107, 0, 70, "Section",ExpressionUUID->"38ede450-607c-7f4c-bd2f-8e653a3a4848"],
-Cell[27162, 712, 1314, 29, 70, "Text",ExpressionUUID->"50f087c8-7aba-e640-b8f4-0d63afbb5e54"],
-Cell[28450, 743, 293, 6, 70, "Text",ExpressionUUID->"8f094500-4ef5-d744-bb80-3fb80a864ed5"],
-Cell[28740, 751, 530, 9, 70, "Text",ExpressionUUID->"41f82b77-02ce-1c45-9884-568b8bb5e219"],
-Cell[29264, 762, 357, 5, 70, "Text",ExpressionUUID->"0de3ef0a-5a70-f04e-bb56-1db8624e07f8"],
-Cell[29619, 769, 550, 10, 70, "Text",ExpressionUUID->"493dad11-0c13-bc48-add8-fb398f0ce300"],
-Cell[30162, 781, 87, 0, 70, "Section",ExpressionUUID->"ef5525e1-53f0-b54d-bfb7-f14dfaf9dbe5"],
-Cell[30252, 783, 335, 5, 70, "Text",ExpressionUUID->"a134520a-37c8-a740-a33e-822b910337d8"],
-Cell[30585, 790, 279, 6, 70, "Text",ExpressionUUID->"ae5d9abb-d14f-7c4b-8e58-db1727241ba4"],
-Cell[30861, 798, 279, 6, 70, "Text",ExpressionUUID->"966e5b87-2c2b-d845-a653-85f18e079bca"],
-Cell[31137, 806, 279, 6, 70, "Text",ExpressionUUID->"969bc1ee-13fa-3c47-be3c-6e9cea2bd58a"],
-Cell[31413, 814, 82, 0, 70, "Section",ExpressionUUID->"224fa0bc-a89b-704f-bb05-1c08e16ba833"],
-Cell[31498, 816, 332, 7, 70, "Text",ExpressionUUID->"deb8e1c3-8798-e043-acb8-bcb613cd7023"],
-Cell[31826, 825, 318, 7, 70, "Text",ExpressionUUID->"092082b0-2541-af4d-9fa9-300e599521ab"],
-Cell[32140, 834, 325, 7, 70, "Text",ExpressionUUID->"cc728b21-d6fd-0f45-bf42-39fc86433b90"],
-Cell[32461, 843, 322, 7, 70, "Text",ExpressionUUID->"e60988cb-1380-a64a-9417-bb167ccf0f28"],
-Cell[32779, 852, 329, 7, 70, "Text",ExpressionUUID->"bdc23b64-b795-a34b-88fa-a6262d50716a"],
-Cell[33104, 861, 330, 7, 70, "Text",ExpressionUUID->"c6bfe57e-c21e-b447-9a90-5fb9188d7e38"],
-Cell[33430, 870, 315, 7, 70, "Text",ExpressionUUID->"bc0921e6-d9c2-b24d-a60c-dc8267a64d56"],
-Cell[33741, 879, 311, 7, 70, "Text",ExpressionUUID->"127fedc9-7fed-6541-a6a8-bb9060bf7e3b"],
-Cell[34048, 888, 324, 7, 70, "Text",ExpressionUUID->"f5451aa5-99ea-b649-a6a3-c6eebe69d411"],
-Cell[34368, 897, 306, 7, 70, "Text",ExpressionUUID->"bd93b622-a6ee-714b-ad97-180904f9ce5c"],
-Cell[34670, 906, 339, 7, 70, "Text",ExpressionUUID->"5d8aa9e3-70bc-3441-bace-c3ac7b65a4a3"],
-Cell[35005, 915, 324, 7, 70, "Text",ExpressionUUID->"1a7354d7-3e3f-eb45-b0ce-3eb25333b3de"],
-Cell[35325, 924, 320, 7, 70, "Text",ExpressionUUID->"68a24680-b6d0-0247-a535-65325c9b891c"],
-Cell[35641, 933, 329, 7, 70, "Text",ExpressionUUID->"2a06389d-eecc-5e45-a6a6-ad90d8684b66"],
-Cell[35966, 942, 327, 7, 70, "Text",ExpressionUUID->"a9c7c43e-a66c-d34f-a6bb-26d110070bc1"],
-Cell[36289, 951, 322, 7, 70, "Text",ExpressionUUID->"1e91d861-1327-804f-9013-7477e513a2f2"],
-Cell[36607, 960, 324, 7, 70, "Text",ExpressionUUID->"ab0e8cae-9826-d74b-b952-7db0753ec974"],
-Cell[36927, 969, 310, 7, 70, "Text",ExpressionUUID->"4e17b929-4213-7848-b9a4-2bc1ee833f0a"],
-Cell[37233, 978, 314, 7, 70, "Text",ExpressionUUID->"b668be60-0f48-9240-90c0-cbe1d13ee9cb"],
-Cell[37543, 987, 327, 7, 70, "Text",ExpressionUUID->"2dc90ece-9fc2-8d4c-a8b5-5def2abc04b3"],
-Cell[37866, 996, 327, 7, 70, "Text",ExpressionUUID->"986f5a9b-3be2-6a49-ba9f-cfaa8ee9fbb6"],
-Cell[38189, 1005, 338, 7, 70, "Text",ExpressionUUID->"09a2a22f-c3af-8548-afae-5fc6ca19c2ed"],
-Cell[38523, 1014, 311, 7, 70, "Text",ExpressionUUID->"2487858a-f67a-884a-85ce-7c8880c0bc2d"],
-Cell[38830, 1023, 337, 7, 70, "Text",ExpressionUUID->"a084370e-93c3-b94e-917d-f1b76db4ebc0"],
-Cell[39163, 1032, 323, 7, 70, "Text",ExpressionUUID->"61dacf01-7d45-8645-bf53-94bd55743083"],
-Cell[39482, 1041, 93, 0, 70, "Section",ExpressionUUID->"da9cb2a6-413b-6a41-9543-c06a8a4d317f"],
-Cell[39578, 1043, 528, 7, 70, "Text",ExpressionUUID->"a4a03751-c1d3-764b-9430-5f04b9a58916"]
+Cell[554, 20, 83, 0, 70, "Title",ExpressionUUID->"21bd6ac0-e842-544b-aa63-643e60698d37"],
+Cell[640, 22, 161, 2, 70, "Subtitle",ExpressionUUID->"9173b8d1-2424-bf4c-bfbb-b3bba0eddc16"],
+Cell[802, 26, 305, 4, 70, "Text",ExpressionUUID->"ca2c488b-ec75-7a4e-8237-98dc0d2a95ad"],
+Cell[1106, 32, 93, 0, 70, "Section",ExpressionUUID->"850d4843-6123-7647-ba6b-8184d2bd6b46"],
+Cell[1202, 34, 321, 6, 70, "Text",ExpressionUUID->"bde37b7d-a41a-3c4b-9550-de94ae7a8c56"],
+Cell[1520, 42, 134, 0, 70, "Input",ExpressionUUID->"03e70f50-2df3-5d41-8ac6-1131f866fd4b"],
+Cell[1657, 44, 543, 10, 70, "Text",ExpressionUUID->"714c82bb-0a71-0a4e-ae61-baa66b914c65"],
+Cell[2193, 56, 94, 0, 70, "Section",ExpressionUUID->"d225faed-8df6-3c4c-abfa-1e75ad7623ba"],
+Cell[2290, 58, 270, 4, 70, "Text",ExpressionUUID->"b127bfd0-f04e-f543-8b36-a6fae9a8556c"],
+Cell[2559, 64, 416, 9, 70, "Text",ExpressionUUID->"da074c68-6d08-fe42-81b2-a6a9f6736b9c"],
+Cell[2969, 75, 330, 7, 70, "Text",ExpressionUUID->"3d0430fd-7bf3-1140-b106-f415444c87ef"],
+Cell[3295, 84, 277, 7, 70, "Text",ExpressionUUID->"7a6c7ed2-e8de-2643-8b78-2347d8b605cb"],
+Cell[3568, 93, 313, 7, 70, "Text",ExpressionUUID->"841d444c-362c-444b-b49f-7ae19893df67"],
+Cell[3877, 102, 275, 7, 70, "Text",ExpressionUUID->"6c401b87-fd08-174f-97e8-d34881c7f60a"],
+Cell[4148, 111, 321, 7, 70, "Text",ExpressionUUID->"fd22dc71-2284-d24c-97c2-73e6faa23372"],
+Cell[4465, 120, 399, 8, 70, "Text",ExpressionUUID->"866e17b7-7cdd-6d4d-85e0-dd7c85cb8dff"],
+Cell[4859, 130, 335, 7, 70, "Text",ExpressionUUID->"b96247b9-dfc2-ad48-9762-1106dce9255e"],
+Cell[5190, 139, 249, 6, 70, "Text",ExpressionUUID->"1bc85d04-eb12-814e-bf12-c4e0f6ad7aba"],
+Cell[5436, 147, 273, 6, 70, "Text",ExpressionUUID->"d84e1df1-fa33-c945-aaaa-9879b02fad35"],
+Cell[5706, 155, 263, 6, 70, "Text",ExpressionUUID->"5a4d392d-fcda-c843-975b-670a40473645"],
+Cell[5966, 163, 241, 6, 70, "Text",ExpressionUUID->"87cf3820-96c2-2644-895b-04a6f7302897"],
+Cell[6204, 171, 257, 6, 70, "Text",ExpressionUUID->"26fbcbd0-3a43-c747-a7b9-1139e9a14033"],
+Cell[6458, 179, 227, 6, 70, "Text",ExpressionUUID->"fcc19a63-ed71-7440-a63f-1c70ff36b176"],
+Cell[6682, 187, 350, 7, 70, "Text",ExpressionUUID->"65c6b88c-aaa6-6e41-9a4e-956297fc63e1"],
+Cell[7028, 196, 677, 12, 70, "Text",ExpressionUUID->"1fbebb32-866d-ad41-81b3-d4fb015993b9"],
+Cell[7696, 210, 228, 6, 70, "Text",ExpressionUUID->"aa63e39f-e70c-4747-9fe8-b9cb317a19ba"],
+Cell[7921, 218, 246, 4, 70, "Text",ExpressionUUID->"517ff790-d03a-9d45-95c0-99f01783e87b"],
+Cell[8166, 224, 92, 0, 70, "Section",ExpressionUUID->"b4a214fa-0c08-d248-bd0e-887d3f4118c6"],
+Cell[8261, 226, 300, 6, 70, "Text",ExpressionUUID->"5281c261-07ed-2645-b1ce-4a67b9483663"],
+Cell[8558, 234, 266, 6, 70, "Text",ExpressionUUID->"b506d8e9-c42f-064d-b55c-e67a8e42d452"],
+Cell[8821, 242, 273, 6, 70, "Text",ExpressionUUID->"600036c8-01d0-4a4b-b75e-34229996629f"],
+Cell[9091, 250, 275, 6, 70, "Text",ExpressionUUID->"7c24f81a-d25b-0043-8303-4e6db0054927"],
+Cell[9363, 258, 291, 6, 70, "Text",ExpressionUUID->"ac0dcc67-ab02-e14f-8885-4a8dd58be536"],
+Cell[9651, 266, 271, 6, 70, "Text",ExpressionUUID->"00084dce-56d7-8d44-8fb1-dedfeff7299f"],
+Cell[9919, 274, 322, 7, 70, "Text",ExpressionUUID->"b32015b6-b032-4742-82e7-134ceb692ad6"],
+Cell[10237, 283, 274, 6, 70, "Text",ExpressionUUID->"4546e36c-44a8-214a-8114-82187600d616"],
+Cell[10508, 291, 271, 6, 70, "Text",ExpressionUUID->"82904550-6c2d-b74b-a332-95e78db1b6b3"],
+Cell[10776, 299, 85, 0, 70, "Section",ExpressionUUID->"0fc7f8cb-60a0-df4a-917c-f4f952e03ea7"],
+Cell[10864, 301, 294, 6, 70, "Text",ExpressionUUID->"22256344-ed7d-c647-99d7-05b389efbedf"],
+Cell[11155, 309, 277, 6, 70, "Text",ExpressionUUID->"6e1e2007-e0ec-aa46-b613-27a6503c8fc0"],
+Cell[11429, 317, 286, 6, 70, "Text",ExpressionUUID->"83fba40f-6ba0-4549-adf2-5b078c7d65a2"],
+Cell[11712, 325, 294, 6, 70, "Text",ExpressionUUID->"8ae0ad09-878a-b64f-bfaa-5f2d67420bb7"],
+Cell[12003, 333, 1167, 29, 70, "Text",ExpressionUUID->"4ed877f2-d5a2-d841-bcd6-75812fdfef4d"],
+Cell[13144, 364, 104, 0, 70, "Section",ExpressionUUID->"b34e67e1-ff60-e149-8b69-78583b252382"],
+Cell[13251, 366, 302, 6, 70, "Text",ExpressionUUID->"f4bae6a1-62f4-3740-bb3a-1f1a8059eb33"],
+Cell[13550, 374, 313, 6, 70, "Text",ExpressionUUID->"ce656ca7-3445-bc4c-9943-7b4c351d5821"],
+Cell[13860, 382, 318, 6, 70, "Text",ExpressionUUID->"1dade88d-f441-6d46-9bec-546396d2f84a"],
+Cell[14175, 390, 308, 4, 70, "Text",ExpressionUUID->"efa5ca59-383b-f74b-8d35-399f924b32ed"],
+Cell[14482, 396, 81, 0, 70, "Section",ExpressionUUID->"ac7d2711-b120-ce42-ba5b-1c6f790cc565"],
+Cell[14566, 398, 263, 6, 70, "Text",ExpressionUUID->"9d85810c-99ee-804e-acd6-ebf687acaa02"],
+Cell[14826, 406, 290, 6, 70, "Text",ExpressionUUID->"9b6caded-f82c-4747-8145-8094ce71b7d4"],
+Cell[15113, 414, 318, 6, 70, "Text",ExpressionUUID->"9ca9e5b3-41a6-6547-aa48-a1cd1e0c661d"],
+Cell[15428, 422, 311, 6, 70, "Text",ExpressionUUID->"fb2362b3-869e-0a41-a8d4-464379aa75c9"],
+Cell[15736, 430, 202, 3, 70, "Text",ExpressionUUID->"ac76abce-3182-0a44-9482-a8ebc08c2bb8"],
+Cell[15938, 435, 80, 0, 70, "Section",ExpressionUUID->"2225c621-70d6-3d48-9967-27ebfe662d49"],
+Cell[16021, 437, 610, 8, 70, "Text",ExpressionUUID->"d5b692dc-bf99-d04b-9b24-4f1c729e6424"],
+Cell[16626, 447, 452, 8, 70, "Text",ExpressionUUID->"b1ad0292-765a-544f-853a-549006836c94"],
+Cell[17073, 457, 277, 6, 70, "Text",ExpressionUUID->"4ef1a340-6c40-ac45-8448-e07b0471d328"],
+Cell[17347, 465, 310, 6, 70, "Text",ExpressionUUID->"957a55cc-ee26-1748-b15f-49b3a800fe62"],
+Cell[17654, 473, 263, 6, 70, "Text",ExpressionUUID->"492c7dc2-df8e-0740-9e30-ecf91ddce9b0"],
+Cell[17914, 481, 273, 6, 70, "Text",ExpressionUUID->"cdb442d2-363f-c443-95b4-137dc402da59"],
+Cell[18184, 489, 303, 6, 70, "Text",ExpressionUUID->"c0182340-4b18-f34d-8afb-493877c9a5e0"],
+Cell[18484, 497, 293, 6, 70, "Text",ExpressionUUID->"6dd8989b-7702-264b-ab4a-20ab587f0bf4"],
+Cell[18774, 505, 273, 6, 70, "Text",ExpressionUUID->"9781245f-4efa-1348-b657-3f89c0dd5960"],
+Cell[19044, 513, 292, 6, 70, "Text",ExpressionUUID->"d7f0a1a2-2896-a849-b997-7a934e5a136e"],
+Cell[19333, 521, 273, 6, 70, "Text",ExpressionUUID->"4c636388-c8b8-4a46-8af2-ec2ca277d0ea"],
+Cell[19603, 529, 358, 8, 70, "Text",ExpressionUUID->"a692fab6-f517-ca4b-8f79-7a5ac512a4ef"],
+Cell[19956, 539, 88, 0, 70, "Section",ExpressionUUID->"981e32b5-7774-d24b-8c0b-17100d04bd75"],
+Cell[20047, 541, 246, 4, 70, "Text",ExpressionUUID->"0199d5ad-ecf6-6d47-85a4-b0965302cf38"],
+Cell[20292, 547, 257, 6, 70, "Text",ExpressionUUID->"7c5f7b88-bbe2-ba45-baa8-950f5f2ffe3a"],
+Cell[20546, 555, 255, 6, 70, "Text",ExpressionUUID->"99d4878a-ab7b-f54d-99a8-4e9afc3187f0"],
+Cell[20798, 563, 292, 6, 70, "Text",ExpressionUUID->"86a96064-106e-8240-8ba9-899fe12d56ba"],
+Cell[21087, 571, 299, 6, 70, "Text",ExpressionUUID->"2bae8308-ebbc-924a-ab7f-705df691883d"],
+Cell[21383, 579, 85, 0, 70, "Section",ExpressionUUID->"b74da89b-c892-e944-996f-ac253974c5bb"],
+Cell[21471, 581, 326, 7, 70, "Text",ExpressionUUID->"409be682-3489-1241-8b89-58c48288633b"],
+Cell[21793, 590, 452, 6, 70, "Text",ExpressionUUID->"4d4a163b-28d7-d542-957f-c6a34a000eb8"],
+Cell[22242, 598, 88, 0, 70, "Section",ExpressionUUID->"17ed4891-1b6e-6e4d-93a8-2301f03efcab"],
+Cell[22333, 600, 534, 7, 70, "Text",ExpressionUUID->"037bb4c8-5d46-714a-ae6b-e30144b00c2d"],
+Cell[22863, 609, 482, 8, 70, "Text",ExpressionUUID->"4f99e332-7b8a-354e-8e14-37ec9923d6c9"],
+Cell[23340, 619, 284, 6, 70, "Text",ExpressionUUID->"9e584d25-5fb5-b74b-8776-15c4a956e298"],
+Cell[23621, 627, 291, 6, 70, "Text",ExpressionUUID->"e4c93a58-9b87-8248-9d20-6db507e08bfb"],
+Cell[23909, 635, 299, 6, 70, "Text",ExpressionUUID->"d77c9f5a-98d4-244a-9cc0-10284d4caa52"],
+Cell[24205, 643, 298, 6, 70, "Text",ExpressionUUID->"4fe10fce-88e9-db41-9faa-2769999ab823"],
+Cell[24500, 651, 280, 6, 70, "Text",ExpressionUUID->"aee2e88c-c177-2b4c-8913-2eab79d08b6f"],
+Cell[24777, 659, 111, 0, 70, "Section",ExpressionUUID->"e8c49119-3d36-4b47-a318-fc89c31cf458"],
+Cell[24891, 661, 265, 6, 70, "Text",ExpressionUUID->"36bf6602-5862-8e4a-a6d2-bb6e85ee1936"],
+Cell[25153, 669, 272, 6, 70, "Text",ExpressionUUID->"6bb2cc05-b35e-8546-a78c-18d16961e8df"],
+Cell[25422, 677, 917, 19, 70, "Text",ExpressionUUID->"a95e54a2-3407-0245-98f0-0e3a12aa2337"],
+Cell[26323, 698, 95, 0, 70, "Section",ExpressionUUID->"9b4b8b47-2c22-a94e-b543-738d2d9231bf"],
+Cell[26421, 700, 335, 7, 70, "Text",ExpressionUUID->"0571edae-212e-454d-8d94-a8c783f2a173"],
+Cell[26752, 709, 576, 8, 70, "Text",ExpressionUUID->"2c56ac25-d437-324e-b147-ec68c95c09a7"],
+Cell[27323, 719, 107, 0, 70, "Section",ExpressionUUID->"628f7c64-9bcc-674c-8a2b-b48ace94f95f"],
+Cell[27433, 721, 1314, 29, 70, "Text",ExpressionUUID->"4524a4f8-2b56-c14d-b4ea-9f640b4786c5"],
+Cell[28721, 752, 293, 6, 70, "Text",ExpressionUUID->"4fa345e1-57d3-8947-9128-50d8b7fd2b13"],
+Cell[29011, 760, 530, 9, 70, "Text",ExpressionUUID->"16906e73-a354-5c4b-892e-61fc13c2f907"],
+Cell[29535, 771, 357, 5, 70, "Text",ExpressionUUID->"b8b7d450-a8c3-3b4a-a315-21b49a884366"],
+Cell[29890, 778, 550, 10, 70, "Text",ExpressionUUID->"1fd9b47a-6031-4a44-a785-94c961ac6434"],
+Cell[30433, 790, 87, 0, 70, "Section",ExpressionUUID->"20a8162c-a960-0a4b-8e23-0d85c36ab5fc"],
+Cell[30523, 792, 335, 5, 70, "Text",ExpressionUUID->"14be2058-ee0b-1846-be32-8c968826706f"],
+Cell[30856, 799, 279, 6, 70, "Text",ExpressionUUID->"d4ec38b6-b8c8-414d-960c-657bfa433723"],
+Cell[31132, 807, 279, 6, 70, "Text",ExpressionUUID->"9d45434d-7760-9342-b7a9-b0833bfcea89"],
+Cell[31408, 815, 279, 6, 70, "Text",ExpressionUUID->"32b15d4b-a032-8c41-aef3-fa6213e05990"],
+Cell[31684, 823, 82, 0, 70, "Section",ExpressionUUID->"c59b1038-9ad8-f041-9167-827a17e28833"],
+Cell[31769, 825, 332, 7, 70, "Text",ExpressionUUID->"ebf96d8d-6b3d-e649-95d0-8468c76704f9"],
+Cell[32097, 834, 318, 7, 70, "Text",ExpressionUUID->"3d0ff4e5-8ea0-834f-a969-9803f5c19311"],
+Cell[32411, 843, 325, 7, 70, "Text",ExpressionUUID->"36cb06f8-0129-4941-8e1b-e8e9378ba77d"],
+Cell[32732, 852, 322, 7, 70, "Text",ExpressionUUID->"9d17e362-9081-0845-bd55-45f6c84c4351"],
+Cell[33050, 861, 329, 7, 70, "Text",ExpressionUUID->"e643df72-118c-ee46-8364-231a99528edb"],
+Cell[33375, 870, 330, 7, 70, "Text",ExpressionUUID->"29169a19-c7d0-8448-9a88-492200050afb"],
+Cell[33701, 879, 315, 7, 70, "Text",ExpressionUUID->"203e8bf8-9ada-fb4c-900f-2dd0165eb38b"],
+Cell[34012, 888, 311, 7, 70, "Text",ExpressionUUID->"7da6741d-f3b3-a24c-b88c-cb5495be7012"],
+Cell[34319, 897, 324, 7, 70, "Text",ExpressionUUID->"73f0b2d3-2686-0a4f-b213-6cf5d1e131c1"],
+Cell[34639, 906, 306, 7, 70, "Text",ExpressionUUID->"52dcef9a-f8c5-5f49-8933-405751fb7a29"],
+Cell[34941, 915, 339, 7, 70, "Text",ExpressionUUID->"d48d6131-63ae-fe4f-9644-3c3870147c49"],
+Cell[35276, 924, 324, 7, 70, "Text",ExpressionUUID->"9bd76085-db43-6441-94bf-e2b97698c580"],
+Cell[35596, 933, 320, 7, 70, "Text",ExpressionUUID->"b9b147bc-1b33-4d42-9f06-77c30574c7e1"],
+Cell[35912, 942, 329, 7, 70, "Text",ExpressionUUID->"bc81de19-9178-5b48-8794-8d0c69cda6ed"],
+Cell[36237, 951, 327, 7, 70, "Text",ExpressionUUID->"b3da4cb3-9a73-eb4a-a31b-f109546b89bd"],
+Cell[36560, 960, 322, 7, 70, "Text",ExpressionUUID->"2e85b715-d19c-4b41-85a9-a05997c29fba"],
+Cell[36878, 969, 324, 7, 70, "Text",ExpressionUUID->"66032b04-5b27-064d-a6d6-93a477da1db8"],
+Cell[37198, 978, 310, 7, 70, "Text",ExpressionUUID->"3843cd2d-435b-6b44-82ae-b354d4f88118"],
+Cell[37504, 987, 314, 7, 70, "Text",ExpressionUUID->"df0ed029-53c1-b043-8d92-bd8d46ec1e61"],
+Cell[37814, 996, 327, 7, 70, "Text",ExpressionUUID->"10fdb1a7-c376-b642-8862-7aa5a00d70ef"],
+Cell[38137, 1005, 327, 7, 70, "Text",ExpressionUUID->"34cbd955-832b-a744-925e-9d5c15adb618"],
+Cell[38460, 1014, 338, 7, 70, "Text",ExpressionUUID->"6859233a-ffd3-384f-9b72-e4a495c47e6a"],
+Cell[38794, 1023, 311, 7, 70, "Text",ExpressionUUID->"3759a5de-1699-b640-9818-21d45963af75"],
+Cell[39101, 1032, 309, 7, 70, "Text",ExpressionUUID->"8803b1e4-7650-1644-a061-8eefd98cdde7"],
+Cell[39406, 1041, 316, 7, 70, "Text",ExpressionUUID->"c5ed656b-c48a-154f-bb7b-cfd10db6677f"],
+Cell[39718, 1050, 337, 7, 70, "Text",ExpressionUUID->"caee4597-4bb1-b249-b5f0-8eff8ef49ef7"],
+Cell[40051, 1059, 323, 7, 70, "Text",ExpressionUUID->"f3c9d86b-98b3-9a4c-8233-f62329ca9df0"],
+Cell[40370, 1068, 83, 0, 70, "Section",ExpressionUUID->"d76755ea-6f54-2e4c-9731-092cca7cdb7d"],
+Cell[40456, 1070, 427, 6, 70, "Text",ExpressionUUID->"6362769e-6364-9341-b12f-263f8a4b209c"],
+Cell[40880, 1078, 286, 6, 70, "Text",ExpressionUUID->"05cb0298-3643-a049-99d2-72453246541d"],
+Cell[41163, 1086, 268, 6, 70, "Text",ExpressionUUID->"4b8fa1da-bec2-564e-b116-09dcb9e2dfae"],
+Cell[41428, 1094, 313, 6, 70, "Text",ExpressionUUID->"1ca1f066-7b44-d041-a93b-be9b6794235f"],
+Cell[41738, 1102, 315, 6, 70, "Text",ExpressionUUID->"9590020e-631b-2149-b9ff-a29b212155c8"],
+Cell[42050, 1110, 678, 11, 70, "Text",ExpressionUUID->"7913b539-82ef-6243-bee9-327cae70f65c"],
+Cell[42720, 1123, 93, 0, 70, "Section",ExpressionUUID->"a0c6a442-e191-ba46-976a-7564eb2868e5"],
+Cell[42816, 1125, 577, 8, 70, "Text",ExpressionUUID->"4317e386-9e9d-114b-9dc6-2f994afdd304"]
 }
 ]
 *)

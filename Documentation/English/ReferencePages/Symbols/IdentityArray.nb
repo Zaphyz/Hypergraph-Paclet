@@ -18,47 +18,47 @@ WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["IdentityArray", "ObjectName",ExpressionUUID->"7150c7f0-5ce4-ee4c-9d44-62c1aae0fef1"],
+Cell["IdentityArray", "ObjectName",ExpressionUUID->"be94e84a-a753-a54b-8c6c-4d53dfad74f6"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"IdentityArray", "[", 
     RowBox[{"n", ",", " ", "d"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"742ac443-cbb7-1d46-ac99-1e0bf169e47b"],
+  ExpressionUUID->"0a9f7d89-bbe0-c043-a339-bffb9b3c6cef"],
  " ",
  "gives the n-array with every index of length d whose entry is one where all \
 n indices agree and zero elsewhere."
-}], "Usage",ExpressionUUID->"ef6178ad-74af-5840-9cbd-0f1ded1abaf7"],
+}], "Usage",ExpressionUUID->"e04350de-aadb-294f-a73b-111cb29c417c"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"IdentityArray", "[", 
     RowBox[{"n", ",", " ", "d", ",", " ", "dom"}], "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"b561f286-c3a6-fd43-ab40-7fad2ef21541"],
+  "InlineFormula",ExpressionUUID->"bbca38d4-c990-9244-8b82-21cfbd207425"],
  " ",
  "gives its entries in the value domain dom."
-}], "Usage",ExpressionUUID->"4505a218-5434-9446-9d96-43dad7c4bcc8"],
+}], "Usage",ExpressionUUID->"24418839-8bfc-b848-a93c-dfbf7b95f03f"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"04eb2935-fcf1-364f-8573-5f09ff445e76"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"fd21fb1b-b692-1945-a37e-12e1aef5edfb"],
 
 Cell["\<\
 For n equal to 2 this is the ordinary identity matrix of size d.\
-\>", "Notes",ExpressionUUID->"cc0f2650-41f9-7848-8973-2dddbc855b37"],
+\>", "Notes",ExpressionUUID->"b37c372d-fde7-2244-aef4-d9091d56cb92"],
 
 Cell["\<\
 It is the generalized Kronecker delta on all n indices, and is invariant \
 under every permutation of them, so it is declared \"Symmetric\".\
-\>", "Notes",ExpressionUUID->"cd2e85df-fcfc-1d40-b3cd-5e0c2af7efa9"],
+\>", "Notes",ExpressionUUID->"939bad54-470a-0a44-ab31-84c919c4a04a"],
 
-Cell["IdentityArray[n, d] is PartialIdentityArray[n, d, Range[n]].", "Notes",ExpressionUUID->"0603e945-f9dc-c34d-be81-db2fe7ef55dc"],
+Cell["IdentityArray[n, d] is PartialIdentityArray[n, d, Range[n]].", "Notes",ExpressionUUID->"0f183c88-516e-4a4e-8883-676fbb40d625"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"c758d21f-98bb-b04a-80dc-3ff04ed4592c"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"9128df7d-1a28-7842-abbf-559f63b4f458"],
 
-Cell["At order two it is the identity matrix:", "ExampleText",ExpressionUUID->"0ce69d20-4f65-6e41-b29e-2548d0a92651"],
+Cell["At order two it is the identity matrix:", "ExampleText",ExpressionUUID->"65f6a4c6-2e3f-0741-ae54-5a22fc54b492"],
 
-Cell["Normal @ IdentityArray[2, 3]", "Input",ExpressionUUID->"c51f146a-b3a3-e540-85f6-a99ea6922743"],
+Cell["Normal @ IdentityArray[2, 3]", "Input",ExpressionUUID->"e0efc7a2-8b1e-9045-bccd-9d59fb6fd3bf"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -69,11 +69,11 @@ Cell[BoxData[
     RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
    RowBox[{"{", 
     RowBox[{"0", ",", "0", ",", "1"}], "}"}]}], "}"}]], "Output",ExpressionUUI\
-D->"dd5c75a2-5d5f-2143-804f-99237056b543"],
+D->"ef731d3b-c3e6-1040-88b0-3d7c184dffa9"],
 
-Cell["At order three it is one only on the main diagonal:", "ExampleText",ExpressionUUID->"4e96d713-1e3b-2d4f-b882-37431232228b"],
+Cell["At order three it is one only on the main diagonal:", "ExampleText",ExpressionUUID->"a63d88f0-e5e5-a34f-88fc-4720a543adb3"],
 
-Cell["Normal @ IdentityArray[3, 2]", "Input",ExpressionUUID->"3e124170-018c-e449-affa-151de9c3c50c"],
+Cell["Normal @ IdentityArray[3, 2]", "Input",ExpressionUUID->"efc9770c-14e7-c94e-8f40-90da4fe97808"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -90,14 +90,14 @@ Cell[BoxData[
       RowBox[{"0", ",", "0"}], "}"}], ",", 
      RowBox[{"{", 
       RowBox[{"0", ",", "1"}], "}"}]}], "}"}]}], "}"}]], "Output",ExpressionUU\
-ID->"e08d18f7-c278-474c-a515-0429c49fb8b5"],
+ID->"d47a9986-9485-e44f-ab0e-413b4b236711"],
 
-Cell["It acts as an identity for the matrix product:", "ExampleText",ExpressionUUID->"5fd1175b-abdf-fb49-887b-1f57c6b5f708"],
+Cell["It acts as an identity for the matrix product:", "ExampleText",ExpressionUUID->"5e9f6aa7-6deb-f740-b172-25c142612988"],
 
 Cell["\<\
 a = {{1, 2}, {3, 4}};
 Normal @ ArrayMultiply[{Normal @ IdentityArray[2, 2], a}, \"ij,jk->ik\"]\
-\>", "Input",ExpressionUUID->"cb54a6a1-2f64-ff44-a945-b6b4bce9cc4e"],
+\>", "Input",ExpressionUUID->"9972630e-099b-6f4c-b38c-69cadb70676b"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -106,11 +106,11 @@ Cell[BoxData[
     RowBox[{"1", ",", "2"}], "}"}], ",", 
    RowBox[{"{", 
     RowBox[{"3", ",", "4"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
-"73b746e0-039a-394c-bc07-a6a4fc246b82"],
+"0377f653-d2a9-6542-9853-a90e4627236f"],
 
-Cell["Over a finite field:", "ExampleText",ExpressionUUID->"abfbd077-e06f-e444-a79e-cc11d0777684"],
+Cell["Over a finite field:", "ExampleText",ExpressionUUID->"5cb5a973-a9a7-ca48-adcf-5f1d8b7fc1aa"],
 
-Cell["Normal @ IdentityArray[2, 2, FiniteField[2, 1]]", "Input",ExpressionUUID->"20e64aa4-4e98-af4a-b53d-690068dfef49"],
+Cell["Normal @ IdentityArray[2, 2, FiniteField[2, 1]]", "Input",ExpressionUUID->"0679df77-dadb-5a4a-902e-22178269e02f"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -687,9 +687,9 @@ Cell[BoxData[
          FiniteField[2, 1 + #& , "Polynomial"], Selectable -> False, Editable -> 
          False, SelectWithContents -> True], "fieldDisplayed" -> False|>,
       "FiniteFieldElement"]}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
-"6fbb2afe-00ef-3243-beea-a76921ec782b"],
+"3dbe85b5-76f0-4943-80c6-7194ca156e85"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"430e4833-76ca-884b-b351-05f7565d10bc"],
+Cell["Source", "NotesSection",ExpressionUUID->"49a3fbc7-4c88-c64f-9e7b-c3b64d43a3ff"],
 
 Cell[TextData[{
  "Defined in ",
@@ -700,32 +700,32 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "Special arrays",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"c2507870-f3e3-ac48-9f60-ecdb23b65033"],
+}], "Notes",ExpressionUUID->"b13a9604-12c7-864b-b856-647088a2ec7c"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"b4eef49e-2a77-6c47-b31a-6f6e8df2be47"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"d71b3389-f7b5-394f-a69a-1b56e3bf61aa"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["PartialIdentityArray", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"e249462e-c878-4548-9d62-1c09a027fa84"],
+  ExpressionUUID->"567b6404-6894-0d45-86ad-4767a41270b5"],
  ", ",
  Cell[BoxData[
   StyleBox["ZeroArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "57018301-8790-9442-b85a-bfda9a4a73da"],
+  "b59e89ae-2bf7-1b49-ba2a-1f9b28dd6cb2"],
  ", ",
  Cell[BoxData[
   StyleBox["OneArray", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "93b7ce07-105b-7d49-9261-a984159f4e0e"],
+  "18d5fdb3-6012-c744-990e-debb1be4824c"],
  ", ",
  Cell[BoxData[
   StyleBox["ArrayMultiply", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "9828e9d2-2387-904a-8836-c0bae5849eaf"]
-}], "SeeAlso",ExpressionUUID->"924ab3aa-2fa4-cd4d-b0cc-2c37c069df5a"]
+  "5a7dfddf-af8c-8742-9f18-99adc226274d"]
+}], "SeeAlso",ExpressionUUID->"2ba0ff1e-585c-ee47-b699-6e267bdef1ca"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"d8aa7511-5182-ac4c-bf73-0bac3a5635f3"
+ExpressionUUID->"aae57b0f-c3fc-3c4c-9427-57379acf44b0"
 ]
 (* End of Notebook Content *)
 
@@ -738,30 +738,30 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 90, 0, 70, "ObjectName",ExpressionUUID->"7150c7f0-5ce4-ee4c-9d44-62c1aae0fef1"],
-Cell[647, 22, 409, 9, 70, "Usage",ExpressionUUID->"ef6178ad-74af-5840-9cbd-0f1ded1abaf7"],
-Cell[1050, 33, 354, 8, 70, "Usage",ExpressionUUID->"4505a218-5434-9446-9d96-43dad7c4bcc8"],
-Cell[1399, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"04eb2935-fcf1-364f-8573-5f09ff445e76"],
-Cell[1500, 45, 146, 2, 70, "Notes",ExpressionUUID->"cc0f2650-41f9-7848-8973-2dddbc855b37"],
-Cell[1647, 49, 223, 3, 70, "Notes",ExpressionUUID->"cd2e85df-fcfc-1d40-b3cd-5e0c2af7efa9"],
-Cell[1870, 54, 132, 0, 70, "Notes",ExpressionUUID->"0603e945-f9dc-c34d-be81-db2fe7ef55dc"],
-Cell[2005, 56, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"c758d21f-98bb-b04a-80dc-3ff04ed4592c"],
-Cell[2105, 58, 117, 0, 70, "ExampleText",ExpressionUUID->"0ce69d20-4f65-6e41-b29e-2548d0a92651"],
-Cell[2225, 60, 100, 0, 70, "Input",ExpressionUUID->"c51f146a-b3a3-e540-85f6-a99ea6922743"],
-Cell[2328, 62, 326, 9, 70, "Output",ExpressionUUID->"dd5c75a2-5d5f-2143-804f-99237056b543"],
-Cell[2648, 73, 129, 0, 70, "ExampleText",ExpressionUUID->"4e96d713-1e3b-2d4f-b882-37431232228b"],
-Cell[2780, 75, 100, 0, 70, "Input",ExpressionUUID->"3e124170-018c-e449-affa-151de9c3c50c"],
-Cell[2883, 77, 455, 15, 70, "Output",ExpressionUUID->"e08d18f7-c278-474c-a515-0429c49fb8b5"],
-Cell[3326, 94, 124, 0, 70, "ExampleText",ExpressionUUID->"5fd1175b-abdf-fb49-887b-1f57c6b5f708"],
-Cell[3453, 96, 177, 3, 70, "Input",ExpressionUUID->"cb54a6a1-2f64-ff44-a945-b6b4bce9cc4e"],
-Cell[3630, 101, 235, 7, 70, "Output",ExpressionUUID->"73b746e0-039a-394c-bc07-a6a4fc246b82"],
-Cell[3861, 110, 98, 0, 70, "ExampleText",ExpressionUUID->"abfbd077-e06f-e444-a79e-cc11d0777684"],
-Cell[3962, 112, 119, 0, 70, "Input",ExpressionUUID->"20e64aa4-4e98-af4a-b53d-690068dfef49"],
-Cell[4084, 114, 30421, 575, 70, "Output",ExpressionUUID->"6fbb2afe-00ef-3243-beea-a76921ec782b"],
-Cell[33933, 691, 85, 0, 70, "NotesSection",ExpressionUUID->"430e4833-76ca-884b-b351-05f7565d10bc"],
-Cell[34021, 693, 281, 9, 70, "Notes",ExpressionUUID->"c2507870-f3e3-ac48-9f60-ecdb23b65033"],
-Cell[34296, 704, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"b4eef49e-2a77-6c47-b31a-6f6e8df2be47"],
-Cell[34388, 706, 659, 16, 70, "SeeAlso",ExpressionUUID->"924ab3aa-2fa4-cd4d-b0cc-2c37c069df5a"]
+Cell[554, 20, 90, 0, 70, "ObjectName",ExpressionUUID->"be94e84a-a753-a54b-8c6c-4d53dfad74f6"],
+Cell[647, 22, 409, 9, 70, "Usage",ExpressionUUID->"e04350de-aadb-294f-a73b-111cb29c417c"],
+Cell[1050, 33, 354, 8, 70, "Usage",ExpressionUUID->"24418839-8bfc-b848-a93c-dfbf7b95f03f"],
+Cell[1399, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"fd21fb1b-b692-1945-a37e-12e1aef5edfb"],
+Cell[1500, 45, 146, 2, 70, "Notes",ExpressionUUID->"b37c372d-fde7-2244-aef4-d9091d56cb92"],
+Cell[1647, 49, 223, 3, 70, "Notes",ExpressionUUID->"939bad54-470a-0a44-ab31-84c919c4a04a"],
+Cell[1870, 54, 132, 0, 70, "Notes",ExpressionUUID->"0f183c88-516e-4a4e-8883-676fbb40d625"],
+Cell[2005, 56, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"9128df7d-1a28-7842-abbf-559f63b4f458"],
+Cell[2105, 58, 117, 0, 70, "ExampleText",ExpressionUUID->"65f6a4c6-2e3f-0741-ae54-5a22fc54b492"],
+Cell[2225, 60, 100, 0, 70, "Input",ExpressionUUID->"e0efc7a2-8b1e-9045-bccd-9d59fb6fd3bf"],
+Cell[2328, 62, 326, 9, 70, "Output",ExpressionUUID->"ef731d3b-c3e6-1040-88b0-3d7c184dffa9"],
+Cell[2648, 73, 129, 0, 70, "ExampleText",ExpressionUUID->"a63d88f0-e5e5-a34f-88fc-4720a543adb3"],
+Cell[2780, 75, 100, 0, 70, "Input",ExpressionUUID->"efc9770c-14e7-c94e-8f40-90da4fe97808"],
+Cell[2883, 77, 455, 15, 70, "Output",ExpressionUUID->"d47a9986-9485-e44f-ab0e-413b4b236711"],
+Cell[3326, 94, 124, 0, 70, "ExampleText",ExpressionUUID->"5e9f6aa7-6deb-f740-b172-25c142612988"],
+Cell[3453, 96, 177, 3, 70, "Input",ExpressionUUID->"9972630e-099b-6f4c-b38c-69cadb70676b"],
+Cell[3630, 101, 235, 7, 70, "Output",ExpressionUUID->"0377f653-d2a9-6542-9853-a90e4627236f"],
+Cell[3861, 110, 98, 0, 70, "ExampleText",ExpressionUUID->"5cb5a973-a9a7-ca48-adcf-5f1d8b7fc1aa"],
+Cell[3962, 112, 119, 0, 70, "Input",ExpressionUUID->"0679df77-dadb-5a4a-902e-22178269e02f"],
+Cell[4084, 114, 30421, 575, 70, "Output",ExpressionUUID->"3dbe85b5-76f0-4943-80c6-7194ca156e85"],
+Cell[33933, 691, 85, 0, 70, "NotesSection",ExpressionUUID->"49a3fbc7-4c88-c64f-9e7b-c3b64d43a3ff"],
+Cell[34021, 693, 281, 9, 70, "Notes",ExpressionUUID->"b13a9604-12c7-864b-b856-647088a2ec7c"],
+Cell[34296, 704, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"d71b3389-f7b5-394f-a69a-1b56e3bf61aa"],
+Cell[34388, 706, 659, 16, 70, "SeeAlso",ExpressionUUID->"2ba0ff1e-585c-ee47-b699-6e267bdef1ca"]
 }
 ]
 *)

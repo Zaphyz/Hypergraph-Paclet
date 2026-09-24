@@ -995,6 +995,91 @@ hStr = Hypergraph[{Edge[{\"z\", \"a\"}], Edge[{\"a\", \"m\"}]}];
   {"Hypergraph", "Hypermatrix", "EdgeSymmetry", "ArraySymmetry", "HypergraphSkeleton", "HypermatrixGraphics"}
 ];
 
+(* ================= Rewriting ================= *)
+
+$rw = "src/Rewriting.wl";
+
+(* Examples run in this same kernel, so a variable an example assigns to is a variable this file
+   loses. An example once assigned to `path`, the helper just above, and the source cell of the
+   two pages below quietly became a Missing -- which Export cannot write, so the pages vanished
+   with no error. Example variables are named to miss the helpers; this clears the ones the
+   earlier sections bound. *)
+ClearAll[a, b, c, x, y, z, h, m, sub, chain, events, del, hl];
+
+page["HypergraphRule",
+  {usage["HypergraphRule[input, output]", "represents the rewrite rule taking the hypergraph input to the hypergraph output."]},
+  {note["Either side may be given as anything Hypergraph accepts, and is converted; a side that is not a hypergraph gives HypergraphRule::hg."],
+   noteC[{inline["rule[hg]"], " applies the rule, giving one event for every way the input matches. See ", inline["HypergraphRuleApply"], "."}],
+   note["A vertex of the input that the output keeps is carried through the rewrite; one the output introduces is created fresh; one the output drops is destroyed. \"SharedVertices\", \"NewVertices\" and \"DeletedVertices\" report the three groups, read off the two sides by vertex identifier."],
+   note["Vertices correspond between the two sides by identifier, so the same name on both sides means the same vertex, and a name on the output alone means a new one."],
+   note["The shape follows the reference paclet this package grew out of, so that rules written for that one read the same here."]},
+  {exText["Subdividing an edge: the two endpoints are kept, a third vertex is new."],
+   input["sub = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}]"],
+   input["{sub[\"SharedVertices\"], sub[\"NewVertices\"], sub[\"DeletedVertices\"]}"],
+   exText["A rule that destroys a vertex, by mentioning it on the left only:"],
+   input["HypergraphRule[{{1, 2}}, {{1}}][\"DeletedVertices\"]"],
+   exText["The sides may carry symmetry types and labels like any hypergraph:"],
+   input["HypergraphRule[{Edge[{1, 2, 3}, \"Unordered\", \"a\"]}, {Edge[{1, 2}, \"Directed\"]}][\"Input\"]"],
+   exText["Something that is not a hypergraph is refused:"],
+   input["Quiet @ HypergraphRule[{{1, 2}}, \"nope\"]"]},
+  source[$rw, "The rule object"],
+  {"HypergraphRuleApply", "HypergraphRuleMatches", "HypergraphRuleQ", "Hypergraph", "Edge"}
+];
+
+page["HypergraphRuleQ",
+  {usage["HypergraphRuleQ[expr]", "gives True if expr is a valid HypergraphRule, and False otherwise."]},
+  {note["A rule is valid when both of its sides are valid Hypergraph objects."]},
+  {input["{HypergraphRuleQ @ HypergraphRule[{{1, 2}}, {{2, 1}}],\n HypergraphRuleQ[{{1, 2}} -> {{2, 1}}]}"]},
+  source[$rw, "The rule object"],
+  {"HypergraphRule", "HypergraphQ"}
+];
+
+page["HypergraphRuleApply",
+  {usage["HypergraphRuleApply[rule, hg]", "applies rule to the hypergraph hg, giving a list of events, one for every way the rule's input matches."],
+   usage["rule[hg]", "is equivalent."]},
+  {note["Each event is an association. \"Hypergraph\" is the result; \"MatchVertices\", \"MatchEdges\" and \"MatchEdgePositions\" say what was matched; \"NewVertices\" and \"NewEdges\" what was created; \"DeletedVertices\" what was destroyed; \"RuleVertexMap\" the correspondence from the rule's vertices to the hypergraph's; and \"Rule\" the rule itself."],
+   note["The result is the hypergraph with the matched edges removed and the output's edges put in their place. A vertex the output introduces becomes a new vertex of the result, and one the output drops is destroyed."],
+   note["A destroyed vertex is removed only when nothing still standing uses it. A rule rewrites what it matched, and reaching into edges it did not match to strike a vertex out of them would not be local; so a vertex the rule drops but another edge still holds simply stays, and is not reported destroyed."],
+   note["New vertices are named so as to miss every vertex already present, which makes the result reproducible from one session to the next rather than depending on a counter of fresh symbols."],
+   noteC[{"Labels constrain matching and absence of a label does not: a pattern edge or vertex carrying no label matches whatever it lies on, and one carrying a label matches only the same label. ", inline["\"Labeled\" -> False"], " ignores labels altogether."}],
+   noteC[{"Symmetry types must agree, and the pattern is matched over the orderings its symmetry allows: one for a directed edge, its rotations for a cyclic one, every permutation for an unordered one. An unordered edge of arity k therefore matches in k! ways, which are genuinely different matches and are all reported."}],
+   noteC[{inline["\"DistinctVertices\" -> True"], ", the default, keeps two vertices of the input from landing on one vertex of the hypergraph, which is what the reference paclet does. ", inline["False"], " allows it."}],
+   note["No match gives an empty list, which is not a failure: it says the rule does not apply."]},
+  {exText["Subdividing an edge of a two-edge path: one event for each edge."],
+   input["sub = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];\nchain = Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}];\nevents = sub[chain];\nLength[events]"],
+   exText["What the first event did:"],
+   input["KeyTake[First[events], {\"MatchEdgePositions\", \"NewVertices\", \"RuleVertexMap\"}]"],
+   exText["And what it produced:"],
+   input["First[events][\"Hypergraph\"]"],
+   exText["The results of both events, as edge lists:"],
+   input["EdgeList[#[\"Hypergraph\"]] & /@ events"],
+   exText["A rule that destroys a vertex does so only when nothing else holds it:"],
+   input["del = HypergraphRule[{{1, 2}}, {{1}}];\n{VertexList @ First[del[Hypergraph[{Edge[{1, 2}]}]]][\"Hypergraph\"],\n VertexList @ First[del[Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}]]][\"Hypergraph\"]}"],
+   exText["A label on the pattern narrows what the rule applies to:"],
+   input["hl = Hypergraph[{Edge[{1, 2}, \"Directed\", \"a\"], Edge[{2, 3}, \"Directed\", \"b\"]}];\n{Length @ HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}], hl],\n Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, \"Directed\", \"a\"]}, {}], hl]}"],
+   exText["A rule that does not apply gives no events:"],
+   input["HypergraphRule[{{1, 2}, {2, 3}}, {}][Hypergraph[{Edge[{1, 2}]}]]"]},
+  source[$rw, "Applying"],
+  {"HypergraphRule", "HypergraphRuleMatches", "Hypergraph", "EdgeSymmetry", "EdgeLabel"}
+];
+
+page["HypergraphRuleMatches",
+  {usage["HypergraphRuleMatches[rule, hg]", "gives the ways the input of rule sits inside hg, without rewriting anything."]},
+  {note["Each match is an association with \"MatchEdgePositions\", the positions in EdgeList[hg] that the input's edges lie on, and \"RuleVertexMap\", the correspondence from the input's vertices to the hypergraph's."],
+   note["It takes the same options as HypergraphRuleApply, and is what that function matches with; asking for the matches alone is the way to see why a rule applies as often as it does."],
+   note["An edge of the hypergraph is used by at most one edge of the input, so a rule whose input has two edges wants two of them."],
+   note["A vertex of the input lying in no edge constrains nothing, and is matched to each vertex not already taken in turn."]},
+  {input["HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}],\n   Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}]]"],
+   exText["An unordered edge matches in as many ways as its vertices can be ordered:"],
+   input["Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2, 3}, \"Unordered\"]}, {}],\n   Hypergraph[{Edge[{1, 2, 3}, \"Unordered\"]}]]"],
+   exText["\[Ellipsis] a cyclic one in as many ways as it can be rotated, and a directed one in one way:"],
+   input["{Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2, 3}, \"Cyclic\"]}, {}],\n    Hypergraph[{Edge[{1, 2, 3}, \"Cyclic\"]}]],\n Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2, 3}, \"Directed\"]}, {}],\n    Hypergraph[{Edge[{1, 2, 3}, \"Directed\"]}]]}"],
+   exText["Two vertices of the input will not land on one, unless that is allowed:"],
+   input["{HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}], Hypergraph[{Edge[{1, 1}]}]],\n Length @ HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}], Hypergraph[{Edge[{1, 1}]}],\n    \"DistinctVertices\" -> False]}"]},
+  source[$rw, "Matching"],
+  {"HypergraphRuleApply", "HypergraphRule", "EdgeList"}
+];
+
 (* ================= Guide ================= *)
 
 (* The Guide* styles are defined in Reference.nb but only resolve inside the Documentation
@@ -1050,6 +1135,7 @@ thresholds, and the MakeBoxes definition that makes a Hypergraph draw itself."],
 accessors and predicates."],
         pathEntry["src/ArrayAlgebra.wl", "The special arrays, the contraction ArrayMultiply, the \
 entry-by-entry ArrayAdd and ArrayTimes, and FindArrayEquations."],
+        pathEntry["src/Rewriting.wl", "HypergraphRule and its application: the matcher, and the \nevents a rewrite produces."],
         pathEntry["src/Adjacency.wl", "AdjacencyHypermatrix: the correspondence between edge \nsymmetry types and array symmetries, and the passage from one to the other."],
         pathEntry["src/ArrayGraphics.wl", "The two families of pictures: ArrayGraphics and \
 HypermatrixGraphics in the plane, ArrayGraphics3D and HypermatrixGraphics3D in space, with \
@@ -1235,15 +1321,33 @@ the same arrays in a different order produces the identical expression."],
         entry["ArrayGraphics::block", "a block of more than two indices has no flat picture"],
         entry["ArrayGraphics3D::block", "a block of more than three indices has nowhere to go in space"],
         entry["AdjacencyHypermatrix::hg", "the argument is not a hypergraph"],
+        entry["HypergraphRule::hg", "a side of a rule is not a hypergraph"],
+        entry["HypergraphRuleApply::rule", "what was given is not a rewrite rule"],
         entry["AdjacencyHypermatrix::nonsimple", "labels cannot be entries unless no edge is repeated"],
         entry["ArrayGraphics::big", "the array has too many entries to be drawn legibly"],
 
+        gSection["Rewriting"],
+        gText["A rewrite rule is a pair of hypergraphs. Applying it means finding the ways its \
+input sits inside a hypergraph, and for each of them replacing what was matched by the output. \
+Each such way is an event, reported as an association saying not only what the new hypergraph is \
+but what was matched, what was created and what was destroyed."],
+        entry["HypergraphRule", "a rewrite rule, as a pair of hypergraphs"],
+        entry["HypergraphRuleQ", "test for a valid rule"],
+        entry["HypergraphRuleApply", "apply a rule, giving one event per match; rule[hg] is the same"],
+        entry["HypergraphRuleMatches", "the ways the input sits inside a hypergraph, without rewriting"],
+        gTextC[{"Symmetry types must agree between a pattern edge and the edge it lies on, and \
+the pattern is matched over the orderings that symmetry allows. Labels constrain: a pattern \
+carrying no label matches whatever it lies on, one carrying a label matches only the same label, \
+and ", inline["\"Labeled\" -> False"], " ignores them. The shape of all this follows the reference \
+paclet, so that rules written for that one read the same here."}],
+
         gSection["Not yet implemented"],
-        gText["The hypergraph and array halves are both in place, and the passage from a \
-hypergraph to its adjacency hypermatrix now joins them. What remains is the passage back, and \
-then the rewriting itself \[LongDash] rules, their application, the generations of states and the \
-causal graph \[LongDash] and after that the plex diagrams that tie rewriting to hypermatrix \
-algebra. A visual editor, for hypergraphs and for rules, is still to come."]
+        gText["The objects, isomorphism, the array algebra, the drawing, the adjacency \
+hypermatrix and the core of rewriting are all in place. What remains of the rewriting is the \
+machinery around it: the generations of states a rule produces, the causal graph of its events, \
+and the conditions under which two events depend on one another or their matches overlap. After \
+that come the plex diagrams that tie rewriting to hypermatrix algebra, and a visual editor for \
+hypergraphs and for rules."]
     }],
     StyleDefinitions -> "Default.nb",
     WindowSize -> {820, 750}

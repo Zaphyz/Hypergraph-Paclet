@@ -382,6 +382,24 @@ r4 = Flatten @ Table[
     300];
 check["300 mappings are bijections that carry g exactly onto h", Union[r4], {True}];
 
+
+p[];
+p["=== Simplicity ==="];
+check["no repeated edge", SimpleHypergraphQ @ Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}], True];
+check["a repeated edge", SimpleHypergraphQ @ Hypergraph[{Edge[{1, 2}], Edge[{1, 2}]}], False];
+check["labels are set aside: two edges differing only by a label are one edge of the skeleton",
+   SimpleHypergraphQ @ Hypergraph[{Edge[{1, 2}, "Directed", "a"], Edge[{1, 2}, "Directed", "b"]}],
+   False];
+check["a vertex repeated within one edge is allowed",
+   SimpleHypergraphQ @ Hypergraph[{Edge[{1, 1, 2}, "Unordered"]}], True];
+check["the same vertices under different symmetry types are different edges",
+   SimpleHypergraphQ @ Hypergraph[{Edge[{1, 2}, "Directed"], Edge[{1, 2}, "Unordered"]}], True];
+check["two spellings of one unordered edge are one edge, so not simple",
+   SimpleHypergraphQ @ Hypergraph[{Edge[{1, 2}, "Unordered"], Edge[{2, 1}, "Unordered"]}], False];
+check["  the directed pair, by contrast, really is two edges",
+   SimpleHypergraphQ @ Hypergraph[{Edge[{1, 2}, "Directed"], Edge[{2, 1}, "Directed"]}], True];
+check["an empty hypergraph is simple", SimpleHypergraphQ @ Hypergraph[{}], True];
+check["anything else is not a hypergraph", SimpleHypergraphQ[{1, 2}], False];
 p[];
 p[If[$fails === 0, "=== ALL CHECKS PASSED ===", "=== " <> ToString[$fails] <> " CHECK(S) FAILED ==="]];
 

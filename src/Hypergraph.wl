@@ -53,6 +53,13 @@ EdgeVertices::usage = "EdgeVertices[e] gives the list of Vertex objects of the h
 EdgeSymmetry::usage = "EdgeSymmetry[e] gives the symmetry type of the hyperedge e.";
 EdgeLabel::usage = "EdgeLabel[e] gives the label of the hyperedge e, or None if it is unlabelled.";
 
+SimpleHypergraphQ::usage =
+    "SimpleHypergraphQ[hg] gives True if no edge of hg is repeated, and False otherwise.\n" <>
+    "Labels are set aside for the test: two edges differing only by a label are the same edge of " <>
+    "the same skeleton, and so make the hypergraph not simple.\n" <>
+    "A vertex repeated within a single edge is allowed; that is a property of one edge rather " <>
+    "than a collision between two.";
+
 HypergraphSkeleton::usage =
     "HypergraphSkeleton[hg] gives the underlying unlabelled hypergraph of hg, dropping every " <>
     "vertex and edge label but keeping all edge symmetry types.";
@@ -293,6 +300,15 @@ HypergraphSkeleton[hg_Hypergraph] /; HypergraphQ[hg] :=
     ];
 
 
+(* Simple means no edge is repeated -- once labels are set aside, since two edges that differ only
+   by a label are the same edge of the same skeleton and would still be two edges lying in one
+   place. A vertex repeated within a single edge is not at issue here and is allowed: it is a
+   property of that one edge rather than a collision between two. *)
+SimpleHypergraphQ[hg_Hypergraph] /; HypergraphQ[hg] :=
+    DuplicateFreeQ @ EdgeList @ HypergraphSkeleton[hg];
+SimpleHypergraphQ[_] := False;
+
+
 (* ::Section:: *)
 (*Canonical form and isomorphism*)
 
@@ -512,3 +528,5 @@ EndPackage[];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "HypergraphPlot.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "Hypermatrix.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "ArrayAlgebra.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "ArrayGraphics.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "Adjacency.wl"}]];

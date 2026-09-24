@@ -1,0 +1,1520 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     62434,       1511]
+NotebookOptionsPosition[     58848,       1464]
+NotebookOutlinePosition[     59196,       1479]
+CellTagsIndexPosition[     59153,       1476]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["ArrayGraphics3D", "ObjectName",ExpressionUUID->"7f2368a2-e024-5a47-95e9-b4774ef0b3e8"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArrayGraphics3D", "[", "arr", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"7ef9f64b-dae8-914e-8051-f08406346e9e"],
+ " ",
+ "draws the array arr as cubes arranged in space."
+}], "Usage",ExpressionUUID->"f710bc6e-27a5-0d41-a8f1-5d0ddeba87ba"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArrayGraphics3D", "[", 
+    RowBox[{"arr", ",", " ", "opts"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"174e5368-40eb-e448-b54a-ab66783404dc"],
+ " ",
+ "draws it with the given options."
+}], "Usage",ExpressionUUID->"8a73c921-af64-9e43-b928-539411c91a4d"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"7518c029-0cac-3f4a-9358-8d2fa958a564"],
+
+Cell["\<\
+An array of order one is drawn as a line of cubes, one of order two as a \
+plane of them, and one of order three as a lattice. The entry at index tuple \
+(i, j, k) sits at the point {i, j, k}, an index the array does not have \
+standing at one.\
+\>", "Notes",ExpressionUUID->"058d9a92-2805-ca40-b388-328f43091caf"],
+
+Cell["\<\
+An array of higher order is drawn by tiling: the inner block of indices is \
+drawn as a lattice, and the outer block repeats that lattice through space, \
+shifted by its own extent and a gap. Everything ends up in one picture, since \
+space has no room for pictures inset into pictures.\
+\>", "Notes",ExpressionUUID->"6b393c42-fb03-cc48-8f20-e4015ea6ebb9"],
+
+Cell[TextData[{
+ "The result is always a three-dimensional ",
+ Cell[BoxData[
+  StyleBox["Graphics3D", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "0441f537-a96c-a448-97bb-24a3604e1fed"],
+ ". For plane pictures at every order see ",
+ Cell[BoxData[
+  StyleBox["ArrayGraphics", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "9f4307e3-faac-fd49-882e-2d8ae08f2975"],
+ "."
+}], "Notes",ExpressionUUID->"9350db4d-4587-4643-b1e1-0c356c63824a"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"\"\<Nesting\>\"", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"k1", ",", " ", "k2", ",", " ", "..."}], "}"}]}], "InlineCode"]],
+   "InlineFormula",ExpressionUUID->"f02bb790-70e3-0043-a695-568e28bf12a5"],
+ " says how to split the indices: the blocks must sum to the order of the \
+array and each must be one, two or three, space holding no more at a time. \
+The default uses ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArrayNesting", "[", 
+    RowBox[{"n", ",", " ", "3"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"04dc0535-1720-2546-9b87-e0e80f4e984d"],
+ "."
+}], "Notes",ExpressionUUID->"3479e398-d1b8-294a-8a57-47ab07ec747a"],
+
+Cell["\<\
+The cubes have translucent faces and no outline, so that the entries behind \
+them can still be read; an outline on every cube of a lattice reads as a mesh \
+rather than as a set of cells.\
+\>", "Notes",ExpressionUUID->"b77b09c7-8f3d-1143-8d58-36a9216d6e16"],
+
+Cell[TextData[{
+ "A gnomon in the near corner marks as many axes as the picture uses; ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"\"\<Gnomon\>\"", " ", "->", " ", "False"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"954d04b7-bf51-5641-a156-c8b423518914"],
+ " drops it. ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"\"\<Indices\>\"", " ", "->", " ", "\"\<Colored\>\""}], 
+   "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "52687241-1673-fb46-8f5a-8cea65c86bd9"],
+ " gives each axis a colour of its own."
+}], "Notes",ExpressionUUID->"5796985c-9309-614f-9aba-586ccbba398f"],
+
+Cell["\<\
+The reference implementation this package grew out of drew only the \
+order-three case, and called such a picture a cubix; the name is not kept, \
+but the look of it is.\
+\>", "Notes",ExpressionUUID->"5d597bee-de1d-8f4e-b642-0e649e173d82"],
+
+Cell["The other options are shared with ArrayGraphics.", "Notes",ExpressionUUID->"a00a0538-1b1d-3447-9a72-63a66839db53"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"095a51d9-e882-9841-acda-2c1ee7b6c7c2"],
+
+Cell["At order one a line of cubes, at order two a plane of them:", \
+"ExampleText",ExpressionUUID->"118bb571-6079-694d-bc55-f790858bee04"],
+
+Cell["\<\
+{ArrayGraphics3D[{1, 2, 3, 4}], ArrayGraphics3D[{{1, 2, 3}, {4, 5, 6}}]}\
+\>", "Input",ExpressionUUID->"62acfa14-0683-e84a-b522-0917249096b1"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   Graphics3DBox[{{{
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 
+         1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, 1, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 
+         1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, 1, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{2.64, 0.64, 0.64}, {3.36, 1.3599999999999999`, 
+         1.3599999999999999`}]}, Text3DBox[
+        StyleBox["3",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {3, 1, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{3.64, 0.64, 0.64}, {4.36, 1.3599999999999999`, 
+         1.3599999999999999`}]}, Text3DBox[
+        StyleBox["4",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {4, 1, 1}]}}, 
+     {Thickness[0.006], 
+      {Hue[0.63, 0.7, 0.5], 
+       Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 
+        0.06}}, 0.02]], Text3DBox[
+        StyleBox["\<\"i\"\>",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->11,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {0.8400000000000001, 0.06, 0.06}]}}},
+    Background->GrayLevel[1],
+    Boxed->False,
+    FormatType->StandardForm,
+    ImageSize->216,
+    Lighting->"Neutral",
+    PlotRange->{{0, 4.7}, {0, 1.7}, {0, 1.7}},
+    PlotRangePadding->Scaled[0.02]], ",", 
+   Graphics3DBox[{{{
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 
+         1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, 1, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{0.64, 1.6400000000000001`, 0.64}, {1.3599999999999999`, 
+         2.36, 1.3599999999999999`}]}, Text3DBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, 2, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{0.64, 2.64, 0.64}, {1.3599999999999999`, 3.36, 
+         1.3599999999999999`}]}, Text3DBox[
+        StyleBox["3",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, 3, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 
+         1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+        StyleBox["4",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, 1, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 0.64}, {2.36, 
+         2.36, 1.3599999999999999`}]}, Text3DBox[
+        StyleBox["5",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, 2, 1}]}, {
+       {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+        CuboidBox[{1.6400000000000001`, 2.64, 0.64}, {2.36, 3.36, 
+         1.3599999999999999`}]}, Text3DBox[
+        StyleBox["6",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, 3, 1}]}}, 
+     {Thickness[0.006], 
+      {Hue[0.63, 0.7, 0.5], 
+       Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 
+        0.06}}, 0.02]], Text3DBox[
+        StyleBox["\<\"i\"\>",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->11,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {0.8400000000000001, 0.06, 
+        0.06}]}, 
+      {Hue[0.63, 0.7, 0.5], 
+       Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.6100000000000001, 
+        0.06}}, 0.02]], Text3DBox[
+        StyleBox["\<\"j\"\>",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->11,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.8400000000000001, 0.06}]}}},
+    Background->GrayLevel[1],
+    Boxed->False,
+    FormatType->StandardForm,
+    ImageSize->162,
+    Lighting->"Neutral",
+    PlotRange->{{0, 2.7}, {0, 3.7}, {0, 1.7}},
+    PlotRangePadding->Scaled[0.02]]}], "}"}]], "Output",ExpressionUUID->\
+"0ae1404b-6946-0847-b3c4-5b9c788f883b"],
+
+Cell["At order three, the full lattice:", "ExampleText",ExpressionUUID->"9200f5b2-5935-044f-9491-1765fddd4b43"],
+
+Cell["ArrayGraphics3D[Array[#1 + #2 + #3 &, {3, 3, 3}]]", "Input",ExpressionUUID->"653824ee-4585-184b-a2da-a8975a96f818"],
+
+Cell[BoxData[
+ Graphics3DBox[{{{
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 1.3599999999999999`,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["3",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 1, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 0.64, 1.6400000000000001`}, {1.3599999999999999`, 
+       1.3599999999999999`, 2.36}]}, Text3DBox[
+      StyleBox["4",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 1, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 0.64, 2.64}, {1.3599999999999999`, 1.3599999999999999`,
+        3.36}]}, Text3DBox[
+      StyleBox["5",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 1, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 1.6400000000000001`, 0.64}, {1.3599999999999999`, 2.36,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["4",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 2, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 1.6400000000000001`, 1.6400000000000001`}, {
+       1.3599999999999999`, 2.36, 2.36}]}, Text3DBox[
+      StyleBox["5",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 2, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 1.6400000000000001`, 2.64}, {1.3599999999999999`, 2.36,
+        3.36}]}, Text3DBox[
+      StyleBox["6",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 2, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 2.64, 0.64}, {1.3599999999999999`, 3.36, 
+       1.3599999999999999`}]}, Text3DBox[
+      StyleBox["5",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 3, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 2.64, 1.6400000000000001`}, {1.3599999999999999`, 3.36,
+        2.36}]}, Text3DBox[
+      StyleBox["6",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 3, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 2.64, 2.64}, {1.3599999999999999`, 3.36, 3.36}]}, 
+     Text3DBox[
+      StyleBox["7",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 3, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 1.3599999999999999`,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["4",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 1, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 0.64, 1.6400000000000001`}, {2.36, 
+       1.3599999999999999`, 2.36}]}, Text3DBox[
+      StyleBox["5",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 1, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 0.64, 2.64}, {2.36, 1.3599999999999999`,
+        3.36}]}, Text3DBox[
+      StyleBox["6",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 1, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 0.64}, {2.36, 2.36,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["5",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 2, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 
+       1.6400000000000001`}, {2.36, 2.36, 2.36}]}, Text3DBox[
+      StyleBox["6",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 2, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 2.64}, {2.36, 2.36,
+        3.36}]}, Text3DBox[
+      StyleBox["7",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 2, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 2.64, 0.64}, {2.36, 3.36, 
+       1.3599999999999999`}]}, Text3DBox[
+      StyleBox["6",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 3, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 2.64, 1.6400000000000001`}, {2.36, 3.36,
+        2.36}]}, Text3DBox[
+      StyleBox["7",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 3, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 2.64, 2.64}, {2.36, 3.36, 3.36}]}, 
+     Text3DBox[
+      StyleBox["8",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 3, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 0.64, 0.64}, {3.36, 1.3599999999999999`, 
+       1.3599999999999999`}]}, Text3DBox[
+      StyleBox["5",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 1, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 0.64, 1.6400000000000001`}, {3.36, 1.3599999999999999`,
+        2.36}]}, Text3DBox[
+      StyleBox["6",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 1, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 0.64, 2.64}, {3.36, 1.3599999999999999`, 3.36}]}, 
+     Text3DBox[
+      StyleBox["7",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 1, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 1.6400000000000001`, 0.64}, {3.36, 2.36, 
+       1.3599999999999999`}]}, Text3DBox[
+      StyleBox["6",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 2, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 1.6400000000000001`, 1.6400000000000001`}, {3.36, 2.36,
+        2.36}]}, Text3DBox[
+      StyleBox["7",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 2, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 1.6400000000000001`, 2.64}, {3.36, 2.36, 3.36}]}, 
+     Text3DBox[
+      StyleBox["8",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 2, 3}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 2.64, 0.64}, {3.36, 3.36, 1.3599999999999999`}]}, 
+     Text3DBox[
+      StyleBox["7",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 3, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 2.64, 1.6400000000000001`}, {3.36, 3.36, 2.36}]}, 
+     Text3DBox[
+      StyleBox["8",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 3, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{2.64, 2.64, 2.64}, {3.36, 3.36, 3.36}]}, Text3DBox[
+      StyleBox["9",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {3, 3, 3}]}}, 
+   {Thickness[0.006], 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 
+      0.06}}, 0.02]], Text3DBox[
+      StyleBox["\<\"i\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.8400000000000001, 0.06, 0.06}]}, 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.6100000000000001, 
+      0.06}}, 0.02]], Text3DBox[
+      StyleBox["\<\"j\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.8400000000000001, 0.06}]}, 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.06, 
+      0.6100000000000001}}, 0.02]], Text3DBox[
+      StyleBox["\<\"k\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.06, 0.8400000000000001}]}}},
+  Background->GrayLevel[1],
+  Boxed->False,
+  FormatType->StandardForm,
+  ImageSize->162,
+  Lighting->"Neutral",
+  PlotRange->{{0, 3.7}, {0, 3.7}, {0, 3.7}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"86dde551-8617-\
+324e-85ef-6edb51e93500"],
+
+Cell["\<\
+Above that the lattices are tiled through space. A 4-array is a line of them:\
+\
+\>", "ExampleText",ExpressionUUID->"97378c36-abb7-ad49-9497-6e7ad9b68fb0"],
+
+Cell["ArrayGraphics3D[Array[#1 + #2 + #3 + #4 &, {2, 2, 2, 2}]]", "Input",ExpressionUUID->"9af19e85-aa36-4d41-938f-38dc3729b9ad"],
+
+Cell[BoxData[
+ Graphics3DBox[{{{{
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 
+        1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["4",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 0.64, 1.6400000000000001`}, {1.3599999999999999`, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["5",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 1.6400000000000001`, 0.64}, {1.3599999999999999`, 
+        2.36, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["5",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 1.6400000000000001`, 1.6400000000000001`}, {
+        1.3599999999999999`, 2.36, 2.36}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 2., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 
+        1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["5",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 0.64, 1.6400000000000001`}, {2.36, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 0.64}, {2.36, 
+        2.36, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 
+        1.6400000000000001`}, {2.36, 2.36, 2.36}]}, Text3DBox[
+       StyleBox["7",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 2., 2.}]}}, {{
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 0.64, 0.64}, {4.26, 1.3599999999999999`, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["5",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 0.64, 1.6400000000000001`}, {4.26, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 1.6400000000000001`, 0.64}, {4.26, 2.36, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 1.6400000000000001`, 1.6400000000000001`}, {4.26, 
+        2.36, 2.36}]}, Text3DBox[
+       StyleBox["7",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 2., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 0.64, 0.64}, {5.260000000000001, 1.3599999999999999`, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 0.64, 1.6400000000000001`}, {5.260000000000001, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["7",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 1.6400000000000001`, 0.64}, {5.260000000000001, 2.36, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["7",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 1.6400000000000001`, 1.6400000000000001`}, {
+        5.260000000000001, 2.36, 2.36}]}, Text3DBox[
+       StyleBox["8",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 2., 2.}]}}}, 
+   {Thickness[0.006], 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 
+      0.06}}, 0.02]], Text3DBox[
+      StyleBox["\<\"i\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.8400000000000001, 0.06, 0.06}]}, 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.6100000000000001, 0.06}}
+      , 0.02]], Text3DBox[
+      StyleBox["\<\"j\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.8400000000000001, 0.06}]}, 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.06, 
+      0.6100000000000001}}, 0.02]], Text3DBox[
+      StyleBox["\<\"k\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.06, 0.8400000000000001}]}}},
+  Background->GrayLevel[1],
+  Boxed->False,
+  FormatType->StandardForm,
+  ImageSize->265,
+  Lighting->"Neutral",
+  PlotRange->{{0, 5.6}, {0, 2.7}, {0, 2.7}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"0345ac2a-0cfb-\
+604c-9572-6cb208e5e176"],
+
+Cell["\[Ellipsis] and a 5-array a plane of them:", "ExampleText",ExpressionUUID->"d8e24bc1-db22-0044-8fe8-b7df2b16aec7"],
+
+Cell["\<\
+ArrayGraphics3D[Array[Mod[#1 + #2 + #3 + #4 + #5, 7] &, {2, 2, 2, 2, 2}]]\
+\>", "Input",ExpressionUUID->"c655590f-ccc6-bc44-bc34-58bb715d617f"],
+
+Cell[BoxData[
+ Graphics3DBox[{{{{
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 
+        1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["5",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 0.64, 1.6400000000000001`}, {1.3599999999999999`, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 1.6400000000000001`, 0.64}, {1.3599999999999999`, 
+        2.36, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 1.6400000000000001`, 1.6400000000000001`}, {
+        1.3599999999999999`, 2.36, 2.36}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 2., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 
+        1.3599999999999999`, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 0.64, 1.6400000000000001`}, {2.36, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 0.64}, {2.36, 
+        2.36, 1.3599999999999999`}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 
+        1.6400000000000001`}, {2.36, 2.36, 2.36}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 2., 2.}]}}, {{
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 3.54, 0.64}, {1.3599999999999999`, 4.26, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 3.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 3.54, 1.6400000000000001`}, {1.3599999999999999`, 
+        4.26, 2.36}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 3.9, 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 4.54, 0.64}, {1.3599999999999999`, 5.260000000000001, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 4.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{0.64, 4.54, 1.6400000000000001`}, {1.3599999999999999`, 
+        5.260000000000001, 2.36}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1., 4.9, 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 3.54, 0.64}, {2.36, 4.26, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 3.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 3.54, 1.6400000000000001`}, {2.36, 
+        4.26, 2.36}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 3.9, 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 4.54, 0.64}, {2.36, 5.260000000000001, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 4.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{1.6400000000000001`, 4.54, 1.6400000000000001`}, {2.36, 
+        5.260000000000001, 2.36}]}, Text3DBox[
+       StyleBox["2",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2., 4.9, 2.}]}}, {{
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 0.64, 0.64}, {4.26, 1.3599999999999999`, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["6",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 0.64, 1.6400000000000001`}, {4.26, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 1.6400000000000001`, 0.64}, {4.26, 2.36, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 1.6400000000000001`, 1.6400000000000001`}, {4.26, 
+        2.36, 2.36}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 2., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 0.64, 0.64}, {5.260000000000001, 1.3599999999999999`, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 1., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 0.64, 1.6400000000000001`}, {5.260000000000001, 
+        1.3599999999999999`, 2.36}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 1., 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 1.6400000000000001`, 0.64}, {5.260000000000001, 2.36, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 2., 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 1.6400000000000001`, 1.6400000000000001`}, {
+        5.260000000000001, 2.36, 2.36}]}, Text3DBox[
+       StyleBox["2",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 2., 2.}]}}, {{
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 3.54, 0.64}, {4.26, 4.26, 1.3599999999999999`}]}, 
+      Text3DBox[
+       StyleBox["0",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 3.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 3.54, 1.6400000000000001`}, {4.26, 4.26, 2.36}]}, 
+      Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 3.9, 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 4.54, 0.64}, {4.26, 5.260000000000001, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 4.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{3.54, 4.54, 1.6400000000000001`}, {4.26, 5.260000000000001, 
+        2.36}]}, Text3DBox[
+       StyleBox["2",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3.9, 4.9, 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 3.54, 0.64}, {5.260000000000001, 4.26, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 3.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 3.54, 1.6400000000000001`}, {5.260000000000001, 4.26, 
+        2.36}]}, Text3DBox[
+       StyleBox["2",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 3.9, 2.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 4.54, 0.64}, {5.260000000000001, 5.260000000000001, 
+        1.3599999999999999`}]}, Text3DBox[
+       StyleBox["2",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 4.9, 1.}]}, {
+      {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+       CuboidBox[{4.54, 4.54, 1.6400000000000001`}, {5.260000000000001, 
+        5.260000000000001, 2.36}]}, Text3DBox[
+       StyleBox["3",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4.9, 4.9, 2.}]}}}, 
+   {Thickness[0.006], 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 
+      0.06}}, 0.02]], Text3DBox[
+      StyleBox["\<\"i\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.8400000000000001, 0.06, 0.06}]}, 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.6100000000000001, 
+      0.06}}, 0.02]], Text3DBox[
+      StyleBox["\<\"j\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.8400000000000001, 0.06}]}, 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.06, 
+      0.6100000000000001}}, 0.02]], Text3DBox[
+      StyleBox["\<\"k\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.06, 0.8400000000000001}]}}},
+  Background->GrayLevel[1],
+  Boxed->False,
+  FormatType->StandardForm,
+  ImageSize->265,
+  Lighting->"Neutral",
+  PlotRange->{{0, 5.6}, {0, 5.6}, {0, 2.7}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"519c1d47-68d8-\
+944a-ad92-62bfbd2f9c9c"],
+
+Cell["Colouring the axes says which index runs which way:", "ExampleText",ExpressionUUID->"37784a8c-0507-cc43-a63b-3db7dba0d078"],
+
+Cell["\<\
+ArrayGraphics3D[Array[#1 #2 #3 &, {2, 2, 2}], \"Indices\" -> \"Colored\"]\
+\>", "Input",ExpressionUUID->"fc31a008-d4ec-1142-87b4-734872514ca6"],
+
+Cell[BoxData[
+ Graphics3DBox[{{{
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 1.3599999999999999`,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["1",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 1, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 0.64, 1.6400000000000001`}, {1.3599999999999999`, 
+       1.3599999999999999`, 2.36}]}, Text3DBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 1, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 1.6400000000000001`, 0.64}, {1.3599999999999999`, 2.36,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 2, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{0.64, 1.6400000000000001`, 1.6400000000000001`}, {
+       1.3599999999999999`, 2.36, 2.36}]}, Text3DBox[
+      StyleBox["4",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {1, 2, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 1.3599999999999999`,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 1, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 0.64, 1.6400000000000001`}, {2.36, 
+       1.3599999999999999`, 2.36}]}, Text3DBox[
+      StyleBox["4",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 1, 2}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 0.64}, {2.36, 2.36,
+        1.3599999999999999`}]}, Text3DBox[
+      StyleBox["4",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 2, 1}]}, {
+     {EdgeForm[None], FaceForm[{Hue[0.63, 0.3, 0.86], Opacity[0.22]}], 
+      CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 
+       1.6400000000000001`}, {2.36, 2.36, 2.36}]}, Text3DBox[
+      StyleBox["8",
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->12,
+       FontColor->GrayLevel[0]], {2, 2, 2}]}}, 
+   {Thickness[0.006], 
+    {Hue[0., 0.65, 0.72], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 
+      0.06}}, 0.02]], Text3DBox[
+      StyleBox["\<\"i\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0., 0.65, 0.72],
+       FrontFaceColor->Hue[0., 0.65, 0.72],
+       BackFaceColor->Hue[0., 0.65, 0.72],
+       GraphicsColor->Hue[0., 0.65, 0.72],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0., 0.65, 0.72]], {0.8400000000000001, 0.06, 0.06}]}, 
+    {Hue[0.33, 0.7, 0.55], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.6100000000000001, 
+      0.06}}, 0.02]], Text3DBox[
+      StyleBox["\<\"j\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.33, 0.7, 0.55],
+       FrontFaceColor->Hue[0.33, 0.7, 0.55],
+       BackFaceColor->Hue[0.33, 0.7, 0.55],
+       GraphicsColor->Hue[0.33, 0.7, 0.55],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.33, 0.7, 0.55]], {0.06, 0.8400000000000001, 0.06}]}, 
+    {Hue[0.63, 0.7, 0.5], 
+     Arrow3DBox[TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.06, 
+      0.6100000000000001}}, 0.02]], Text3DBox[
+      StyleBox["\<\"k\"\>",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->11,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.06, 0.06, 0.8400000000000001}]}}},
+  Background->GrayLevel[1],
+  Boxed->False,
+  FormatType->StandardForm,
+  ImageSize->120,
+  Lighting->"Neutral",
+  PlotRange->{{0, 2.7}, {0, 2.7}, {0, 2.7}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"0a15a480-fad5-\
+f14a-add2-476b5ccb9268"],
+
+Cell["A block of four indices has nowhere to go, and is refused:", \
+"ExampleText",ExpressionUUID->"e0a234f0-5c61-1642-a4a2-aa0b4b60a2d3"],
+
+Cell["\<\
+Quiet @ ArrayGraphics3D[Array[1 &, {2, 2, 2, 2}], \"Nesting\" -> {4}]\
+\>", "Input",ExpressionUUID->"ffb1de5e-c3bf-c344-bb58-f927b50eda38"],
+
+Cell[BoxData["$Failed"], "Output",ExpressionUUID->"1418da7a-1fd5-c74c-96fb-a4b92a38e9b9"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"15fcfc45-ea78-574e-a53d-74d7379f7ad2"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/ArrayGraphics.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "The spatial family",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"6a59bdc4-26b3-2a4e-86fd-9d1bc902cdea"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"b2d4c14b-7f17-ec40-bf68-62d242594f04"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["ArrayGraphics", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "e36c2aa4-b37d-ca41-acc5-888e1c6a0b0f"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayNesting", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "06bec09f-7cb9-a446-aadb-ad7adda18c0b"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypermatrixGraphics3D", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"b75ca3d7-adb1-004d-9948-85a404e3ee67"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayObject", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "953d305b-5d9b-0245-a70f-9de3427bfa35"]
+}], "SeeAlso",ExpressionUUID->"48e86e9c-fd5a-c347-96f2-97a0ccaea147"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"d8aa7511-5182-ac4c-bf73-0bac3a5635f3"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 92, 0, 70, "ObjectName",ExpressionUUID->"7f2368a2-e024-5a47-95e9-b4774ef0b3e8"],
+Cell[649, 22, 315, 7, 70, "Usage",ExpressionUUID->"f710bc6e-27a5-0d41-a8f1-5d0ddeba87ba"],
+Cell[960, 31, 334, 8, 70, "Usage",ExpressionUUID->"8a73c921-af64-9e43-b928-539411c91a4d"],
+Cell[1289, 41, 98, 0, 70, "NotesSection",ExpressionUUID->"7518c029-0cac-3f4a-9358-8d2fa958a564"],
+Cell[1390, 43, 329, 5, 70, "Notes",ExpressionUUID->"058d9a92-2805-ca40-b388-328f43091caf"],
+Cell[1717, 50, 371, 5, 70, "Notes",ExpressionUUID->"6b393c42-fb03-cc48-8f20-e4015ea6ebb9"],
+Cell[2086, 57, 456, 10, 70, "Notes",ExpressionUUID->"9350db4d-4587-4643-b1e1-0c356c63824a"],
+Cell[2535, 69, 717, 16, 70, "Notes",ExpressionUUID->"3479e398-d1b8-294a-8a57-47ab07ec747a"],
+Cell[3239, 87, 272, 4, 70, "Notes",ExpressionUUID->"b77b09c7-8f3d-1143-8d58-36a9216d6e16"],
+Cell[3510, 93, 591, 13, 70, "Notes",ExpressionUUID->"5796985c-9309-614f-9aba-586ccbba398f"],
+Cell[4091, 108, 253, 4, 70, "Notes",ExpressionUUID->"5d597bee-de1d-8f4e-b642-0e649e173d82"],
+Cell[4343, 114, 120, 0, 70, "Notes",ExpressionUUID->"a00a0538-1b1d-3447-9a72-63a66839db53"],
+Cell[4466, 116, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"095a51d9-e882-9841-acda-2c1ee7b6c7c2"],
+Cell[4566, 118, 140, 1, 70, "ExampleText",ExpressionUUID->"118bb571-6079-694d-bc55-f790858bee04"],
+Cell[4708, 121, 154, 2, 70, "Input",ExpressionUUID->"62acfa14-0683-e84a-b522-0917249096b1"],
+Cell[4863, 125, 7005, 168, 70, "Output",ExpressionUUID->"0ae1404b-6946-0847-b3c4-5b9c788f883b"],
+Cell[11703, 295, 111, 0, 70, "ExampleText",ExpressionUUID->"9200f5b2-5935-044f-9491-1765fddd4b43"],
+Cell[11817, 297, 121, 0, 70, "Input",ExpressionUUID->"653824ee-4585-184b-a2da-a8975a96f818"],
+Cell[11941, 299, 13884, 342, 70, "Output",ExpressionUUID->"86dde551-8617-324e-85ef-6edb51e93500"],
+Cell[25486, 643, 168, 3, 70, "ExampleText",ExpressionUUID->"97378c36-abb7-ad49-9497-6e7ad9b68fb0"],
+Cell[25654, 648, 129, 0, 70, "Input",ExpressionUUID->"9af19e85-aa36-4d41-938f-38dc3729b9ad"],
+Cell[25786, 650, 9385, 222, 70, "Output",ExpressionUUID->"0345ac2a-0cfb-604c-9572-6cb208e5e176"],
+Cell[34952, 874, 120, 0, 70, "ExampleText",ExpressionUUID->"d8e24bc1-db22-0044-8fe8-b7df2b16aec7"],
+Cell[35075, 876, 155, 2, 70, "Input",ExpressionUUID->"c655590f-ccc6-bc44-bc34-58bb715d617f"],
+Cell[35231, 880, 16837, 398, 70, "Output",ExpressionUUID->"519c1d47-68d8-944a-ad92-62bfbd2f9c9c"],
+Cell[51673, 1280, 129, 0, 70, "ExampleText",ExpressionUUID->"37784a8c-0507-cc43-a63b-3db7dba0d078"],
+Cell[51805, 1282, 155, 2, 70, "Input",ExpressionUUID->"fc31a008-d4ec-1142-87b4-734872514ca6"],
+Cell[51961, 1286, 5519, 134, 70, "Output",ExpressionUUID->"0a15a480-fad5-f14a-add2-476b5ccb9268"],
+Cell[57349, 1422, 139, 1, 70, "ExampleText",ExpressionUUID->"e0a234f0-5c61-1642-a4a2-aa0b4b60a2d3"],
+Cell[57490, 1425, 151, 2, 70, "Input",ExpressionUUID->"ffb1de5e-c3bf-c344-bb58-f927b50eda38"],
+Cell[57642, 1429, 89, 0, 70, "Output",ExpressionUUID->"1418da7a-1fd5-c74c-96fb-a4b92a38e9b9"],
+Cell[57734, 1431, 85, 0, 70, "NotesSection",ExpressionUUID->"15fcfc45-ea78-574e-a53d-74d7379f7ad2"],
+Cell[57822, 1433, 286, 9, 70, "Notes",ExpressionUUID->"6a59bdc4-26b3-2a4e-86fd-9d1bc902cdea"],
+Cell[58102, 1444, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"b2d4c14b-7f17-ec40-bf68-62d242594f04"],
+Cell[58194, 1446, 666, 16, 70, "SeeAlso",ExpressionUUID->"48e86e9c-fd5a-c347-96f2-97a0ccaea147"]
+}
+]
+*)
+
+(* End of internal cache information *)

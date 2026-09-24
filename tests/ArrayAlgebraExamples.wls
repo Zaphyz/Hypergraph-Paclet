@@ -32,7 +32,7 @@ check["3-way elementwise (Einstein default output)",
    Normal @ ArrayMultiply[{pv, qv, pv}, "i,i,i"], Total[pv qv pv]];
 check["matrix-vector", Normal @ ArrayMultiply[{a, pv}, "ij,j->i"], a . pv];
 check["accepts array objects",
-   ArrayMultiply[{NumericalArray[a], NumericalArray[b]}, "ij,jk->ik"],
+   ArrayMultiply[{ArrayObject[a], ArrayObject[b]}, "ij,jk->ik"],
    ArrayMultiply[{a, b}, "ij,jk->ik"]];
 
 p[];
@@ -78,18 +78,18 @@ check["bad positions rejected", Quiet @ PartialIdentityArray[3, 2, {1, 5}], $Fai
 p[];
 p["-- the identity acts as an identity for matrix multiplication --"];
 check["I . a == a", ArrayMultiply[{Normal @ IdentityArray[2, 3], a}, "ij,jk->ik"],
-   NumericalArray[a]];
+   ArrayObject[a]];
 
 p[];
 p["-- arrays of order zero --"];
-check["a scalar is the 0-array", ArrayOrder @ NumericalArray[7], 0];
+check["a scalar is the 0-array", ArrayOrder @ ArrayObject[7], 0];
 check["ZeroArray[{}] is the scalar zero", Normal @ ZeroArray[{}], 0];
 check["ZeroArray[0, 3] is the same", ZeroArray[0, 3], ZeroArray[{}]];
 check["a 0-array contributes no index labels",
-   Normal @ ArrayMultiply[{NumericalArray[3], a}, ",ij->ij"], 3 a];
+   Normal @ ArrayMultiply[{ArrayObject[3], a}, ",ij->ij"], 3 a];
 check["contracting every index gives one back",
    Normal @ ArrayMultiply[{a, a}, "ij,ji->"], Tr[a . a]];
-check["a symbolic 0-array is its name", Normal @ SymbolicArray[s0, {}], s0];
+check["a symbolic 0-array is its name", Normal @ GenerateSymbolicArray[s0, {}], s0];
 
 p[];
 p["=== B2. Element-wise operations ==="];
@@ -102,24 +102,24 @@ check["one argument is itself", Normal @ ArrayAdd[u2], u2];
 check["a 0-array multiplies every entry", Normal @ ArrayTimes[2, u2], 2 u2];
 check["  and adds to every entry", Normal @ ArrayAdd[1, u2], 1 + u2];
 check["  so scalar multiplication needs no name of its own",
-   ArrayTimes[2, u2], ArrayTimes[NumericalArray[2], u2]];
-check["Plus on array objects", Normal[NumericalArray[u2] + NumericalArray[v2]], u2 + v2];
-check["Times on array objects", Normal[NumericalArray[u2] NumericalArray[v2]], u2 v2];
-check["a difference", Normal[NumericalArray[u2] - NumericalArray[v2]], u2 - v2];
-check["a quotient by a number", Normal[NumericalArray[u2] / 2], u2 / 2];
-check["a numerical result is an array object", Head @ ArrayAdd[u2, v2], NumericalArray];
-check["anything symbolic gives the plain entries",
-   2 SymbolicArray[sc, {2}], {2 sc[1], 2 sc[2]}];
-check["the two kinds may be combined, entry by entry",
-   NumericalArray[{1, 2}] + SymbolicArray[sc, {2}], {1 + sc[1], 2 + sc[2]}];
+   ArrayTimes[2, u2], ArrayTimes[ArrayObject[2], u2]];
+check["Plus on array objects", Normal[ArrayObject[u2] + ArrayObject[v2]], u2 + v2];
+check["Times on array objects", Normal[ArrayObject[u2] ArrayObject[v2]], u2 v2];
+check["a difference", Normal[ArrayObject[u2] - ArrayObject[v2]], u2 - v2];
+check["a quotient by a number", Normal[ArrayObject[u2] / 2], u2 / 2];
+check["a numerical result is an array object", Head @ ArrayAdd[u2, v2], ArrayObject];
+check["symbolic entries come back in an array like any others",
+   Normal[2 GenerateSymbolicArray[sc, {2}]], {2 sc[1], 2 sc[2]}];
+check["numeric and symbolic entries combine entry by entry",
+   Normal[ArrayObject[{1, 2}] + GenerateSymbolicArray[sc, {2}]], {1 + sc[1], 2 + sc[2]}];
 check["dimensions must agree", Quiet @ ArrayAdd[{1, 2}, {1, 2, 3}], $Failed];
 check["a shared symmetry is preserved",
-   ArraySymmetry @ ArrayAdd[NumericalArray[{{1, 2}, {2, 3}}, "Integer", "Symmetric"],
-                            NumericalArray[{{0, 1}, {1, 0}}, "Integer", "Symmetric"]],
+   ArraySymmetry @ ArrayAdd[ArrayObject[{{1, 2}, {2, 3}}, "Symmetric"],
+                            ArrayObject[{{0, 1}, {1, 0}}, "Symmetric"]],
    "Symmetric"];
 check["  and is not claimed when they disagree",
-   ArraySymmetry @ ArrayAdd[NumericalArray[{{1, 2}, {2, 3}}, "Integer", "Symmetric"],
-                            NumericalArray[u2]],
+   ArraySymmetry @ ArrayAdd[ArrayObject[{{1, 2}, {2, 3}}, "Symmetric"],
+                            ArrayObject[u2]],
    "Rigid"];
 check["adding nothing is refused", Quiet @ ArrayAdd[], $Failed];
 
@@ -167,20 +167,23 @@ p[];
 p["=== C2. Numerical and symbolic arrays, and several operations ==="];
 trace[u_List] := Normal @ ArrayMultiply[{u}, "pp->"];
 perp[u_List] := Normal @ ArrayMultiply[{u}, "ij->ji"];
-sa = Normal @ SymbolicArray[sym1, {2, 2}];
-sb = Normal @ SymbolicArray[sym2, {2, 2}];
+sa = Normal @ GenerateSymbolicArray[sym1, {2, 2}];
+sb = Normal @ GenerateSymbolicArray[sym2, {2, 2}];
 
 p["-- a symbolic array is a list of lists of terms, and so is the result --"];
 check["symbolic entries", sa,
    {{sym1[1, 1], sym1[1, 2]}, {sym1[2, 1], sym1[2, 2]}}];
-check["a symbolic product is a plain list of lists", Head @ ArrayMultiply[{sa, sb}, "ij,jk->ik"], List];
-check["  and agrees with Dot", ArrayMultiply[{sa, sb}, "ij,jk->ik"], sa . sb];
-check["a numerical product is a NumericalArray",
-   Head @ ArrayMultiply[{{{1, 2}, {3, 4}}, {{0, 1}, {1, 0}}}, "ij,jk->ik"], NumericalArray];
-check["the two kinds may not be mixed",
-   Quiet @ ArrayMultiply[{{{1, 2}, {3, 4}}, sb}, "ij,jk->ik"], $Failed];
-check["a SymbolicArray object is accepted directly",
-   ArrayMultiply[{SymbolicArray[sym1, {2, 2}], SymbolicArray[sym2, {2, 2}]}, "ij,jk->ik"],
+check["a symbolic product is an array like any other",
+   Head @ ArrayMultiply[{sa, sb}, "ij,jk->ik"], ArrayObject];
+check["  and agrees with Dot", Normal @ ArrayMultiply[{sa, sb}, "ij,jk->ik"], sa . sb];
+check["a numerical product is one too",
+   Head @ ArrayMultiply[{{{1, 2}, {3, 4}}, {{0, 1}, {1, 0}}}, "ij,jk->ik"], ArrayObject];
+check["the two kinds may now be mixed, there being only one kind of array",
+   Normal @ ArrayMultiply[{{{1, 2}, {3, 4}}, sb}, "ij,jk->ik"],
+   {{1, 2}, {3, 4}} . sb];
+check["a generated symbolic array is accepted directly",
+   Normal @ ArrayMultiply[{GenerateSymbolicArray[sym1, {2, 2}], GenerateSymbolicArray[sym2, {2, 2}]},
+      "ij,jk->ik"],
    sa . sb];
 
 p[];

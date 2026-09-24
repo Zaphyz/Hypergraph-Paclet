@@ -1,0 +1,590 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     21173,        581]
+NotebookOptionsPosition[     19424,        553]
+NotebookOutlinePosition[     19772,        568]
+CellTagsIndexPosition[     19729,        565]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypermatrixGraphics", "ObjectName",ExpressionUUID->"31c719a3-1cfa-ae41-b1f9-0785dbddef41"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypermatrixGraphics", "[", "hm", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"3caa78bb-833d-284e-8513-0fed8f8c54f0"],
+ " ",
+ "draws each array of the hypermatrix hm in the plane, in canonical order."
+}], "Usage",ExpressionUUID->"0ff23322-925f-0e40-a9c2-d9529636d144"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"7185886d-8d8b-8e44-b420-288f74dffec7"],
+
+Cell["\<\
+Each array is drawn by ArrayGraphics, and the options are the same.\
+\>", "Notes",ExpressionUUID->"b0035c00-5e0e-674e-a54f-f77a16be0673"],
+
+Cell["\<\
+The arrays appear in the hypermatrix's own order: lowest order first, then \
+the shorter dimensions, then symmetry.\
+\>", "Notes",ExpressionUUID->"1eb606ea-1eb8-774e-a28b-25814b565996"],
+
+Cell[TextData[{
+ "For cubes arranged in space, see ",
+ Cell[BoxData[
+  StyleBox["HypermatrixGraphics3D", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"5ebcdbdc-cfd3-1045-b57f-ae15ea52c8b0"],
+ "."
+}], "Notes",ExpressionUUID->"52beb88c-aa48-c644-a77e-557824dd9add"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"c2d6de8d-c48f-304d-b8d8-bf5970273eba"],
+
+Cell["\<\
+HypermatrixGraphics @ Hypermatrix[{{1, 2}, {{1, 2}, {3, 4}}}]\
+\>", "Input",ExpressionUUID->"f747f1e2-f79f-ff4d-ac7e-d9631a159a8a"],
+
+Cell[BoxData[
+ TemplateBox[{
+   GraphicsBox[{{{{
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{0.55, -1.45}, {1.45, -0.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{1.55, -1.45}, {2.45, -0.55}, RoundingRadius -> 
+         0.08]}}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, -1}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, -1}]}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {1, -0.02}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {2, -0.02}]}}}, {}, 
+    FormatType -> StandardForm, PlotRange -> {{0.4, 2.6}, {-1.55, 0.25}}, 
+    PlotRangePadding -> Scaled[0.02], ImagePadding -> 6, Background -> 
+    GrayLevel[1], ImageSize -> 90], 
+   TemplateBox[{12}, "Spacer1"], 
+   GraphicsBox[{{{{
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{0.55, -1.45}, {1.45, -0.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{1.55, -1.45}, {2.45, -0.55}, RoundingRadius -> 
+         0.08]}}, {{
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{0.55, -2.45}, {1.45, -1.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{1.55, -2.45}, {2.45, -1.55}, RoundingRadius -> 
+         0.08]}}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, -1}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, -1}]}, {
+       InsetBox[
+        FormBox[
+         StyleBox["3", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, -2}], 
+       InsetBox[
+        FormBox[
+         StyleBox["4", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, -2}]}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {1, -0.02}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {2, -0.02}]}, {
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {0.28, -1}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {0.28, -2}]}}}, {}, 
+    FormatType -> StandardForm, 
+    PlotRange -> {{-0.050000000000000044`, 2.6}, {-2.55, 0.25}}, 
+    PlotRangePadding -> Scaled[0.02], ImagePadding -> 6, Background -> 
+    GrayLevel[1], ImageSize -> 90]},
+  "RowDefault"]], "Output",ExpressionUUID->"f85a4357-9c02-be44-a1f5-\
+68731b1469ef"],
+
+Cell["Arrays of several orders at once:", "ExampleText",ExpressionUUID->"f5c34d42-3f25-6949-823c-08a879b7cb10"],
+
+Cell["\<\
+HypermatrixGraphics @ Hypermatrix[{{1, 2, 3}, {{1, 2}, {3, 4}}, Array[1 &, \
+{2, 2, 2}]}]\
+\>", "Input",ExpressionUUID->"df84c937-4da5-6046-a791-0b2c79dd2592"],
+
+Cell[BoxData[
+ TemplateBox[{
+   GraphicsBox[{{{{
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{0.55, -1.45}, {1.45, -0.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{1.55, -1.45}, {2.45, -0.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{2.55, -1.45}, {3.45, -0.55}, RoundingRadius -> 
+         0.08]}}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, -1}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, -1}], 
+       InsetBox[
+        FormBox[
+         StyleBox["3", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {3, -1}]}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {1, -0.02}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {2, -0.02}], 
+       InsetBox[
+        FormBox[
+         StyleBox["3", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {3, -0.02}]}}}, {}, 
+    FormatType -> StandardForm, PlotRange -> {{0.4, 3.6}, {-1.55, 0.25}}, 
+    PlotRangePadding -> Scaled[0.02], ImagePadding -> 6, Background -> 
+    GrayLevel[1], ImageSize -> 102], 
+   TemplateBox[{12}, "Spacer1"], 
+   GraphicsBox[{{{{
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{0.55, -1.45}, {1.45, -0.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{1.55, -1.45}, {2.45, -0.55}, RoundingRadius -> 
+         0.08]}}, {{
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{0.55, -2.45}, {1.45, -1.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[
+         Hue[0.63, 0.26, 0.89]], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.9]]], 
+        RectangleBox[{1.55, -2.45}, {2.45, -1.55}, RoundingRadius -> 
+         0.08]}}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, -1}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, -1}]}, {
+       InsetBox[
+        FormBox[
+         StyleBox["3", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, -2}], 
+       InsetBox[
+        FormBox[
+         StyleBox["4", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, -2}]}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {1, -0.02}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {2, -0.02}]}, {
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {0.28, -1}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {0.28, -2}]}}}, {}, 
+    FormatType -> StandardForm, 
+    PlotRange -> {{-0.050000000000000044`, 2.6}, {-2.55, 0.25}}, 
+    PlotRangePadding -> Scaled[0.02], ImagePadding -> 6, Background -> 
+    GrayLevel[1], ImageSize -> 90], 
+   TemplateBox[{12}, "Spacer1"], 
+   GraphicsBox[{{{{
+        FaceForm[None], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.45]]], 
+        RectangleBox[{0.55, -1.45}, {1.45, -0.55}, RoundingRadius -> 0.08]}, {
+       
+        FaceForm[None], 
+        EdgeForm[
+         Directive[
+          Hue[0.63, 0.7, 0.33], 
+          Opacity[0.45]]], 
+        RectangleBox[{1.55, -1.45}, {2.45, -0.55}, RoundingRadius -> 
+         0.08]}}}, {{
+       InsetBox[
+        GraphicsBox[{{{{
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{0.55, -1.45}, {1.45, -0.55}, RoundingRadius -> 
+              0.08]}, {
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{1.55, -1.45}, {2.45, -0.55}, RoundingRadius -> 
+              0.08]}}, {{
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{0.55, -2.45}, {1.45, -1.55}, RoundingRadius -> 
+              0.08]}, {
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{1.55, -2.45}, {2.45, -1.55}, RoundingRadius -> 
+              0.08]}}}, {{
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {1, -1}], 
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {2, -1}]}, {
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {1, -2}], 
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {2, -2}]}}, {{
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {1, -0.02}], 
+            InsetBox[
+             FormBox[
+              StyleBox["2", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {2, -0.02}]}, {
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {0.28, -1}], 
+            InsetBox[
+             FormBox[
+              StyleBox["2", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {0.28, -2}]}}}, {}, 
+         FormatType -> StandardForm, 
+         PlotRange -> {{-0.050000000000000044`, 2.6}, {-2.55, 0.25}}, 
+         PlotRangePadding -> Scaled[0.02], ImagePadding -> 6, Background -> 
+         None, ImageSize -> Automatic], {1, -1}, Center, 0.86], 
+       InsetBox[
+        GraphicsBox[{{{{
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{0.55, -1.45}, {1.45, -0.55}, RoundingRadius -> 
+              0.08]}, {
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{1.55, -1.45}, {2.45, -0.55}, RoundingRadius -> 
+              0.08]}}, {{
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{0.55, -2.45}, {1.45, -1.55}, RoundingRadius -> 
+              0.08]}, {
+             FaceForm[
+              Hue[0.63, 0.26, 0.89]], 
+             EdgeForm[
+              Directive[
+               Hue[0.63, 0.7, 0.33], 
+               Opacity[0.9]]], 
+             
+             RectangleBox[{1.55, -2.45}, {2.45, -1.55}, RoundingRadius -> 
+              0.08]}}}, {{
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {1, -1}], 
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {2, -1}]}, {
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {1, -2}], 
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+              StandardForm], {2, -2}]}}, {{
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {1, -0.02}], 
+            InsetBox[
+             FormBox[
+              StyleBox["2", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {2, -0.02}]}, {
+            InsetBox[
+             FormBox[
+              StyleBox["1", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {0.28, -1}], 
+            InsetBox[
+             FormBox[
+              StyleBox["2", 
+               Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+               StripOnInput -> False], StandardForm], {0.28, -2}]}}}, {}, 
+         FormatType -> StandardForm, 
+         PlotRange -> {{-0.050000000000000044`, 2.6}, {-2.55, 0.25}}, 
+         PlotRangePadding -> Scaled[0.02], ImagePadding -> 6, Background -> 
+         None, ImageSize -> Automatic], {2, -1}, Center, 0.86]}}, {{
+       InsetBox[
+        FormBox[
+         StyleBox["1", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {1, -0.02}], 
+       InsetBox[
+        FormBox[
+         StyleBox["2", 
+          Hue[0.63, 0.7, 0.5], FontSize -> 10, FontSlant -> Italic, 
+          StripOnInput -> False], StandardForm], {2, -0.02}]}}}, {}, 
+    FormatType -> StandardForm, PlotRange -> {{0.4, 2.6}, {-1.55, 0.25}}, 
+    PlotRangePadding -> Scaled[0.02], ImagePadding -> 6, Background -> 
+    GrayLevel[1], ImageSize -> 200]},
+  "RowDefault"]], "Output",ExpressionUUID->"1471accc-cc32-134a-8199-\
+5b52dd4c0a49"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"75a7cf1e-0575-0649-ae50-d4aa821d837b"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/ArrayGraphics.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Public entry points",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"84f6563e-6c4b-004b-82bd-dad154069e53"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"467180e9-add0-5b45-b5e7-4c65a5292941"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypermatrixGraphics3D", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"1e110de8-65d8-be4b-a546-cdf8dcc85966"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayGraphics", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "4fedd17c-a8c7-5c46-8313-12e0a61a21d6"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["Hypermatrix", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "761a0ae6-9710-9540-b0ef-3fddd39f0b2c"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypermatrixArrays", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"2f4e9e5e-e8ac-4449-92d3-d4507a12ac53"]
+}], "SeeAlso",ExpressionUUID->"c518b741-4446-c844-97ba-3f4a932d73b3"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"d8aa7511-5182-ac4c-bf73-0bac3a5635f3"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 96, 0, 70, "ObjectName",ExpressionUUID->"31c719a3-1cfa-ae41-b1f9-0785dbddef41"],
+Cell[653, 22, 343, 7, 70, "Usage",ExpressionUUID->"0ff23322-925f-0e40-a9c2-d9529636d144"],
+Cell[992, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"7185886d-8d8b-8e44-b420-288f74dffec7"],
+Cell[1093, 33, 149, 2, 70, "Notes",ExpressionUUID->"b0035c00-5e0e-674e-a54f-f77a16be0673"],
+Cell[1243, 37, 198, 3, 70, "Notes",ExpressionUUID->"1eb606ea-1eb8-774e-a28b-25814b565996"],
+Cell[1441, 42, 275, 6, 70, "Notes",ExpressionUUID->"52beb88c-aa48-c644-a77e-557824dd9add"],
+Cell[1713, 50, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"c2d6de8d-c48f-304d-b8d8-bf5970273eba"],
+Cell[1813, 52, 143, 2, 70, "Input",ExpressionUUID->"f747f1e2-f79f-ff4d-ac7e-d9631a159a8a"],
+Cell[1957, 56, 4250, 121, 70, "Output",ExpressionUUID->"f85a4357-9c02-be44-a1f5-68731b1469ef"],
+Cell[6089, 179, 111, 0, 70, "ExampleText",ExpressionUUID->"f5c34d42-3f25-6949-823c-08a879b7cb10"],
+Cell[6203, 181, 172, 3, 70, "Input",ExpressionUUID->"df84c937-4da5-6046-a791-0b2c79dd2592"],
+Cell[6375, 186, 12258, 332, 70, "Output",ExpressionUUID->"1471accc-cc32-134a-8199-5b52dd4c0a49"],
+Cell[18304, 520, 85, 0, 70, "NotesSection",ExpressionUUID->"75a7cf1e-0575-0649-ae50-d4aa821d837b"],
+Cell[18392, 522, 287, 9, 70, "Notes",ExpressionUUID->"84f6563e-6c4b-004b-82bd-dad154069e53"],
+Cell[18673, 533, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"467180e9-add0-5b45-b5e7-4c65a5292941"],
+Cell[18765, 535, 671, 16, 70, "SeeAlso",ExpressionUUID->"c518b741-4446-c844-97ba-3f4a932d73b3"]
+}
+]
+*)
+
+(* End of internal cache information *)

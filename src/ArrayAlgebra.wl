@@ -16,7 +16,7 @@ BeginPackage["WolframInstitute`Hypergraphs`"];
 Unprotect[
     ZeroArray, OneArray, IdentityArray, PartialIdentityArray,
     ArrayMultiply, ArrayAdd, ArrayTimes, FindArrayEquations,
-    NumericalArray, SymbolicArray
+    ArrayObject
 ];
 
 
@@ -87,9 +87,6 @@ ArrayMultiply::rank = "Array `1` has `2` indices but its specification names `3`
 ArrayMultiply::dims = "Index `1` is used with inconsistent lengths `2`.";
 ArrayMultiply::out = "The output index `1` does not occur among the inputs.";
 ArrayMultiply::array = "Argument `1` is not a rectangular array.";
-ArrayMultiply::mixed =
-    "Numerical and symbolic arrays cannot be contracted together; every array in one call must be \
-of the same kind.";
 
 ArrayAdd::array = "Argument `1` is not a rectangular array.";
 ArrayAdd::dims =
@@ -152,7 +149,7 @@ constantArrayObject[head_Symbol, value_, dims_, dom_] := Module[{sym},
     (* a constant array is invariant under every permutation of its indices, so it is symmetric
        whenever it is regular *)
     sym = If[SameQ @@ dims, "Symmetric", "Rigid"];
-    NumericalArray[If[dims === {}, value, ConstantArray[value, dims]], dom, sym]
+    ArrayObject[If[dims === {}, value, ConstantArray[value, dims]], sym]
 ];
 
 makeConstant[head_Symbol, zeroOrOne_, args___, dom_] := Module[{dims, v},
@@ -188,7 +185,7 @@ partialIdentity[head_, n_, d_, positions_, dom_] := Module[{zero, one, data, sym
         Message[MessageName[head, "dom"], dom]; Return[$Failed, Module]];
     data = Array[If[SameQ @@ {##}[[positions]], one, zero] &, ConstantArray[d, n]];
     sym = If[Sort[positions] === Range[n], "Symmetric", "Rigid"];
-    NumericalArray[data, dom, sym]
+    ArrayObject[data, sym]
 ];
 
 IdentityArray[n_Integer, d_Integer] := partialIdentity[IdentityArray, n, d, Range[n], "Integer"];
@@ -232,17 +229,12 @@ parseArraySpec[Rule[ins_List, out_List]] /; AllTrue[ins, ListQ] := {ins, out};
 parseArraySpec[ins_List] /; AllTrue[ins, ListQ] := {ins, Automatic};
 parseArraySpec[_] := $Failed;
 
-(* Raw nested lists and array objects are both acceptable inputs. A SymbolicArray comes through
-   as its list of lists of terms, which is what the contraction then works with. *)
+(* Raw nested lists and array objects are both acceptable inputs; an array object comes through as
+   its entries, which is what the contraction then works with. *)
 arrayDataOf[a_] := If[ArrayObjectQ[a], ArrayEntries[a], a];
 
-(* An array counts as numerical when every entry lies in a recognized value domain, and as
-   symbolic otherwise. A single contraction has to be one or the other: mixing them would make
-   the result neither, and the entries of the result would have no consistent reading. *)
-arrayKind[data_] := If[inferArrayDomain[data] === $Failed, "Symbolic", "Numerical"];
-
 ArrayMultiply[arrays_List, spec_] := Module[
-    {parsed, ins, out, data, kinds, occurrences, dimOf, bad, labels, summed,
+    {parsed, ins, out, data, occurrences, dimOf, bad, labels, summed,
      outDims, sumTuples, outTuples, entries},
 
     parsed = parseArraySpec[spec];
@@ -256,10 +248,6 @@ ArrayMultiply[arrays_List, spec_] := Module[
     If[ ! AllTrue[data, arrayDataQ],
         Message[ArrayMultiply::array, First @ FirstPosition[data, _ ? (! arrayDataQ[#] &)]];
         Return[$Failed, Module]];
-
-    kinds = DeleteDuplicates[arrayKind /@ data];
-    If[ Length[kinds] > 1,
-        Message[ArrayMultiply::mixed]; Return[$Failed, Module]];
 
     Do[
         If[ Length[ins[[k]]] =!= dataOrder[data[[k]]],
@@ -309,12 +297,11 @@ ArrayMultiply[arrays_List, spec_] := Module[
         {ot, outTuples}
     ];
 
-    (* Contracting every index leaves a single entry, which is the 0-array. The kind of the inputs
-       decides the kind of the result: numerical arrays give back a NumericalArray, symbolic ones
-       the plain list of lists of expressions they build. Normal recovers the entries either way,
-       so a fully contracted numerical result reads as the scalar it is. *)
+    (* Contracting every index leaves a single entry, which is the 0-array. Whatever the entries
+       are, the result is an array of them; Normal recovers them, so a fully contracted result
+       reads as the scalar it is. *)
     With[{result = If[out === {}, First[entries], ArrayReshape[entries, outDims]]},
-        If[kinds === {"Numerical"}, NumericalArray[result], result]
+        ArrayObject[result]
     ]
 ];
 
@@ -367,14 +354,9 @@ elementwise[head_Symbol, op_, arrays_List] := Module[{data, shapes, result, sym}
     result = op @@ data;
     sym = elementwiseSymmetry[arrays, data];
 
-    (* As with ArrayMultiply, numerical arrays give back a NumericalArray and anything symbolic
-       gives the plain entries. Unlike ArrayMultiply, the two kinds may be combined: the operation
-       acts on one entry at a time, so a numerical entry meeting a symbolic one has the obvious
-       reading, and it is what scalar multiplication of a symbolic array amounts to. *)
-    If[ DeleteDuplicates[arrayKind /@ data] === {"Numerical"},
-        NumericalArray[result, Automatic, sym],
-        result
-    ]
+    (* One head for every array, so there is nothing to decide here: whatever the entries turned
+       out to be, the result is an array of them. *)
+    ArrayObject[result, sym]
 ];
 
 ArrayAdd[arrays__] := elementwise[ArrayAdd, Plus, {arrays}];
@@ -385,10 +367,8 @@ ArrayTimes[] := (Message[ArrayTimes::args]; $Failed);
 (* Plus and Times on array objects are the same operations, so that the ordinary arithmetic
    notation may be used: a + b, 2 a, a - b, a / 2. Nothing here feeds an array object back into
    Plus or Times -- elementwise works on the entries -- so there is no recursion. *)
-NumericalArray /: Plus[a___, b_NumericalArray, c___] := ArrayAdd[a, b, c];
-NumericalArray /: Times[a___, b_NumericalArray, c___] := ArrayTimes[a, b, c];
-SymbolicArray /: Plus[a___, b_SymbolicArray, c___] := ArrayAdd[a, b, c];
-SymbolicArray /: Times[a___, b_SymbolicArray, c___] := ArrayTimes[a, b, c];
+ArrayObject /: Plus[a___, b_ArrayObject, c___] := ArrayAdd[a, b, c];
+ArrayObject /: Times[a___, b_ArrayObject, c___] := ArrayTimes[a, b, c];
 
 
 (* ::Section:: *)
@@ -610,7 +590,7 @@ FindArrayEquations[ops_List, arguments_List, OptionsPattern[]] := Module[{
         trials
     ];
     (* arrayDataOf so that a term is judged by its entries: an operation may hand back a
-       NumericalArray while a bare argument is a plain list, and those two must still compare
+       array object while a bare argument is a plain list, and those two must still compare
        equal when they hold the same numbers. *)
     leftValues = Table[Quiet @ Map[arrayDataOf, ReplaceAll[leftTerms, s]], {s, numericSets}];
     rightValues = Table[Quiet @ Map[arrayDataOf, ReplaceAll[rightTerms, s]], {s, numericSets}];
@@ -646,7 +626,7 @@ FindArrayEquations[ops_List, arguments_List, OptionsPattern[]] := Module[{
        and two terms are equal exactly when their expanded entries agree, so grouping by that
        expansion settles a whole class of terms at once. Each term is evaluated once, however many
        pairs it takes part in. *)
-    symbolic = AssociationThread[distinct -> (Normal @ SymbolicArray[#, dims] & /@ distinct)];
+    symbolic = AssociationThread[distinct -> (Normal @ GenerateSymbolicArray[#, dims] & /@ distinct)];
     symbolicValue[t_] := symbolicValue[t] = With[{v = arrayDataOf @ Quiet[t /. symbolic]},
         If[evaluatedQ[v], Expand[v], $Failed]
     ];

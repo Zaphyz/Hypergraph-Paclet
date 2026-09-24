@@ -1,0 +1,379 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     13549,        370]
+NotebookOptionsPosition[     12181,        346]
+NotebookOutlinePosition[     12529,        361]
+CellTagsIndexPosition[     12486,        358]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypermatrixGraphics3D", "ObjectName",ExpressionUUID->"95e4d4e1-cbf6-7e41-a20c-fab65ba1a8d4"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypermatrixGraphics3D", "[", "hm", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"46fc62cc-49ee-db40-98ad-bf8b29ef641d"],
+ " ",
+ "draws each array of the hypermatrix hm as cubes in space, in canonical \
+order."
+}], "Usage",ExpressionUUID->"fc6bffb3-f227-cc4e-8620-119f067d7c9b"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"9184b9ad-916e-6247-af36-41b746063f77"],
+
+Cell["\<\
+Each array is drawn by ArrayGraphics3D, and the options are the same.\
+\>", "Notes",ExpressionUUID->"a3fac23c-af7f-2647-8c63-00fd600f1dbd"],
+
+Cell[TextData[{
+ "For plane pictures, see ",
+ Cell[BoxData[
+  StyleBox["HypermatrixGraphics", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"da30f810-5baf-014c-989e-55be4865ac91"],
+ "."
+}], "Notes",ExpressionUUID->"220d0cd7-2647-4f4b-a5aa-1b8c8ffdae32"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"dc35c47f-1ef3-5046-b2e5-6bc1ac026d22"],
+
+Cell["\<\
+HypermatrixGraphics3D @ Hypermatrix[{{1, 2, 3}, {{1, 2}, {3, 4}}, Array[1 &, \
+{2, 2, 2}]}]\
+\>", "Input",ExpressionUUID->"1df4e9df-7204-3747-9084-33a25f42372b"],
+
+Cell[BoxData[
+ TemplateBox[{
+   Graphics3DBox[{{{{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 
+         1.3599999999999999`, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, 1, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 
+         1.3599999999999999`, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["2", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, 1, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{2.64, 0.64, 0.64}, {3.36, 1.3599999999999999`, 
+         1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["3", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {3, 1, 1}]}}, {
+      Thickness[0.006], {{
+        Hue[0.63, 0.7, 0.5], 
+        Arrow3DBox[
+         TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 0.06}}, 
+          0.02]], 
+        Text3DBox[
+         FormBox[
+          StyleBox["\"i\"", 
+           Hue[0.63, 0.7, 0.5], FontSize -> 11, FontSlant -> Italic, 
+           StripOnInput -> False], StandardForm], {0.8400000000000001, 0.06, 
+         0.06}]}}}}, {}, FormatType -> StandardForm, Boxed -> False, Lighting -> 
+    "Neutral", PlotRange -> {{0, 3.7}, {0, 1.7}, {0, 1.7}}, PlotRangePadding -> 
+    Scaled[0.02], Background -> GrayLevel[1], ImageSize -> 162], 
+   TemplateBox[{12}, "Spacer1"], 
+   Graphics3DBox[{{{{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 
+         1.3599999999999999`, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, 1, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{0.64, 1.6400000000000001`, 0.64}, {1.3599999999999999`, 
+         2.36, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["2", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, 2, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 
+         1.3599999999999999`, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["3", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, 1, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 0.64}, {2.36, 
+         2.36, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["4", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, 2, 1}]}}, {
+      Thickness[0.006], {{
+        Hue[0.63, 0.7, 0.5], 
+        Arrow3DBox[
+         TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 0.06}}, 
+          0.02]], 
+        Text3DBox[
+         FormBox[
+          StyleBox["\"i\"", 
+           Hue[0.63, 0.7, 0.5], FontSize -> 11, FontSlant -> Italic, 
+           StripOnInput -> False], StandardForm], {0.8400000000000001, 0.06, 
+         0.06}]}, {
+        Hue[0.63, 0.7, 0.5], 
+        Arrow3DBox[
+         TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.6100000000000001, 0.06}}, 
+          0.02]], 
+        Text3DBox[
+         FormBox[
+          StyleBox["\"j\"", 
+           Hue[0.63, 0.7, 0.5], FontSize -> 11, FontSlant -> Italic, 
+           StripOnInput -> False], StandardForm], {0.06, 0.8400000000000001, 
+         0.06}]}}}}, {}, FormatType -> StandardForm, Boxed -> False, Lighting -> 
+    "Neutral", PlotRange -> {{0, 2.7}, {0, 2.7}, {0, 1.7}}, PlotRangePadding -> 
+    Scaled[0.02], Background -> GrayLevel[1], ImageSize -> 120], 
+   TemplateBox[{12}, "Spacer1"], 
+   Graphics3DBox[{{{{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{0.64, 0.64, 0.64}, {1.3599999999999999`, 
+         1.3599999999999999`, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, 1, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{0.64, 0.64, 1.6400000000000001`}, {1.3599999999999999`, 
+         1.3599999999999999`, 2.36}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, 1, 2}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{0.64, 1.6400000000000001`, 0.64}, {1.3599999999999999`, 
+         2.36, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, 2, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{0.64, 1.6400000000000001`, 1.6400000000000001`}, {
+         1.3599999999999999`, 2.36, 2.36}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {1, 2, 2}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{1.6400000000000001`, 0.64, 0.64}, {2.36, 
+         1.3599999999999999`, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, 1, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{1.6400000000000001`, 0.64, 1.6400000000000001`}, {2.36, 
+         1.3599999999999999`, 2.36}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, 1, 2}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 0.64}, {2.36, 
+         2.36, 1.3599999999999999`}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, 2, 1}]}, {{
+        FaceForm[
+         Directive[
+          Hue[0.63, 0.3, 0.86], 
+          Opacity[0.22]]], 
+        EdgeForm[None], 
+        CuboidBox[{1.6400000000000001`, 1.6400000000000001`, 
+         1.6400000000000001`}, {2.36, 2.36, 2.36}]}, 
+       Text3DBox[
+        FormBox[
+         StyleBox["1", 
+          GrayLevel[0], FontSize -> 12, StripOnInput -> False], 
+         StandardForm], {2, 2, 2}]}}, {
+      Thickness[0.006], {{
+        Hue[0.63, 0.7, 0.5], 
+        Arrow3DBox[
+         TubeBox[{{0.06, 0.06, 0.06}, {0.6100000000000001, 0.06, 0.06}}, 
+          0.02]], 
+        Text3DBox[
+         FormBox[
+          StyleBox["\"i\"", 
+           Hue[0.63, 0.7, 0.5], FontSize -> 11, FontSlant -> Italic, 
+           StripOnInput -> False], StandardForm], {0.8400000000000001, 0.06, 
+         0.06}]}, {
+        Hue[0.63, 0.7, 0.5], 
+        Arrow3DBox[
+         TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.6100000000000001, 0.06}}, 
+          0.02]], 
+        Text3DBox[
+         FormBox[
+          StyleBox["\"j\"", 
+           Hue[0.63, 0.7, 0.5], FontSize -> 11, FontSlant -> Italic, 
+           StripOnInput -> False], StandardForm], {0.06, 0.8400000000000001, 
+         0.06}]}, {
+        Hue[0.63, 0.7, 0.5], 
+        Arrow3DBox[
+         TubeBox[{{0.06, 0.06, 0.06}, {0.06, 0.06, 0.6100000000000001}}, 
+          0.02]], 
+        Text3DBox[
+         FormBox[
+          StyleBox["\"k\"", 
+           Hue[0.63, 0.7, 0.5], FontSize -> 11, FontSlant -> Italic, 
+           StripOnInput -> False], StandardForm], {0.06, 0.06, 
+         0.8400000000000001}]}}}}, {}, FormatType -> StandardForm, Boxed -> 
+    False, Lighting -> "Neutral", PlotRange -> {{0, 2.7}, {0, 2.7}, {0, 2.7}},
+     PlotRangePadding -> Scaled[0.02], Background -> GrayLevel[1], ImageSize -> 
+    120]},
+  "RowDefault"]], "Output",ExpressionUUID->"53b5ad04-d3ca-e745-856d-\
+48f53091ab81"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"8a78bb7a-827a-ec46-bb7c-e97fe1060be4"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/ArrayGraphics.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Public entry points",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"c999541a-60cb-e14b-9f3b-0810ed99f75d"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"fb96e4ff-e87e-5242-8166-3cc1053304b8"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypermatrixGraphics", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"6ad76fea-b2fb-744f-a8a0-ac85f4f0f25c"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayGraphics3D", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "47e8eeb8-6a69-9340-9183-157afdb977d2"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["Hypermatrix", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "87a07c21-33d6-e445-bfbc-e98f5ea2517f"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypermatrixArrays", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"2abf7450-5592-b245-a2e8-ddafac550e24"]
+}], "SeeAlso",ExpressionUUID->"c4552391-bb73-fd4d-baec-546114c393a9"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"d8aa7511-5182-ac4c-bf73-0bac3a5635f3"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 98, 0, 70, "ObjectName",ExpressionUUID->"95e4d4e1-cbf6-7e41-a20c-fab65ba1a8d4"],
+Cell[655, 22, 353, 8, 70, "Usage",ExpressionUUID->"fc6bffb3-f227-cc4e-8620-119f067d7c9b"],
+Cell[1003, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"9184b9ad-916e-6247-af36-41b746063f77"],
+Cell[1104, 34, 151, 2, 70, "Notes",ExpressionUUID->"a3fac23c-af7f-2647-8c63-00fd600f1dbd"],
+Cell[1256, 38, 264, 6, 70, "Notes",ExpressionUUID->"220d0cd7-2647-4f4b-a5aa-1b8c8ffdae32"],
+Cell[1517, 46, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"dc35c47f-1ef3-5046-b2e5-6bc1ac026d22"],
+Cell[1617, 48, 174, 3, 70, "Input",ExpressionUUID->"1df4e9df-7204-3747-9084-33a25f42372b"],
+Cell[1791, 53, 9525, 258, 70, "Output",ExpressionUUID->"53b5ad04-d3ca-e745-856d-48f53091ab81"],
+Cell[11061, 313, 85, 0, 70, "NotesSection",ExpressionUUID->"8a78bb7a-827a-ec46-bb7c-e97fe1060be4"],
+Cell[11149, 315, 287, 9, 70, "Notes",ExpressionUUID->"c999541a-60cb-e14b-9f3b-0810ed99f75d"],
+Cell[11430, 326, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"fb96e4ff-e87e-5242-8166-3cc1053304b8"],
+Cell[11522, 328, 671, 16, 70, "SeeAlso",ExpressionUUID->"c4552391-bb73-fd4d-baec-546114c393a9"]
+}
+]
+*)
+
+(* End of internal cache information *)

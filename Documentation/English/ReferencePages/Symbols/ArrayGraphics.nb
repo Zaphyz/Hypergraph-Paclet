@@ -1,0 +1,1675 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     68443,       1666]
+NotebookOptionsPosition[     64372,       1614]
+NotebookOutlinePosition[     64720,       1629]
+CellTagsIndexPosition[     64677,       1626]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["ArrayGraphics", "ObjectName",ExpressionUUID->"195d3e78-ef03-6b4d-8d76-bb0b6349bc63"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArrayGraphics", "[", "arr", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"edd5fc3c-9123-d047-aa8f-1bc6195a3dca"],
+ " ",
+ "draws the array arr in the plane."
+}], "Usage",ExpressionUUID->"2500f494-2dc9-f949-a22b-b49d805b85d6"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArrayGraphics", "[", 
+    RowBox[{"arr", ",", " ", "opts"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"35a8b855-fcb9-c84d-a880-37fc300b28c1"],
+ " ",
+ "draws it with the given options."
+}], "Usage",ExpressionUUID->"bba3179e-04e3-9342-9a39-6d7502bbecc0"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"cea1f1b2-5e94-694c-81cf-2189d833a4ea"],
+
+Cell["\<\
+An array of order one is drawn as a row of cells and one of order two as a \
+grid; an array of order zero is a single cell.\
+\>", "Notes",ExpressionUUID->"c1d84adf-2c74-824b-8600-0f435be3bc85"],
+
+Cell["\<\
+Only those orders have a flat picture of their own. Anything higher is drawn \
+as a nesting of them: the first block of indices gives the outer picture, and \
+each of its cells holds the picture of the indices that remain. A 3-array is \
+a row of grids, a 4-array a grid of grids.\
+\>", "Notes",ExpressionUUID->"b8bb0dfb-e3c3-2b40-a7be-8a26f98e2524"],
+
+Cell[TextData[{
+ "The result is always a two-dimensional ",
+ Cell[BoxData[
+  StyleBox["Graphics", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "23922267-9a55-2d4c-972c-2cee8a533954"],
+ ". For cubes arranged in space, at every order, see ",
+ Cell[BoxData[
+  StyleBox["ArrayGraphics3D", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "3024fdd8-ed72-5b4e-a9b8-d24e156c11aa"],
+ "."
+}], "Notes",ExpressionUUID->"e0337340-5c77-8e4a-a915-45fd9e0d4a8d"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"\"\<Nesting\>\"", " ", "->", " ", 
+    RowBox[{"{", 
+     RowBox[{"k1", ",", " ", "k2", ",", " ", "..."}], "}"}]}], "InlineCode"]],
+   "InlineFormula",ExpressionUUID->"59a611d0-203d-4141-bc7f-ab65feb4eb18"],
+ " says how to split the indices: the blocks must sum to the order of the \
+array and each must be one or two, since a flat picture holds no more. The \
+default, ",
+ Cell[BoxData[
+  StyleBox["Automatic", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "232675fa-5537-6446-8806-8f295d50343f"],
+ ", uses ",
+ Cell[BoxData[
+  StyleBox["ArrayNesting", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "bbb5d0de-a679-ef46-bfb8-31765b47b78f"],
+ "."
+}], "Notes",ExpressionUUID->"36f6179c-060b-404d-af49-a1199cc787e2"],
+
+Cell["\<\
+The cells of the innermost block are sized to the widest entry, so that the \
+entries of a symbolic array do not overflow one another.\
+\>", "Notes",ExpressionUUID->"acc587cd-4dc8-4840-95b5-3e11b64a4592"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"\"\<Framed\>\"", " ", "->", " ", "False"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"fc814d8d-a05b-454b-98c4-e6938e06d166"],
+ " leaves the entries on the background with no cell drawn around them."
+}], "Notes",ExpressionUUID->"7b8035e8-76a9-a143-bfcf-5f644e1d1e07"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["\"\<Indices\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "7fcd4286-2721-8040-96a6-4f4069a0b8ce"],
+ " is ",
+ Cell[BoxData[
+  StyleBox["Automatic", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "23a01374-bd22-864d-bf5d-35f164244cb8"],
+ ", which labels the rows and columns; ",
+ Cell[BoxData[
+  StyleBox["None", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "a108c878-010f-0145-a322-a8d741e121a7"],
+ ", which labels nothing; or ",
+ Cell[BoxData[
+  StyleBox["\"\<Colored\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "bd8dbf44-9577-3e4a-a6fd-e0feafcb8ab4"],
+ ", which gives each axis a colour of its own."
+}], "Notes",ExpressionUUID->"aac128ab-dc54-2044-9e60-fd63689334d3"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["\"\<PlotTheme\>\"", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"e05f6b6e-f6fa-d148-a115-3da89319e0ab"],
+ " is ",
+ Cell[BoxData[
+  StyleBox["\"\<Light\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "02491bad-29ac-0f49-8e41-a1b61d87f805"],
+ " or ",
+ Cell[BoxData[
+  StyleBox["\"\<Dark\>\"", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "aeec991e-65df-5e47-a08b-c46dffe82a6b"],
+ "."
+}], "Notes",ExpressionUUID->"c4192a29-2500-a043-ad6a-c19965264b29"],
+
+Cell[TextData[{
+ "An array of more than ",
+ Cell[BoxData[
+  StyleBox["\"\<MaxEntries\>\"", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"973c88d7-b26f-7d49-b33c-cf3d888e147c"],
+ " entries, 512 by default, is refused with ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"ArrayGraphics", "::", "big"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"9dd669ce-c813-be4a-b536-7795f65c09ca"],
+ " rather than drawn illegibly."
+}], "Notes",ExpressionUUID->"8dcb68b8-db83-fe47-9734-10efdc2d8b97"],
+
+Cell["\<\
+Array objects and plain nested lists are both accepted, and Graphics options \
+are passed through.\
+\>", "Notes",ExpressionUUID->"6bd71826-1e1f-c940-bbf4-61ddc60bad34"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"60eaffaa-50cb-c344-990a-311220c90597"],
+
+Cell["A 1-array is a row of cells, and a 2-array a grid:", "ExampleText",ExpressionUUID->"d7e8f715-8093-984e-bcae-37ff4d572d52"],
+
+Cell["\<\
+{ArrayGraphics[{1, 2, 3, 4}], ArrayGraphics[{{1, 2, 3}, {4, 5, 6}}]}\
+\>", "Input",ExpressionUUID->"4a671d59-d70f-c542-8071-0aa88e5817c6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   GraphicsBox[{{
+      {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+       0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+        RoundingRadius->0.08]}, 
+      {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+       0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+        RoundingRadius->0.08]}, 
+      {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+       0.63, 0.26, 0.89]], RectangleBox[{2.55, -1.45}, {3.45, -0.55},
+        RoundingRadius->0.08]}, 
+      {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+       0.63, 0.26, 0.89]], RectangleBox[{3.55, -1.45}, {4.45, -0.55},
+        RoundingRadius->0.08]}}, {InsetBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+       StyleBox["2",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {2, -1}], InsetBox[
+       StyleBox["3",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {3, -1}], InsetBox[
+       StyleBox["4",
+        StripOnInput->False,
+        LineColor->GrayLevel[0],
+        FrontFaceColor->GrayLevel[0],
+        BackFaceColor->GrayLevel[0],
+        GraphicsColor->GrayLevel[0],
+        FontSize->12,
+        FontColor->GrayLevel[0]], {4, -1}]}, {InsetBox[
+       StyleBox["1",
+        StripOnInput->False,
+        LineColor->Hue[0.63, 0.7, 0.5],
+        FrontFaceColor->Hue[0.63, 0.7, 0.5],
+        BackFaceColor->Hue[0.63, 0.7, 0.5],
+        GraphicsColor->Hue[0.63, 0.7, 0.5],
+        FontSize->10,
+        FontSlant->Italic,
+        FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+       StyleBox["2",
+        StripOnInput->False,
+        LineColor->Hue[0.63, 0.7, 0.5],
+        FrontFaceColor->Hue[0.63, 0.7, 0.5],
+        BackFaceColor->Hue[0.63, 0.7, 0.5],
+        GraphicsColor->Hue[0.63, 0.7, 0.5],
+        FontSize->10,
+        FontSlant->Italic,
+        FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}], InsetBox[
+       StyleBox["3",
+        StripOnInput->False,
+        LineColor->Hue[0.63, 0.7, 0.5],
+        FrontFaceColor->Hue[0.63, 0.7, 0.5],
+        BackFaceColor->Hue[0.63, 0.7, 0.5],
+        GraphicsColor->Hue[0.63, 0.7, 0.5],
+        FontSize->10,
+        FontSlant->Italic,
+        FontColor->Hue[0.63, 0.7, 0.5]], {3, -0.02}], InsetBox[
+       StyleBox["4",
+        StripOnInput->False,
+        LineColor->Hue[0.63, 0.7, 0.5],
+        FrontFaceColor->Hue[0.63, 0.7, 0.5],
+        BackFaceColor->Hue[0.63, 0.7, 0.5],
+        GraphicsColor->Hue[0.63, 0.7, 0.5],
+        FontSize->10,
+        FontSlant->Italic,
+        FontColor->Hue[0.63, 0.7, 0.5]], {4, -0.02}]}},
+    Background->GrayLevel[1],
+    FormatType->StandardForm,
+    ImagePadding->6,
+    ImageSize->136,
+    PlotRange->{{0.4, 4.6}, {-1.55, 0.25}},
+    PlotRangePadding->Scaled[0.02]], ",", 
+   GraphicsBox[{{{
+       {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+         RoundingRadius->0.08]}, 
+       {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+         RoundingRadius->0.08]}, 
+       {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.26, 0.89]], RectangleBox[{2.55, -1.45}, {3.45, -0.55},
+         RoundingRadius->0.08]}}, {
+       {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.26, 0.89]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+         RoundingRadius->0.08]}, 
+       {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.26, 0.89]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+         RoundingRadius->0.08]}, 
+       {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.26, 0.89]], RectangleBox[{2.55, -2.45}, {3.45, -1.55},
+         RoundingRadius->0.08]}}}, {{InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, -1}], InsetBox[
+        StyleBox["3",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {3, -1}]}, {InsetBox[
+        StyleBox["4",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+        StyleBox["5",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, -2}], InsetBox[
+        StyleBox["6",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {3, -2}]}}, {{InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}], InsetBox[
+        StyleBox["3",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {3, -0.02}]}, {InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+    Background->GrayLevel[1],
+    FormatType->StandardForm,
+    ImagePadding->6,
+    ImageSize->102,
+    PlotRange->{{-0.050000000000000044`, 3.6}, {-2.55, 0.25}},
+    PlotRangePadding->Scaled[0.02]]}], "}"}]], "Output",ExpressionUUID->\
+"18dccd84-7a84-f641-8cb4-af05fca726a8"],
+
+Cell["\<\
+A 3-array has no flat picture of its own, so it is drawn as a row of \
+matrices, the first index choosing the matrix:\
+\>", "ExampleText",ExpressionUUID->"58328e68-54a5-e949-8b3e-0d3410f849f3"],
+
+Cell["ArrayGraphics[Array[#1 + #2 + #3 &, {2, 2, 2}]]", "Input",ExpressionUUID->"28c51fe2-4abb-8542-b042-b2adfe0d46d2"],
+
+Cell[BoxData[
+ GraphicsBox[{{
+    {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+     RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+      RoundingRadius->0.08]}, 
+    {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+     RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+      RoundingRadius->0.08]}}, {InsetBox[
+     GraphicsBox[{{{
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+           RoundingRadius->0.08]}}, {
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+           RoundingRadius->0.08]}}}, {{InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+          StyleBox["4",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+          StyleBox["4",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -2}]}}, {{InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+      Background->None,
+      FormatType->StandardForm,
+      ImagePadding->6,
+      ImageSize->Automatic,
+      PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+      PlotRangePadding->Scaled[0.02]], {1, -1}, Center, 0.86], InsetBox[
+     GraphicsBox[{{{
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+           RoundingRadius->0.08]}}, {
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+           RoundingRadius->0.08]}}}, {{InsetBox[
+          StyleBox["4",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+          StyleBox["6",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -2}]}}, {{InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+      Background->None,
+      FormatType->StandardForm,
+      ImagePadding->6,
+      ImageSize->Automatic,
+      PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+      PlotRangePadding->Scaled[0.02]], {2, -1}, Center, 0.86]}, {InsetBox[
+     StyleBox["1",
+      StripOnInput->False,
+      LineColor->Hue[0.63, 0.7, 0.5],
+      FrontFaceColor->Hue[0.63, 0.7, 0.5],
+      BackFaceColor->Hue[0.63, 0.7, 0.5],
+      GraphicsColor->Hue[0.63, 0.7, 0.5],
+      FontSize->10,
+      FontSlant->Italic,
+      FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+     StyleBox["2",
+      StripOnInput->False,
+      LineColor->Hue[0.63, 0.7, 0.5],
+      FrontFaceColor->Hue[0.63, 0.7, 0.5],
+      BackFaceColor->Hue[0.63, 0.7, 0.5],
+      GraphicsColor->Hue[0.63, 0.7, 0.5],
+      FontSize->10,
+      FontSlant->Italic,
+      FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}},
+  Background->GrayLevel[1],
+  FormatType->StandardForm,
+  ImagePadding->6,
+  ImageSize->200,
+  PlotRange->{{0.4, 2.6}, {-1.55, 0.25}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"fc3e1221-81ff-\
+1b4d-aa99-973fe3750cb4"],
+
+Cell["A 4-array becomes a grid of grids:", "ExampleText",ExpressionUUID->"ac0bbd17-d695-b648-94f5-86644ff8d54f"],
+
+Cell["ArrayGraphics[Array[#1 + #2 + #3 + #4 &, {2, 2, 2, 2}]]", "Input",ExpressionUUID->"7cc7bb64-5309-f146-8238-f9c1ca0070fa"],
+
+Cell[BoxData[
+ GraphicsBox[{{{
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+       RoundingRadius->0.08]}}, {
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+       RoundingRadius->0.08]}}}, {{InsetBox[
+      GraphicsBox[{{{
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+            RoundingRadius->0.08]}}, {
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+            RoundingRadius->0.08]}}}, {{InsetBox[
+           StyleBox["4",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+           StyleBox["5",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+           StyleBox["5",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+           StyleBox["6",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -2}]}}, {{InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {1, -1}, Center, 0.86], InsetBox[
+      GraphicsBox[{{{
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+            RoundingRadius->0.08]}}, {
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+            RoundingRadius->0.08]}}}, {{InsetBox[
+           StyleBox["5",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+           StyleBox["6",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+           StyleBox["6",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+           StyleBox["7",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -2}]}}, {{InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {2, -1}, Center, 0.86]}, {InsetBox[
+      GraphicsBox[{{{
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+            RoundingRadius->0.08]}}, {
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+            RoundingRadius->0.08]}}}, {{InsetBox[
+           StyleBox["5",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+           StyleBox["6",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+           StyleBox["6",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+           StyleBox["7",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -2}]}}, {{InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {1, -2}, Center, 0.86], InsetBox[
+      GraphicsBox[{{{
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+            RoundingRadius->0.08]}}, {
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+            RoundingRadius->0.08]}, 
+          {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+           0.63, 0.26, 0.89]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+            RoundingRadius->0.08]}}}, {{InsetBox[
+           StyleBox["6",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+           StyleBox["7",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+           StyleBox["7",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+           StyleBox["8",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontSize->12,
+            FontColor->GrayLevel[0]], {2, -2}]}}, {{InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->Hue[0.63, 0.7, 0.5],
+            FrontFaceColor->Hue[0.63, 0.7, 0.5],
+            BackFaceColor->Hue[0.63, 0.7, 0.5],
+            GraphicsColor->Hue[0.63, 0.7, 0.5],
+            FontSize->10,
+            FontSlant->Italic,
+            FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {2, -2}, Center, 0.86]}}, {{InsetBox[
+      StyleBox["1",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+      StyleBox["1",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+  Background->GrayLevel[1],
+  FormatType->StandardForm,
+  ImagePadding->6,
+  ImageSize->200,
+  PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"98a8a776-10da-\
+1d44-83f9-5220ece7b0b6"],
+
+Cell["\<\
+Which indices go outside and which inside is a choice. The same 3-array as a \
+matrix of rows instead:\
+\>", "ExampleText",ExpressionUUID->"ca291d6c-8022-7843-80c0-9c05613710c9"],
+
+Cell["\<\
+ArrayGraphics[Array[#1 + #2 + #3 &, {2, 2, 2}], \"Nesting\" -> {2, 1}]\
+\>", "Input",ExpressionUUID->"b2904c46-8eb1-c04c-a3ee-f8782dcb1048"],
+
+Cell[BoxData[
+ GraphicsBox[{{{
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+       RoundingRadius->0.08]}}, {
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.45]}], FaceForm[None], 
+      RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+       RoundingRadius->0.08]}}}, {{InsetBox[
+      GraphicsBox[{{
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+           RoundingRadius->0.08]}}, {InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+          StyleBox["4",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{0.4, 2.6}, {-1.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {1, -1}, Center, 0.86], InsetBox[
+      GraphicsBox[{{
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+           RoundingRadius->0.08]}}, {InsetBox[
+          StyleBox["4",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{0.4, 2.6}, {-1.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {2, -1}, Center, 0.86]}, {InsetBox[
+      GraphicsBox[{{
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+           RoundingRadius->0.08]}}, {InsetBox[
+          StyleBox["4",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{0.4, 2.6}, {-1.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {1, -2}, Center, 0.86], InsetBox[
+      GraphicsBox[{{
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+           RoundingRadius->0.08]}, 
+         {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+          0.63, 0.26, 0.89]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+           RoundingRadius->0.08]}}, {InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+          StyleBox["6",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontSize->12,
+           FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->Hue[0.63, 0.7, 0.5],
+           FrontFaceColor->Hue[0.63, 0.7, 0.5],
+           BackFaceColor->Hue[0.63, 0.7, 0.5],
+           GraphicsColor->Hue[0.63, 0.7, 0.5],
+           FontSize->10,
+           FontSlant->Italic,
+           FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}},
+       Background->None,
+       FormatType->StandardForm,
+       ImagePadding->6,
+       ImageSize->Automatic,
+       PlotRange->{{0.4, 2.6}, {-1.55, 0.25}},
+       PlotRangePadding->Scaled[0.02]], {2, -2}, Center, 0.86]}}, {{InsetBox[
+      StyleBox["1",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+      StyleBox["1",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+  Background->GrayLevel[1],
+  FormatType->StandardForm,
+  ImagePadding->6,
+  ImageSize->200,
+  PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"792b4dd8-0077-\
+db4a-87b2-c77d9caad5d6"],
+
+Cell["\<\
+The entries of a symbolic array are wider, and the cells widen to match:\
+\>", "ExampleText",ExpressionUUID->"eddab94c-794f-9b47-b319-08c3c98b0a82"],
+
+Cell["ArrayGraphics[GenerateSymbolicArray[b, {2, 3}]]", "Input",ExpressionUUID->"f90313bc-b722-b740-92f0-ad276d339a1e"],
+
+Cell[BoxData[
+ GraphicsBox[{{{
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+      0.63, 0.26, 0.89]], 
+      RectangleBox[{0.8550000000000001, -1.45}, {2.365, -0.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+      0.63, 0.26, 0.89]], 
+      RectangleBox[{2.465, -1.45}, {3.9750000000000005, -0.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+      0.63, 0.26, 0.89]], RectangleBox[{4.075, -1.45}, {5.585, -0.55},
+       RoundingRadius->0.08]}}, {
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+      0.63, 0.26, 0.89]], 
+      RectangleBox[{0.8550000000000001, -2.45}, {2.365, -1.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+      0.63, 0.26, 0.89]], 
+      RectangleBox[{2.465, -2.45}, {3.9750000000000005, -1.55},
+       RoundingRadius->0.08]}, 
+     {EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.9]}], FaceForm[Hue[
+      0.63, 0.26, 0.89]], RectangleBox[{4.075, -2.45}, {5.585, -1.55},
+       RoundingRadius->0.08]}}}, {{InsetBox[
+      StyleBox[
+       RowBox[{"b", "[", 
+        RowBox[{"1", ",", "1"}], "]"}],
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->7,
+       FontColor->GrayLevel[0]], {1.61, -1}], InsetBox[
+      StyleBox[
+       RowBox[{"b", "[", 
+        RowBox[{"1", ",", "2"}], "]"}],
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->7,
+       FontColor->GrayLevel[0]], {3.22, -1}], InsetBox[
+      StyleBox[
+       RowBox[{"b", "[", 
+        RowBox[{"1", ",", "3"}], "]"}],
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->7,
+       FontColor->GrayLevel[0]], {4.83, -1}]}, {InsetBox[
+      StyleBox[
+       RowBox[{"b", "[", 
+        RowBox[{"2", ",", "1"}], "]"}],
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->7,
+       FontColor->GrayLevel[0]], {1.61, -2}], InsetBox[
+      StyleBox[
+       RowBox[{"b", "[", 
+        RowBox[{"2", ",", "2"}], "]"}],
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->7,
+       FontColor->GrayLevel[0]], {3.22, -2}], InsetBox[
+      StyleBox[
+       RowBox[{"b", "[", 
+        RowBox[{"2", ",", "3"}], "]"}],
+       StripOnInput->False,
+       LineColor->GrayLevel[0],
+       FrontFaceColor->GrayLevel[0],
+       BackFaceColor->GrayLevel[0],
+       GraphicsColor->GrayLevel[0],
+       FontSize->7,
+       FontColor->GrayLevel[0]], {4.83, -2}]}}, {{InsetBox[
+      StyleBox["1",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {1.61, -0.02}], InsetBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {3.22, -0.02}], InsetBox[
+      StyleBox["3",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {4.83, -0.02}]}, {InsetBox[
+      StyleBox["1",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.5850000000000001, -1}], InsetBox[
+      StyleBox["2",
+       StripOnInput->False,
+       LineColor->Hue[0.63, 0.7, 0.5],
+       FrontFaceColor->Hue[0.63, 0.7, 0.5],
+       BackFaceColor->Hue[0.63, 0.7, 0.5],
+       GraphicsColor->Hue[0.63, 0.7, 0.5],
+       FontSize->10,
+       FontSlant->Italic,
+       FontColor->Hue[0.63, 0.7, 0.5]], {0.5850000000000001, -2}]}}},
+  Background->GrayLevel[1],
+  FormatType->StandardForm,
+  ImagePadding->6,
+  ImageSize->164,
+  PlotRange->{{0.255, 5.735}, {-2.55, 0.25}},
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"12062058-1f28-\
+d742-a2bd-47c777adf32d"],
+
+Cell["A dark theme, and cells left undrawn:", "ExampleText",ExpressionUUID->"ea6f6f44-0b70-a24f-a2fd-feba632bbd66"],
+
+Cell["\<\
+{ArrayGraphics[{{1, 2}, {3, 4}}, \"PlotTheme\" -> \"Dark\"],
+ ArrayGraphics[{{1, 2}, {3, 4}}, \"Framed\" -> False]}\
+\>", "Input",ExpressionUUID->"962a6526-3a92-b341-bab6-251fa7744033"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   GraphicsBox[{{{
+       {EdgeForm[{Hue[0.63, 0.35, 0.85], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.55, 0.45]], RectangleBox[{0.55, -1.45}, {1.45, -0.55},
+         RoundingRadius->0.08]}, 
+       {EdgeForm[{Hue[0.63, 0.35, 0.85], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.55, 0.45]], RectangleBox[{1.55, -1.45}, {2.45, -0.55},
+         RoundingRadius->0.08]}}, {
+       {EdgeForm[{Hue[0.63, 0.35, 0.85], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.55, 0.45]], RectangleBox[{0.55, -2.45}, {1.45, -1.55},
+         RoundingRadius->0.08]}, 
+       {EdgeForm[{Hue[0.63, 0.35, 0.85], Opacity[0.9]}], FaceForm[Hue[
+        0.63, 0.55, 0.45]], RectangleBox[{1.55, -2.45}, {2.45, -1.55},
+         RoundingRadius->0.08]}}}, {{InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->GrayLevel[0.97],
+         FrontFaceColor->GrayLevel[0.97],
+         BackFaceColor->GrayLevel[0.97],
+         GraphicsColor->GrayLevel[0.97],
+         FontSize->12,
+         FontColor->GrayLevel[0.97]], {1, -1}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->GrayLevel[0.97],
+         FrontFaceColor->GrayLevel[0.97],
+         BackFaceColor->GrayLevel[0.97],
+         GraphicsColor->GrayLevel[0.97],
+         FontSize->12,
+         FontColor->GrayLevel[0.97]], {2, -1}]}, {InsetBox[
+        StyleBox["3",
+         StripOnInput->False,
+         LineColor->GrayLevel[0.97],
+         FrontFaceColor->GrayLevel[0.97],
+         BackFaceColor->GrayLevel[0.97],
+         GraphicsColor->GrayLevel[0.97],
+         FontSize->12,
+         FontColor->GrayLevel[0.97]], {1, -2}], InsetBox[
+        StyleBox["4",
+         StripOnInput->False,
+         LineColor->GrayLevel[0.97],
+         FrontFaceColor->GrayLevel[0.97],
+         BackFaceColor->GrayLevel[0.97],
+         GraphicsColor->GrayLevel[0.97],
+         FontSize->12,
+         FontColor->GrayLevel[0.97]], {2, -2}]}}, {{InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.35, 0.85],
+         FrontFaceColor->Hue[0.63, 0.35, 0.85],
+         BackFaceColor->Hue[0.63, 0.35, 0.85],
+         GraphicsColor->Hue[0.63, 0.35, 0.85],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.35, 0.85]], {1, -0.02}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.35, 0.85],
+         FrontFaceColor->Hue[0.63, 0.35, 0.85],
+         BackFaceColor->Hue[0.63, 0.35, 0.85],
+         GraphicsColor->Hue[0.63, 0.35, 0.85],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.35, 0.85]], {2, -0.02}]}, {InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.35, 0.85],
+         FrontFaceColor->Hue[0.63, 0.35, 0.85],
+         BackFaceColor->Hue[0.63, 0.35, 0.85],
+         GraphicsColor->Hue[0.63, 0.35, 0.85],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.35, 0.85]], {0.28, -1}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.35, 0.85],
+         FrontFaceColor->Hue[0.63, 0.35, 0.85],
+         BackFaceColor->Hue[0.63, 0.35, 0.85],
+         GraphicsColor->Hue[0.63, 0.35, 0.85],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.35, 0.85]], {0.28, -2}]}}},
+    Background->GrayLevel[0.15],
+    FormatType->StandardForm,
+    ImagePadding->6,
+    ImageSize->90,
+    PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+    PlotRangePadding->Scaled[0.02]], ",", 
+   GraphicsBox[{{{{}, {}}, {{}, {}}}, {{InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, -1}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, -1}]}, {InsetBox[
+        StyleBox["3",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {1, -2}], InsetBox[
+        StyleBox["4",
+         StripOnInput->False,
+         LineColor->GrayLevel[0],
+         FrontFaceColor->GrayLevel[0],
+         BackFaceColor->GrayLevel[0],
+         GraphicsColor->GrayLevel[0],
+         FontSize->12,
+         FontColor->GrayLevel[0]], {2, -2}]}}, {{InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {1, -0.02}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {2, -0.02}]}, {InsetBox[
+        StyleBox["1",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -1}], InsetBox[
+        StyleBox["2",
+         StripOnInput->False,
+         LineColor->Hue[0.63, 0.7, 0.5],
+         FrontFaceColor->Hue[0.63, 0.7, 0.5],
+         BackFaceColor->Hue[0.63, 0.7, 0.5],
+         GraphicsColor->Hue[0.63, 0.7, 0.5],
+         FontSize->10,
+         FontSlant->Italic,
+         FontColor->Hue[0.63, 0.7, 0.5]], {0.28, -2}]}}},
+    Background->GrayLevel[1],
+    FormatType->StandardForm,
+    ImagePadding->6,
+    ImageSize->90,
+    PlotRange->{{-0.050000000000000044`, 2.6}, {-2.55, 0.25}},
+    PlotRangePadding->Scaled[0.02]]}], "}"}]], "Output",ExpressionUUID->\
+"c9f2eb2b-adde-524b-a398-b8e96691a7f0"],
+
+Cell["\<\
+A block of three indices has no flat picture, and is refused:\
+\>", "ExampleText",ExpressionUUID->"de2cbd1b-00f3-4d4d-aba3-2f087d78b216"],
+
+Cell["\<\
+Quiet @ ArrayGraphics[Array[1 &, {2, 2, 2}], \"Nesting\" -> {3}]\
+\>", "Input",ExpressionUUID->"8f3472fa-5d91-f140-a844-48443f37a774"],
+
+Cell[BoxData["$Failed"], "Output",ExpressionUUID->"37677566-c628-af49-a78f-f5dd0bd1d01d"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"ca37ceb5-c28d-e642-a120-537825e46925"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/ArrayGraphics.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "The flat family",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"c169b765-d07a-8348-895d-d29122ceaa24"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"730f1268-ca8c-c248-bfba-308be7c7196a"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["ArrayGraphics3D", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "f8de4aa6-5d2b-8743-bc29-47fb434e464b"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayNesting", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "5269ecb2-4e70-f44b-ae4d-8e3c91228a53"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypermatrixGraphics", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"551369c8-1aac-fa44-ab3c-f15a441b13b9"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["ArrayObject", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "edf95ce8-1923-644f-a04f-23a34bf2eaf7"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["GenerateSymbolicArray", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"9d49f215-db42-134e-b64e-a0dcfff71c2f"]
+}], "SeeAlso",ExpressionUUID->"2432d2ff-334d-4d40-869f-7d78f805b936"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"d8aa7511-5182-ac4c-bf73-0bac3a5635f3"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 90, 0, 70, "ObjectName",ExpressionUUID->"195d3e78-ef03-6b4d-8d76-bb0b6349bc63"],
+Cell[647, 22, 299, 7, 70, "Usage",ExpressionUUID->"2500f494-2dc9-f949-a22b-b49d805b85d6"],
+Cell[942, 31, 332, 8, 70, "Usage",ExpressionUUID->"bba3179e-04e3-9342-9a39-6d7502bbecc0"],
+Cell[1269, 41, 98, 0, 70, "NotesSection",ExpressionUUID->"cea1f1b2-5e94-694c-81cf-2189d833a4ea"],
+Cell[1370, 43, 206, 3, 70, "Notes",ExpressionUUID->"c1d84adf-2c74-824b-8600-0f435be3bc85"],
+Cell[1576, 48, 365, 5, 70, "Notes",ExpressionUUID->"b8bb0dfb-e3c3-2b40-a7be-8a26f98e2524"],
+Cell[1939, 55, 465, 10, 70, "Notes",ExpressionUUID->"e0337340-5c77-8e4a-a915-45fd9e0d4a8d"],
+Cell[2397, 67, 795, 18, 70, "Notes",ExpressionUUID->"36f6179c-060b-404d-af49-a1199cc787e2"],
+Cell[3177, 87, 217, 3, 70, "Notes",ExpressionUUID->"acc587cd-4dc8-4840-95b5-3e11b64a4592"],
+Cell[3394, 92, 337, 6, 70, "Notes",ExpressionUUID->"7b8035e8-76a9-a143-bfcf-5f644e1d1e07"],
+Cell[3728, 100, 762, 17, 70, "Notes",ExpressionUUID->"aac128ab-dc54-2044-9e60-fd63689334d3"],
+Cell[4476, 119, 527, 13, 70, "Notes",ExpressionUUID->"c4192a29-2500-a043-ad6a-c19965264b29"],
+Cell[4993, 134, 503, 11, 70, "Notes",ExpressionUUID->"8dcb68b8-db83-fe47-9734-10efdc2d8b97"],
+Cell[5488, 147, 181, 3, 70, "Notes",ExpressionUUID->"6bd71826-1e1f-c940-bbf4-61ddc60bad34"],
+Cell[5669, 152, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"60eaffaa-50cb-c344-990a-311220c90597"],
+Cell[5769, 154, 128, 0, 70, "ExampleText",ExpressionUUID->"d7e8f715-8093-984e-bcae-37ff4d572d52"],
+Cell[5900, 156, 150, 2, 70, "Input",ExpressionUUID->"4a671d59-d70f-c542-8071-0aa88e5817c6"],
+Cell[6051, 160, 8336, 208, 70, "Output",ExpressionUUID->"18dccd84-7a84-f641-8cb4-af05fca726a8"],
+Cell[14182, 370, 206, 3, 70, "ExampleText",ExpressionUUID->"58328e68-54a5-e949-8b3e-0d3410f849f3"],
+Cell[14388, 375, 119, 0, 70, "Input",ExpressionUUID->"28c51fe2-4abb-8542-b042-b2adfe0d46d2"],
+Cell[14510, 377, 8690, 206, 70, "Output",ExpressionUUID->"fc3e1221-81ff-1b4d-aa99-973fe3750cb4"],
+Cell[22997, 585, 112, 0, 70, "ExampleText",ExpressionUUID->"ac0bbd17-d695-b648-94f5-86644ff8d54f"],
+Cell[23112, 587, 127, 0, 70, "Input",ExpressionUUID->"7cc7bb64-5309-f146-8238-f9c1ca0070fa"],
+Cell[23242, 589, 17527, 404, 70, "Output",ExpressionUUID->"98a8a776-10da-1d44-83f9-5220ece7b0b6"],
+Cell[40368, 995, 191, 3, 70, "ExampleText",ExpressionUUID->"ca291d6c-8022-7843-80c0-9c05613710c9"],
+Cell[40559, 1000, 152, 2, 70, "Input",ExpressionUUID->"b2904c46-8eb1-c04c-a3ee-f8782dcb1048"],
+Cell[40712, 1004, 10211, 244, 70, "Output",ExpressionUUID->"792b4dd8-0077-db4a-87b2-c77d9caad5d6"],
+Cell[50682, 1250, 160, 2, 70, "ExampleText",ExpressionUUID->"eddab94c-794f-9b47-b319-08c3c98b0a82"],
+Cell[50843, 1254, 119, 0, 70, "Input",ExpressionUUID->"f90313bc-b722-b740-92f0-ad276d339a1e"],
+Cell[50965, 1256, 5163, 135, 70, "Output",ExpressionUUID->"12062058-1f28-d742-a2bd-47c777adf32d"],
+Cell[55996, 1393, 115, 0, 70, "ExampleText",ExpressionUUID->"ea6f6f44-0b70-a24f-a2fd-feba632bbd66"],
+Cell[56114, 1395, 198, 3, 70, "Input",ExpressionUUID->"962a6526-3a92-b341-bab6-251fa7744033"],
+Cell[56312, 1400, 6572, 165, 70, "Output",ExpressionUUID->"c9f2eb2b-adde-524b-a398-b8e96691a7f0"],
+Cell[62722, 1567, 149, 2, 70, "ExampleText",ExpressionUUID->"de2cbd1b-00f3-4d4d-aba3-2f087d78b216"],
+Cell[62872, 1571, 146, 2, 70, "Input",ExpressionUUID->"8f3472fa-5d91-f140-a844-48443f37a774"],
+Cell[63019, 1575, 89, 0, 70, "Output",ExpressionUUID->"37677566-c628-af49-a78f-f5dd0bd1d01d"],
+Cell[63111, 1577, 85, 0, 70, "NotesSection",ExpressionUUID->"ca37ceb5-c28d-e642-a120-537825e46925"],
+Cell[63199, 1579, 283, 9, 70, "Notes",ExpressionUUID->"c169b765-d07a-8348-895d-d29122ceaa24"],
+Cell[63476, 1590, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"730f1268-ca8c-c248-bfba-308be7c7196a"],
+Cell[63568, 1592, 820, 20, 70, "SeeAlso",ExpressionUUID->"2432d2ff-334d-4d40-869f-7d78f805b936"]
+}
+]
+*)
+
+(* End of internal cache information *)

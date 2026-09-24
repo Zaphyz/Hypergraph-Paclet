@@ -12,9 +12,24 @@ time, rewrite rules, causal graphs, and the plex diagrams that connect the two h
 
 ## Loading
 
-There is no paclet build yet: `PacletInfo.wl` is a stub, so the package is loaded from
-source. A single `Get` of the core file brings in the whole package, which pulls in the
-other three source files at its end.
+The two notebooks in `notebooks/` load the package themselves: they carry an initialization
+cell that the front end evaluates on opening, so every symbol is ready before you read
+anything. Nothing needs installing and nothing is copied — the repository itself is what
+gets loaded, so an edit to `src/` is picked up next time.
+
+Elsewhere, point the kernel at the repository and open the context:
+
+```wolfram
+PacletDirectoryLoad["<path to this repository>"]
+Needs["WolframInstitute`Hypergraphs`"]
+```
+
+`PacletDirectoryLoad` lasts for the session. `PacletDirectoryAdd`, run once on the same
+directory, registers it permanently — and because `PacletInfo.wl` declares the package's
+symbols, any one of them then loads the package on first use, in any notebook, with no
+`Needs` at all.
+
+A plain `Get` of the entry file still works, and pulls in the other five source files:
 
 ```wolfram
 Get[FileNameJoin[{"<path to this repository>", "src", "Hypergraph.wl"}]]
@@ -24,8 +39,8 @@ Everything lives in the context `` WolframInstitute`Hypergraphs` `` — plural, 
 deliberately distinct from the upstream `` WolframInstitute`Hypergraph` `` so that both
 can be loaded into one kernel.
 
-Developed and tested against Wolfram Language 15.0; earlier versions are untested. The test
-suites run under `wolframscript`.
+Developed and tested against Wolfram Language 15.0; `PacletInfo.wl` claims 14.0+, which is
+a conservative guess rather than a tested floor.  The test suites run under `wolframscript`.
 
 ## A quick tour
 
@@ -87,9 +102,12 @@ labels outright.
 
 ### Arrays and contraction
 
-Arrays come in two kinds, which are different objects: a `NumericalArray` carries explicit
-entries drawn from a value domain, a `SymbolicArray` carries a name and generates its
-entries from the indices. A scalar is the array of order zero.
+There is one array object, `ArrayObject`, whatever its entries are: numbers, elements of a
+finite field, symbolic expressions, labels. Nothing about the structure of an array depends
+on what sits in it, so what it is made of is read off the entries by `ArrayDomain` rather
+than declared alongside them. A scalar is the array of order zero. Entries may also be
+generated rather than given — `GenerateSymbolicArray[a, {2, 2}]` builds them from a name,
+as `ZeroArray` and `IdentityArray` build theirs from a shape.
 
 `ArrayMultiply` is a native Einstein summation — no cloud dependency — taking either a
 string or a rule between lists of index labels. An index may occur in any number of the
@@ -110,9 +128,52 @@ those same operations, so ordinary arithmetic notation works. A 0-array spreads 
 shape, which is why scalar multiplication needs no name of its own:
 
 ```wolfram
-Normal[2 NumericalArray[a]]     (* {{2, 4}, {6, 8}} *)
+Normal[2 ArrayObject[a]]        (* {{2, 4}, {6, 8}} *)
 Normal @ ArrayTimes[a, b]       (* {{0, 2}, {3, 0}} *)
 ```
+
+### Drawing them
+
+Two families, and an array of any order may be drawn in either. `ArrayGraphics` gives plane
+pictures throughout — a row of cells, a grid, and above that a grid whose cells hold grids.
+`ArrayGraphics3D` gives cubes arranged in space throughout — a line, a plane, a lattice, and
+above that those lattices tiled through space, all in one picture you can turn and look at.
+
+```wolfram
+ArrayGraphics[{{1, 2, 3}, {4, 5, 6}}]                      (* a grid of cells *)
+ArrayGraphics[Array[#1 + #2 + #3 &, {2, 2, 2}]]            (* a row of matrices *)
+ArrayGraphics3D[Array[#1 + #2 + #3 &, {3, 3, 3}]]          (* a lattice of cubes *)
+ArrayGraphics3D[Array[1 &, {2, 2, 2, 2}]]                  (* a line of lattices *)
+```
+
+Which indices go outside and which inside is a choice rather than a fact about the array, and
+`"Nesting"` makes it. `HypermatrixGraphics` and `HypermatrixGraphics3D` draw every array of a
+hypermatrix at once.
+
+### From a hypergraph to a hypermatrix
+
+This is where the two halves meet. An edge has an arity and a symmetry type; an array has an
+order and a symmetry; and the two line up one for one — `"Directed"` with `"Rigid"`,
+`"Cyclic"` with `"Cyclic"`, `"Unordered"` with `"Symmetric"`. Since an array holds one
+symmetry and one order, the edges are gathered by arity and symmetry type together and each
+group becomes one array.
+
+```wolfram
+h = Hypergraph[{Edge[{1, 2, 3}, "Unordered"], Edge[{3, 4}, "Directed"], Edge[{1, 2}, "Directed"]}];
+AdjacencyHypermatrix[h]["Symmetries"]
+(* {"Rigid", "Symmetric"} *)
+```
+
+Identical copies of an edge share an entry, so a repeated edge comes out as an integer multiple.
+With `"Labeled" -> True` the entries are the edge labels themselves rather than counts, which
+needs the hypergraph to be simple -- one entry cannot hold two labels, and `SimpleHypergraphQ`
+tests for that.
+
+The entry at an index tuple counts the edges sitting on it, looked up against the canonical
+index of its orbit — so every tuple of an orbit reads the same count, and each array carries
+its declared symmetry by construction. Nothing is lost: the canonical entries name exactly
+the edges that went in, multiplicities and all, which the test suite checks by round-tripping
+300 random hypergraphs.
 
 ### Searching for equational identities
 
@@ -138,7 +199,7 @@ left out rather than reported alongside them.
 
 ## Documentation
 
-`Documentation/` holds a reference page for every exported symbol — 40 of them — and a
+`Documentation/` holds a reference page for every exported symbol — 46 of them — and a
 guide that groups them by subject. Open them in the front end:
 
 ```wolfram
@@ -160,10 +221,13 @@ reasoning behind each design choice.
 
 | Path | |
 | --- | --- |
-| `src/Hypergraph.wl` | `Vertex`, `Edge`, `Hypergraph`, accessors, skeletons, canonical form and isomorphism. Loads the other three at its end. |
+| `src/Hypergraph.wl` | `Vertex`, `Edge`, `Hypergraph`, accessors, skeletons, canonical form and isomorphism. Loads the other five at its end. |
 | `src/HypergraphPlot.wl` | `HypergraphPlot`, `HypergraphEmbedding`, and the default graphical display. |
-| `src/Hypermatrix.wl` | `NumericalArray`, `SymbolicArray`, `Hypermatrix` and their accessors. |
+| `src/Hypermatrix.wl` | `ArrayObject`, `GenerateSymbolicArray`, `Hypermatrix` and their accessors. |
 | `src/ArrayAlgebra.wl` | Special arrays, `ArrayMultiply`, `ArrayAdd`, `ArrayTimes`, `FindArrayEquations`. |
+| `src/ArrayGraphics.wl` | `ArrayGraphics`, `ArrayGraphics3D`, `HypermatrixGraphics`, `HypermatrixGraphics3D`, `ArrayNesting`. |
+| `src/Adjacency.wl` | `AdjacencyHypermatrix`: the correspondence between edge symmetry types and array symmetries, counting or labelled. |
+| `PacletInfo.wl` | The paclet's description of itself: kernel root, context, and the symbols that load it. |
 | `Documentation/` | Reference pages and guide, with the script that generates them. |
 | `notebooks/` | `HypergraphBasics.nb` and `HypermatrixBasics.nb`, the review notebooks. |
 | `notebooks/legacy/` | Earlier research notebooks, kept for reference; not part of the package. |
@@ -188,9 +252,11 @@ apart silently.
 The plan, in the order it is being built:
 
 - [x] **Hypermatrices** — definitions, arbitrary contraction by index specification,
-      symmetry properties. *Graphical rendering of 1-, 2- and 3-arrays still to come.*
+      symmetry properties, and the drawing of arrays of any order, flat or as cubes in space.
 - [x] **Hypergraphs** — definitions, properties, isomorphism, labels, labelled isomorphism,
       default graphical display. *A visual editor is still to come.*
+- [x] **Hypergraphs to hypermatrices** — `AdjacencyHypermatrix`, with the edge symmetry types
+      corresponding to the array symmetries. *The passage back is still to come.*
 - [ ] **Rewriting rules** — definitions, rule application, a visual interface for editing a rule.
 - [ ] **Rewriting systems and causality** — generations of states, causal graphs, causal
       dependence of events, conditions for dependence and for overlapping patterns.

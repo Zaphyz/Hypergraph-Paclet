@@ -428,4 +428,70 @@ check["the output's labels win where it gives them",
 
 
 p[];
+p["=== 7. The reference notebooks' rules ==="];
+(* The rules of reference/Chemoids.wl, and the laws they were written to express. Each of these
+   is a cell of notebooks/RewritingBasics.nb section 5. *)
+
+ClearAll[a, b, c, d, e, f, g, p0, q0, r0, s0, u, x, y, z];
+labels[ev_] := EdgeLabel /@ EdgeList[ev["Hypergraph"]];
+again[rule_, evs_] := Catenate[rule /@ (#["Hypergraph"] & /@ evs)];
+
+arrowComp = HypergraphRule[
+   {Edge[{1, 2}, "Directed", x], Edge[{2, 3}, "Directed", y]},
+   {Edge[{1, 3}, "Directed", Row[{"(", x, y, ")"}]]}];
+arrowUnit = HypergraphRule[
+   Hypergraph[{Vertex[1, p0]}, {}],
+   Hypergraph[{Vertex[1, p0], Vertex[2, p0]}, {Edge[{1, 2}, "Directed", Subscript["1", p0]]}]];
+arrow = Hypergraph[{Vertex[1, r0], Vertex[2, s0]}, {Edge[{1, 2}, "Directed", f]}];
+
+p["-- composition and the unit --"];
+check["composition has nothing to do to a single edge", arrowComp[arrow], {}];
+check["the unit fires once at each end",
+   labels /@ arrowUnit[arrow], {{f, Subscript["1", r0]}, {f, Subscript["1", s0]}}];
+check["only the unit at the target composes with f",
+   labels /@ again[arrowComp, arrowUnit[arrow]], {{Row[{"(", f, Subscript["1", s0], ")"}]}}];
+
+p["-- the dagger is an antihomomorphism --"];
+chain2 = Hypergraph[{Edge[{1, 2}, "Directed", f], Edge[{2, 3}, "Directed", g]}];
+dag = HypergraphRule[
+   Hypergraph[{Vertex[1, p0], Vertex[2, q0]}, {Edge[{1, 2}, "Directed", x]}],
+   Hypergraph[{Vertex[1, p0], Vertex[2, q0]}, {Edge[{2, 1}, "Directed", SuperDagger[x]]}]];
+check["compose then dagger gives the dagger of the composite",
+   labels /@ again[dag, arrowComp[chain2]], {{SuperDagger[Row[{"(", f, g, ")"}]]}}];
+bothDaggered = Select[#["Hypergraph"] & /@ again[dag, dag[chain2]],
+   FreeQ[EdgeLabel /@ EdgeList[#], SuperDagger[SuperDagger[_]]] &];
+check["dagger both then compose gives the composite of the daggers, reversed",
+   DeleteDuplicates[labels /@ Catenate[arrowComp /@ bothDaggered]],
+   {{Row[{"(", SuperDagger[g], SuperDagger[f], ")"}]}}];
+
+p["-- an action, and its associativity --"];
+action = HypergraphRule[
+   {Edge[{1}, "Directed", a], Edge[{1, 2}, "Directed", x]},
+   {Edge[{2}, "Directed", Row[{x, "[", a, "]"}]]}];
+pointed = Hypergraph[{Edge[{1}, "Directed", u], Edge[{1, 2}, "Directed", f],
+                      Edge[{2, 3}, "Directed", g]}];
+check["a rule may mix arities: one unary edge and one binary",
+   Length @ HypergraphRuleMatches[action, pointed], 1];
+check["acting twice walks the point along the chain",
+   labels /@ again[action, action[pointed]], {{Row[{g, "[", Row[{f, "[", u, "]"}], "]"}]}}];
+check["composing first and acting once gives the other side of the law",
+   labels /@ again[action, arrowComp[pointed]], {{Row[{Row[{"(", f, g, ")"}], "[", u, "]"}]}}];
+
+p["-- zig-zag composition and heap associativity --"];
+zigzag = HypergraphRule[
+   {Edge[{1, 2}, "Directed", x], Edge[{3, 2}, "Directed", y], Edge[{3, 4}, "Directed", z]},
+   {Edge[{1, 4}, "Directed", Row[{"(", x, y, z, ")"}]]}];
+long = Hypergraph[{Edge[{1, 2}, "Directed", a], Edge[{3, 2}, "Directed", b],
+                   Edge[{3, 4}, "Directed", c], Edge[{5, 4}, "Directed", d],
+                   Edge[{5, 6}, "Directed", e]}];
+check["three windows of three edges fit", Length @ zigzag[long], 3];
+check["  and each contracts a different one",
+   Sort[Sort /@ (#["DeletedVertices"] & /@ zigzag[long])], {{2, 3}, {3, 4}, {4, 5}}];
+check["two steps give the three bracketings of the whole",
+   Sort[Flatten[labels /@ again[zigzag, zigzag[long]]]],
+   Sort[{Row[{"(", Row[{"(", a, b, c, ")"}], d, e, ")"}],
+         Row[{"(", a, b, Row[{"(", c, d, e, ")"}], ")"}],
+         Row[{"(", a, Row[{"(", d, c, b, ")"}], e, ")"}]}]];
+
+p[];
 p[If[$fails === 0, "=== ALL CHECKS PASSED ===", "=== " <> ToString[$fails] <> " CHECK(S) FAILED ==="]];

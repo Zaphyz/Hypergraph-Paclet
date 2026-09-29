@@ -1041,7 +1041,11 @@ page["HypergraphRuleApply",
    note["The result is the hypergraph with the matched edges removed and the output's edges put in their place. A vertex the output introduces becomes a new vertex of the result, and one the output drops is destroyed."],
    note["A destroyed vertex is removed only when nothing still standing uses it. A rule rewrites what it matched, and reaching into edges it did not match to strike a vertex out of them would not be local; so a vertex the rule drops but another edge still holds simply stays, and is not reported destroyed."],
    note["New vertices are named so as to miss every vertex already present, which makes the result reproducible from one session to the next rather than depending on a counter of fresh symbols."],
-   noteC[{"Labels constrain matching and absence of a label does not: a pattern edge or vertex carrying no label matches whatever it lies on, and one carrying a label matches only the same label. ", inline["\"Labeled\" -> False"], " ignores labels altogether."}],
+   noteC[{"A label on the input is read three ways. A bare symbol is a **variable**: it matches whatever label it is laid against and remembers it, and every later occurrence of that symbol must find the same thing. No label at all is a wildcard, matching anything and remembering nothing. Anything else \[LongDash] a string, a number, a composite expression \[LongDash] is a literal and matches only itself; ", inline["Verbatim[x]"], " forces a symbol to be read that way too."}],
+   noteC[{"The output's labels are expressions in those variables, written out with the bindings substituted. A rule may therefore name what it builds after what it found, which is how a pair of composable edges labelled x and y becomes one labelled for their composite. The bindings are reported with the event as ", inline["\"LabelBindings\""], "."}],
+   note["Vertex labels bind in the same way as edge labels, so a rule whose whole input is one labelled vertex binds that label and may name what it creates after it."],
+   noteC[{inline["\"Labeled\" -> False"], " ignores labels altogether; ", inline["\"LabelPatterns\" -> False"], " keeps labels significant but reads every one of them literally, symbols included."}],
+   note["Where the output gives a vertex a label, that label is the one the result carries: relabelling is something a rule is entitled to do. Where the output leaves a vertex unlabelled, whatever the hypergraph had is kept."],
    noteC[{"Symmetry types must agree, and the pattern is matched over the orderings its symmetry allows: one for a directed edge, its rotations for a cyclic one, every permutation for an unordered one. An unordered edge of arity k therefore matches in k! ways, which are genuinely different matches and are all reported."}],
    noteC[{inline["\"DistinctVertices\" -> True"], ", the default, keeps two vertices of the input from landing on one vertex of the hypergraph, which is what the reference paclet does. ", inline["False"], " allows it."}],
    note["No match gives an empty list, which is not a failure: it says the rule does not apply."]},
@@ -1055,8 +1059,15 @@ page["HypergraphRuleApply",
    input["EdgeList[#[\"Hypergraph\"]] & /@ events"],
    exText["A rule that destroys a vertex does so only when nothing else holds it:"],
    input["del = HypergraphRule[{{1, 2}}, {{1}}];\n{VertexList @ First[del[Hypergraph[{Edge[{1, 2}]}]]][\"Hypergraph\"],\n VertexList @ First[del[Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}]]][\"Hypergraph\"]}"],
-   exText["A label on the pattern narrows what the rule applies to:"],
+   exText["A literal label on the pattern narrows what the rule applies to:"],
    input["hl = Hypergraph[{Edge[{1, 2}, \"Directed\", \"a\"], Edge[{2, 3}, \"Directed\", \"b\"]}];\n{Length @ HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}], hl],\n Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, \"Directed\", \"a\"]}, {}], hl]}"],
+   exText["A symbol, by contrast, matches any label and remembers what it found:"],
+   input["hsym = Hypergraph[{Edge[{1, 2}, \"Directed\", f], Edge[{2, 3}, \"Directed\", g]}];\n#[\"LabelBindings\"] & /@ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, \"Directed\", x]}, {}], hsym]"],
+   exText["\[Ellipsis] so the output can be named after it. Composing two labelled edges into one:"],
+   input["comp = HypergraphRule[\n   {Edge[{1, 2}, \"Directed\", x], Edge[{2, 3}, \"Directed\", y]},\n   {Edge[{1, 3}, \"Directed\", Row[{\"{\", x, y, \"}\"}]]}];\nEdgeLabel /@ EdgeList @ First[comp[hsym]][\"Hypergraph\"]"],
+   exText["Vertex labels bind too, so a rule whose whole input is one labelled vertex can name what it creates after it:"],
+   input["obj = Hypergraph[{Vertex[1, r], Vertex[2, s]}, {Edge[{1, 2}, \"Directed\", u]}];\nunit = HypergraphRule[\n   Hypergraph[{Vertex[1, p]}, {}],\n   Hypergraph[{Vertex[1, p], Vertex[2, p]}, {Edge[{1, 2}, \"Directed\", Subscript[\"1\", p]]}]];\n#[\"LabelBindings\"] & /@ unit[obj]"],
+   input["EdgeLabel /@ EdgeList @ First[unit[obj]][\"Hypergraph\"]"],
    exText["A rule that does not apply gives no events:"],
    input["HypergraphRule[{{1, 2}, {2, 3}}, {}][Hypergraph[{Edge[{1, 2}]}]]"]},
   source[$rw, "Applying"],
@@ -1145,9 +1156,11 @@ assertion, plus several thousand randomized checks. Run it with wolframscript -f
         pathEntry["tests/HypermatrixExamples.wls", "The same for the array and hypermatrix objects."],
         pathEntry["tests/ArrayAlgebraExamples.wls", "The same for the special arrays, ArrayMultiply \
 and FindArrayEquations."],
+        pathEntry["tests/RewritingExamples.wls", "The same for rewriting, with invariants checked over several hundred events."],
         pathEntry["notebooks/HypergraphBasics.nb", "Worked examples with the reasoning behind each \
 design choice."],
         pathEntry["notebooks/HypermatrixBasics.nb", "The same for arrays and hypermatrices."],
+        pathEntry["notebooks/RewritingBasics.nb", "The same for rules, matches and events."],
         pathEntry["Documentation/English/ReferencePages/Symbols/", "One reference page per exported \
 symbol."],
         pathEntry["Documentation/English/Guides/Hypergraphs.nb", "This guide."],
@@ -1335,11 +1348,16 @@ but what was matched, what was created and what was destroyed."],
         entry["HypergraphRuleQ", "test for a valid rule"],
         entry["HypergraphRuleApply", "apply a rule, giving one event per match; rule[hg] is the same"],
         entry["HypergraphRuleMatches", "the ways the input sits inside a hypergraph, without rewriting"],
-        gTextC[{"Symmetry types must agree between a pattern edge and the edge it lies on, and \
-the pattern is matched over the orderings that symmetry allows. Labels constrain: a pattern \
-carrying no label matches whatever it lies on, one carrying a label matches only the same label, \
-and ", inline["\"Labeled\" -> False"], " ignores them. The shape of all this follows the reference \
-paclet, so that rules written for that one read the same here."}],
+        gText["Symmetry types must agree between a pattern edge and the edge it lies on, and the \
+pattern is matched over the orderings that symmetry allows."],
+        gText["A label on a rule's input is read three ways. A bare symbol is a variable: it \
+matches whatever label it is laid against and remembers it, and the output's labels are \
+expressions in those variables, written out with the bindings put in \[LongDash] which is how a \
+pair of composable edges labelled x and y becomes one labelled for their composite. No label at \
+all is a wildcard. Anything else is a literal. Vertex labels bind the same way as edge labels, so \
+a rule whose whole input is a single labelled vertex can name what it creates after it."],
+        gText["The shape of all this follows the reference paclet, so that rules written for that \
+one read the same here, including the label-variable rules of its chemoid notebooks."],
 
         gSection["Not yet implemented"],
         gText["The objects, isomorphism, the array algebra, the drawing, the adjacency \

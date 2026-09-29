@@ -141,6 +141,7 @@ $HypergraphRuleIcon := $HypergraphRuleIcon = Graphics[
 
 Options[HypergraphRuleMatches] = {
     "Labeled" -> True,
+    "LabelPatterns" -> True,
     "DistinctVertices" -> True
 };
 
@@ -156,88 +157,137 @@ symmetryPermutations["Cyclic", k_Integer] := NestList[RotateLeft, Range[k], k - 
 symmetryPermutations["Unordered", k_Integer] := Permutations[Range[k]];
 symmetryPermutations[___] := {};
 
-(* A label on the pattern is a constraint; no label is a wildcard. So an unlabelled rule matches
-   a labelled hypergraph exactly as it matches the skeleton, and labels only ever narrow what a
-   rule applies to. With "Labeled" -> False they are ignored altogether. *)
-labelMatchQ[_, _, False] := True;
-labelMatchQ[None, _, True] := True;
-labelMatchQ[patt_, host_, True] := patt === host;
 
-(* Whether a pattern edge could sit on a host edge at all, before any vertices are considered. *)
-edgeCompatibleQ[pe_, he_, labeledQ_] :=
+(* A match is built up in two parts: which vertex of the hypergraph each vertex of the rule stands
+   on, and what each label variable of the rule stands for. *)
+$emptyMatchState = <|"Vertices" -> <||>, "Labels" -> <||>|>;
+
+bindIn[state_, part_String, key_, value_] :=
+    Append[state, part -> Append[state[part], key -> value]];
+
+(* A label on the rule is read three ways.
+
+   A bare symbol is a variable: it matches whatever label it is laid against and remembers it, and
+   every later occurrence of that symbol must find the same thing. This is what lets a rule say
+   "an edge labelled x followed by an edge labelled y" without knowing what x and y will be, and
+   then name the result in terms of them -- which is how the composition rules in the reference
+   notebooks are written, and the reason labels are worth this trouble at all.
+
+   No label at all is a wildcard, matching anything and remembering nothing.
+
+   Anything else -- a string, a number, a composite expression -- is a literal, and matches only
+   itself. Verbatim[x] forces a symbol to be read that way, for a rule that wants to match the
+   label x rather than bind it. *)
+labelVariableQ[lab_] := Head[lab] === Symbol && lab =!= None;
+
+bindLabel[$Failed, _, _] := $Failed;
+bindLabel[state_, patt_, host_] := Which[
+    ! $labeledQ, state,
+    patt === None, state,
+    MatchQ[patt, Verbatim[Verbatim][_]], If[First[patt] === host, state, $Failed],
+    $labelPatternsQ && labelVariableQ[patt],
+        With[{seen = Lookup[state["Labels"], Key[patt], $unbound]},
+            Which[
+                seen === $unbound, bindIn[state, "Labels", patt, host],
+                seen === host, state,
+                True, $Failed
+            ]
+        ],
+    patt === host, state,
+    True, $Failed
+];
+
+(* One vertex of the rule onto one vertex of the hypergraph: the correspondence must agree with
+   whatever was settled earlier, the labels must match or bind, and with "DistinctVertices" no two
+   vertices of the rule may land on the same one. *)
+bindVertex[$Failed, _, _] := $Failed;
+bindVertex[state_, pv_, hv_] := Module[{pid = VertexID[pv], hid = VertexID[hv], seen, next},
+    seen = Lookup[state["Vertices"], Key[pid], $unbound];
+    next = Which[
+        seen === $unbound,
+            If[ $distinctQ && MemberQ[Values[state["Vertices"]], hid],
+                $Failed,
+                bindIn[state, "Vertices", pid, hid]
+            ],
+        seen === hid, state,
+        True, $Failed
+    ];
+    bindLabel[next, VertexLabel[pv], VertexLabel[hv]]
+];
+
+(* Whether a pattern edge could sit on a host edge at all, before any vertices are considered.
+   The label is not checked here: a label variable has to be bound rather than compared, which
+   only makes sense once the rest of the match is being built. *)
+edgeCompatibleQ[pe_, he_] :=
     Length[EdgeVertices[pe]] === Length[EdgeVertices[he]] &&
-    EdgeSymmetry[pe] === EdgeSymmetry[he] &&
-    labelMatchQ[EdgeLabel[pe], EdgeLabel[he], labeledQ];
+    EdgeSymmetry[pe] === EdgeSymmetry[he];
 
-(* Extend a partial vertex binding by laying one pattern edge over one host edge. Every ordering
-   the symmetry allows is tried, so the result is a list of bindings rather than one. *)
-extendBinding[binding_, pe_, he_, labeledQ_, distinctQ_] := Module[{pvs, hvs, perms},
+(* Extend a match by laying one pattern edge over one host edge. Every ordering the symmetry
+   allows is tried, so the result is a list of states rather than one. *)
+extendMatch[state_, pe_, he_] := Module[{pvs, hvs, perms, withLabel},
+    withLabel = bindLabel[state, EdgeLabel[pe], EdgeLabel[he]];
+    If[withLabel === $Failed, Return[{}, Module]];
     pvs = EdgeVertices[pe];
     hvs = EdgeVertices[he];
     perms = symmetryPermutations[EdgeSymmetry[he], Length[hvs]];
     DeleteCases[
-        Function[perm, Fold[bindVertex[#1, #2[[1]], #2[[2]], labeledQ, distinctQ] &,
-                            binding, Thread[{pvs, hvs[[perm]]}]]] /@ perms,
+        Function[perm,
+            Fold[bindVertex[#1, #2[[1]], #2[[2]]] &, withLabel, Thread[{pvs, hvs[[perm]]}]]
+        ] /@ perms,
         $Failed
-    ]
-];
-
-(* One vertex of the pattern onto one vertex of the hypergraph. A binding already made must agree,
-   and with "DistinctVertices" no two pattern vertices may land on the same one. *)
-bindVertex[$Failed, ___] := $Failed;
-bindVertex[binding_, pv_, hv_, labeledQ_, distinctQ_] := With[{
-    pid = VertexID[pv], hid = VertexID[hv], seen = Lookup[binding, Key[VertexID[pv]], None]
-},
-    Which[
-        ! labelMatchQ[VertexLabel[pv], VertexLabel[hv], labeledQ], $Failed,
-        seen =!= None, If[seen === hid, binding, $Failed],
-        distinctQ && MemberQ[Values[binding], hid], $Failed,
-        True, Append[binding, pid -> hid]
     ]
 ];
 
 (* Lay the pattern edges over the host edges one at a time, keeping every consistent way of doing
    it. A host edge may be used once: a rule matching two edges wants two of them. *)
-matchEdges[{}, _, used_, binding_] := {{Reverse[used], binding}};
-matchEdges[{pe_, rest___}, hostEdges_, used_, binding_] := Catenate @ Table[
-    If[ MemberQ[used, p] || ! edgeCompatibleQ[pe, hostEdges[[p]], $labeledQ],
+matchEdges[{}, _, used_, state_] := {{Reverse[used], state}};
+matchEdges[{pe_, rest___}, hostEdges_, used_, state_] := Catenate @ Table[
+    If[ MemberQ[used, p] || ! edgeCompatibleQ[pe, hostEdges[[p]]],
         {},
-        Catenate[
-            matchEdges[{rest}, hostEdges, Prepend[used, p], #] & /@
-                extendBinding[binding, pe, hostEdges[[p]], $labeledQ, $distinctQ]
-        ]
+        Catenate[matchEdges[{rest}, hostEdges, Prepend[used, p], #] & /@ extendMatch[state, pe, hostEdges[[p]]]]
     ],
     {p, Length[hostEdges]}
 ];
 
-(* A vertex of the input that lies in no edge constrains nothing, so it may sit on any vertex not
-   already taken. Rules usually have none, and this is what happens when they do. *)
-bindFreeVertices[binding_, {}, _] := {binding};
-bindFreeVertices[binding_, free_List, hostIDs_] := With[{
-    taken = Values[binding]
-},
-    Function[choice, Join[binding, AssociationThread[free -> choice]]] /@
-        Permutations[Complement[hostIDs, taken], {Length[free]}]
+(* A vertex of the rule lying in no edge constrains nothing about which edges are used, so it may
+   sit on any vertex not already taken -- but its label still has to match or bind, which is what
+   makes a rule whose whole input is one labelled vertex mean anything. *)
+bindFreeVertices[state_, {}, _] := {state};
+bindFreeVertices[state_, free_List, hostVertices_] := Catenate @ Map[
+    Function[choice,
+        With[{result = Fold[bindVertex[#1, #2[[1]], #2[[2]]] &, state, Thread[{free, choice}]]},
+            If[result === $Failed, {}, {result}]
+        ]
+    ],
+    Permutations[
+        Select[hostVertices, ! MemberQ[Values[state["Vertices"]], VertexID[#]] &],
+        {Length[free]}
+    ]
 ];
 
 HypergraphRuleMatches[r_HypergraphRule ? HypergraphRuleQ, hg_Hypergraph ? HypergraphQ,
                       opts : OptionsPattern[]] := Block[{
     $labeledQ = TrueQ @ OptionValue["Labeled"],
+    $labelPatternsQ = TrueQ @ OptionValue["LabelPatterns"],
     $distinctQ = TrueQ @ OptionValue["DistinctVertices"],
-    lhs = r["Input"], patternEdges, hostEdges, hostIDs, freeIDs, raw
+    lhs = r["Input"], patternEdges, hostEdges, freeVertices, raw
 },
     patternEdges = EdgeList[lhs];
     hostEdges = EdgeList[hg];
-    hostIDs = VertexID /@ VertexList[hg];
-    freeIDs = Complement[VertexID /@ VertexList[lhs],
-                         VertexID /@ Catenate[EdgeVertices /@ patternEdges]];
+    freeVertices = Select[VertexList[lhs],
+        ! MemberQ[VertexID /@ Catenate[EdgeVertices /@ patternEdges], VertexID[#]] &];
 
-    raw = matchEdges[patternEdges, hostEdges, {}, <||>];
+    raw = matchEdges[patternEdges, hostEdges, {}, $emptyMatchState];
 
     DeleteDuplicates @ Catenate @ Map[
         Function[pair,
-            Function[binding, <|"MatchEdgePositions" -> First[pair], "RuleVertexMap" -> binding|>] /@
-                bindFreeVertices[Last[pair], freeIDs, hostIDs]
+            Function[state,
+                <|
+                    "MatchEdgePositions" -> First[pair],
+                    "RuleVertexMap" -> state["Vertices"],
+                    "LabelBindings" -> state["Labels"]
+                |>
+            ] /@ bindFreeVertices[Last[pair], freeVertices, VertexList[hg]]
         ],
         raw
     ]
@@ -253,6 +303,13 @@ HypergraphRuleMatches[r_, hg_, ___] := (
 (* ::Section:: *)
 (*Applying*)
 
+
+(* The label a vertex of the hypergraph carries, for an output that names the vertex but gives it
+   no label of its own. *)
+hostLabelOf[hostVertices_, id_] :=
+    With[{v = SelectFirst[hostVertices, VertexID[#] === id &, None]},
+        If[v === None, None, VertexLabel[v]]
+    ];
 
 (* Names for the vertices the output creates. Fresh symbols would do, and are what the reference
    uses, but names chosen to avoid what is already there are reproducible from one session to the
@@ -273,15 +330,21 @@ newVertexNames[n_Integer, avoid_List] := Module[{k = 0, names = {}, candidate},
    get new ones, and those only the input had are destroyed. A destroyed vertex is dropped from
    the vertex list only when nothing left in the hypergraph uses it -- a rule rewrites what it
    matched, and reaching into edges it did not match to remove a vertex from them would not be
-   local. *)
-applyMatch[r_, hg_, match_, labeledQ_] := Module[{
+   local.
+
+   The output's labels are expressions in whatever its input's label variables were bound to, so
+   they are written out with those bindings substituted. A rule may therefore name what it builds
+   after what it found: this is what turns a pair of composable edges labelled x and y into one
+   labelled for their composite. *)
+applyMatch[r_, hg_, match_] := Module[{
     lhs = r["Input"], rhs = r["Output"],
     pos = match["MatchEdgePositions"], vmap = match["RuleVertexMap"],
+    labelRules = Normal[match["LabelBindings"]],
     hostEdges = EdgeList[hg], hostVertices = VertexList[hg],
-    sharedIDs, newIDs, deletedIDs, newNames, fullMap,
-    matchEdges, matchVertexIDs, keptEdges, newEdges, deletedHostIDs, keptVertices, result
+    newIDs, deletedIDs, newNames, fullMap,
+    matchEdges, matchVertexIDs, keptEdges, newEdges, outputVertices,
+    deletedHostIDs, keptVertices, outputIDs, result
 },
-    sharedIDs = r["SharedVertices"];
     newIDs = r["NewVertices"];
     deletedIDs = r["DeletedVertices"];
 
@@ -297,20 +360,31 @@ applyMatch[r_, hg_, match_, labeledQ_] := Module[{
         Edge[
             Replace[VertexID /@ EdgeVertices[e], id_ :> Lookup[fullMap, Key[id], id], 1],
             EdgeSymmetry[e],
-            EdgeLabel[e]
+            EdgeLabel[e] /. labelRules
         ]
     ] /@ EdgeList[rhs];
 
+    (* The vertices the output names, carrying the labels it gives them with the bindings put in.
+       Where the output labels a vertex, that label is the one that stands -- relabelling is
+       something a rule is entitled to do. Where it leaves one unlabelled, whatever the hypergraph
+       had is kept. The label is settled here rather than left to the constructor to merge, which
+       would see two labels for one vertex and warn about a disagreement that is not one. *)
+    outputVertices = Function[v,
+        With[{id = Lookup[fullMap, Key[VertexID[v]], VertexID[v]],
+              lab = VertexLabel[v] /. labelRules},
+            Vertex[id, If[lab === None, hostLabelOf[hostVertices, id], lab]]
+        ]
+    ] /@ VertexList[rhs];
+    outputIDs = VertexID /@ outputVertices;
+
     deletedHostIDs = Lookup[vmap, Key[#]] & /@ deletedIDs;
-    (* keep a destroyed vertex if anything still standing uses it *)
     With[{surviving = VertexID /@ Catenate[EdgeVertices /@ Join[keptEdges, newEdges]]},
         keptVertices = DeleteCases[hostVertices,
-            v_ /; MemberQ[deletedHostIDs, VertexID[v]] && ! MemberQ[surviving, VertexID[v]]]
+            v_ /; (MemberQ[deletedHostIDs, VertexID[v]] && ! MemberQ[surviving, VertexID[v]]) ||
+                  MemberQ[outputIDs, VertexID[v]]]
     ];
 
-    (* The host's vertices go in first, so that where the output gives a label to a vertex that
-       already had one, the one already there wins. *)
-    result = Hypergraph[keptVertices, Join[keptEdges, newEdges]];
+    result = Hypergraph[Join[outputVertices, keptVertices], Join[keptEdges, newEdges]];
 
     <|
         "Hypergraph" -> result,
@@ -322,14 +396,14 @@ applyMatch[r_, hg_, match_, labeledQ_] := Module[{
         "DeletedVertices" -> Complement[deletedHostIDs,
             VertexID /@ Catenate[EdgeVertices /@ Join[keptEdges, newEdges]]],
         "RuleVertexMap" -> fullMap,
+        "LabelBindings" -> match["LabelBindings"],
         "Rule" -> r
     |>
 ];
 
 HypergraphRuleApply[r_HypergraphRule ? HypergraphRuleQ, hg_Hypergraph ? HypergraphQ,
                     opts : OptionsPattern[]] :=
-    applyMatch[r, hg, #, TrueQ @ OptionValue["Labeled"]] & /@
-        HypergraphRuleMatches[r, hg, opts];
+    applyMatch[r, hg, #] & /@ HypergraphRuleMatches[r, hg, opts];
 
 HypergraphRuleApply[r_, hg_, ___] := (
     If[! HypergraphRuleQ[r], Message[HypergraphRuleApply::rule, HoldForm[r]],

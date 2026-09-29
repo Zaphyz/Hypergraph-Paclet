@@ -47,7 +47,7 @@ check["one edge matches each edge of a two-edge path",
    Length @ HypergraphRuleMatches[sub, path2], 2];
 check["a match names the positions it used and the binding it made",
    Keys @ First @ HypergraphRuleMatches[sub, path2],
-   {"MatchEdgePositions", "RuleVertexMap"}];
+   {"MatchEdgePositions", "RuleVertexMap", "LabelBindings"}];
 check["the binding of the first match",
    First[HypergraphRuleMatches[sub, path2]]["RuleVertexMap"], <|1 -> 1, 2 -> 2|>];
 check["a two-edge pattern matches the two consecutive pairs",
@@ -101,7 +101,7 @@ ev = sub[path2];
 check["one event per match", Length[ev], 2];
 check["the keys of an event", Keys @ First[ev],
    {"Hypergraph", "MatchVertices", "MatchEdges", "MatchEdgePositions", "NewVertices",
-    "NewEdges", "DeletedVertices", "RuleVertexMap", "Rule"}];
+    "NewEdges", "DeletedVertices", "RuleVertexMap", "LabelBindings", "Rule"}];
 check["rule[hg] and HypergraphRuleApply agree", sub[path2] === HypergraphRuleApply[sub, path2], True];
 check["subdividing the first edge", ed @ ev[[1, "Hypergraph"]],
    Sort[{{1, \[FormalV][1]}, {\[FormalV][1], 2}, {2, 3}}]];
@@ -275,6 +275,156 @@ check["matching is unaffected by the order the edges were written in",
          Length[sub[Hypergraph[es]]] === Length[sub[Hypergraph[RandomSample[es]]]]],
       100],
    {True}];
+
+
+p[];
+p["=== 5. The worked examples of notebooks/RewritingBasics.nb ==="];
+
+p["-- growing a path by subdividing repeatedly --"];
+grown = NestList[First[sub[#]]["Hypergraph"] &, Hypergraph[{Edge[{1, 2}]}], 3];
+check["each step adds an edge", EdgeCount /@ grown, {1, 2, 3, 4}];
+check["  and a vertex", VertexCount /@ grown, {2, 3, 4, 5}];
+check["the new vertices do not collide from one step to the next",
+   DuplicateFreeQ @ Cases[vs @ Last[grown], _\[FormalV]], True];
+check["and the result really is a path: no vertex in more than two edges, two in just one",
+   With[{degrees = Last /@ Tally[Flatten[ed @ Last[grown]]]},
+      {Max[degrees], Count[degrees, 1]}],
+   {2, 2}];
+
+p["-- every state one step away from a star --"];
+star = Hypergraph[{Edge[{1, 2}], Edge[{1, 3}], Edge[{1, 4}]}];
+check["one event per edge", Length @ sub[star], 3];
+check["the events differ",
+   Length @ DeleteDuplicates[#["MatchEdgePositions"] & /@ sub[star]], 3];
+check["but their results are all isomorphic",
+   Length @ DeleteDuplicates[CanonicalHypergraph[#["Hypergraph"]] & /@ sub[star]], 1];
+
+p["-- an unordered rule --"];
+grow = HypergraphRule[{Edge[{1, 2}, "Unordered"]}, {Edge[{1, 2, 3}, "Unordered"]}];
+check["two events, from the two orderings the pattern admits",
+   Length @ grow[Hypergraph[{Edge[{1, 2}, "Unordered"]}]], 2];
+check["  whose results are the same hypergraph",
+   Length @ DeleteDuplicates[#["Hypergraph"] & /@ grow[Hypergraph[{Edge[{1, 2}, "Unordered"]}]]], 1];
+check["the edge produced is unordered and of arity three",
+   {EdgeSymmetry[#], Length @ EdgeVertices[#]} & @
+      First @ EdgeList @ First[grow[Hypergraph[{Edge[{1, 2}, "Unordered"]}]]]["Hypergraph"],
+   {"Unordered", 3}];
+
+p["-- rewriting only the edges carrying a label --"];
+mixed = Hypergraph[{Edge[{1, 2}, "Directed", "x"], Edge[{2, 3}, "Directed", "y"],
+                    Edge[{3, 4}, "Directed", "x"]}];
+onlyX = HypergraphRule[{Edge[{1, 2}, "Directed", "x"]},
+                       {Edge[{1, 3}, "Directed", "x"], Edge[{3, 2}, "Directed", "x"]}];
+check["it finds the two edges labelled x and not the one labelled y",
+   Length @ onlyX[mixed], 2];
+check["  and the edge labelled y is untouched in every result",
+   Union @ Map[Function[ev, MemberQ[EdgeLabel /@ EdgeList[ev["Hypergraph"]], "y"]], onlyX[mixed]],
+   {True}];
+check["each result has one edge more than it started with",
+   Union[EdgeCount[#["Hypergraph"]] & /@ onlyX[mixed]], {4}];
+
+p["-- a rule that consumes two edges --"];
+contract = HypergraphRule[{{1, 2}, {2, 3}}, {{1, 3}}];
+path3 = Hypergraph[{Edge[{1, 2}], Edge[{2, 3}], Edge[{3, 4}]}];
+check["two matches on a three-edge path",
+   #["MatchEdgePositions"] & /@ contract[path3], {{1, 2}, {2, 3}}];
+check["the middle vertex of each goes with them",
+   #["DeletedVertices"] & /@ contract[path3], {{2}, {3}}];
+check["and each result is a two-edge path",
+   ed[#["Hypergraph"]] & /@ contract[path3], {{{1, 3}, {3, 4}}, {{1, 2}, {2, 4}}}];
+
+
+p[];
+p["=== 6. Labels as pattern variables ==="];
+(* A bare symbol used as a label in a rule's input is a variable: it matches whatever label it is
+   laid against and remembers it, and the output may then be named in terms of it. This is what
+   the composition rules of the reference notebooks are written with. *)
+
+p["-- a symbol binds, a string does not --"];
+hlab = Hypergraph[{Edge[{1, 2}, "Directed", f], Edge[{2, 3}, "Directed", g]}];
+check["a symbol matches any label and remembers it",
+   #["LabelBindings"] & /@ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, "Directed", x]}, {}], hlab],
+   {<|x -> f|>, <|x -> g|>}];
+check["a string is a literal, as before",
+   HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, "Directed", "f"]}, {}], hlab], {}];
+check["  and matches its own literal",
+   Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, "Directed", "a"]}, {}],
+      Hypergraph[{Edge[{1, 2}, "Directed", "a"]}]],
+   1];
+check["no label is still a wildcard that binds nothing",
+   #["LabelBindings"] & /@ HypergraphRuleMatches[HypergraphRule[{{1, 2}}, {}], hlab],
+   {<||>, <||>}];
+check["Verbatim forces a symbol to be read literally",
+   {Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, "Directed", Verbatim[f]]}, {}], hlab],
+    Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, "Directed", Verbatim[zzz]]}, {}], hlab]},
+   {1, 0}];
+check["\"LabelPatterns\" -> False turns binding off, so a symbol is a literal",
+   Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, "Directed", x]}, {}], hlab,
+      "LabelPatterns" -> False],
+   0];
+
+p["-- one variable, used twice, must find the same label --"];
+same = HypergraphRule[{Edge[{1, 2}, "Directed", x], Edge[{2, 3}, "Directed", x]}, {}];
+check["two edges labelled differently do not match it",
+   HypergraphRuleMatches[same, hlab], {}];
+check["  but two labelled the same do",
+   Length @ HypergraphRuleMatches[same,
+      Hypergraph[{Edge[{1, 2}, "Directed", f], Edge[{2, 3}, "Directed", f]}]],
+   1];
+
+p["-- vertex labels bind too --"];
+vlab = Hypergraph[{Vertex[1, r], Vertex[2, ss]}, {Edge[{1, 2}, "Directed", ff]}];
+check["a vertex label variable binds",
+   Sort @ Values[First[HypergraphRuleMatches[
+      HypergraphRule[Hypergraph[{Vertex[1, pp], Vertex[2, qq]}, {Edge[{1, 2}, "Directed", xx]}], {}],
+      vlab]]["LabelBindings"]],
+   Sort[{r, ss, ff}]];
+
+p["-- the output is named in terms of what was found --"];
+lineComp = HypergraphRule[
+   {Edge[{1, 2}, "Directed", x], Edge[{2, 3}, "Directed", y]},
+   {Edge[{1, 3}, "Directed", Row[{"{", x, y, "}"}]]}];
+check["composing two labelled edges names the result after them",
+   EdgeLabel /@ EdgeList @ First[lineComp[hlab]]["Hypergraph"],
+   {Row[{"{", f, g, "}"}]}];
+check["and the binding is reported with the event",
+   First[lineComp[hlab]]["LabelBindings"], <|x -> f, y -> g|>];
+
+p["-- the reference's unit rule: a free labelled vertex --"];
+unit = HypergraphRule[
+   Hypergraph[{Vertex[1, pp]}, {}],
+   Hypergraph[{Vertex[1, pp], Vertex[2, pp]}, {Edge[{1, 2}, "Unordered", Subscript["1", pp]]}]];
+unitEvents = unit[vlab];
+check["one event per vertex of the state", Length[unitEvents], 2];
+check["binding the vertex label each time",
+   #["LabelBindings"] & /@ unitEvents, {<|pp -> r|>, <|pp -> ss|>}];
+check["an identity edge named after the object it was found at",
+   DeleteDuplicates @ Cases[
+      Catenate[EdgeLabel /@ EdgeList[#["Hypergraph"]] & /@ unitEvents], _Subscript],
+   {Subscript["1", r], Subscript["1", ss]}];
+check["and the created vertex carries that label too",
+   VertexLabel /@ Select[VertexList[First[unitEvents]["Hypergraph"]],
+      MatchQ[VertexID[#], _\[FormalV]] &],
+   {r}];
+
+p["-- the reference's dagger rule --"];
+dagger = HypergraphRule[
+   Hypergraph[{Vertex[1, pp], Vertex[2, qq]}, {Edge[{1, 2}, "Directed", x]}],
+   Hypergraph[{Vertex[1, pp], Vertex[2, qq]}, {Edge[{2, 1}, "Directed", Row[{"(", SuperDagger[x], ")"}]]}]];
+dEvent = First @ dagger[vlab];
+check["the edge is reversed", VertexID /@ EdgeVertices @ First @ EdgeList[dEvent["Hypergraph"]], {2, 1}];
+check["and daggered", EdgeLabel /@ EdgeList[dEvent["Hypergraph"]], {Row[{"(", SuperDagger[ff], ")"}]}];
+check["the vertex labels survive", Sort[VertexLabel /@ VertexList[dEvent["Hypergraph"]]], Sort[{r, ss}]];
+check["applying it twice gives the involution unreduced",
+   EdgeLabel /@ EdgeList @ First[dagger[dEvent["Hypergraph"]]]["Hypergraph"],
+   {Row[{"(", SuperDagger[Row[{"(", SuperDagger[ff], ")"}]], ")"}]}];
+
+p["-- an output label may relabel a vertex --"];
+relabel = HypergraphRule[
+   Hypergraph[{Vertex[1, pp], Vertex[2, qq]}, {Edge[{1, 2}, "Directed", x]}],
+   Hypergraph[{Vertex[1, qq], Vertex[2, pp]}, {Edge[{1, 2}, "Directed", x]}]];
+check["the output's labels win where it gives them",
+   VertexLabel /@ VertexList @ First[relabel[vlab]]["Hypergraph"], {ss, r}];
 
 
 p[];

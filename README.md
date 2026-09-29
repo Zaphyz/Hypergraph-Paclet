@@ -168,10 +168,29 @@ First[events]["Hypergraph"]                          (* the result *)
 
 Symmetry types must agree between a pattern edge and the edge it lies on, and the pattern is
 matched over the orderings that symmetry allows — one for a directed edge, its rotations for
-a cyclic one, every permutation for an unordered one. Labels constrain: a pattern carrying no
-label matches whatever it lies on, one carrying a label matches only the same label.
-`HypergraphRuleMatches` shows the matches without rewriting anything.
+a cyclic one, every permutation for an unordered one. `HypergraphRuleMatches` shows the
+matches without rewriting anything.
 
+**Labels can be pattern variables.** A label on a rule's input written as a bare symbol
+matches whatever it is laid against and remembers it; the output's labels are expressions in
+those variables. So a rule can carry information out of a match and into what it builds:
+
+```wolfram
+compose = HypergraphRule[
+   {Edge[{1, 2}, "Directed", x], Edge[{2, 3}, "Directed", y]},
+   {Edge[{1, 3}, "Directed", Row[{"{", x, y, "}"}]]}];
+
+EdgeLabel /@ EdgeList @ First[compose[
+   Hypergraph[{Edge[{1, 2}, "Directed", f], Edge[{2, 3}, "Directed", g]}]]]["Hypergraph"]
+(* {Row[{"{", f, g, "}"}]} *)
+```
+
+A string or any composite expression is a literal and matches only itself; no label at all
+is a wildcard. Vertex labels bind the same way, so a rule whose whole input is one labelled
+vertex can name what it creates after it.
+
+The syntax follows the upstream paclet, so rules written for that one read the same here —
+including the label-variable rules of its chemoid notebooks.
 The syntax follows the upstream paclet, so rules written for that one read the same here.
 
 ### From a hypergraph to a hypermatrix
@@ -254,7 +273,7 @@ reasoning behind each design choice.
 | `src/Adjacency.wl` | `AdjacencyHypermatrix`: the correspondence between edge symmetry types and array symmetries, counting or labelled. |
 | `PacletInfo.wl` | The paclet's description of itself: kernel root, context, and the symbols that load it. |
 | `Documentation/` | Reference pages and guide, with the script that generates them. |
-| `notebooks/` | `HypergraphBasics.nb` and `HypermatrixBasics.nb`, the review notebooks. |
+| `notebooks/` | `HypergraphBasics.nb`, `HypermatrixBasics.nb` and `RewritingBasics.nb`, the review notebooks. |
 | `notebooks/legacy/` | Earlier research notebooks, kept for reference; not part of the package. |
 | `tests/` | The examples as assertions, plus several thousand randomized checks. |
 | `reference/` | Not in version control. Clones of the two upstream paclets, for comparison. |
@@ -267,6 +286,7 @@ Each suite runs from a clean kernel and prints a line per check:
 wolframscript -file tests/BasicExamples.wls
 wolframscript -file tests/HypermatrixExamples.wls
 wolframscript -file tests/ArrayAlgebraExamples.wls
+wolframscript -file tests/RewritingExamples.wls
 ```
 
 Every example in the documentation appears here as an assertion, so the two cannot drift

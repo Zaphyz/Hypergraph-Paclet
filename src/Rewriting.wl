@@ -121,10 +121,24 @@ HypergraphRule /: MakeBoxes[r_HypergraphRule /; HypergraphRuleQ[r], form : Stand
         {
             {BoxForm`SummaryItem[{"Shared: ", r["SharedVertices"]}]},
             {BoxForm`SummaryItem[{"Created: ", r["NewVertices"]}]},
-            {BoxForm`SummaryItem[{"Destroyed: ", r["DeletedVertices"]}]}
+            {BoxForm`SummaryItem[{"Destroyed: ", r["DeletedVertices"]}]},
+            {rulePicture[r]}
         },
         form, "Interpretable" -> Automatic
     ];
+
+(* Opening the summary box shows the rule drawn, as the reference paclet displays it: a rule is a
+   picture, and two vertex counts say much less about it than the two sides side by side do. It
+   goes in the opened part rather than the icon because a rule is not legible at icon size. A
+   rule too big to draw quickly is left out, on the same reasoning as HypergraphLargeQ. *)
+rulePicture[r_] := If[
+    HypergraphLargeQ[r["Input"]] || HypergraphLargeQ[r["Output"]],
+    Nothing,
+    Quiet @ Replace[
+        HypergraphRulePlot[r, "PanelSize" -> 110, ImagePadding -> 6],
+        Except[_Graphics] :> Nothing
+    ]
+];
 
 $HypergraphRuleIcon := $HypergraphRuleIcon = Graphics[
     {
@@ -408,6 +422,10 @@ applyMatch[r_, hg_, match_] := Module[{
 
     <|
         "Hypergraph" -> result,
+        (* The hypergraph the event acted on. An event that carries only its result cannot be
+           drawn: a picture of an event is the match highlighted in what was there and the
+           creations highlighted in what came of it, and the first half is otherwise gone. *)
+        "Input" -> hg,
         "EdgeOrigins" -> edgeOrigins,
         "MatchVertices" -> matchVertexIDs,
         "MatchEdges" -> matchEdges,

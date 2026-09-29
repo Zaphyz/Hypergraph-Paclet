@@ -1,0 +1,548 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     23787,        539]
+NotebookOptionsPosition[     21281,        503]
+NotebookOutlinePosition[     21629,        518]
+CellTagsIndexPosition[     21586,        515]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypergraphRulePlot", "ObjectName",ExpressionUUID->"b562f9c9-c430-a540-986c-560f0c6344dc"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphRulePlot", "[", "rule", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"290bfeec-4d57-d141-8d42-778aab3ec9a9"],
+ " ",
+ "draws the rewrite rule rule as its input beside its output."
+}], "Usage",ExpressionUUID->"be8a2dfc-bebb-934d-8a26-2c5e426478fc"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"1a4dfd6c-0163-404d-a063-73fb2e31e590"],
+
+Cell["\<\
+Vertices the two sides share are drawn in the same places, so that what the \
+rule does to them can be read off rather than searched for.\
+\>", "Notes",ExpressionUUID->"a13240b9-a6e5-b94d-a74f-f27430d9cd75"],
+
+Cell["\<\
+The vertices a rule creates are highlighted on the right and the ones it \
+destroys on the left; \"Highlight\" -> False leaves both plain.\
+\>", "Notes",ExpressionUUID->"d4b59e8d-f6f9-0e45-9fc0-65b643325474"],
+
+Cell[TextData[{
+ "The highlight styles are \"HighlightLeftVertexStyle\", \
+\"HighlightLeftEdgeStyle\", \"HighlightRightVertexStyle\" and \
+\"HighlightRightEdgeStyle\", the same four names the reference paclet's ",
+ Cell[BoxData[
+  StyleBox["HighlightRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "6ddabbe8-1252-054b-872f-a1e3f2341c5d"],
+ " takes."
+}], "Notes",ExpressionUUID->"c9916ce7-3dac-9543-966f-52250b9db499"],
+
+Cell["\<\
+\"PanelSize\" sets how many pixels wide each of the two sides is drawn.\
+\>", "Notes",ExpressionUUID->"d57e5fe3-3bae-0b4b-81af-877bb218fc68"],
+
+Cell["\<\
+\"SharedCoordinates\" -> False lays the two sides out independently.\
+\>", "Notes",ExpressionUUID->"e67b63aa-c4cd-8c4f-b5ce-28fe9050cbb2"],
+
+Cell[TextData[{
+ "It takes the options of ",
+ Cell[BoxData[
+  StyleBox["HypergraphPlot", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "0913c474-fe83-9c42-ac6d-0247838c15cd"],
+ " as well, which are passed to both sides."
+}], "Notes",ExpressionUUID->"6faf7a43-e462-8e43-b0d7-49bf51b11fc8"],
+
+Cell["\<\
+Opening the summary box of a HypergraphRule shows the same picture.\
+\>", "Notes",ExpressionUUID->"4c9840d5-c879-aa4f-ada3-6c91bbcd924d"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"fe81cf2f-05a1-ad4c-b06f-17a1010342dd"],
+
+Cell["\<\
+A rule that subdivides an edge. Vertices 2 and 3 stay where they are; the \
+vertex the rule creates is highlighted:\
+\>", "ExampleText",ExpressionUUID->"eb208203-80e4-074a-b486-7c9cdb8a928e"],
+
+Cell["\<\
+HypergraphRulePlot[HypergraphRule[{{2, 3}}, {{2, 5}, {5, 3}}], \"PanelSize\" \
+-> 130]\
+\>", "Input",ExpressionUUID->"bd083a0c-51cb-b849-98d9-e6c8df0e0636"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {InsetBox[
+     GraphicsBox[
+      {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], 
+       {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+        {Hue[0.63, 0.7, 0.5], Opacity[
+         0.7], {ArrowBox[
+           LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+         {Opacity[1]}}}, 
+       {Opacity[1], {
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0., 1.2246467991473532`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {1., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 1.2246467991473532*^-16}, 
+          ImageScaled[{1.5, 0.4999999999999999}]]}}},
+      Background->GrayLevel[1],
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImageSize->130,
+      PlotInteractivity:>True,
+      PlotRange->{{0., 1.}, {-0.16666666666666666`, 0.16666666666666677`}},
+      PlotRangePadding->Scaled[0.02]], {65., -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+    InsetBox[
+     GraphicsBox[
+      {GrayLevel[0.65], 
+       FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+        0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 0.1848}, {
+        0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {1., 0.0034}, {
+        0.109, -0.8982}, {-0.1531, -0.6363}, {
+        0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{0., 1.}, {20., 20.}},
+      ImageSize->NCache[
+        Rational[65, 4], 16.25],
+      PlotInteractivity:>True,
+      PlotRangePadding->0.6], {138.125, -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {16.25, 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+    InsetBox[
+     GraphicsBox[
+      {AbsoluteThickness[Medium], Opacity[0.5], 
+       Arrowheads[{{Medium, 0.5}}], {
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{1., 0.}, {0.5, 6.123233995736766*^-17}}]], {}}, 
+          {Opacity[1]}}}, 
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{0.5, 6.123233995736766*^-17}, {0., 
+             1.2246467991473532`*^-16}}]], {}}, 
+          {Opacity[1]}}}}, 
+       {Opacity[1], {
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0., 1.2246467991473532`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}, 
+         {RGBColor[1, 0, 0], PointSize[0.02], 
+          DiskBox[{0.5, 6.123233995736766*^-17}, 
+           Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {1., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 1.2246467991473532*^-16}, 
+          ImageScaled[{1.5, 0.4999999999999999}]], InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0.5, 6.123233995736766*^-17}, 
+          ImageScaled[{0.5, 0.5}]]}}},
+      Background->GrayLevel[1],
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImageSize->130,
+      PlotInteractivity:>True,
+      PlotRange->{{0., 1.}, {-0.16666666666666666`, 0.16666666666666677`}},
+      PlotRangePadding->Scaled[0.02]], {211.25, -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
+  ImageSize->{276.25, 73.50000000000001},
+  Method->{"IgnoreImageSizeAutomaticLimit" -> True},
+  PlotRange->{{0, 276.25}, {-73.50000000000001, 0}},
+  PlotRangePadding->Automatic]], "Output",ExpressionUUID->"b76d7395-413d-8242-\
+929d-9825c6b5c6a8"],
+
+Cell["Without the highlighting:", "ExampleText",ExpressionUUID->"82fedad7-3c84-2f4b-b1af-e50b72a132e5"],
+
+Cell["\<\
+HypergraphRulePlot[HypergraphRule[{{2, 3}}, {{2, 5}, {5, 3}}], \"Highlight\" \
+-> False, \"PanelSize\" -> 130]\
+\>", "Input",ExpressionUUID->"43cd2b27-a55c-5c47-998f-d27727c82bb4"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {InsetBox[
+     GraphicsBox[
+      {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], 
+       {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+        {Hue[0.63, 0.7, 0.5], Opacity[
+         0.7], {ArrowBox[
+           LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+         {Opacity[1]}}}, 
+       {Opacity[1], {
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0., 1.2246467991473532`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {1., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 1.2246467991473532*^-16}, 
+          ImageScaled[{1.5, 0.4999999999999999}]]}}},
+      Background->GrayLevel[1],
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImageSize->130,
+      PlotInteractivity:>True,
+      PlotRange->{{0., 1.}, {-0.16666666666666666`, 0.16666666666666677`}},
+      PlotRangePadding->Scaled[0.02]], {65., -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+    InsetBox[
+     GraphicsBox[
+      {GrayLevel[0.65], 
+       FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+        0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 0.1848}, {
+        0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {1., 0.0034}, {
+        0.109, -0.8982}, {-0.1531, -0.6363}, {
+        0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{0., 1.}, {20., 20.}},
+      ImageSize->NCache[
+        Rational[65, 4], 16.25],
+      PlotInteractivity:>True,
+      PlotRangePadding->0.6], {138.125, -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {16.25, 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+    InsetBox[
+     GraphicsBox[
+      {AbsoluteThickness[Medium], Opacity[0.5], 
+       Arrowheads[{{Medium, 0.5}}], {
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{1., 0.}, {0.5, 6.123233995736766*^-17}}]], {}}, 
+          {Opacity[1]}}}, 
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{0.5, 6.123233995736766*^-17}, {0., 
+             1.2246467991473532`*^-16}}]], {}}, 
+          {Opacity[1]}}}}, 
+       {Opacity[1], {
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0., 1.2246467991473532`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}, 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0.5, 6.123233995736766*^-17}, 
+           Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {1., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 1.2246467991473532*^-16}, 
+          ImageScaled[{1.5, 0.4999999999999999}]], InsetBox[
+          StyleBox["5",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0.5, 6.123233995736766*^-17}, 
+          ImageScaled[{0.5, 0.5}]]}}},
+      Background->GrayLevel[1],
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImageSize->130,
+      PlotInteractivity:>True,
+      PlotRange->{{0., 1.}, {-0.16666666666666666`, 0.16666666666666677`}},
+      PlotRangePadding->Scaled[0.02]], {211.25, -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
+  ImageSize->{276.25, 73.50000000000001},
+  Method->{"IgnoreImageSizeAutomaticLimit" -> True},
+  PlotRange->{{0, 276.25}, {-73.50000000000001, 0}},
+  PlotRangePadding->Automatic]], "Output",ExpressionUUID->"c6f09abe-2068-4e43-\
+9d76-dc2dd80fb400"],
+
+Cell["A rule that destroys a vertex highlights it on the left:", "ExampleText",ExpressionUUID->"cc4f8702-60a2-b247-b807-ed2125db5661"],
+
+Cell["\<\
+HypergraphRulePlot[HypergraphRule[{{1, 2}, {2, 3}}, {{1, 3}}], \"PanelSize\" \
+-> 130]\
+\>", "Input",ExpressionUUID->"1ab9191c-8777-e046-b721-bbf8a496ecbc"],
+
+Cell[BoxData[
+ GraphicsBox[{{}, {InsetBox[
+     GraphicsBox[
+      {AbsoluteThickness[Medium], Opacity[0.5], 
+       Arrowheads[{{Medium, 0.5}}], {
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+             2.4492935982947064`*^-16}}]], {}}, 
+          {Opacity[1]}}}, 
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+          {Opacity[1]}}}}, 
+       {Opacity[1], {
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0., 3.6739403974420594`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}, 
+         {RGBColor[1, 0, 0], PointSize[0.02], 
+          DiskBox[{1., 2.4492935982947064`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}, 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}}, {
+         InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
+          ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+          StyleBox["2",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
+          ImageScaled[{0.5, -0.5}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {2., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000002}]]}}},
+      Background->GrayLevel[1],
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImageSize->130,
+      PlotInteractivity:>True,
+      PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
+      PlotRangePadding->Scaled[0.02]], {65., -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+    InsetBox[
+     GraphicsBox[
+      {GrayLevel[0.65], 
+       FilledCurveBox[{{{0, 2, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 
+        0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}}, {{{-1., 0.1848}, {
+        0.2991, 0.1848}, {-0.1531, 0.6363}, {0.109, 0.8982}, {1., 0.0034}, {
+        0.109, -0.8982}, {-0.1531, -0.6363}, {
+        0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{0., 1.}, {20., 20.}},
+      ImageSize->NCache[
+        Rational[65, 4], 16.25],
+      PlotInteractivity:>True,
+      PlotRangePadding->0.6], {138.125, -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {16.25, 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
+    InsetBox[
+     GraphicsBox[
+      {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], 
+       {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+        {Hue[0.63, 0.7, 0.5], Opacity[
+         0.7], {ArrowBox[
+           LineBox[{{0., 3.6739403974420594`*^-16}, {2., 0.}}]], {}}, 
+         {Opacity[1]}}}, 
+       {Opacity[1], {
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0., 3.6739403974420594`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}, 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}}, {
+         InsetBox[
+          StyleBox["1",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
+          ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+          StyleBox["3",
+           StripOnInput->False,
+           LineColor->GrayLevel[0],
+           FrontFaceColor->GrayLevel[0],
+           BackFaceColor->GrayLevel[0],
+           GraphicsColor->GrayLevel[0],
+           FontColor->GrayLevel[0]], {2., 0.}, 
+          ImageScaled[{-0.5, 0.5000000000000002}]]}}},
+      Background->GrayLevel[1],
+      DefaultBaseStyle->{"PlotGraphics", "Graphics"},
+      DisplayFunction->Identity,
+      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImageSize->130,
+      PlotInteractivity:>True,
+      PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
+      PlotRangePadding->Scaled[0.02]], {211.25, -36.75000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+     BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
+  ImageSize->{276.25, 73.50000000000001},
+  Method->{"IgnoreImageSizeAutomaticLimit" -> True},
+  PlotRange->{{0, 276.25}, {-73.50000000000001, 0}},
+  PlotRangePadding->Automatic]], "Output",ExpressionUUID->"a5742377-a28a-a543-\
+aa56-377285fed804"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"e35968c5-814a-cc4d-80ba-9e67eb1b1ef3"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/RewritingGraphics.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Rules",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"7c8b818a-635f-0a4e-af35-450981e108a2"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"9f0a961c-4f92-5341-bbb8-ab931e4fae29"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphEventPlot", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"4d45c351-41b8-3d47-b0c2-e0faffb93019"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "046cd058-231f-2d40-8adb-fc3339eac57d"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphPlot", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "1208e462-b97b-6a48-ab56-910954d1d547"]
+}], "SeeAlso",ExpressionUUID->"2dc14267-b02c-0644-a3ad-3c88b22cff24"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"c38dc7da-6730-d640-a752-5dad13f73908"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 95, 0, 70, "ObjectName",ExpressionUUID->"b562f9c9-c430-a540-986c-560f0c6344dc"],
+Cell[652, 22, 331, 7, 70, "Usage",ExpressionUUID->"be8a2dfc-bebb-934d-8a26-2c5e426478fc"],
+Cell[979, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"1a4dfd6c-0163-404d-a063-73fb2e31e590"],
+Cell[1080, 33, 220, 3, 70, "Notes",ExpressionUUID->"a13240b9-a6e5-b94d-a74f-f27430d9cd75"],
+Cell[1300, 38, 221, 3, 70, "Notes",ExpressionUUID->"d4b59e8d-f6f9-0e45-9fc0-65b643325474"],
+Cell[1521, 43, 435, 8, 70, "Notes",ExpressionUUID->"c9916ce7-3dac-9543-966f-52250b9db499"],
+Cell[1951, 53, 153, 2, 70, "Notes",ExpressionUUID->"d57e5fe3-3bae-0b4b-81af-877bb218fc68"],
+Cell[2105, 57, 150, 2, 70, "Notes",ExpressionUUID->"e67b63aa-c4cd-8c4f-b5ce-28fe9050cbb2"],
+Cell[2256, 61, 299, 6, 70, "Notes",ExpressionUUID->"6faf7a43-e462-8e43-b0d7-49bf51b11fc8"],
+Cell[2552, 69, 149, 2, 70, "Notes",ExpressionUUID->"4c9840d5-c879-aa4f-ada3-6c91bbcd924d"],
+Cell[2702, 73, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"fe81cf2f-05a1-ad4c-b06f-17a1010342dd"],
+Cell[2802, 75, 204, 3, 70, "ExampleText",ExpressionUUID->"eb208203-80e4-074a-b486-7c9cdb8a928e"],
+Cell[3006, 80, 169, 3, 70, "Input",ExpressionUUID->"bd083a0c-51cb-b849-98d9-e6c8df0e0636"],
+Cell[3175, 85, 5609, 122, 70, "Output",ExpressionUUID->"b76d7395-413d-8242-929d-9825c6b5c6a8"],
+Cell[8665, 209, 103, 0, 70, "ExampleText",ExpressionUUID->"82fedad7-3c84-2f4b-b1af-e50b72a132e5"],
+Cell[8771, 211, 193, 3, 70, "Input",ExpressionUUID->"43cd2b27-a55c-5c47-998f-d27727c82bb4"],
+Cell[8964, 216, 5657, 123, 70, "Output",ExpressionUUID->"c6f09abe-2068-4e43-9d76-dc2dd80fb400"],
+Cell[14501, 341, 134, 0, 70, "ExampleText",ExpressionUUID->"cc4f8702-60a2-b247-b807-ed2125db5661"],
+Cell[14638, 343, 169, 3, 70, "Input",ExpressionUUID->"1ab9191c-8777-e046-b721-bbf8a496ecbc"],
+Cell[14807, 348, 5629, 124, 70, "Output",ExpressionUUID->"a5742377-a28a-a543-aa56-377285fed804"],
+Cell[20315, 474, 85, 0, 70, "NotesSection",ExpressionUUID->"e35968c5-814a-cc4d-80ba-9e67eb1b1ef3"],
+Cell[20403, 476, 277, 9, 70, "Notes",ExpressionUUID->"7c8b818a-635f-0a4e-af35-450981e108a2"],
+Cell[20674, 487, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"9f0a961c-4f92-5341-bbb8-ab931e4fae29"],
+Cell[20766, 489, 523, 12, 70, "SeeAlso",ExpressionUUID->"2dc14267-b02c-0644-a3ad-3c88b22cff24"]
+}
+]
+*)
+
+(* End of internal cache information *)

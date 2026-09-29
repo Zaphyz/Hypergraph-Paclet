@@ -10,50 +10,50 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     78480,       1721]
-NotebookOptionsPosition[     75193,       1677]
-NotebookOutlinePosition[     75541,       1692]
-CellTagsIndexPosition[     75498,       1689]
+NotebookDataLength[    122665,       2712]
+NotebookOptionsPosition[    119374,       2668]
+NotebookOutlinePosition[    119722,       2683]
+CellTagsIndexPosition[    119679,       2680]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphRewritingSystem", "ObjectName",ExpressionUUID->"c6373ddc-a6ea-6348-8aec-c9979553fd5d"],
+Cell["HypergraphRewritingSystem", "ObjectName",ExpressionUUID->"12dac4e3-4121-954d-aea9-4acaac8ff709"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphRewritingSystem", "[", 
     RowBox[{"rules", ",", " ", "init"}], "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"4de4115d-dbff-bf47-a1b1-f9068e01e262"],
+  "InlineFormula",ExpressionUUID->"70aad622-f608-9442-8ccd-9be78c89877a"],
  " ",
  "represents the rewriting system with the given rules started from the \
 hypergraph init."
-}], "Usage",ExpressionUUID->"8aff6f2b-2991-b84d-a941-7c97d3e62a9e"],
+}], "Usage",ExpressionUUID->"e4ebb0ae-ae54-344a-aa1f-68f75f6cda2d"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"sys", "[", 
     RowBox[{"prop", ",", " ", "n"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"03f84b12-f4e2-2944-a1a9-53e8c62993ae"],
+  ExpressionUUID->"6e273123-e735-304f-baa8-6d6051387e91"],
  " ",
  "gives a property of the evolution carried n generations."
-}], "Usage",ExpressionUUID->"ec446931-7f87-474d-9c7a-2dcbd6f2ae13"],
+}], "Usage",ExpressionUUID->"02007e00-8b60-b84d-baf3-6c58838a45b5"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"005e66a1-b3d4-924e-bfab-5606b1332fa6"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"c409562c-dda3-7844-b30b-ca130bc81bfe"],
 
 Cell["\<\
 rules may be one HypergraphRule, a list of them, or plain arrows input -> \
 output, which are converted; init may be anything Hypergraph accepts.\
-\>", "Notes",ExpressionUUID->"91027085-b7d6-1041-a557-4e6ddd68c61c"],
+\>", "Notes",ExpressionUUID->"8ade811a-991d-154a-bcc8-8e042f392149"],
 
 Cell["\<\
 Evolving means applying every rule in every way it fits, to every state \
 reached so far. The result is a tree of state occurrences joined by events: a \
 state reached two ways appears twice, since which elements it is made of \
 depends on how it was reached.\
-\>", "Notes",ExpressionUUID->"f9fd212c-7721-314d-a107-e86a8192a906"],
+\>", "Notes",ExpressionUUID->"b86a7eff-55d7-bd4a-845d-34164b182041"],
 
 Cell[TextData[{
  "The properties are \"Rules\", \"RuleCount\", \"InitialState\", \"States\", \
@@ -63,24 +63,24 @@ Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"sys", "[", "\"\<Properties\>\"", "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"0ddb9d0e-c0b6-7c4b-9971-035767971a57"],
+  "InlineFormula",ExpressionUUID->"9e2b82bb-1fec-9d41-b159-d3eaebfced88"],
  " lists them."
-}], "Notes",ExpressionUUID->"7a6c43bb-f0b5-b943-91ae-f7e3c4d9329e"],
+}], "Notes",ExpressionUUID->"c9ddcc46-6e21-8a42-91d9-22f0d2d1f6f9"],
 
 Cell["\<\
 The number of generations defaults to 1, so sys[\"CausalGraph\"] and \
 sys[\"CausalGraph\", 1] are the same.\
-\>", "Notes",ExpressionUUID->"6c42ce93-d1f1-5143-850b-d4ba62373201"],
+\>", "Notes",ExpressionUUID->"bf3294ca-fc3e-454b-8924-d6860b9b6a81"],
 
 Cell[TextData[{
  "Options are those of ",
  Cell[BoxData[
   StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c971da81-e1ee-5140-8700-ea938a103552"],
+  ExpressionUUID->"86d37a21-7de2-3d42-ac56-83322c5042bc"],
  ", and are given to the property: \"CausalDependence\", \
 \"TransitiveReduction\", \"CanonicalizeStates\", \"MaxStates\", and the \
 matching options \"Labeled\", \"LabelPatterns\" and \"DistinctVertices\"."
-}], "Notes",ExpressionUUID->"bd8ae54f-0e0a-2a41-a3f7-3aed3943334f"],
+}], "Notes",ExpressionUUID->"43bb54bb-258b-7148-afa5-90cf11cf8ce8"],
 
 Cell["\<\
 An event of \"EventList\" is an association with \"Rule\" and \"RuleIndex\", \
@@ -88,7 +88,7 @@ which rule fired; \"Generation\"; \"InputState\" and \"OutputState\", indices \
 into \"StateList\"; \"ConsumedEdges\", \"CreatedEdges\", \"MatchedVertices\", \
 \"CreatedVertices\" and \"DestroyedVertices\", the elements it touched, as \
 tokens; and \"Data\", the event HypergraphRuleApply gave.\
-\>", "Notes",ExpressionUUID->"95604b35-2eff-6d46-8179-bd599b3d20e5"],
+\>", "Notes",ExpressionUUID->"d57daa69-6de7-044d-a196-87a8b2651bcd"],
 
 Cell["\<\
 Elements are tracked by token rather than by value, because an edge is an \
@@ -96,22 +96,22 @@ element of a multiset: two edges that look the same are still two elements, \
 and a vertex identifier freed by one event may be handed out again by a later \
 one. A token is minted when an element is created and carried for as long as \
 it survives.\
-\>", "Notes",ExpressionUUID->"4a067bec-2a12-554a-86de-6f0b8c330920"],
+\>", "Notes",ExpressionUUID->"9d9b949f-f6ae-4742-a86c-b3a2bd4d8337"],
 
 Cell["\<\
 \"MaxStates\", by default 2048, stops an evolution that is growing faster \
 than expected and gives HypergraphRewritingSystem::trunc rather than running \
 on.\
-\>", "Notes",ExpressionUUID->"7c975766-399f-8842-b92b-c658cd59c202"],
+\>", "Notes",ExpressionUUID->"95d74a77-8d67-5747-9ce3-2a7d2d79b2f9"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"3613836e-753e-194c-a6e0-4a1f8ae4de1a"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"5b428217-7345-4c4d-90c7-210185cc9f50"],
 
-Cell["A rule that subdivides an edge, started from one edge:", "ExampleText",ExpressionUUID->"7c1665a7-6593-cf4f-9970-3d023ca69d95"],
+Cell["A rule that subdivides an edge, started from one edge:", "ExampleText",ExpressionUUID->"98f9073d-8a40-814f-9fc1-529648c81612"],
 
 Cell["\<\
 subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];
 system = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]]\
-\>", "Input",ExpressionUUID->"d96327d2-f4a2-2944-9dff-e36ee397226f"],
+\>", "Input",ExpressionUUID->"593a3082-e787-3a42-8107-b273719efd2e"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -274,19 +274,19 @@ Cell[BoxData[
      WolframInstitute`Hypergraphs`Vertex[2]}, {
      WolframInstitute`Hypergraphs`Edge[{
        WolframInstitute`Hypergraphs`Vertex[1], 
-       WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]],
+       WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], {}],
   Editable->False,
   SelectWithContents->True,
-  Selectable->False]], "Output",ExpressionUUID->"a2f18f21-65d2-0547-b92c-\
-831cea5b68d6"],
+  Selectable->False]], "Output",ExpressionUUID->"1de10b2d-c9b2-ac49-93bc-\
+ac5f7c3c99ca"],
 
 Cell["\<\
 Every edge of every state is a place the rule fits, so the states multiply:\
-\>", "ExampleText",ExpressionUUID->"51391eaa-8096-0248-ac95-d59fed1c9130"],
+\>", "ExampleText",ExpressionUUID->"8dd9bdf3-933f-d044-8105-d3b154fde9a2"],
 
 Cell["\<\
 Table[{system[\"StateCount\", g], system[\"EventCount\", g]}, {g, 0, 3}]\
-\>", "Input",ExpressionUUID->"8a0e7ed0-52e5-2149-b1df-ec7f10364cb4"],
+\>", "Input",ExpressionUUID->"11ba4b33-34d7-a94f-b36f-c1a25c4df9c4"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -299,11 +299,11 @@ Cell[BoxData[
     RowBox[{"4", ",", "3"}], "}"}], ",", 
    RowBox[{"{", 
     RowBox[{"10", ",", "9"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
-"b3db1b25-4a94-9444-83e6-976736acef0b"],
+"a445ce0d-8536-ea43-acd1-9198aa7b5b22"],
 
-Cell["The states of each generation:", "ExampleText",ExpressionUUID->"8193de96-60e6-844c-9d3b-0d4f4bda4fd4"],
+Cell["The states of each generation:", "ExampleText",ExpressionUUID->"a49a276e-a77e-9545-a9cc-a5fc49c250b6"],
 
-Cell["system[\"States\", 2]", "Input",ExpressionUUID->"eadc2a64-e008-f84e-ac3c-0c995f3fd1f6"],
+Cell["system[\"States\", 2]", "Input",ExpressionUUID->"681d124a-9613-2841-9d7f-b51c21b7603e"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -325,11 +325,13 @@ Cell[BoxData[
           0.7], {ArrowBox[
             LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
           {Opacity[1]}}}, 
-        {Opacity[1], 
-         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
-          0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]], 
-          DiskBox[{0., 1.2246467991473532`*^-16}, 
-           Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+        {Opacity[1], {
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0., 1.2246467991473532`*^-16}, 
+            Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
            StyleBox["1",
             StripOnInput->False,
             LineColor->GrayLevel[0],
@@ -379,13 +381,17 @@ Cell[BoxData[
            0.7], {ArrowBox[
              LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
            {Opacity[1]}}}}, 
-        {Opacity[1], 
-         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
-          0.95]}], 
-          DiskBox[{0., 3.6739403974420594`*^-16}, Offset[{2., 2.}, {0., 0.}]],
-           DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]], 
-          DiskBox[{1., 2.4492935982947064`*^-16}, 
-           Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+        {Opacity[1], {
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0., 3.6739403974420594`*^-16}, 
+            Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{1., 2.4492935982947064`*^-16}, 
+            Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
            StyleBox["1",
             StripOnInput->False,
             LineColor->GrayLevel[0],
@@ -459,15 +465,21 @@ Cell[BoxData[
               LineBox[{{1., 4.898587196589413*^-16}, {2., 
                2.4492935982947064`*^-16}}]], {}}, 
             {Opacity[1]}}}}, 
-         {Opacity[1], 
-          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
-           0.95]}], 
-           DiskBox[{0., 6.123233995736766*^-16}, Offset[{2., 2.}, {0., 0.}]], 
-           DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]], 
-           DiskBox[{2., 2.4492935982947064`*^-16}, 
-            Offset[{2., 2.}, {0., 0.}]], 
-           DiskBox[{1., 4.898587196589413*^-16}, 
-            Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0., 6.123233995736766*^-16}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{2., 2.4492935982947064`*^-16}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{1., 4.898587196589413*^-16}, 
+             Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
             StyleBox["1",
              StripOnInput->False,
              LineColor->GrayLevel[0],
@@ -548,14 +560,21 @@ Cell[BoxData[
             0.7], {ArrowBox[
               LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
             {Opacity[1]}}}}, 
-         {Opacity[1], 
-          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
-           0.95]}], 
-           DiskBox[{0., 6.123233995736766*^-16}, Offset[{2., 2.}, {0., 0.}]], 
-           DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]], 
-           DiskBox[{1., 4.898587196589413*^-16}, Offset[{2., 2.}, {0., 0.}]], 
-           DiskBox[{2., 2.4492935982947064`*^-16}, 
-            Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+         {Opacity[1], {
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{0., 6.123233995736766*^-16}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{1., 4.898587196589413*^-16}, 
+             Offset[{2., 2.}, {0., 0.}]]}, 
+           {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+            0.95]}], 
+            DiskBox[{2., 2.4492935982947064`*^-16}, 
+             Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
             StyleBox["1",
              StripOnInput->False,
              LineColor->GrayLevel[0],
@@ -594,13 +613,13 @@ Cell[BoxData[
       ImagePadding->20,
       PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
       PlotRangePadding->Scaled[0.02]]}], "}"}]}], "}"}]], "Output",ExpressionU\
-UID->"1a1bdd84-08f4-b941-aac3-bf7ca4b4708e"],
+UID->"cf9ce736-e6f2-f243-9524-a41e2fdd91c7"],
 
 Cell["What one event did, in the tokens the causal reading uses:", \
-"ExampleText",ExpressionUUID->"03cefa26-0415-0843-a73f-c94691d081aa"],
+"ExampleText",ExpressionUUID->"56e2ddbb-0e59-ff44-9d33-7e5932dc9f48"],
 
 Cell["KeyDrop[First @ system[\"EventList\", 1], {\"Rule\", \"Data\"}]", \
-"Input",ExpressionUUID->"2d984326-11c6-664a-a7ea-d80f48749412"],
+"Input",ExpressionUUID->"12092e3e-12f2-7840-b8bd-a83125902d82"],
 
 Cell[BoxData[
  RowBox[{"\[LeftAssociation]", 
@@ -621,15 +640,15 @@ Cell[BoxData[
    RowBox[{"\<\"DestroyedVertices\"\>", "\[Rule]", 
     RowBox[{"{", "}"}]}], ",", 
    RowBox[{"\<\"OutputState\"\>", "\[Rule]", "2"}]}], 
-  "\[RightAssociation]"}]], "Output",ExpressionUUID->"8bcabf99-852f-8447-8900-\
-460307aa5cc0"],
+  "\[RightAssociation]"}]], "Output",ExpressionUUID->"4b19084a-1f15-8c46-8d38-\
+dfb58898d0cd"],
 
 Cell["\<\
 The evolution as a tree of state occurrences, and the same states merged up \
 to canonical form:\
-\>", "ExampleText",ExpressionUUID->"9eef375f-b54e-6d47-b822-70b429c42ac4"],
+\>", "ExampleText",ExpressionUUID->"7b3eb9df-c591-d240-a8d6-94dcb04e0a45"],
 
-Cell["{system[\"EvolutionGraph\", 2], system[\"StatesGraph\", 2]}", "Input",ExpressionUUID->"b18b45ef-a44f-3f45-95a1-a12c0bdb9ca1"],
+Cell["{system[\"EvolutionGraph\", 2], system[\"StatesGraph\", 2]}", "Input",ExpressionUUID->"465bad4a-617b-2144-9e43-22653446c506"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -638,7 +657,9 @@ Cell[BoxData[
     NamespaceBox["NetworkGraphics",
      DynamicModuleBox[{Typeset`graph = HoldComplete[
        Graph[{1, 2, 3, 4}, {{{1, 2}, {2, 3}, {2, 4}}, Null, Automatic}, {
-        GraphLayout -> "LayeredDigraphEmbedding", VertexLabels -> {2 -> Placed[
+        AspectRatio -> Automatic, Background -> GrayLevel[1], EdgeStyle -> {
+           Hue[0.75, 0, 0.35]}, GraphLayout -> "LayeredDigraphEmbedding", 
+         PerformanceGoal -> "Quality", VertexLabels -> {2 -> Placed[
              WolframInstitute`Hypergraphs`Hypergraph[{
                WolframInstitute`Hypergraphs`Vertex[1], 
                WolframInstitute`Hypergraphs`Vertex[2], 
@@ -701,13 +722,268 @@ Cell[BoxData[
                   \[FormalV][2]], 
                  WolframInstitute`Hypergraphs`Vertex[
                   \[FormalV][1]]}, "Directed"]}], Tooltip]}, 
-         VertexSize -> {Medium}, VertexStyle -> {
+         VertexShapeFunction -> {
+           
+           Function[{
+            WolframInstitute`Hypergraphs`Private`pos$, 
+             WolframInstitute`Hypergraphs`Private`name$, 
+             WolframInstitute`Hypergraphs`Private`size$}, 
+            With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+             Inset[
+              Lookup[<|1 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 1.2246467991473532`*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 1.}, {-0.16666666666666666`, 
+                    0.16666666666666677`}}, PlotRangePadding -> Scaled[0.02], 
+                   ImagePadding -> 20, Background -> GrayLevel[1]], 
+                  Background -> GrayLevel[0.99], FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3], 2 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{0., 3.6739403974420594`*^-16}, {1., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 3.6739403974420594`*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{2., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 2.}, {-0.3333333333333333, 
+                    0.3333333333333337}}, PlotRangePadding -> Scaled[0.02], 
+                   ImagePadding -> 20, Background -> GrayLevel[1]], 
+                  Background -> GrayLevel[0.99], FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3], 3 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{3., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+                   PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+                   Background -> GrayLevel[1]], Background -> GrayLevel[0.99],
+                   FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3], 4 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{3., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+                   PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+                   Background -> GrayLevel[1]], Background -> GrayLevel[0.99],
+                   FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3]|>, 
+               Key[WolframInstitute`Hypergraphs`Private`name$], ""], 
+              WolframInstitute`Hypergraphs`Private`pos$, Center, {
+              WolframInstitute`Hypergraphs`Private`w$, 
+               WolframInstitute`Hypergraphs`Private`w$/1}]]]}, 
+         VertexSize -> {1}, VertexStyle -> {
            Directive[
-            Hue[0.58, 0.55, 0.92], 
-            EdgeForm[
-             Hue[0.58, 0.8, 0.6]]]}}]]}, 
+            Opacity[0.7], 
+            Hue[0.62, 0.45, 0.87]]}}]]}, 
       TagBox[GraphicsGroupBox[{
-         {Hue[0.6, 0.7, 0.7], Opacity[0.7], CapForm["Round"], Arrowheads[
+         {Hue[0.75, 0, 0.35], Opacity[0.7], CapForm["Round"], Arrowheads[
           Medium], 
           ArrowBox[{
            DynamicLocation["VertexID$1", Automatic, Center], DynamicLocation[
@@ -718,12 +994,44 @@ Cell[BoxData[
           ArrowBox[{
            DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
             "VertexID$4", Automatic, Center]}]}, 
-         {Hue[0.58, 0.55, 0.92], EdgeForm[{Hue[0.58, 0.8, 0.6], Opacity[
-          0.7]}], 
+         {Hue[0.62, 0.45, 0.87], Opacity[0.7], EdgeForm[{GrayLevel[0], 
+          Opacity[0.7]}], 
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{0., 2.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], 
+                  {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                   {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 1.2246467991473532`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 
+                 PlotRange->{{0., 1.}, {-0.16666666666666666`, 
+                  0.16666666666666677`}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {0., 2.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$1"],
              GraphicsBox[
@@ -746,15 +1054,21 @@ Cell[BoxData[
                     ArrowBox[
                     LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 1.2246467991473532`*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -785,7 +1099,49 @@ Cell[BoxData[
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{0., 1.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], {
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+                    {Opacity[1]}}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 3.6739403974420594`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 
+                 PlotRange->{{0., 2.}, {-0.3333333333333333, 
+                  0.3333333333333337}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {0., 1.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$2"],
              GraphicsBox[
@@ -825,17 +1181,29 @@ Cell[BoxData[
                     ArrowBox[
                     LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 3.6739403974420594`*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{2., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 2.4492935982947064`*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -880,7 +1248,57 @@ Cell[BoxData[
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{-1., 0.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], {
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    {Opacity[1]}}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {-1., 0.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$3"],
              GraphicsBox[
@@ -937,19 +1355,37 @@ Cell[BoxData[
                     LineBox[{{1., 4.898587196589413*^-16}, {2., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 6.123233995736766*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{3., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{2., 2.4492935982947064`*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 4.898587196589413*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -1007,7 +1443,57 @@ Cell[BoxData[
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{0., 0.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], {
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    {Opacity[1]}}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {0., 0.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$4"],
              GraphicsBox[
@@ -1064,19 +1550,37 @@ Cell[BoxData[
                     ArrowBox[
                     LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 6.123233995736766*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{3., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 4.898587196589413*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{2., 2.4492935982947064`*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -1134,6 +1638,7 @@ Cell[BoxData[
            BoxID -> "VertexLabelID$4"]}}],
        MouseAppearanceTag["NetworkGraphics"]],
       AllowKernelInitialization->False]],
+    Background->GrayLevel[1],
     DefaultBaseStyle->"NetworkGraphics",
     FormatType->TraditionalForm,
     FrameTicks->None], ",", 
@@ -1141,7 +1646,9 @@ Cell[BoxData[
     NamespaceBox["NetworkGraphics",
      DynamicModuleBox[{Typeset`graph = HoldComplete[
        Graph[{1, 2, 3, 4}, {{{1, 2}, {2, 3}, {2, 4}}, Null}, {
-        GraphLayout -> "LayeredDigraphEmbedding", VertexLabels -> {2 -> Placed[
+        AspectRatio -> Automatic, Background -> GrayLevel[1], EdgeStyle -> {
+           Hue[0.75, 0, 0.35]}, GraphLayout -> "LayeredDigraphEmbedding", 
+         PerformanceGoal -> "Quality", VertexLabels -> {2 -> Placed[
              WolframInstitute`Hypergraphs`Hypergraph[{
                WolframInstitute`Hypergraphs`Vertex[1], 
                WolframInstitute`Hypergraphs`Vertex[2], 
@@ -1204,13 +1711,268 @@ Cell[BoxData[
                   \[FormalV][2]], 
                  WolframInstitute`Hypergraphs`Vertex[
                   \[FormalV][1]]}, "Directed"]}], Tooltip]}, 
-         VertexSize -> {Medium}, VertexStyle -> {
+         VertexShapeFunction -> {
+           
+           Function[{
+            WolframInstitute`Hypergraphs`Private`pos$, 
+             WolframInstitute`Hypergraphs`Private`name$, 
+             WolframInstitute`Hypergraphs`Private`size$}, 
+            With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+             Inset[
+              Lookup[<|1 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 1.2246467991473532`*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 1.}, {-0.16666666666666666`, 
+                    0.16666666666666677`}}, PlotRangePadding -> Scaled[0.02], 
+                   ImagePadding -> 20, Background -> GrayLevel[1]], 
+                  Background -> GrayLevel[0.99], FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3], 2 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{0., 3.6739403974420594`*^-16}, {1., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 3.6739403974420594`*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{2., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 2.}, {-0.3333333333333333, 
+                    0.3333333333333337}}, PlotRangePadding -> Scaled[0.02], 
+                   ImagePadding -> 20, Background -> GrayLevel[1]], 
+                  Background -> GrayLevel[0.99], FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3], 3 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{3., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+                   PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+                   Background -> GrayLevel[1]], Background -> GrayLevel[0.99],
+                   FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3], 4 -> Framed[
+                  Graphics[{
+                    Opacity[0.5], 
+                    Arrowheads[{{Medium, 0.5}}], 
+                    AbsoluteThickness[Medium], {{
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    
+                    Line[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                    Opacity[1], 
+                    Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    Arrow[
+                    Line[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                    Opacity[1], {{
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{3., 0.}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]]}, {
+                    Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
+                    Disk[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {}}, {
+                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
+                    Background -> None}, 
+                   PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+                   PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+                   Background -> GrayLevel[1]], Background -> GrayLevel[0.99],
+                   FrameStyle -> Directive[
+                    Opacity[0.6], 
+                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
+                  3]|>, 
+               Key[WolframInstitute`Hypergraphs`Private`name$], ""], 
+              WolframInstitute`Hypergraphs`Private`pos$, Center, {
+              WolframInstitute`Hypergraphs`Private`w$, 
+               WolframInstitute`Hypergraphs`Private`w$/1}]]]}, 
+         VertexSize -> {1}, VertexStyle -> {
            Directive[
-            Hue[0.58, 0.55, 0.92], 
-            EdgeForm[
-             Hue[0.58, 0.8, 0.6]]]}}]]}, 
+            Opacity[0.7], 
+            Hue[0.62, 0.45, 0.87]]}}]]}, 
       TagBox[GraphicsGroupBox[{
-         {Hue[0.6, 0.7, 0.7], Opacity[0.7], CapForm["Round"], Arrowheads[
+         {Hue[0.75, 0, 0.35], Opacity[0.7], CapForm["Round"], Arrowheads[
           Medium], 
           ArrowBox[{
            DynamicLocation["VertexID$1", Automatic, Center], DynamicLocation[
@@ -1221,12 +1983,44 @@ Cell[BoxData[
           ArrowBox[{
            DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
             "VertexID$4", Automatic, Center]}]}, 
-         {Hue[0.58, 0.55, 0.92], EdgeForm[{Hue[0.58, 0.8, 0.6], Opacity[
-          0.7]}], 
+         {Hue[0.62, 0.45, 0.87], Opacity[0.7], EdgeForm[{GrayLevel[0], 
+          Opacity[0.7]}], 
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{0., 2.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], 
+                  {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                   {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 1.2246467991473532`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 
+                 PlotRange->{{0., 1.}, {-0.16666666666666666`, 
+                  0.16666666666666677`}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {0., 2.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$1"],
              GraphicsBox[
@@ -1249,15 +2043,21 @@ Cell[BoxData[
                     ArrowBox[
                     LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 1.2246467991473532`*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -1288,7 +2088,49 @@ Cell[BoxData[
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{0., 1.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], {
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+                    {Opacity[1]}}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 3.6739403974420594`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 
+                 PlotRange->{{0., 2.}, {-0.3333333333333333, 
+                  0.3333333333333337}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {0., 1.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$2"],
              GraphicsBox[
@@ -1328,17 +2170,29 @@ Cell[BoxData[
                     ArrowBox[
                     LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 3.6739403974420594`*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{2., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 2.4492935982947064`*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -1383,7 +2237,57 @@ Cell[BoxData[
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{-1., 0.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], {
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    {Opacity[1]}}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {-1., 0.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$3"],
              GraphicsBox[
@@ -1440,19 +2344,37 @@ Cell[BoxData[
                     LineBox[{{1., 4.898587196589413*^-16}, {2., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 6.123233995736766*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{3., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{2., 2.4492935982947064`*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 4.898587196589413*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -1510,7 +2432,57 @@ Cell[BoxData[
           TagBox[
            TagBox[
             TooltipBox[
-             TagBox[DiskBox[{0., 0.}, 0.1],
+             TagBox[InsetBox[
+               FrameBox[
+                GraphicsBox[
+                 {AbsoluteThickness[Medium], Opacity[0.5], 
+                  Arrowheads[{{Medium, 0.5}}], {
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    {Opacity[1]}}}, 
+                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+                    {Hue[0.63, 0.7, 0.5], Opacity[
+                    0.7], {ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    {Opacity[1]}}}}, 
+                  {Opacity[1], {
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}, 
+                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]}], 
+                    DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
+                 AspectRatio->1,
+                 Background->None,
+                 ImagePadding->7,
+                 ImageSize->90,
+                 PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
+                 PlotRangePadding->Scaled[0.02]],
+                Background->GrayLevel[0.99],
+                FrameMargins->0,
+                FrameStyle->Directive[
+                  Opacity[0.6], 
+                  Hue[0.62, 0.45, 0.6]],
+                RoundingRadius->3,
+                StripOnInput->False], {0., 0.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$4"],
              GraphicsBox[
@@ -1567,19 +2539,37 @@ Cell[BoxData[
                     ArrowBox[
                     LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
                     Opacity[1], {}}}}, 
-                 Opacity[1], {
-                  Directive[
-                   Hue[0.63, 0.26, 0.89], 
-                   EdgeForm[
+                 Opacity[1], {{
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
                     Directive[
                     Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], {
+                    Opacity[0.95]]]], 
                    DiskBox[{0., 6.123233995736766*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{3., 0.}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{1., 4.898587196589413*^-16}, 
-                    Offset[{2., 2.}]], 
+                    Offset[{2., 2.}]]}, {
+                   Directive[
+                    Hue[0.63, 0.26, 0.89], 
+                    EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], 
                    DiskBox[{2., 2.4492935982947064`*^-16}, 
                     Offset[{2., 2.}]]}}, {
                   InsetBox[
@@ -1637,12 +2627,13 @@ Cell[BoxData[
            BoxID -> "VertexLabelID$4"]}}],
        MouseAppearanceTag["NetworkGraphics"]],
       AllowKernelInitialization->False]],
+    Background->GrayLevel[1],
     DefaultBaseStyle->"NetworkGraphics",
     FormatType->TraditionalForm,
-    FrameTicks->None]}], "}"}]], "Output",ExpressionUUID->"67337b83-2bf2-a747-\
-8115-9b42f284b38e"],
+    FrameTicks->None]}], "}"}]], "Output",ExpressionUUID->"9b6bbd4a-b310-5143-\
+ae08-a35c346ca697"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"9a3929d3-f8c4-ae46-b18f-63fce582d2cd"],
+Cell["Source", "NotesSection",ExpressionUUID->"ed061a72-609c-be4c-9cea-75a3fe330cf1"],
 
 Cell[TextData[{
  "Defined in ",
@@ -1653,32 +2644,32 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "The system object",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"338e4e35-5e8c-8c49-8ec9-95f953848db1"],
+}], "Notes",ExpressionUUID->"dffb1197-09c5-7b4b-9088-2677f0b8c926"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"7bce3720-3344-6b4a-a210-d63266ccaf65"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"c2a624fc-3b66-4546-975a-c81be634b5e9"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"efb25eb2-cc3d-9044-94c3-9b98bf5ca319"],
+  ExpressionUUID->"073060ed-0ae1-7944-afa5-552ef3550a20"],
  ", ",
  Cell[BoxData[
   StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"ef8d25ba-ee74-394b-bdf9-bd9f4cdcf5bb"],
+  ExpressionUUID->"c1a553e8-0e25-0e40-86a4-99f76c8d7a36"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "6d4a4910-480b-3f46-8630-e3363a9414f1"],
+  "e2a3b05e-0113-9542-9606-d8b8e64e8e4a"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"419fc72d-be72-3c46-bd69-c103bc6025ca"]
-}], "SeeAlso",ExpressionUUID->"677e7762-fd04-7848-9e44-57f642bbf4d8"]
+  ExpressionUUID->"1d0b345c-47a7-a944-9c96-d47c65241f75"]
+}], "SeeAlso",ExpressionUUID->"a8d4383c-ab61-7944-9b15-a20c5e164a0c"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"dc3b1e92-c5bd-3645-b316-02820f66faac"
+ExpressionUUID->"c38dc7da-6730-d640-a752-5dad13f73908"
 ]
 (* End of Notebook Content *)
 
@@ -1691,38 +2682,38 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 102, 0, 70, "ObjectName",ExpressionUUID->"c6373ddc-a6ea-6348-8aec-c9979553fd5d"],
-Cell[659, 22, 403, 9, 70, "Usage",ExpressionUUID->"8aff6f2b-2991-b84d-a941-7c97d3e62a9e"],
-Cell[1056, 33, 344, 8, 70, "Usage",ExpressionUUID->"ec446931-7f87-474d-9c7a-2dcbd6f2ae13"],
-Cell[1395, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"005e66a1-b3d4-924e-bfab-5606b1332fa6"],
-Cell[1496, 45, 228, 3, 70, "Notes",ExpressionUUID->"91027085-b7d6-1041-a557-4e6ddd68c61c"],
-Cell[1724, 50, 344, 5, 70, "Notes",ExpressionUUID->"f9fd212c-7721-314d-a107-e86a8192a906"],
-Cell[2066, 57, 548, 10, 70, "Notes",ExpressionUUID->"7a6c43bb-f0b5-b943-91ae-f7e3c4d9329e"],
-Cell[2607, 69, 191, 3, 70, "Notes",ExpressionUUID->"6c42ce93-d1f1-5143-850b-d4ba62373201"],
-Cell[2798, 74, 468, 8, 70, "Notes",ExpressionUUID->"bd8ae54f-0e0a-2a41-a3f7-3aed3943334f"],
-Cell[3261, 84, 459, 6, 70, "Notes",ExpressionUUID->"95604b35-2eff-6d46-8179-bd599b3d20e5"],
-Cell[3717, 92, 411, 6, 70, "Notes",ExpressionUUID->"4a067bec-2a12-554a-86de-6f0b8c330920"],
-Cell[4125, 100, 242, 4, 70, "Notes",ExpressionUUID->"7c975766-399f-8842-b92b-c658cd59c202"],
-Cell[4366, 106, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"3613836e-753e-194c-a6e0-4a1f8ae4de1a"],
-Cell[4466, 108, 132, 0, 70, "ExampleText",ExpressionUUID->"7c1665a7-6593-cf4f-9970-3d023ca69d95"],
-Cell[4601, 110, 206, 3, 70, "Input",ExpressionUUID->"d96327d2-f4a2-2944-9dff-e36ee397226f"],
-Cell[4807, 115, 7744, 165, 70, "Output",ExpressionUUID->"a2f18f21-65d2-0547-b92c-831cea5b68d6"],
-Cell[12389, 282, 163, 2, 70, "ExampleText",ExpressionUUID->"51391eaa-8096-0248-ac95-d59fed1c9130"],
-Cell[12553, 286, 154, 2, 70, "Input",ExpressionUUID->"8a0e7ed0-52e5-2149-b1df-ec7f10364cb4"],
-Cell[12708, 290, 358, 11, 70, "Output",ExpressionUUID->"b3db1b25-4a94-9444-83e6-976736acef0b"],
-Cell[13058, 303, 108, 0, 70, "ExampleText",ExpressionUUID->"8193de96-60e6-844c-9d3b-0d4f4bda4fd4"],
-Cell[13169, 305, 93, 0, 70, "Input",ExpressionUUID->"eadc2a64-e008-f84e-ac3c-0c995f3fd1f6"],
-Cell[13265, 307, 13172, 289, 70, "Output",ExpressionUUID->"1a1bdd84-08f4-b941-aac3-bf7ca4b4708e"],
-Cell[26151, 598, 139, 1, 70, "ExampleText",ExpressionUUID->"03cefa26-0415-0843-a73f-c94691d081aa"],
-Cell[26292, 601, 138, 1, 70, "Input",ExpressionUUID->"2d984326-11c6-664a-a7ea-d80f48749412"],
-Cell[26432, 604, 875, 20, 70, "Output",ExpressionUUID->"8bcabf99-852f-8447-8900-460307aa5cc0"],
-Cell[27290, 626, 185, 3, 70, "ExampleText",ExpressionUUID->"9eef375f-b54e-6d47-b822-70b429c42ac4"],
-Cell[27475, 631, 131, 0, 70, "Input",ExpressionUUID->"b18b45ef-a44f-3f45-95a1-a12c0bdb9ca1"],
-Cell[27609, 633, 47462, 1009, 70, "Output",ExpressionUUID->"67337b83-2bf2-a747-8115-9b42f284b38e"],
-Cell[74065, 1644, 85, 0, 70, "NotesSection",ExpressionUUID->"9a3929d3-f8c4-ae46-b18f-63fce582d2cd"],
-Cell[74153, 1646, 281, 9, 70, "Notes",ExpressionUUID->"338e4e35-5e8c-8c49-8ec9-95f953848db1"],
-Cell[74428, 1657, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"7bce3720-3344-6b4a-a210-d63266ccaf65"],
-Cell[74520, 1659, 685, 16, 70, "SeeAlso",ExpressionUUID->"677e7762-fd04-7848-9e44-57f642bbf4d8"]
+Cell[554, 20, 102, 0, 70, "ObjectName",ExpressionUUID->"12dac4e3-4121-954d-aea9-4acaac8ff709"],
+Cell[659, 22, 403, 9, 70, "Usage",ExpressionUUID->"e4ebb0ae-ae54-344a-aa1f-68f75f6cda2d"],
+Cell[1056, 33, 344, 8, 70, "Usage",ExpressionUUID->"02007e00-8b60-b84d-baf3-6c58838a45b5"],
+Cell[1395, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"c409562c-dda3-7844-b30b-ca130bc81bfe"],
+Cell[1496, 45, 228, 3, 70, "Notes",ExpressionUUID->"8ade811a-991d-154a-bcc8-8e042f392149"],
+Cell[1724, 50, 344, 5, 70, "Notes",ExpressionUUID->"b86a7eff-55d7-bd4a-845d-34164b182041"],
+Cell[2066, 57, 548, 10, 70, "Notes",ExpressionUUID->"c9ddcc46-6e21-8a42-91d9-22f0d2d1f6f9"],
+Cell[2607, 69, 191, 3, 70, "Notes",ExpressionUUID->"bf3294ca-fc3e-454b-8924-d6860b9b6a81"],
+Cell[2798, 74, 468, 8, 70, "Notes",ExpressionUUID->"43bb54bb-258b-7148-afa5-90cf11cf8ce8"],
+Cell[3261, 84, 459, 6, 70, "Notes",ExpressionUUID->"d57daa69-6de7-044d-a196-87a8b2651bcd"],
+Cell[3717, 92, 411, 6, 70, "Notes",ExpressionUUID->"9d9b949f-f6ae-4742-a86c-b3a2bd4d8337"],
+Cell[4125, 100, 242, 4, 70, "Notes",ExpressionUUID->"95d74a77-8d67-5747-9ce3-2a7d2d79b2f9"],
+Cell[4366, 106, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"5b428217-7345-4c4d-90c7-210185cc9f50"],
+Cell[4466, 108, 132, 0, 70, "ExampleText",ExpressionUUID->"98f9073d-8a40-814f-9fc1-529648c81612"],
+Cell[4601, 110, 206, 3, 70, "Input",ExpressionUUID->"593a3082-e787-3a42-8107-b273719efd2e"],
+Cell[4807, 115, 7748, 165, 70, "Output",ExpressionUUID->"1de10b2d-c9b2-ac49-93bc-ac5f7c3c99ca"],
+Cell[12393, 282, 163, 2, 70, "ExampleText",ExpressionUUID->"8dd9bdf3-933f-d044-8105-d3b154fde9a2"],
+Cell[12557, 286, 154, 2, 70, "Input",ExpressionUUID->"11ba4b33-34d7-a94f-b36f-c1a25c4df9c4"],
+Cell[12712, 290, 358, 11, 70, "Output",ExpressionUUID->"a445ce0d-8536-ea43-acd1-9198aa7b5b22"],
+Cell[13062, 303, 108, 0, 70, "ExampleText",ExpressionUUID->"a49a276e-a77e-9545-a9cc-a5fc49c250b6"],
+Cell[13173, 305, 93, 0, 70, "Input",ExpressionUUID->"681d124a-9613-2841-9d7f-b51c21b7603e"],
+Cell[13269, 307, 14126, 308, 70, "Output",ExpressionUUID->"cf9ce736-e6f2-f243-9524-a41e2fdd91c7"],
+Cell[27090, 617, 139, 1, 70, "ExampleText",ExpressionUUID->"56e2ddbb-0e59-ff44-9d33-7e5932dc9f48"],
+Cell[27231, 620, 138, 1, 70, "Input",ExpressionUUID->"12092e3e-12f2-7840-b8bd-a83125902d82"],
+Cell[27371, 623, 875, 20, 70, "Output",ExpressionUUID->"4b19084a-1f15-8c46-8d38-dfb58898d0cd"],
+Cell[28229, 645, 185, 3, 70, "ExampleText",ExpressionUUID->"7b3eb9df-c591-d240-a8d6-94dcb04e0a45"],
+Cell[28414, 650, 131, 0, 70, "Input",ExpressionUUID->"465bad4a-617b-2144-9e43-22653446c506"],
+Cell[28548, 652, 91676, 1981, 70, "Output",ExpressionUUID->"9b6bbd4a-b310-5143-ae08-a35c346ca697"],
+Cell[118246, 2635, 85, 0, 70, "NotesSection",ExpressionUUID->"ed061a72-609c-be4c-9cea-75a3fe330cf1"],
+Cell[118334, 2637, 281, 9, 70, "Notes",ExpressionUUID->"dffb1197-09c5-7b4b-9088-2677f0b8c926"],
+Cell[118609, 2648, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"c2a624fc-3b66-4546-975a-c81be634b5e9"],
+Cell[118701, 2650, 685, 16, 70, "SeeAlso",ExpressionUUID->"a8d4383c-ab61-7944-9b15-a20c5e164a0c"]
 }
 ]
 *)

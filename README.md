@@ -240,6 +240,42 @@ common.
 Elements are followed by token rather than by value, since an edge is an element of a
 multiset: two edges that look the same are still two elements.
 
+### Seeing it
+
+Every graph-valued property draws its states and events as pictures, in the colours the
+reference paclets use, so a graph made here reads the same way as one made there.
+
+```wolfram
+sys["EvolutionGraph", 2]      (* states as framed hypergraph plots *)
+sys["CausalGraph", 2]         (* events as before-and-after, match highlighted *)
+sys["TokenEventGraph", 1]     (* elements as vertices, events between them *)
+```
+
+An event is drawn as the hypergraph it acted on with the match highlighted, an arrow, and what
+it made with the creations highlighted — both halves on one layout, so what changed is what
+moves. The same picture on its own:
+
+```wolfram
+HypergraphRulePlot[sub]                              (* input beside output *)
+HypergraphEventPlot[First @ sub[Hypergraph[{{1, 2}}]]]
+```
+
+`HypergraphPlot` takes `VertexStyle`, `EdgeStyle` and `VertexCoordinates` per element, which is
+what those are built on. A style key is an element's position, the element itself, or a pattern.
+
+Drawing a state means laying out a hypergraph, so past `"MaxDrawnVertices"` a graph falls back to
+plain vertices and says so; `"StateRendering"` and `"EventRendering"` settle it either way.
+
+`$HypergraphRewritingOptions` is the registry of every option with its default, and a system can
+hold the ones that describe it:
+
+```wolfram
+strict = HypergraphRewritingSystem[sub, init, "CausalDependence" -> "Edges"];
+strict["Options"]   (* what is in force *)
+```
+
+An option given to a property still wins over one the system holds.
+
 ### From a hypergraph to a hypermatrix
 
 This is where the two halves meet. An edge has an arity and a symmetry type; an array has an
@@ -317,6 +353,7 @@ reasoning behind each design choice.
 | `src/ArrayAlgebra.wl` | Special arrays, `ArrayMultiply`, `ArrayAdd`, `ArrayTimes`, `FindArrayEquations`. |
 | `src/ArrayGraphics.wl` | `ArrayGraphics`, `ArrayGraphics3D`, `HypermatrixGraphics`, `HypermatrixGraphics3D`, `ArrayNesting`. |
 | `src/Rewriting.wl` | `HypergraphRule` and its application: the matcher, and the events a rewrite produces. |
+| `src/RewritingGraphics.wl` | `HypergraphRulePlot`, `HypergraphEventPlot`: a rule and an event as pictures. |
 | `src/Causality.wl` | `HypergraphRewritingSystem`, `HypergraphCausalGraph`: the evolution, element tokens, and the readings of causal dependence. |
 | `src/Adjacency.wl` | `AdjacencyHypermatrix`: the correspondence between edge symmetry types and array symmetries, counting or labelled. |
 | `PacletInfo.wl` | The paclet's description of itself: kernel root, context, and the symbols that load it. |

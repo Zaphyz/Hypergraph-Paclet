@@ -22,7 +22,7 @@
 BeginPackage["WolframInstitute`Hypergraphs`"];
 
 Unprotect[HypergraphRewritingSystem, HypergraphRewritingSystemQ, HypergraphCausalGraph,
-          $CausalDependenceTypes];
+          $CausalDependenceTypes, $HypergraphRewritingOptions];
 
 
 (* ::Section:: *)
@@ -46,6 +46,15 @@ HypergraphCausalGraph::usage =
     "HypergraphCausalGraph[rules, init, n] builds the system first.\n" <>
     "The option \"CausalDependence\" chooses what counts as a dependence; " <>
     "$CausalDependenceTypes lists the values it takes.";
+
+$HypergraphRewritingOptions::usage =
+    "$HypergraphRewritingOptions is the registry of options a rewriting system takes, with their " <>
+    "defaults: the ones that govern the evolution, the ones that govern causal dependence, and " <>
+    "the ones that govern how a graph is drawn.
+" <>
+    "Every graph-valued property takes these together with the options of Graph.
+" <>
+    "sys[\"Options\"] gives the values in force for a particular system.";
 
 $CausalDependenceTypes::usage =
     "$CausalDependenceTypes is the list of values the \"CausalDependence\" option takes.\n" <>
@@ -73,6 +82,11 @@ HypergraphRewritingSystem::trunc =
 
 HypergraphCausalGraph::sys = "`1` is not a rewriting system.";
 
+HypergraphRewritingSystem::undrawn =
+    "There are `1` `2` to draw, more than the `3` allowed by \"MaxDrawnVertices\"; plain vertices are " <>
+    "used instead. Raise that option, or set \"StateRendering\" or \"EventRendering\" to True, " <>
+    "to draw them anyway.";
+
 
 Begin["`Private`"];
 
@@ -81,16 +95,31 @@ Begin["`Private`"];
 (*The system object*)
 
 
-(* Canonical form: a list of rules and a Hypergraph. As everywhere else in this package the guard
-   reads only the pattern variables, never the expression itself, so there is no re-entrancy. *)
-canonicalSystemArgsQ[rules_List, init_] := AllTrue[rules, HypergraphRuleQ] && HypergraphQ[init];
+(* Canonical form: a list of rules, a Hypergraph, and a list of options. As everywhere else in
+   this package the guard reads only the pattern variables, never the expression itself, so there
+   is no re-entrancy.
+
+   The options are held on the system because there are enough of them that repeating the ones
+   that matter on every property call is a chore, and because they describe the system rather
+   than the question being asked of it. An option given to a property still wins over one held
+   here. *)
+canonicalSystemArgsQ[rules_List, init_, opts_List] :=
+    AllTrue[rules, HypergraphRuleQ] && HypergraphQ[init] &&
+    MatchQ[opts, {(_Rule | _RuleDelayed) ...}];
 canonicalSystemArgsQ[___] := False;
 
 HypergraphRewritingSystem[args___] /; ! canonicalSystemArgsQ[args] := makeSystem[args];
 
-makeSystem[rules_, init_] := Module[{rs = toRuleList[rules], hg = toInitial[init]},
+makeSystem[rules_, init_, opts___] := Module[{
+    rs = toRuleList[rules], hg = toInitial[init], os = Flatten[{opts}]
+},
     If[rs === $Failed || hg === $Failed, Return[$Failed, Module]];
-    HypergraphRewritingSystem[rs, hg]
+    If[ ! MatchQ[os, {(_Rule | _RuleDelayed) ...}],
+        Message[HypergraphRewritingSystem::spec,
+                HoldForm[HypergraphRewritingSystem[rules, init, opts]]];
+        Return[$Failed, Module]
+    ];
+    HypergraphRewritingSystem[rs, hg, os]
 ];
 makeSystem[args___] :=
     (Message[HypergraphRewritingSystem::spec, HoldForm[HypergraphRewritingSystem[args]]]; $Failed);
@@ -124,17 +153,41 @@ HypergraphRewritingSystemQ[_] := False;
 
 $CausalDependenceTypes = {"Elements", "Edges", "Vertices"};
 
-Options[HypergraphCausalGraph] = {
-    "CausalDependence" -> "Elements",
-    "TransitiveReduction" -> True,
-    "CanonicalizeStates" -> True,
+(* The options are grouped by what they act on, and the groups are what everything else is built
+   out of, so that there is one place where an option is written down and one place to look for
+   it. $HypergraphRewritingOptions is the whole registry, and sys["Options"] says which values
+   are actually in force for a given system. *)
+
+$evolutionOptions = {
     "MaxStates" -> 2048,
     "Labeled" -> True,
     "LabelPatterns" -> True,
     "DistinctVertices" -> True
 };
 
-dependenceType[opts___] := With[{t = OptionValue[HypergraphCausalGraph, {opts}, "CausalDependence"]},
+$causalOptions = {
+    "CausalDependence" -> "Elements",
+    "TransitiveReduction" -> True,
+    "CanonicalizeStates" -> True
+};
+
+$drawingOptions = {
+    "StateRendering" -> Automatic,
+    "EventRendering" -> Automatic,
+    "MaxDrawnVertices" -> 24,
+    "PanelSize" -> 90,
+    "HypergraphPlotOptions" -> {}
+};
+
+$HypergraphRewritingOptions = Join[$evolutionOptions, $causalOptions, $drawingOptions];
+
+(* Every graph-valued property also takes the options of Graph, and what the caller passes wins
+   over what the property would have set, since in WL the first setting of an option is the one
+   used and the caller's are put first. *)
+Options[HypergraphCausalGraph] = Join[$HypergraphRewritingOptions, Options[Graph]];
+Options[HypergraphRewritingSystem] = Options[HypergraphCausalGraph];
+
+dependenceType[o_List] := With[{t = OptionValue[HypergraphCausalGraph, o, "CausalDependence"]},
     If[ MemberQ[$CausalDependenceTypes, t],
         t,
         Message[HypergraphRewritingSystem::dep, t, $CausalDependenceTypes]; "Elements"
@@ -157,10 +210,10 @@ dependenceType[opts___] := With[{t = OptionValue[HypergraphCausalGraph, {opts}, 
    handed out again by a later one. A token is a counter, minted when an element is created and
    carried unchanged for as long as that element survives. *)
 
-evolve[sys_, n_Integer, opts___] := Module[{
-    rules = First[sys], init = Last[sys],
-    maxStates = OptionValue[HypergraphCausalGraph, {opts}, "MaxStates"],
-    applyOpts = FilterRules[{opts}, Options[HypergraphRuleApply]],
+evolve[sys_, n_Integer, o_List] := Module[{
+    rules = First[sys], init = sys[[2]],
+    maxStates = OptionValue[HypergraphCausalGraph, o, "MaxStates"],
+    applyOpts = FilterRules[o, Options[HypergraphRuleApply]],
     edgeToken = 0, vertexToken = 0,
     mintEdges, mintVertices,
     states, events, frontier, next, truncated = False
@@ -308,15 +361,24 @@ causalPairs[ev_, states_, type_] := Module[{lines, tok, out = {}},
 (s_HypergraphRewritingSystem)[args___] /; HypergraphRewritingSystemQ[s] := systemProp[s, args];
 
 systemProp[_, "Properties"] := {
-    "Rules", "RuleCount", "InitialState",
+    "Rules", "RuleCount", "InitialState", "Options",
     "States", "StateList", "StateCount",
     "EventList", "EventCount",
     "EvolutionGraph", "StatesGraph", "BranchialGraph",
-    "CausalGraph", "CausalEdges", "EvolutionCausalGraph"
+    "CausalGraph", "CausalEdges", "EvolutionCausalGraph", "TokenEventGraph"
 };
 systemProp[s_, "Rules"] := First[s];
 systemProp[s_, "RuleCount"] := Length @ First[s];
-systemProp[s_, "InitialState"] := Last[s];
+systemProp[s_, "InitialState"] := s[[2]];
+(* Every option of the registry with the value actually in force: the system's own where it set
+   one, the default otherwise. *)
+systemProp[s_, "Options"] := Normal @ Join[
+    Association[$HypergraphRewritingOptions],
+    Association @ FilterRules[Last[s], $HypergraphRewritingOptions]
+];
+
+(* Options held on the system, with the ones given here put first so that they win. *)
+systemOptions[s_, opts_] := Join[Flatten[{opts}], Last[s]];
 
 systemProp[s_, prop_String, opts : OptionsPattern[HypergraphCausalGraph]] :=
     systemProp[s, prop, 1, opts];
@@ -324,7 +386,7 @@ systemProp[s_, prop_String, opts : OptionsPattern[HypergraphCausalGraph]] :=
 systemProp[s_, prop_String, n_, opts : OptionsPattern[HypergraphCausalGraph]] :=
     If[ ! (IntegerQ[n] && n >= 0),
         Message[HypergraphRewritingSystem::gen, n]; $Failed,
-        evolutionProp[evolve[s, n, opts], prop, n, opts]
+        With[{o = systemOptions[s, {opts}]}, evolutionProp[evolve[s, n, o], prop, n, o]]
     ];
 
 systemProp[_, prop_, ___] := Missing["UnknownProperty", prop];
@@ -336,34 +398,107 @@ evolutionProp[e_, "States", ___] :=
 evolutionProp[e_, "EventList", ___] := e["Events"];
 evolutionProp[e_, "EventCount", ___] := Length @ e["Events"];
 
-evolutionProp[e_, "CausalEdges", n_, opts___] :=
-    causalPairs[e["Events"], e["States"], dependenceType[opts]];
+evolutionProp[e_, "CausalEdges", n_, o_List] :=
+    causalPairs[e["Events"], e["States"], dependenceType[o]];
 
 
 (* ::Subsection:: *)
 (*Graphs*)
 
 
-$stateStyle = Directive[Hue[0.58, 0.55, 0.92], EdgeForm[Hue[0.58, 0.8, 0.6]]];
-$eventStyle = Directive[Hue[0.11, 0.85, 0.9], EdgeForm[Hue[0.09, 1, 0.65]]];
-$causalStyle = Hue[0.02, 0.75, 0.8];
+(* The colours of the Wolfram Physics Project, which is what the reference paclets draw these
+   graphs in, so that a graph made here and one made there read the same way: states in blue,
+   events in amber, causal edges in red, branchial edges in magenta.
 
-evolutionProp[e_, "CausalGraph", n_, opts___] := Module[{events = e["Events"], edges, g},
-    edges = DeleteDuplicates[
-        DirectedEdge[#["From"], #["To"]] & /@ evolutionProp[e, "CausalEdges", n, opts]];
-    g = Graph[
-        Range[Length[events]], edges,
-        VertexLabels -> Table[k -> Placed[eventTooltip[events, k], Tooltip], {k, Length[events]}],
-        GraphLayout -> "LayeredDigraphEmbedding",
-        VertexStyle -> $eventStyle,
-        EdgeStyle -> $causalStyle,
-        VertexSize -> Medium
-    ];
-    If[ TrueQ @ OptionValue[HypergraphCausalGraph, {opts}, "TransitiveReduction"],
-        Graph[TransitiveReductionGraph[g], Sequence @@ Options[g]],
-        g
+   The values are copied rather than fetched. The reference asks
+   ResourceFunction["WolframPhysicsProjectStyleData"] for them at load time, which is a network
+   call on a machine that has not cached the function, and a package that cannot be loaded
+   offline is not worth the exactness. These are that function's values. *)
+
+$stateStyle = Directive[Opacity[0.7], Hue[0.62, 0.45, 0.87]];
+$stateEdgeStyle = Hue[0.75, 0, 0.35];
+$eventStyle = Directive[Hue[0.11, 1, 0.97], EdgeForm[{Hue[0.11, 1, 0.97], Opacity[1]}]];
+$causalStyle = Hue[0, 1, 0.56];
+$branchialStyle = Hue[0.89, 0.97, 0.71];
+$tokenStyle = Directive[Opacity[0.75], Hue[0.35, 0.5, 0.75]];
+
+$frameStyle = Directive[Opacity[0.6], Hue[0.62, 0.45, 0.6]];
+
+
+(* ::Subsubsection:: *)
+(*Whether to draw at all*)
+
+
+(* Drawing a state means laying out a hypergraph, and drawing an event means laying out two. A
+   few dozen of those is a moment; a few hundred is a wait long enough that nobody meant to ask
+   for it. So past "MaxDrawnVertices" the graph falls back to numbered vertices and says which
+   option to raise -- silently plain would be worse than slow, since the caller would think the
+   pictures were not implemented. *)
+
+drawQ[setting_, count_, o_List, what_String] := Which[
+    setting === True, True,
+    setting === False, False,
+    True,
+    With[{limit = OptionValue[HypergraphCausalGraph, o, "MaxDrawnVertices"]},
+        If[ IntegerQ[limit] && count > limit,
+            Message[HypergraphRewritingSystem::undrawn, count, what, limit];
+            False,
+            True
+        ]
     ]
 ];
+
+panelSize[o_List] := Replace[OptionValue[HypergraphCausalGraph, o, "PanelSize"],
+                             Except[_ ? NumericQ] -> 90];
+
+(* AspectRatio -> 1 is what makes a panel a known shape, which is what lets the inset below be
+   sized without measuring it. The reference squares its rule plots for the same reason. *)
+plotOptions[o_List] := Join[
+    Replace[OptionValue[HypergraphCausalGraph, o, "HypergraphPlotOptions"], Except[_List] -> {}],
+    {VertexLabels -> None, EdgeLabels -> None, AspectRatio -> 1}
+];
+
+(* A state, framed, for use as a graph vertex. The labels come off: a hypergraph drawn ninety
+   pixels wide has no room for them, and the state is on the tooltip anyway. *)
+statePanel[hg_, o_List] := Framed[
+    HypergraphPlot[hg, Sequence @@ plotOptions[o],
+        ImageSize -> panelSize[o], ImagePadding -> 7, Background -> None],
+    Background -> GrayLevel[0.99], FrameStyle -> $frameStyle, FrameMargins -> 0,
+    RoundingRadius -> 3
+];
+
+eventPanel[ev_, o_List] := Framed[
+    HypergraphEventPlot[ev["Data"], Sequence @@ plotOptions[o],
+        "PanelSize" -> panelSize[o], ImagePadding -> 7],
+    Background -> GrayLevel[0.99], FrameStyle -> $frameStyle, FrameMargins -> 0,
+    RoundingRadius -> 3
+];
+
+(* Insets are sized in the coordinates of the graph, so that VertexSize genuinely controls how
+   big a picture is and the layout leaves room for it. Passing a pixel size the way the reference
+   does makes the layout space the vertices as though each were sixty-four graph units wide.
+
+   The width has to be given as well as the height, or a wide panel dropped into the square box a
+   vertex is allotted runs off both sides of it. A state panel is square, being one squared plot;
+   an event panel is the same twice over with an arrow between. *)
+$statePanelAspect = 1;
+$eventPanelAspect = 2.4;
+
+(* The size a vertex shape function is handed is a radius, and the layout puts vertices a unit
+   apart, so a panel drawn at that size comes out half the width it has room for. Twice it, less
+   a little, fills the space between neighbours without the frames touching. *)
+panelShapeFunction[panels_, aspect_ : 1] := Function[{pos, name, size},
+    With[{w = 1.84 Min[Flatten[{size}]]},
+        Inset[Lookup[panels, Key[name], ""], pos, Center, {w, w / aspect}]
+    ]
+];
+
+
+(* ::Subsubsection:: *)
+(*Assembling one*)
+
+
+graphOptions[o_List] := FilterRules[o, Options[Graph]];
 
 eventTooltip[events_, k_] := Column[{
     Row[{"event ", k, " \[LongDash] generation ", events[[k, "Generation"]],
@@ -371,16 +506,60 @@ eventTooltip[events_, k_] := Column[{
     events[[k, "Data", "Hypergraph"]]
 }];
 
-evolutionProp[e_, "EvolutionGraph", n_, opts___] :=
-Module[{states = e["States"], events = e["Events"]},
+evolutionProp[e_, "CausalGraph", n_, o_List] := Module[{events = e["Events"], edges, drawn, g},
+    edges = DeleteDuplicates[
+        DirectedEdge[#["From"], #["To"]] & /@ evolutionProp[e, "CausalEdges", n, o]];
+    drawn = drawQ[OptionValue[HypergraphCausalGraph, o, "EventRendering"], Length[events], o, "events"];
+    g = Graph[
+        Range[Length[events]], edges,
+        Sequence @@ graphOptions[o],
+        VertexShapeFunction -> If[
+            drawn,
+            panelShapeFunction[AssociationMap[eventPanel[events[[#]], o] &, Range[Length[events]]],
+                               $eventPanelAspect],
+            Automatic
+        ],
+        VertexSize -> If[drawn, $eventPanelAspect, Automatic],
+        VertexLabels -> Table[k -> Placed[eventTooltip[events, k], Tooltip], {k, Length[events]}],
+        GraphLayout -> "LayeredDigraphEmbedding",
+        VertexStyle -> $eventStyle,
+        EdgeStyle -> $causalStyle,
+        PerformanceGoal -> "Quality",
+        (* True coordinates, so that a panel a unit wide sits a unit from its neighbour rather
+           than being stretched to fill whatever shape the image happens to be. *)
+        AspectRatio -> Automatic,
+        Background -> White
+    ];
+    If[ TrueQ @ OptionValue[HypergraphCausalGraph, o, "TransitiveReduction"],
+        Graph[TransitiveReductionGraph[g], Sequence @@ Options[g]],
+        g
+    ]
+];
+
+evolutionProp[e_, "EvolutionGraph", n_, o_List] :=
+Module[{states = e["States"], events = e["Events"], drawn},
+    drawn = drawQ[OptionValue[HypergraphCausalGraph, o, "StateRendering"], Length[states], o, "states"];
     Graph[
         Range[Length[states]],
         Table[DirectedEdge[events[[k, "InputState"]], events[[k, "OutputState"]], k],
               {k, Length[events]}],
+        Sequence @@ graphOptions[o],
+        VertexShapeFunction -> If[
+            drawn,
+            panelShapeFunction @ AssociationMap[statePanel[states[[#, "Hypergraph"]], o] &,
+                                                Range[Length[states]]],
+            Automatic
+        ],
+        VertexSize -> If[drawn, 1, Automatic],
         VertexLabels -> Table[i -> Placed[states[[i, "Hypergraph"]], Tooltip], {i, Length[states]}],
         GraphLayout -> "LayeredDigraphEmbedding",
         VertexStyle -> $stateStyle,
-        VertexSize -> Medium
+        EdgeStyle -> $stateEdgeStyle,
+        PerformanceGoal -> "Quality",
+        (* True coordinates, so that a panel a unit wide sits a unit from its neighbour rather
+           than being stretched to fill whatever shape the image happens to be. *)
+        AspectRatio -> Automatic,
+        Background -> White
     ]
 ];
 
@@ -391,10 +570,10 @@ Module[{states = e["States"], events = e["Events"]},
    rewrite names the vertices it creates after what was already there, so two branches reaching
    the same shape rarely reach it under the same names. Setting it False asks for equality of
    the states as they stand, names and all. *)
-evolutionProp[e_, "StatesGraph", n_, opts___] := Module[{
-    states = e["States"], events = e["Events"], canon, distinct, index, representative
+evolutionProp[e_, "StatesGraph", n_, o_List] := Module[{
+    states = e["States"], events = e["Events"], canon, distinct, index, representative, drawn
 },
-    canon = If[ TrueQ @ OptionValue[HypergraphCausalGraph, {opts}, "CanonicalizeStates"],
+    canon = If[ TrueQ @ OptionValue[HypergraphCausalGraph, o, "CanonicalizeStates"],
         CanonicalHypergraph[#["Hypergraph"]] & /@ states,
         #["Hypergraph"] & /@ states
     ];
@@ -403,6 +582,7 @@ evolutionProp[e_, "StatesGraph", n_, opts___] := Module[{
     representative = AssociationThread[
         Range[Length[distinct]] ->
             (states[[First @ FirstPosition[canon, #], "Hypergraph"]] & /@ distinct)];
+    drawn = drawQ[OptionValue[HypergraphCausalGraph, o, "StateRendering"], Length[distinct], o, "states"];
     Graph[
         Range[Length[distinct]],
         DeleteDuplicates @ Table[
@@ -410,36 +590,69 @@ evolutionProp[e_, "StatesGraph", n_, opts___] := Module[{
                          index[canon[[events[[k, "OutputState"]]]]]],
             {k, Length[events]}
         ],
+        Sequence @@ graphOptions[o],
+        VertexShapeFunction -> If[
+            drawn, panelShapeFunction @ Map[statePanel[#, o] &, representative], Automatic],
+        VertexSize -> If[drawn, 1, Automatic],
         VertexLabels -> Table[i -> Placed[representative[i], Tooltip], {i, Length[distinct]}],
         GraphLayout -> "LayeredDigraphEmbedding",
         VertexStyle -> $stateStyle,
-        VertexSize -> Medium
+        EdgeStyle -> $stateEdgeStyle,
+        PerformanceGoal -> "Quality",
+        (* True coordinates, so that a panel a unit wide sits a unit from its neighbour rather
+           than being stretched to fill whatever shape the image happens to be. *)
+        AspectRatio -> Automatic,
+        Background -> White
     ]
 ];
 
 (* Two state occurrences of the same generation are branchially connected when they came from the
    same state: the two ways one step could have gone. *)
-evolutionProp[e_, "BranchialGraph", n_, opts___] := Module[{states = e["States"], sameGen},
+evolutionProp[e_, "BranchialGraph", n_, o_List] := Module[{states = e["States"], sameGen, drawn},
     sameGen = Select[Range[Length[states]], states[[#, "Generation"]] === n &];
+    drawn = drawQ[OptionValue[HypergraphCausalGraph, o, "StateRendering"], Length[sameGen], o, "states"];
     Graph[
         sameGen,
         DeleteDuplicates @ Catenate @ Map[
             UndirectedEdge @@@ Subsets[#, {2}] &,
             Values @ GroupBy[sameGen, states[[#, "Parent"]] &]
         ],
+        Sequence @@ graphOptions[o],
+        VertexShapeFunction -> If[
+            drawn,
+            panelShapeFunction @ AssociationMap[statePanel[states[[#, "Hypergraph"]], o] &, sameGen],
+            Automatic
+        ],
+        VertexSize -> If[drawn, 1, Automatic],
         VertexLabels -> Table[i -> Placed[states[[i, "Hypergraph"]], Tooltip], {i, sameGen}],
-        VertexStyle -> Directive[Hue[0.78, 0.45, 0.92], EdgeForm[Hue[0.78, 0.7, 0.6]]],
-        VertexSize -> Medium
+        VertexStyle -> $stateStyle,
+        EdgeStyle -> $branchialStyle,
+        PerformanceGoal -> "Quality",
+        (* True coordinates, so that a panel a unit wide sits a unit from its neighbour rather
+           than being stretched to fill whatever shape the image happens to be. *)
+        AspectRatio -> Automatic,
+        Background -> White
     ]
 ];
 
 (* States and events together, with the causal edges laid over them: state to event to state, and
    event to event wherever the causal graph has one. *)
-evolutionProp[e_, "EvolutionCausalGraph", n_, opts___] := Module[{
-    states = e["States"], events = e["Events"], st, evn
+evolutionProp[e_, "EvolutionCausalGraph", n_, o_List] := Module[{
+    states = e["States"], events = e["Events"], st, evn, causal, drawn, panels
 },
     st[i_] := {"State", i};
     evn[k_] := {"Event", k};
+    causal = DeleteDuplicates[
+        DirectedEdge[evn[#["From"]], evn[#["To"]]] & /@ evolutionProp[e, "CausalEdges", n, o]];
+    drawn = drawQ[OptionValue[HypergraphCausalGraph, o, "StateRendering"],
+                  Length[states] + Length[events], o, "states and events"];
+    panels = If[ drawn,
+        Join[
+            AssociationMap[statePanel[states[[Last[#], "Hypergraph"]], o] &, st /@ Range[Length[states]]],
+            AssociationMap[eventPanel[events[[Last[#]]], o] &, evn /@ Range[Length[events]]]
+        ],
+        <||>
+    ];
     Graph[
         Join[st /@ Range[Length[states]], evn /@ Range[Length[events]]],
         Join[
@@ -448,21 +661,97 @@ evolutionProp[e_, "EvolutionCausalGraph", n_, opts___] := Module[{
                  DirectedEdge[evn[k], st[events[[k, "OutputState"]]]]},
                 {k, Length[events]}
             ],
-            DeleteDuplicates[
-                DirectedEdge[evn[#["From"]], evn[#["To"]]] & /@
-                    evolutionProp[e, "CausalEdges", n, opts]
-            ]
+            causal
+        ],
+        Sequence @@ graphOptions[o],
+        VertexShapeFunction -> If[
+            drawn,
+            {{"State", _} -> panelShapeFunction[panels, $statePanelAspect],
+             {"Event", _} -> panelShapeFunction[panels, $eventPanelAspect]},
+            {{"Event", _} -> "Square"}
+        ],
+        VertexSize -> If[
+            drawn,
+            {{"State", _} -> $statePanelAspect, {"Event", _} -> $eventPanelAspect},
+            Automatic
         ],
         VertexLabels -> Join[
             Table[st[i] -> Placed[states[[i, "Hypergraph"]], Tooltip], {i, Length[states]}],
             Table[evn[k] -> Placed[eventTooltip[events, k], Tooltip], {k, Length[events]}]
         ],
         VertexStyle -> {{"State", _} -> $stateStyle, {"Event", _} -> $eventStyle},
-        VertexShapeFunction -> {{"Event", _} -> "Square"},
+        (* The specific rules first: in a list of option rules the first that matches wins. *)
+        EdgeStyle -> Join[
+            # -> $causalStyle & /@ causal,
+            {_ -> $stateEdgeStyle}
+        ],
         GraphLayout -> "LayeredDigraphEmbedding",
-        VertexSize -> Medium
+        PerformanceGoal -> "Quality",
+        (* True coordinates, so that a panel a unit wide sits a unit from its neighbour rather
+           than being stretched to fill whatever shape the image happens to be. *)
+        AspectRatio -> Automatic,
+        Background -> White
     ]
 ];
+
+(* Elements as vertices, events between them: the picture in which a causal dependence is visible
+   as a path rather than inferred. An event takes the elements it consumed and gives the ones it
+   created, and two events are joined through the element that passed from one to the other.
+
+   Which elements appear is the "CausalDependence" option, the same choice as everywhere else:
+   under "Edges" only edge tokens are drawn, so a dependence that runs only through a vertex has
+   nothing to run along and the two events stand apart. *)
+evolutionProp[e_, "TokenEventGraph", n_, o_List] := Module[{
+    events = e["Events"], type = dependenceType[o], evn, tok, edges, tokens, drawn, panels
+},
+    evn[k_] := {"Event", k};
+    tok[t_] := {"Token", t};
+    edges = Catenate @ Table[
+        Join[
+            DirectedEdge[tok[#], evn[k]] & /@ consumed[events[[k]], type],
+            DirectedEdge[evn[k], tok[#]] & /@ produced[events[[k]], type]
+        ],
+        {k, Length[events]}
+    ];
+    tokens = DeleteDuplicates @ Cases[edges, {"Token", _}, {2}];
+    drawn = drawQ[OptionValue[HypergraphCausalGraph, o, "EventRendering"], Length[events], o, "events"];
+    panels = If[drawn, AssociationMap[eventPanel[events[[Last[#]]], o] &, evn /@ Range[Length[events]]], <||>];
+    Graph[
+        Join[tokens, evn /@ Range[Length[events]]],
+        DeleteDuplicates[edges],
+        Sequence @@ graphOptions[o],
+        VertexShapeFunction -> If[
+            drawn,
+            {{"Event", _} -> panelShapeFunction[panels, $eventPanelAspect], {"Token", _} -> Automatic},
+            {{"Event", _} -> "Square"}
+        ],
+        VertexSize -> If[drawn, {{"Event", _} -> 1, {"Token", _} -> Automatic}, Automatic],
+        VertexLabels -> Join[
+            Table[evn[k] -> Placed[eventTooltip[events, k], Tooltip], {k, Length[events]}],
+            # -> Placed[tokenName[#], Tooltip] & /@ tokens
+        ],
+        VertexStyle -> {{"Token", _} -> $tokenStyle, {"Event", _} -> $eventStyle},
+        EdgeStyle -> $stateEdgeStyle,
+        GraphLayout -> "LayeredDigraphEmbedding",
+        PerformanceGoal -> "Quality",
+        (* True coordinates, so that a panel a unit wide sits a unit from its neighbour rather
+           than being stretched to fill whatever shape the image happens to be. *)
+        AspectRatio -> Automatic,
+        Background -> White
+    ]
+];
+
+(* The tokens an event takes and the ones it gives, in the currency the option asks for. *)
+consumed[ev_, "Edges"] := {"E", #} & /@ ev["ConsumedEdges"];
+consumed[ev_, "Vertices"] := {"V", #} & /@ Union[ev["MatchedVertices"], ev["DestroyedVertices"]];
+consumed[ev_, "Elements"] := Join[consumed[ev, "Edges"], consumed[ev, "Vertices"]];
+produced[ev_, "Edges"] := {"E", #} & /@ ev["CreatedEdges"];
+produced[ev_, "Vertices"] := {"V", #} & /@ Union[ev["MatchedVertices"], ev["CreatedVertices"]];
+produced[ev_, "Elements"] := Join[produced[ev, "Edges"], produced[ev, "Vertices"]];
+
+tokenName[{"Token", {"E", k_}}] := Row[{"edge ", k}];
+tokenName[{"Token", {"V", k_}}] := Row[{"vertex ", k}];
+tokenName[t_] := t;
 
 evolutionProp[_, prop_, ___] := Missing["UnknownProperty", prop];
 
@@ -495,7 +784,7 @@ HypergraphRewritingSystem /: MakeBoxes[
         {
             {BoxForm`SummaryItem[{"Rules: ", Length @ First[s]}]},
             {BoxForm`SummaryItem[{"Initial state: ",
-                Row[{VertexCount @ Last[s], " vertices, ", EdgeCount @ Last[s], " edges"}]}]}
+                Row[{VertexCount @ s[[2]], " vertices, ", EdgeCount @ s[[2]], " edges"}]}]}
         },
         {
             {BoxForm`SummaryItem[{"Signatures: ", #["Signature"] & /@ First[s]}]}

@@ -76,7 +76,7 @@ Needs[\"WolframInstitute`Hypergraphs`\"]",
    symbols used below as label variables. *)
 (ClearAll[a, b, c, d, e, f, g, p, q, r, s, u, x, y, z,
           subdivide, twoEdges, system, chain4, chainSys, comp, unit, arrow, catSys,
-          zig, zigSys, long, pairsOf, byType]; Nothing),
+          zig, zigSys, long, pairsOf, byType, strict, flip]; Nothing),
 
 section["1.  A system is rules and a state to start from"],
 
@@ -323,7 +323,109 @@ code["pairsOf @ catSys[\"CausalEdges\", 2, \"CausalDependence\" -> \"Edges\"]"],
 
 code["pairsOf @ catSys[\"CausalEdges\", 2]"],
 
-section["7.  Scope and limits"],
+section["7.  Seeing it"],
+
+text["Everything above has been counts and lists of numbered events. A graph of a rewriting \
+system is meant to be looked at, and every graph-valued property draws its states and its events \
+as pictures."],
+
+subsection["A rule, and an event"],
+
+text["A rule is its input beside its output, with the vertices the two sides share in the same \
+places, so that what the rule does to them can be read off rather than worked out. The vertex it \
+creates is highlighted:"],
+
+code["HypergraphRulePlot[subdivide, \"PanelSize\" -> 130]"],
+
+text["An event is the same idea applied to a particular match: what it acted on with the match \
+highlighted, and what it made with the creations highlighted, both on the one layout:"],
+
+code["HypergraphEventPlot[First @ subdivide[Hypergraph[{{1, 2}, {2, 3}}]], \"PanelSize\" -> 130]"],
+
+text["One picture per way the rule fits:"],
+
+code["HypergraphEventPlot[subdivide, Hypergraph[{{1, 2}, {2, 3}}], \"PanelSize\" -> 90]"],
+
+note["The two halves share a layout because otherwise a rewrite that moved nothing would look \
+like it had moved everything: two spring embeddings of nearly the same hypergraph come out \
+differently, and the eye reads the difference as the event. A vertex the event created has no \
+place in the old layout, so it is settled among its neighbours \[LongDash] which puts a vertex \
+inserted into an edge between that edge's two ends, where it belongs."],
+
+note["Which edges of the result to highlight is read off \"EdgeOrigins\" rather than found by \
+looking for edges equal to \"NewEdges\". In a multiset two edges of equal value are still two \
+edges, and a rule that creates an edge the hypergraph already had would otherwise highlight the \
+wrong one."],
+
+subsection["The graphs"],
+
+text["The states of an evolution, each drawn:"],
+
+code["HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]][\"EvolutionGraph\", 2,\n \
+ ImageSize -> 420, \"PanelSize\" -> 110]"],
+
+text["And the causal graph, whose vertices are the events:"],
+
+code["twoEdges[\"CausalGraph\", 2, ImageSize -> 560, \"PanelSize\" -> 70]"],
+
+text["The same relation under the stricter reading has fewer edges, and the difference is now \
+something to look at rather than a list of pairs:"],
+
+code["twoEdges[\"CausalGraph\", 2, \"CausalDependence\" -> \"Edges\", ImageSize -> 560,\n \
+ \"PanelSize\" -> 70]"],
+
+note["The colours are those of the Wolfram Physics Project, which is what the reference paclets \
+draw these graphs in: states in blue, events in amber, causal edges in red, branchial edges in \
+magenta. The values are copied into the source rather than fetched from the style resource \
+function the reference calls, because that is a network call on a machine that has not cached it, \
+and a package that cannot be loaded offline is not worth the exactness."],
+
+subsection["Elements as vertices"],
+
+text["The token-event graph puts the elements themselves in the picture: an event takes the ones \
+it consumed and gives the ones it created, and a causal dependence is then a path rather than \
+something inferred."],
+
+code["twoEdges[\"TokenEventGraph\", 1, ImageSize -> 520, \"PanelSize\" -> 60]"],
+
+note["Which elements appear is the same \"CausalDependence\" option as everywhere else. Under \
+\"Edges\" only edge tokens are drawn, so a dependence that ran only through a shared vertex has \
+nothing to run along and the two events stand apart \[LongDash] the contrast of section 4, made \
+visible."],
+
+subsection["When not to draw"],
+
+text["Drawing a state means laying out a hypergraph, and drawing an event means laying out two. \
+Past a couple of dozen that is a wait nobody asked for, so a graph falls back to plain vertices \
+and says which option to raise:"],
+
+code["Short[Quiet @ HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]][\"EvolutionGraph\", 4],\n \
+ 3]"],
+
+text["\"StateRendering\" and \"EventRendering\" settle the question either way, and \
+\"MaxDrawnVertices\" moves the line."],
+
+subsection["Keeping track of the options"],
+
+text["There are enough options now that they are kept in one registry, with their defaults:"],
+
+code["$HypergraphRewritingOptions"],
+
+text["Every graph-valued property takes those together with the options of Graph, so ImageSize, \
+VertexSize, GraphLayout and the rest all work. A system can also hold the options that describe \
+it, rather than having them retyped on every call:"],
+
+code["strict = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}, {2, 3}}],\n \
+ \"CausalDependence\" -> \"Edges\", \"PanelSize\" -> 70];\n\
+{Length @ strict[\"CausalEdges\", 2],\n \
+ Length @ strict[\"CausalEdges\", 2, \"CausalDependence\" -> \"Elements\"]}"],
+
+text["The held option is used without being repeated, and an option given to a property still \
+wins over it. What is in force for a particular system:"],
+
+code["FilterRules[strict[\"Options\"], {\"CausalDependence\", \"PanelSize\", \"MaxDrawnVertices\"}]"],
+
+section["8.  Scope and limits"],
 
 text["The evolution is exhaustive: every rule in every way it fits, on every state reached. That \
 is what a multiway system is, and it is also how it gets expensive. The number of states can \

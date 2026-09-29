@@ -10,49 +10,49 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     31449,        696]
-NotebookOptionsPosition[     29889,        670]
-NotebookOutlinePosition[     30237,        685]
-CellTagsIndexPosition[     30194,        682]
+NotebookDataLength[     33501,        755]
+NotebookOptionsPosition[     31941,        729]
+NotebookOutlinePosition[     32289,        744]
+CellTagsIndexPosition[     32246,        741]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphLargeQ", "ObjectName",ExpressionUUID->"488dad30-8545-4349-bc01-510879481501"],
+Cell["HypergraphLargeQ", "ObjectName",ExpressionUUID->"7716aead-2be9-0548-97f5-525d85d07ad3"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphLargeQ", "[", "hg", "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"28f10363-5bae-d34b-83b1-8be4a58c4d68"],
+  "InlineFormula",ExpressionUUID->"02bdd551-8d8e-e34b-8832-3b2695039f1b"],
  " ",
  "gives True when hg is big enough that it displays as a summary box instead \
 of a plot."
-}], "Usage",ExpressionUUID->"9120590f-c123-6e40-a7a1-b9abcaa2bf04"],
+}], "Usage",ExpressionUUID->"5103274d-4cd2-0f42-ac81-74b1d25e6246"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"4dc5edc3-b66f-634e-9743-a8e17cd4fa9a"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"1b0b36d4-9fc5-e145-864f-1b81b3a1a160"],
 
 Cell["\<\
 The thresholds are \"MaxVertices\" (32), \"MaxEdges\" (128) and \
 \"MaxTotalElements\" (196), and are changed with SetHypergraphPlotThresholds.\
 \
-\>", "Notes",ExpressionUUID->"7def4dc9-76a9-2d4b-b95d-4fa5f871665d"],
+\>", "Notes",ExpressionUUID->"59ef239d-a7df-9e42-bde7-9892d0c3eaa3"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"fb017bec-b9d9-2b4b-b008-d29ac1e13eac"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"d970fd8e-925e-ef42-b24c-0320e52566ec"],
 
 Cell["\<\
 {HypergraphLargeQ[Hypergraph[{{1, 2}}]], \
 HypergraphLargeQ[Hypergraph[Table[Edge[{i, i + 1}], {i, 40}]]]}\
-\>", "Input",ExpressionUUID->"0e2337d8-dede-3d4a-911d-66c23bb0e38d"],
+\>", "Input",ExpressionUUID->"75fa28a5-296b-d645-b202-5c84d43c6e95"],
 
 Cell[BoxData[
  RowBox[{"{", 
-  RowBox[{"False", ",", "True"}], "}"}]], "Output",ExpressionUUID->"4e523ae9-\
-5415-7f4f-a38b-017f8aae12b7"],
+  RowBox[{"False", ",", "True"}], "}"}]], "Output",ExpressionUUID->"9d1b7929-\
+8d33-154a-98b0-856432417a49"],
 
-Cell["A large hypergraph displays as a summary box:", "ExampleText",ExpressionUUID->"4480eb9f-7f5e-3e4e-b1d0-7623636cbb98"],
+Cell["A large hypergraph displays as a summary box:", "ExampleText",ExpressionUUID->"0dae1997-25ab-1d4c-8996-5bebdfe2b792"],
 
-Cell["Hypergraph[Table[Edge[{i, i + 1}], {i, 40}]]", "Input",ExpressionUUID->"fa274f02-6eba-ba40-a58a-c4e52fcd954d"],
+Cell["Hypergraph[Table[Edge[{i, i + 1}], {i, 40}]]", "Input",ExpressionUUID->"c5c78350-779e-1d4a-807e-7812c5eebcde"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -216,23 +216,53 @@ Cell[BoxData[
                     1.1715158316254604`}, {0.6389833620767228, 
                     0.6410084036869905}, {1.0337399527851194`, 0.}}]]}}}, 
                 Opacity[1], {}}}, 
-              Opacity[1], {
-               Directive[
-                Hue[0.63, 0.26, 0.89], 
-                EdgeForm[
-                 Directive[
-                  Hue[0.63, 0.7, 0.33], 
-                  Opacity[0.95]]]], {
+              Opacity[1], {{
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{2.0924847882027313`, 0.2789332320590235}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{1.8860741430870744`, 1.2910013674040801`}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{1.3050137538750148`, 0.7247023204301083}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{0.717020405986764, 1.0995896091790995`}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{0., 1.1715158316254604`}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{1.0337399527851194`, 0.}, 
                  Offset[{2., 2.}]]}}, {}}, {Background -> None}, 
              PlotRange -> {{0., 2.113642140999227}, {0., 
@@ -335,7 +365,6 @@ Cell[BoxData[
                    BSplineCurve[{{2.0924847882027313`, 0.2789332320590235}, {
                     1.8752351803499216`, 0.7749231365146445}, {
                     1.8860741430870744`, 1.2910013674040801`}}], 
-                   
                    BSplineCurve[{{1.8860741430870744`, 1.2910013674040801`}, {
                     1.6783674217679923`, 0.8863654086074158}, {
                     1.3050137538750148`, 0.7247023204301083}}]}], {{
@@ -413,23 +442,53 @@ Cell[BoxData[
                     1.1715158316254604`}, {0.6389833620767228, 
                     0.6410084036869905}, {1.0337399527851194`, 0.}}]]}}}, 
                 Opacity[1], {}}}, 
-              Opacity[1], {
-               Directive[
-                Hue[0.63, 0.26, 0.89], 
-                EdgeForm[
-                 Directive[
-                  Hue[0.63, 0.7, 0.33], 
-                  Opacity[0.95]]]], {
+              Opacity[1], {{
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{2.0924847882027313`, 0.2789332320590235}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{1.8860741430870744`, 1.2910013674040801`}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{1.3050137538750148`, 0.7247023204301083}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{0.717020405986764, 1.0995896091790995`}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{0., 1.1715158316254604`}, 
-                 Offset[{2., 2.}]], 
+                 Offset[{2., 2.}]]}, {
+                Directive[
+                 Hue[0.63, 0.26, 0.89], 
+                 EdgeForm[
+                  Directive[
+                   Hue[0.63, 0.7, 0.33], 
+                   Opacity[0.95]]]], 
                 DiskBox[{1.0337399527851194`, 0.}, 
                  Offset[{2., 2.}]]}}, {}}, {Background -> None}, 
              PlotRange -> {{0., 2.113642140999227}, {0., 
@@ -632,10 +691,10 @@ Cell[BoxData[
       WolframInstitute`Hypergraphs`Vertex[41]}, "Directed"]}],
   Editable->False,
   SelectWithContents->True,
-  Selectable->False]], "Output",ExpressionUUID->"0b7dbbaf-6b7f-4549-a464-\
-5cc7c63f1198"],
+  Selectable->False]], "Output",ExpressionUUID->"f71e46d3-8d93-f443-bea0-\
+7725d276dce8"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"4931bfb6-4d80-2a4f-8de5-95c6a5a24cc7"],
+Cell["Source", "NotesSection",ExpressionUUID->"9a4ef873-70e7-ff49-820b-7f4c1f8756d9"],
 
 Cell[TextData[{
  "Defined in ",
@@ -646,32 +705,32 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "Default formatting",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"ca503c73-c37c-1f4e-9141-a83bb76e6fc9"],
+}], "Notes",ExpressionUUID->"9f1d5a42-2976-2344-8e7e-efd096e94857"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"eb4bac99-e453-8542-ab11-8b69f5d7ff4b"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"a42f0ac4-775d-1d42-b49b-1ec488f71c01"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["SetHypergraphPlotThresholds", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c748b0e8-c3f2-9d4e-b754-1ef74ed93b78"],
+  ExpressionUUID->"cc56e6ad-f1b8-a54f-807d-d22838300a97"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphPlot", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "1337bdf1-9539-de46-85eb-742145bb986e"],
+  "b52079e1-0968-4b42-ac04-af01fdaea0bc"],
  ", ",
  Cell[BoxData[
   StyleBox["Hypergraph", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "f5889c61-83f2-dd43-810d-9246c4a6d7ce"],
+  "11b5d6ea-abb6-6d40-8103-4a8de988502a"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "2c0532cd-2d57-e24b-87a3-a970ab5bf7e1"]
-}], "SeeAlso",ExpressionUUID->"e20ac056-495d-a946-9e9c-e316c8cff40b"]
+  "154dbc22-8ce7-bf45-ab87-c3a708e964bf"]
+}], "SeeAlso",ExpressionUUID->"db9f08bb-e8ac-d445-8e1b-8413d67d6a19"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"dc3b1e92-c5bd-3645-b316-02820f66faac"
+ExpressionUUID->"c38dc7da-6730-d640-a752-5dad13f73908"
 ]
 (* End of Notebook Content *)
 
@@ -684,20 +743,20 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 93, 0, 70, "ObjectName",ExpressionUUID->"488dad30-8545-4349-bc01-510879481501"],
-Cell[650, 22, 356, 8, 70, "Usage",ExpressionUUID->"9120590f-c123-6e40-a7a1-b9abcaa2bf04"],
-Cell[1001, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"4dc5edc3-b66f-634e-9743-a8e17cd4fa9a"],
-Cell[1102, 34, 229, 4, 70, "Notes",ExpressionUUID->"7def4dc9-76a9-2d4b-b95d-4fa5f871665d"],
-Cell[1330, 40, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"fb017bec-b9d9-2b4b-b008-d29ac1e13eac"],
-Cell[1430, 42, 189, 3, 70, "Input",ExpressionUUID->"0e2337d8-dede-3d4a-911d-66c23bb0e38d"],
-Cell[1619, 47, 140, 3, 70, "Output",ExpressionUUID->"4e523ae9-5415-7f4f-a38b-017f8aae12b7"],
-Cell[1759, 52, 123, 0, 70, "ExampleText",ExpressionUUID->"4480eb9f-7f5e-3e4e-b1d0-7623636cbb98"],
-Cell[1885, 54, 116, 0, 70, "Input",ExpressionUUID->"fa274f02-6eba-ba40-a58a-c4e52fcd954d"],
-Cell[2004, 56, 27341, 579, 70, "Output",ExpressionUUID->"0b7dbbaf-6b7f-4549-a464-5cc7c63f1198"],
-Cell[28769, 637, 85, 0, 70, "NotesSection",ExpressionUUID->"4931bfb6-4d80-2a4f-8de5-95c6a5a24cc7"],
-Cell[28857, 639, 287, 9, 70, "Notes",ExpressionUUID->"ca503c73-c37c-1f4e-9141-a83bb76e6fc9"],
-Cell[29138, 650, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"eb4bac99-e453-8542-ab11-8b69f5d7ff4b"],
-Cell[29230, 652, 671, 16, 70, "SeeAlso",ExpressionUUID->"e20ac056-495d-a946-9e9c-e316c8cff40b"]
+Cell[554, 20, 93, 0, 70, "ObjectName",ExpressionUUID->"7716aead-2be9-0548-97f5-525d85d07ad3"],
+Cell[650, 22, 356, 8, 70, "Usage",ExpressionUUID->"5103274d-4cd2-0f42-ac81-74b1d25e6246"],
+Cell[1001, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"1b0b36d4-9fc5-e145-864f-1b81b3a1a160"],
+Cell[1102, 34, 229, 4, 70, "Notes",ExpressionUUID->"59ef239d-a7df-9e42-bde7-9892d0c3eaa3"],
+Cell[1330, 40, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"d970fd8e-925e-ef42-b24c-0320e52566ec"],
+Cell[1430, 42, 189, 3, 70, "Input",ExpressionUUID->"75fa28a5-296b-d645-b202-5c84d43c6e95"],
+Cell[1619, 47, 140, 3, 70, "Output",ExpressionUUID->"9d1b7929-8d33-154a-98b0-856432417a49"],
+Cell[1759, 52, 123, 0, 70, "ExampleText",ExpressionUUID->"0dae1997-25ab-1d4c-8996-5bebdfe2b792"],
+Cell[1885, 54, 116, 0, 70, "Input",ExpressionUUID->"c5c78350-779e-1d4a-807e-7812c5eebcde"],
+Cell[2004, 56, 29452, 638, 70, "Output",ExpressionUUID->"f71e46d3-8d93-f443-bea0-7725d276dce8"],
+Cell[30821, 696, 85, 0, 70, "NotesSection",ExpressionUUID->"9a4ef873-70e7-ff49-820b-7f4c1f8756d9"],
+Cell[30909, 698, 287, 9, 70, "Notes",ExpressionUUID->"9f1d5a42-2976-2344-8e7e-efd096e94857"],
+Cell[31190, 709, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"a42f0ac4-775d-1d42-b49b-1ec488f71c01"],
+Cell[31282, 711, 671, 16, 70, "SeeAlso",ExpressionUUID->"db9f08bb-e8ac-d445-8e1b-8413d67d6a19"]
 }
 ]
 *)

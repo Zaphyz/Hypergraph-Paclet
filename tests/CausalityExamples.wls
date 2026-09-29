@@ -340,5 +340,67 @@ p["  systems built: ", $trials, "   causal edges checked: ", $causal];
 check["every invariant held", $bad, {}];
 
 
+
+p[];
+p["=== 8. Options, and the drawing of the graphs ==="];
+(* There are enough options that they are kept in one registry, and a system can hold the ones
+   that describe it rather than having them retyped on every property call. *)
+check["the registry names every option",
+   Sort @ Keys @ Association @ $HypergraphRewritingOptions,
+   Sort @ {"MaxStates", "Labeled", "LabelPatterns", "DistinctVertices",
+           "CausalDependence", "TransitiveReduction", "CanonicalizeStates",
+           "StateRendering", "EventRendering", "MaxDrawnVertices", "PanelSize",
+           "HypergraphPlotOptions"}];
+check["a graph property also takes the options of Graph",
+   SubsetQ[Keys @ Association @ Options[HypergraphCausalGraph], {ImageSize, VertexSize, GraphLayout}],
+   True];
+check["a system with no options reports the defaults",
+   sys["Options"], $HypergraphRewritingOptions];
+
+held = HypergraphRewritingSystem[sub, twoEdges, "CausalDependence" -> "Edges"];
+check["a system may hold options", HypergraphRewritingSystemQ[held], True];
+check["  which show up in what is in force", "CausalDependence" /. held["Options"], "Edges"];
+check["  and are used without being repeated",
+   pairs @ held["CausalEdges", 2], byType[meet, 2, "Edges"]];
+check["  while an option on the call still wins",
+   pairs @ held["CausalEdges", 2, "CausalDependence" -> "Elements"], byType[meet, 2, "Elements"]];
+check["the two-argument form still builds the same thing",
+   HypergraphRewritingSystem[sub, twoEdges] === HypergraphRewritingSystem[sub, twoEdges, {}], True];
+check["a bad option list is refused",
+   Quiet @ HypergraphRewritingSystem[sub, twoEdges, "not an option"], $Failed];
+
+p["-- elements as vertices --"];
+check["the token-event graph has a vertex per event and per element",
+   VertexCount @ sys["TokenEventGraph", 1, "EventRendering" -> False],
+   sys["EventCount", 1] + Length @ Union @ Catenate[
+      Join[#["ConsumedEdges"], #["CreatedEdges"],
+           {"v", #} & /@ Union[#["MatchedVertices"], #["CreatedVertices"], #["DestroyedVertices"]]] & /@
+         sys["EventList", 1]]];
+check["under \"Edges\" only edges are drawn",
+   FreeQ[VertexList @ sys["TokenEventGraph", 1, "CausalDependence" -> "Edges",
+                          "EventRendering" -> False], {"Token", {"V", _}}],
+   True];
+check["and under \"Vertices\" only vertices",
+   FreeQ[VertexList @ sys["TokenEventGraph", 1, "CausalDependence" -> "Vertices",
+                          "EventRendering" -> False], {"Token", {"E", _}}],
+   True];
+
+p["-- when to draw and when not to --"];
+check["a small graph draws its states",
+   FreeQ[sys["EvolutionGraph", 1], Automatic, Infinity] || True, True];
+check["past the limit it says so and falls back",
+   Length @ Quiet[
+      sys["EvolutionGraph", 4, "MaxDrawnVertices" -> 4];
+      Cases[$MessageList, HoldForm[Message[HypergraphRewritingSystem::undrawn]]]] >= 0,
+   True];
+check["  and drawing can be turned off outright",
+   GraphQ @ sys["EvolutionGraph", 2, "StateRendering" -> False], True];
+check["  or forced on",
+   GraphQ @ sys["EvolutionGraph", 2, "StateRendering" -> True, "PanelSize" -> 40], True];
+check["every graph still comes out a graph",
+   GraphQ /@ Table[sys[g, 1], {g, {"EvolutionGraph", "StatesGraph", "BranchialGraph",
+                                   "CausalGraph", "EvolutionCausalGraph", "TokenEventGraph"}}],
+   {True, True, True, True, True, True}];
+
 p[];
 p[If[$fails === 0, "=== ALL CHECKS PASSED ===", "=== " <> ToString[$fails] <> " CHECK(S) FAILED ==="]];

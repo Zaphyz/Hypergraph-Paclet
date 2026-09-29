@@ -59,6 +59,59 @@ $plotBackground   = White;
 
 edgeStyleForArity[n_] := Which[n === 0, $nullEdgeStyle, n === 2, $binaryEdgeStyle, True, $largeEdgeStyle];
 
+
+(* ::Subsection:: *)
+(*Styling one element at a time*)
+
+
+(* A style option may be Automatic, a single directive applied to everything, or a list of rules
+   or an Association giving styles element by element. A key is either an element's position,
+   counting from one, or the element itself -- a vertex identifier, or an edge's list of vertex
+   identifiers -- or a pattern, which is how a fallback such as _ -> style is written. Later
+   rules win, so a fallback can be written first and then overridden.
+
+   Positions are what a multiset needs. Two edges of equal value are still two edges, and only a
+   position can say which of them to colour; highlighting a match means colouring the edges the
+   match actually covered, not every edge that happens to look like them.
+
+   Where a vertex is itself named by an integer the identifier wins over the position reading,
+   since that is what anyone writing VertexStyle -> {1 -> Red} on a hypergraph with a vertex 1
+   means. Edge keys cannot collide that way: an edge is keyed by a list. *)
+
+elementStyles[Automatic, _List, defaults_List] := defaults;
+
+elementStyles[spec_, keys_List, defaults_List] := Module[{n = Length[keys], out = defaults, rules},
+    (* An empty list is no overrides rather than a style, which is what lets a caller write
+       VertexStyle -> (# -> red & /@ whatever) without having to check that whatever is not
+       empty -- an empty list of highlights should leave the drawing alone. *)
+    rules = Which[
+        AssociationQ[spec], Normal[spec],
+        MatchQ[spec, {(_Rule | _RuleDelayed) ...}], spec,
+        True, Return[ConstantArray[spec, n], Module]
+    ];
+    Do[
+        With[{lhs = First[rule], rhs = Last[rule]},
+            If[ IntegerQ[lhs] && 1 <= lhs <= n && ! MemberQ[keys, lhs],
+                out = ReplacePart[out, lhs -> rhs],
+                out = MapThread[If[MatchQ[#2, lhs], rhs, #1] &, {out, keys}]
+            ]
+        ],
+        {rule, rules}
+    ];
+    out
+];
+
+(* VertexCoordinates, in any of the spellings a caller is likely to reach for, as rules on the
+   layout graph. Feeding them to that graph rather than overriding the embedding afterwards is
+   what keeps the edge curves consistent with the vertices they run between. *)
+resolveVertexCoordinates[Automatic | None, _List] := {};
+resolveVertexCoordinates[spec_Association, ids_List] := resolveVertexCoordinates[Normal[spec], ids];
+resolveVertexCoordinates[spec : {(_Rule | _RuleDelayed) ...}, ids_List] :=
+    Cases[spec, (Rule | RuleDelayed)[id_, c : {_ ? NumericQ, _ ? NumericQ}] /; MemberQ[ids, id] :> (id -> c)];
+resolveVertexCoordinates[spec : {{_ ? NumericQ, _ ? NumericQ} ...}, ids_List] :=
+    Thread[Take[ids, UpTo[Length[spec]]] -> Take[spec, UpTo[Length[ids]]]];
+resolveVertexCoordinates[_, _List] := {};
+
 (* Vertices are drawn exactly as in the reference: a small disk of fixed screen radius. *)
 vertexPrimitive[coord_, size_] := Disk[coord, Offset[200 {size, size}]];
 
@@ -75,9 +128,9 @@ vertexPrimitive[coord_, size_] := Disk[coord, Offset[200 {size, size}]];
 (* The radius is in printer's points rather than plot coordinates, so that the badge is the same
    modest size whatever the extent of the embedding, and always clears the label it encircles. *)
 
-cyclicBadge[pos_, radius_] := With[{ts = Range[0.55 Pi, 2.2 Pi, Pi / 24]},
+cyclicBadge[pos_, radius_, style_ : Automatic] := With[{ts = Range[0.55 Pi, 2.2 Pi, Pi / 24]},
     {
-        $edgeLineStyle,
+        Replace[style, Automatic -> $edgeLineStyle],
         Opacity[1],
         AbsoluteThickness[1],
         Arrowheads[{{Small, 1}}],
@@ -122,6 +175,12 @@ Options[HypergraphPlot] = Join[
         VertexLabels -> Automatic,
         EdgeLabels -> Automatic,
         VertexSize -> 0.01,
+        VertexStyle -> Automatic,
+        EdgeStyle -> Automatic,
+        VertexLabelStyle -> Automatic,
+        EdgeLabelStyle -> Automatic,
+        VertexCoordinates -> Automatic,
+        "EdgeLineStyle" -> Automatic,
         "EdgeArrows" -> Automatic,
         "CyclicBadges" -> True,
         GraphLayout -> Automatic
@@ -154,6 +213,8 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
     vertexEmbedding, edgeEmbedding,
     allPoints, bounds, corner, center, range, size,
     vertexLabelOffsets,
+    vertexStyles, edgeStyles, edgeLineStyles, vertexLabelStyles, edgeLabelStyles,
+    givenCoordinates,
     totalCounts = <||>,
     arrowsQ, makeEdge, renderEdge
 },
@@ -162,6 +223,16 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
     symms = EdgeSymmetry /@ edgeObjects;
     labels = resolveEdgeLabel[OptionValue[EdgeLabels], #] & /@ edgeObjects;
     vertexLabelSpecs = resolveVertexLabel[OptionValue[VertexLabels], #] & /@ vertices;
+
+    vertexStyles = elementStyles[OptionValue[VertexStyle], ids, ConstantArray[$vertexStyle, Length[ids]]];
+    edgeStyles = elementStyles[OptionValue[EdgeStyle], edges, edgeStyleForArity[Length[#]] & /@ edges];
+    edgeLineStyles = elementStyles[OptionValue["EdgeLineStyle"], edges,
+        ConstantArray[$edgeLineStyle, Length[edges]]];
+    vertexLabelStyles = elementStyles[OptionValue[VertexLabelStyle], ids,
+        ConstantArray[$vertexLabelStyle, Length[ids]]];
+    edgeLabelStyles = elementStyles[OptionValue[EdgeLabelStyle], edges,
+        ConstantArray[$edgeLabelStyle, Length[edges]]];
+    givenCoordinates = resolveVertexCoordinates[OptionValue[VertexCoordinates], ids];
 
     (* Only a directed edge carries arrowheads along its sides.  The reference also puts them on
        cyclic edges, but then a cyclic edge differs from a directed one only by whether the last
@@ -205,6 +276,39 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
             GraphLayout -> OptionValue[GraphLayout]
         ],
         GraphQ
+    ];
+
+    (* Given positions are fed back to the layout graph rather than written over the embedding
+       afterwards, so that the edge curves stay consistent with the vertices they run between.
+
+       They have to cover every vertex of that graph, though: a Graph given coordinates for some
+       of its vertices and not others lays out none of them. So the automatic layout is taken
+       first and the given positions written over it, and the helper vertex standing for each
+       large edge is moved to the centre of the vertices it serves -- left where the automatic
+       layout put it, it would pull its edge's boundary away from the vertices that had moved. *)
+    If[ givenCoordinates =!= {},
+        Block[{known = Association[givenCoordinates], free, neighbours, placed, centre},
+            free = DeleteCases[VertexList[graph], Alternatives @@ Keys[known]];
+            neighbours = AssociationMap[
+                DeleteCases[Union @ AdjacencyList[graph, #], #] &, free];
+            centre = Mean[Values[known]];
+            (* A vertex the caller did not place cannot keep the position the automatic layout
+               gave it: that layout is in its own frame, and mixing the two puts the vertex
+               somewhere unrelated to everything around it. It is settled instead against the
+               ones that were placed, by repeatedly moving it to the middle of its neighbours --
+               which lands a vertex a rewrite has just inserted into an edge between that edge's
+               ends, where it belongs, and puts the helper vertex of a large edge at the centre
+               of the vertices it serves. *)
+            placed = Join[known, AssociationMap[centre &, free]];
+            Do[
+                placed = Join[placed, AssociationMap[
+                    With[{ns = neighbours[#]},
+                        If[ns === {}, placed[#], Mean[Lookup[placed, ns]]]] &,
+                    free]],
+                {24}
+            ];
+            graph = ConfirmBy[Graph[graph, VertexCoordinates -> Normal[placed]], GraphQ]
+        ]
     ];
 
     {vertexEmbedding, edgeEmbedding} = First[#, {}] & /@ Reap[ConfirmMatch[GraphPlot[graph], _Graphics], {"v", "e"}][[2]];
@@ -289,17 +393,18 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
         primitive = If[ arrowsQ[symm],
             {initPrimitive,
              MapIndexed[{Arrowheads[{{Replace[#2[[1]], {1 -> Small, 2 -> Medium, _ -> Large}], .5}}],
-                         $edgeLineStyle, Arrow[#1]} &, lines]},
+                         edgeLineStyles[[i]], Arrow[#1]} &, lines]},
             initPrimitive
         ] /. _EmptyRegion -> {};
         Sow[pos, "EdgeLabelPosition"];
         {
-            edgeStyleForArity[Length[edge]],
+            edgeStyles[[i]],
             primitive,
             Opacity[1],
-            Replace[labelPrimitive, Text[expr_, args___] :> Text[Style[expr, $edgeLabelStyle], args]],
+            Replace[labelPrimitive, Text[expr_, args___] :> Text[Style[expr, edgeLabelStyles[[i]]], args]],
             If[ badgesQ && symm === "Cyclic",
-                cyclicBadge[pos, If[label === None, $cyclicBadgeRadius, $cyclicBadgeLabelledRadius]],
+                cyclicBadge[pos, If[label === None, $cyclicBadgeRadius, $cyclicBadgeLabelledRadius],
+                            edgeLineStyles[[i]]],
                 Nothing
             ]
         }
@@ -376,11 +481,13 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
             ]
         ],
         Opacity[1],
-        {$vertexStyle, vertexPrimitive[#, vertexSize] & /@ Values[vertexEmbedding]},
-        MapThread[{coord, label, offset} |-> (
+        MapThread[{style, coord} |-> {style, vertexPrimitive[coord, vertexSize]},
+                  {vertexStyles, Values[vertexEmbedding]}],
+        MapThread[{coord, label, offset, style} |-> (
             Sow[coord, "Vertex"];
-            makeVertexLabel[label, $vertexLabelStyle, coord, Take[offset, UpTo[2]]]
-        ), {Values[vertexEmbedding], vertexLabelSpecs, Lookup[vertexLabelOffsets, Keys[vertexEmbedding]]}]
+            makeVertexLabel[label, style, coord, Take[offset, UpTo[2]]]
+        ), {Values[vertexEmbedding], vertexLabelSpecs, Lookup[vertexLabelOffsets, Keys[vertexEmbedding]],
+            vertexLabelStyles}]
     },
         FilterRules[{opts}, Options[Graphics]],
         PlotRange -> bounds,

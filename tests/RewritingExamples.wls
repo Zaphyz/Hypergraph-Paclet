@@ -100,7 +100,7 @@ p["=== 3. Applying ==="];
 ev = sub[path2];
 check["one event per match", Length[ev], 2];
 check["the keys of an event", Keys @ First[ev],
-   {"Hypergraph", "EdgeOrigins", "MatchVertices", "MatchEdges", "MatchEdgePositions", "NewVertices",
+   {"Hypergraph", "Input", "EdgeOrigins", "MatchVertices", "MatchEdges", "MatchEdgePositions", "NewVertices",
     "NewEdges", "DeletedVertices", "RuleVertexMap", "LabelBindings", "Rule"}];
 check["rule[hg] and HypergraphRuleApply agree", sub[path2] === HypergraphRuleApply[sub, path2], True];
 check["subdividing the first edge", ed @ ev[[1, "Hypergraph"]],
@@ -514,6 +514,50 @@ check["two steps give the three bracketings of the whole",
    Sort[{Row[{"(", Row[{"(", a, b, c, ")"}], d, e, ")"}],
          Row[{"(", a, b, Row[{"(", c, d, e, ")"}], ")"}],
          Row[{"(", a, Row[{"(", d, c, b, ")"}], e, ")"}]}]];
+
+
+p[];
+p["=== 8. Styling a plot, and drawing rules and events ==="];
+(* Highlighting needs two things HypergraphPlot did not have: a style per element, and a layout
+   that can be handed to another plot so that before and after line up. *)
+styled = Hypergraph[{{1, 2}, {2, 3}, {1, 2}}];
+check["a plot still comes out a plot", Head @ HypergraphPlot[styled], Graphics];
+check["one directive styles everything",
+   Head @ HypergraphPlot[styled, EdgeStyle -> Red, VertexStyle -> Green], Graphics];
+check["a style per edge position", Head @ HypergraphPlot[styled, EdgeStyle -> {1 -> Red}], Graphics];
+check["a style per edge value", Head @ HypergraphPlot[styled, EdgeStyle -> {{2, 3} -> Red}], Graphics];
+check["a fallback and then an override",
+   Head @ HypergraphPlot[styled, VertexStyle -> {_ -> Gray, 2 -> Red}], Graphics];
+check["an empty list of highlights changes nothing",
+   HypergraphPlot[styled, EdgeStyle -> {}] === HypergraphPlot[styled], True];
+
+p["-- coordinates, given and reused --"];
+emb = HypergraphEmbedding[styled];
+coords = Thread[VertexID /@ VertexList[styled] -> emb];
+check["handing a layout back gives the same layout",
+   Chop[HypergraphEmbedding[styled, VertexCoordinates -> coords] - emb] // Flatten // Union, {0}];
+check["a bare list of positions is taken in vertex order",
+   HypergraphEmbedding[styled, VertexCoordinates -> {{0., 0.}, {1., 0.}, {0., 1.}}],
+   {{0., 0.}, {1., 0.}, {0., 1.}}];
+check["placing some leaves the rest to settle among them",
+   Length @ HypergraphEmbedding[styled, VertexCoordinates -> {1 -> {0., 0.}}], 3];
+(* The reason coordinates exist at all: the same layout, imposed on a different hypergraph. *)
+check["another hypergraph can be drawn on the same layout",
+   HypergraphEmbedding[Hypergraph[{{1, 2}, {2, 3}, {1, 3}}], VertexCoordinates -> coords], emb];
+
+p["-- rules and events as pictures --"];
+check["a rule draws", Head @ HypergraphRulePlot[sub], Graphics];
+check["an event draws", Head @ HypergraphEventPlot[First @ sub[path2]], Graphics];
+check["one picture per match",
+   Length @ HypergraphEventPlot[sub, path2], Length @ sub[path2]];
+check["an event carries what it acted on", First[sub[path2]]["Input"], path2];
+check["  which is what lets it be drawn on its own",
+   Head @ HypergraphEventPlot[KeyDrop[First @ sub[path2], "Rule"]], Graphics];
+check["and the created edges are found by origin, not by looking alike",
+   Flatten @ Position[First[sub[Hypergraph[{{1, 2}, {1, 2}}]]]["EdgeOrigins"], None],
+   {2, 3}];
+check["a non-event is refused", Quiet @ HypergraphEventPlot[42], $Failed];
+check["a non-rule is refused", Quiet @ HypergraphRulePlot[42], $Failed];
 
 p[];
 p[If[$fails === 0, "=== ALL CHECKS PASSED ===", "=== " <> ToString[$fails] <> " CHECK(S) FAILED ==="]];

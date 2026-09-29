@@ -18,49 +18,49 @@ WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphRewritingSystemQ", "ObjectName",ExpressionUUID->"0f210e1d-d90a-9b4a-8995-f85cd6d280cb"],
+Cell["HypergraphRewritingSystemQ", "ObjectName",ExpressionUUID->"c5d39924-4ca5-6e41-a460-50629ddfd1fc"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphRewritingSystemQ", "[", "expr", "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"55593ca4-eee1-694d-93a8-3db4ec07f39b"],
+  "InlineFormula",ExpressionUUID->"057d3580-f7c5-9f4b-b57c-348e6f10b13c"],
  " ",
  "gives True if expr is a valid HypergraphRewritingSystem, and False \
 otherwise."
-}], "Usage",ExpressionUUID->"96fef3ab-c7cb-b747-a992-de6896e48e58"],
+}], "Usage",ExpressionUUID->"05a2ffeb-83ce-8546-9dab-b7ed7cc6bc16"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"ab59d5a7-9d0a-9944-961e-819573b96323"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"33a911e1-dd36-4f40-bc50-d532925f3ff7"],
 
 Cell["\<\
 A valid system is a list of HypergraphRule objects together with a \
 Hypergraph. Anything given in another form is converted when the system is \
 built, so a system that exists at all is valid.\
-\>", "Notes",ExpressionUUID->"c32db5df-e84d-bc41-9832-08e78027ab1d"],
+\>", "Notes",ExpressionUUID->"3706a8f3-1682-f445-9e97-cae091ac49bd"],
 
 Cell["\<\
 It gives False rather than a message on anything else, including $Failed.\
-\>", "Notes",ExpressionUUID->"c4da017d-94bc-7141-b20e-f6934cd32eff"],
+\>", "Notes",ExpressionUUID->"3cb75177-5f00-3647-bef3-7aa087d43b28"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"621313bd-aae2-aa4f-af93-81a62f9a6dea"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"582cbefb-94dd-2747-9258-9cfa78fbeecb"],
 
 Cell["\<\
 HypergraphRewritingSystemQ @ HypergraphRewritingSystem[{{1, 2}} -> {{2, 1}}, \
 Hypergraph[{{1, 2}}]]\
-\>", "Input",ExpressionUUID->"85d73a7a-18a3-b74f-80d8-ac3553a93a29"],
+\>", "Input",ExpressionUUID->"2661e42d-f0e2-7042-8218-18c0213baaf6"],
 
-Cell[BoxData["True"], "Output",ExpressionUUID->"a8a41d49-37be-bf42-b419-4a0d70e76b9e"],
+Cell[BoxData["True"], "Output",ExpressionUUID->"061d8b7f-ba58-384f-83f3-47abfea30474"],
 
 Cell["\<\
 HypergraphRewritingSystemQ /@ {HypergraphRule[{{1, 2}}, {{2, 1}}], $Failed, 7}\
-\>", "Input",ExpressionUUID->"16723b25-ccf3-ca40-9ad7-9a8c2895bfb9"],
+\>", "Input",ExpressionUUID->"4a393773-0390-e14f-bda3-cd226ee63dfd"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{"False", ",", "False", ",", "False"}], "}"}]], "Output",ExpressionUU\
-ID->"b3bbadb3-49e3-024d-a201-10ca176397f0"],
+ID->"7a6a3c4a-7db4-654f-99d0-f1964e84e19f"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"5b2ba293-91b4-8340-a537-080c06cf9e75"],
+Cell["Source", "NotesSection",ExpressionUUID->"f7a3d46d-88a1-e549-9c9f-2e7602d88d7d"],
 
 Cell[TextData[{
  "Defined in ",
@@ -71,28 +71,28 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "The system object",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"489877f8-eab2-ac4a-9062-e0cc70a47f27"],
+}], "Notes",ExpressionUUID->"37407704-43af-bf46-9eac-ea59069f890f"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"49a699ba-7e90-7a40-9f53-003ee9400531"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"bc34a5d3-1675-6742-b0fe-71a24ec9a419"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphRewritingSystem", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"8b3eb51d-ac91-3741-98b3-c368a3651b08"],
+  ExpressionUUID->"aa0538f6-55d8-6c46-8753-db9aa6e6b0c4"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "7c5156f0-b23f-b641-b97c-d33a2018468e"],
+  "73b82f73-b5e2-e048-a6f0-6cf2f7712758"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "433710a4-05ef-e348-b3b5-447b03d0e795"]
-}], "SeeAlso",ExpressionUUID->"fa2b8e19-4c5a-6d40-8f7d-d770b5bfb99c"]
+  "bc901fe5-6dbc-7945-93af-d9118ff6d51b"]
+}], "SeeAlso",ExpressionUUID->"4635b87f-067b-6842-b7f5-0df3101902d4"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"dc3b1e92-c5bd-3645-b316-02820f66faac"
+ExpressionUUID->"c38dc7da-6730-d640-a752-5dad13f73908"
 ]
 (* End of Notebook Content *)
 
@@ -105,20 +105,20 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 103, 0, 70, "ObjectName",ExpressionUUID->"0f210e1d-d90a-9b4a-8995-f85cd6d280cb"],
-Cell[660, 22, 360, 8, 70, "Usage",ExpressionUUID->"96fef3ab-c7cb-b747-a992-de6896e48e58"],
-Cell[1015, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"ab59d5a7-9d0a-9944-961e-819573b96323"],
-Cell[1116, 34, 277, 4, 70, "Notes",ExpressionUUID->"c32db5df-e84d-bc41-9832-08e78027ab1d"],
-Cell[1392, 40, 155, 2, 70, "Notes",ExpressionUUID->"c4da017d-94bc-7141-b20e-f6934cd32eff"],
-Cell[1548, 44, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"621313bd-aae2-aa4f-af93-81a62f9a6dea"],
-Cell[1648, 46, 183, 3, 70, "Input",ExpressionUUID->"85d73a7a-18a3-b74f-80d8-ac3553a93a29"],
-Cell[1831, 51, 86, 0, 70, "Output",ExpressionUUID->"a8a41d49-37be-bf42-b419-4a0d70e76b9e"],
-Cell[1920, 53, 160, 2, 70, "Input",ExpressionUUID->"16723b25-ccf3-ca40-9ad7-9a8c2895bfb9"],
-Cell[2081, 57, 155, 3, 70, "Output",ExpressionUUID->"b3bbadb3-49e3-024d-a201-10ca176397f0"],
-Cell[2236, 62, 85, 0, 70, "NotesSection",ExpressionUUID->"5b2ba293-91b4-8340-a537-080c06cf9e75"],
-Cell[2324, 64, 281, 9, 70, "Notes",ExpressionUUID->"489877f8-eab2-ac4a-9062-e0cc70a47f27"],
-Cell[2599, 75, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"49a699ba-7e90-7a40-9f53-003ee9400531"],
-Cell[2691, 77, 527, 12, 70, "SeeAlso",ExpressionUUID->"fa2b8e19-4c5a-6d40-8f7d-d770b5bfb99c"]
+Cell[554, 20, 103, 0, 70, "ObjectName",ExpressionUUID->"c5d39924-4ca5-6e41-a460-50629ddfd1fc"],
+Cell[660, 22, 360, 8, 70, "Usage",ExpressionUUID->"05a2ffeb-83ce-8546-9dab-b7ed7cc6bc16"],
+Cell[1015, 32, 98, 0, 70, "NotesSection",ExpressionUUID->"33a911e1-dd36-4f40-bc50-d532925f3ff7"],
+Cell[1116, 34, 277, 4, 70, "Notes",ExpressionUUID->"3706a8f3-1682-f445-9e97-cae091ac49bd"],
+Cell[1392, 40, 155, 2, 70, "Notes",ExpressionUUID->"3cb75177-5f00-3647-bef3-7aa087d43b28"],
+Cell[1548, 44, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"582cbefb-94dd-2747-9258-9cfa78fbeecb"],
+Cell[1648, 46, 183, 3, 70, "Input",ExpressionUUID->"2661e42d-f0e2-7042-8218-18c0213baaf6"],
+Cell[1831, 51, 86, 0, 70, "Output",ExpressionUUID->"061d8b7f-ba58-384f-83f3-47abfea30474"],
+Cell[1920, 53, 160, 2, 70, "Input",ExpressionUUID->"4a393773-0390-e14f-bda3-cd226ee63dfd"],
+Cell[2081, 57, 155, 3, 70, "Output",ExpressionUUID->"7a6a3c4a-7db4-654f-99d0-f1964e84e19f"],
+Cell[2236, 62, 85, 0, 70, "NotesSection",ExpressionUUID->"f7a3d46d-88a1-e549-9c9f-2e7602d88d7d"],
+Cell[2324, 64, 281, 9, 70, "Notes",ExpressionUUID->"37407704-43af-bf46-9eac-ea59069f890f"],
+Cell[2599, 75, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"bc34a5d3-1675-6742-b0fe-71a24ec9a419"],
+Cell[2691, 77, 527, 12, 70, "SeeAlso",ExpressionUUID->"4635b87f-067b-6842-b7f5-0df3101902d4"]
 }
 ]
 *)

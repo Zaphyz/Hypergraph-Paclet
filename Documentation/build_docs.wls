@@ -414,6 +414,10 @@ page["HypergraphPlot",
    input["HypergraphPlot[Hypergraph[{Edge[{1, 2}, \"Directed\", \"f\"], Edge[{2, 3}, \"Cyclic\", \"g\"],\n                           Edge[{1, 3, 4}, \"Unordered\", \"h\"]}], ImageSize -> 280]"],
    exText["Turning the vertex labels off:"],
    input["HypergraphPlot[Hypergraph[{{1, 2, 3}, {3, 4}}], VertexLabels -> None, ImageSize -> 220]"]},
+   note["VertexStyle and EdgeStyle take a single directive applied to everything, or a list of rules or an Association giving styles element by element. A key is an element's position counting from one, the element itself \[LongDash] a vertex identifier, or an edge's list of vertex identifiers \[LongDash] or a pattern, which is how a fallback such as _ -> style is written. Later rules win."],
+   note["Positions are what a multiset needs: two edges of equal value are still two edges, and only a position can say which of them to style. Where a vertex is itself named by an integer the identifier wins over the position reading."],
+   note["VertexLabelStyle and \"EdgeLineStyle\" take the same forms."],
+   note["VertexCoordinates places vertices explicitly, as rules id -> {x, y}, an Association, or a plain list in vertex order. Vertices left unplaced are settled among the placed ones rather than laid out separately, so a hypergraph can be drawn on the layout of another \[LongDash] which is how the two halves of an event come to line up."],
   source[$plot, "HypergraphPlot"],
   {"Hypergraph", "HypergraphEmbedding", "HypergraphLargeQ", "EdgeSymmetry"}
 ];
@@ -1187,6 +1191,69 @@ page["$CausalDependenceTypes",
 ];
 
 
+
+
+(* ================= Pictures of rules and events ================= *)
+
+$rwg = "src/RewritingGraphics.wl";
+
+ClearAll[a, b, c, d, e, f, g, h, l, m, s, t, u, v, w, x, y, z, sub, chain, sys, comp, meet, ev];
+
+page["HypergraphRulePlot",
+  {usage["HypergraphRulePlot[rule]", "draws the rewrite rule rule as its input beside its output."]},
+  {note["Vertices the two sides share are drawn in the same places, so that what the rule does to them can be read off rather than searched for."],
+   note["The vertices a rule creates are highlighted on the right and the ones it destroys on the left; \"Highlight\" -> False leaves both plain."],
+   noteC[{"The highlight styles are \"HighlightLeftVertexStyle\", \"HighlightLeftEdgeStyle\", \"HighlightRightVertexStyle\" and \"HighlightRightEdgeStyle\", the same four names the reference paclet's ", inline["HighlightRule"], " takes."}],
+   note["\"PanelSize\" sets how many pixels wide each of the two sides is drawn."],
+   note["\"SharedCoordinates\" -> False lays the two sides out independently."],
+   noteC[{"It takes the options of ", inline["HypergraphPlot"], " as well, which are passed to both sides."}],
+   note["Opening the summary box of a HypergraphRule shows the same picture."]},
+  {exText["A rule that subdivides an edge. Vertices 2 and 3 stay where they are; the vertex the rule creates is highlighted:"],
+   input["HypergraphRulePlot[HypergraphRule[{{2, 3}}, {{2, 5}, {5, 3}}], \"PanelSize\" -> 130]"],
+   exText["Without the highlighting:"],
+   input["HypergraphRulePlot[HypergraphRule[{{2, 3}}, {{2, 5}, {5, 3}}], \"Highlight\" -> False, \"PanelSize\" -> 130]"],
+   exText["A rule that destroys a vertex highlights it on the left:"],
+   input["HypergraphRulePlot[HypergraphRule[{{1, 2}, {2, 3}}, {{1, 3}}], \"PanelSize\" -> 130]"]},
+  source[$rwg, "Rules"],
+  {"HypergraphEventPlot", "HypergraphRule", "HypergraphPlot"}
+];
+
+page["HypergraphEventPlot",
+  {usage["HypergraphEventPlot[event]", "draws a rewriting event: what it acted on with the match highlighted, an arrow, and what it made with the created vertices and edges highlighted."],
+   usage["HypergraphEventPlot[rule, hg]", "gives one picture for every way rule matches hg."]},
+  {note["An event is an association of the kind HypergraphRuleApply gives. Its \"Input\" key is the hypergraph the event acted on, which is what makes the left half drawable."],
+   note["Both halves are drawn on the same layout, so that a vertex which did not move does not appear to. A vertex the event created has no place in that layout and is settled among its neighbours, which puts a vertex inserted into an edge between that edge's ends."],
+   note["The created edges are found from \"EdgeOrigins\" rather than by looking for edges equal to \"NewEdges\": in a multiset two edges of equal value are still two edges, and searching by value would highlight one that was merely carried over."],
+   noteC[{"The highlight styles, \"PanelSize\" and \"SharedCoordinates\" are as in ", inline["HypergraphRulePlot"], "."}],
+   noteC[{"This is the picture a rewriting system draws for an event vertex of its ", inline["HypergraphCausalGraph"], "."}]},
+  {exText["Subdividing one edge of a path. The matched edge is red on the left, the two edges that replaced it are red on the right:"],
+   input["event = First @ HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}][Hypergraph[{{1, 2}, {2, 3}}]];\nHypergraphEventPlot[event, \"PanelSize\" -> 130]"],
+   exText["One picture for each way the rule fits:"],
+   input["HypergraphEventPlot[HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}], Hypergraph[{{1, 2}, {2, 3}}], \"PanelSize\" -> 100]"],
+   exText["The highlight colour is an option:"],
+   input["HypergraphEventPlot[event, \"PanelSize\" -> 130,\n \"HighlightLeftEdgeStyle\" -> Directive[Thick, Blue, EdgeForm[Directive[Blue, Thick]]],\n \"HighlightRightEdgeStyle\" -> Directive[Thick, Blue, EdgeForm[Directive[Blue, Thick]]],\n \"HighlightRightVertexStyle\" -> Directive[PointSize[0.02], Blue]]"]},
+  source[$rwg, "Events"],
+  {"HypergraphRulePlot", "HypergraphRuleApply", "HypergraphCausalGraph"}
+];
+
+page["$HypergraphRewritingOptions",
+  {usage["$HypergraphRewritingOptions", "is the registry of options a rewriting system takes, with their defaults."]},
+  {note["The options fall into three groups. \"MaxStates\", \"Labeled\", \"LabelPatterns\" and \"DistinctVertices\" govern the evolution; \"CausalDependence\", \"TransitiveReduction\" and \"CanonicalizeStates\" govern what is made of it; \"StateRendering\", \"EventRendering\", \"MaxDrawnVertices\", \"PanelSize\" and \"HypergraphPlotOptions\" govern how it is drawn."],
+   noteC[{"Every graph-valued property takes these together with the options of ", inline["Graph"], ". What the caller passes wins over what the property would have set."}],
+   note["A system may hold options of its own, as HypergraphRewritingSystem[rules, init, opts], and every property inherits them; an option given to a property still wins over one held by the system."],
+   noteC[{"sys[\"Options\"] gives the values in force for a particular system: the ones it holds, and the defaults for the rest."}],
+   note["\"StateRendering\" and \"EventRendering\" take Automatic, True or False. Under Automatic a graph draws its states and events as hypergraph pictures while there are at most \"MaxDrawnVertices\" of them, and falls back to plain vertices past that with a message rather than spending a long time laying out pictures nobody asked for."],
+   note["\"HypergraphPlotOptions\" is passed to every hypergraph drawn inside a graph vertex."]},
+  {input["$HypergraphRewritingOptions"],
+   exText["What a particular system is working with:"],
+   input["quick = HypergraphRewritingSystem[HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}], Hypergraph[{{1, 2}}],\n  \"CausalDependence\" -> \"Edges\", \"PanelSize\" -> 60];\nFilterRules[quick[\"Options\"], {\"CausalDependence\", \"PanelSize\", \"MaxDrawnVertices\"}]"],
+   exText["The held option is used without being repeated, and an option on the call overrides it:"],
+   input["{Length @ quick[\"CausalEdges\", 2],\n Length @ quick[\"CausalEdges\", 2, \"CausalDependence\" -> \"Elements\"]}"]},
+  source["src/Causality.wl", "Options"],
+  {"HypergraphRewritingSystem", "HypergraphCausalGraph", "$CausalDependenceTypes"}
+];
+
+
 (* ================= Guide ================= *)
 
 (* The Guide* styles are defined in Reference.nb but only resolve inside the Documentation
@@ -1243,6 +1310,7 @@ accessors and predicates."],
         pathEntry["src/ArrayAlgebra.wl", "The special arrays, the contraction ArrayMultiply, the \
 entry-by-entry ArrayAdd and ArrayTimes, and FindArrayEquations."],
         pathEntry["src/Rewriting.wl", "HypergraphRule and its application: the matcher, and the \nevents a rewrite produces."],
+        pathEntry["src/RewritingGraphics.wl", "HypergraphRulePlot and HypergraphEventPlot: a rule and an event as pictures, with the match and the creations highlighted."],
         pathEntry["src/Causality.wl", "HypergraphRewritingSystem: the evolution, the tokens that \nfollow an element across a rewrite, and the readings of causal dependence."],
         pathEntry["src/Adjacency.wl", "AdjacencyHypermatrix: the correspondence between edge \nsymmetry types and array symmetries, and the passage from one to the other."],
         pathEntry["src/ArrayGraphics.wl", "The two families of pictures: ArrayGraphics and \
@@ -1466,6 +1534,9 @@ tree of state occurrences joined by events."],
         entry["HypergraphRewritingSystemQ", "test for a valid system"],
         entry["HypergraphCausalGraph", "the events, and which of them depended on which"],
         entry["$CausalDependenceTypes", "the readings of causal dependence on offer"],
+        entry["$HypergraphRewritingOptions", "the registry of options, with their defaults"],
+        entry["HypergraphRulePlot", "a rule drawn: its input beside its output"],
+        entry["HypergraphEventPlot", "an event drawn: the match highlighted in what was there, and the creations in what came of it"],
         gText["The properties mirror what the reference paclets give: \"EvolutionGraph\" for the \
 tree of state occurrences, \"StatesGraph\" for the same states merged, \"BranchialGraph\" for \
 the states one step could have reached, and \"CausalGraph\" and \"EvolutionCausalGraph\" for the \
@@ -1482,6 +1553,17 @@ for rather than about the rewriting."],
         gText["Elements are followed by token rather than by value, since an edge is an element \
 of a multiset and two edges that look the same are still two elements. A causal edge reports not \
 only that two events are related but which elements they had in common."],
+        gText["A state is drawn in a graph as a framed picture of the hypergraph, and an event \
+as the hypergraph it acted on with the match highlighted, an arrow, and what it made with the \
+creations highlighted \[LongDash] the same two halves HypergraphEventPlot gives on its own. Both \
+halves share a layout, so that what changed is what moves. The colours are those of the Wolfram \
+Physics Project, which is what the reference paclets draw in, so that a graph made here reads \
+the same way as one made there; the values are copied rather than fetched, since a package that \
+cannot be loaded without a network is not worth the exactness."],
+        gText["Drawing a state means laying out a hypergraph and drawing an event means laying \
+out two, so past \"MaxDrawnVertices\" a graph falls back to plain vertices and says so. \
+\"StateRendering\" and \"EventRendering\" force the question either way, and \"PanelSize\" \
+sets how big each picture is."],
 
         gSection["Not yet implemented"],
         gText["The objects, isomorphism, the array algebra, the drawing, the adjacency \

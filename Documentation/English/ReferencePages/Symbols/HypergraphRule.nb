@@ -10,71 +10,71 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     18222,        406]
-NotebookOptionsPosition[     15425,        367]
-NotebookOutlinePosition[     15773,        382]
-CellTagsIndexPosition[     15730,        379]
+NotebookDataLength[     18427,        411]
+NotebookOptionsPosition[     15630,        372]
+NotebookOutlinePosition[     15978,        387]
+CellTagsIndexPosition[     15935,        384]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphRule", "ObjectName",ExpressionUUID->"0f2c5aa4-7e7c-d44d-8458-cff7d02c5ae4"],
+Cell["HypergraphRule", "ObjectName",ExpressionUUID->"c55681b3-ec49-b24c-b979-941a6753cc7e"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphRule", "[", 
     RowBox[{"input", ",", " ", "output"}], "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"a098d3e1-e483-4c49-a106-acbdc0d8b80c"],
+  "InlineFormula",ExpressionUUID->"9a4e75ec-70f8-b142-ba6c-f734b695b9ef"],
  " ",
  "represents the rewrite rule taking the hypergraph input to the hypergraph \
 output."
-}], "Usage",ExpressionUUID->"1ae00328-556a-f64f-8259-5e2a619470c7"],
+}], "Usage",ExpressionUUID->"77fee413-e1b5-c34b-b709-6e6751c69354"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"2637d4a7-a061-9746-9203-ecafafb60114"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"b88fdc76-7bb0-1746-b3cd-dd6487e2e451"],
 
 Cell["\<\
 Either side may be given as anything Hypergraph accepts, and is converted; a \
 side that is not a hypergraph gives HypergraphRule::hg.\
-\>", "Notes",ExpressionUUID->"eee38408-2f19-1a4c-832c-005652d5651b"],
+\>", "Notes",ExpressionUUID->"8c3906b1-b8cc-c140-8e47-c6b1c31fe565"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"rule", "[", "hg", "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"a8ad0cd4-8310-184f-8af4-6311bcf2fc22"],
+  ExpressionUUID->"6a72faf4-8993-924a-8c32-1ae7ce433b20"],
  " applies the rule, giving one event for every way the input matches. See ",
  Cell[BoxData[
   StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"8b3e2df1-7e68-4244-ad66-5b81a5ba6c70"],
+  ExpressionUUID->"9ec82653-a976-774f-ae2a-40b73964b704"],
  "."
-}], "Notes",ExpressionUUID->"58a04b01-9781-e44f-b766-eafe68b99789"],
+}], "Notes",ExpressionUUID->"d75e0087-5dd5-4b45-bcb6-99ab9297b206"],
 
 Cell["\<\
 A vertex of the input that the output keeps is carried through the rewrite; \
 one the output introduces is created fresh; one the output drops is \
 destroyed. \"SharedVertices\", \"NewVertices\" and \"DeletedVertices\" report \
 the three groups, read off the two sides by vertex identifier.\
-\>", "Notes",ExpressionUUID->"c23533fb-a578-8643-9091-e05412694206"],
+\>", "Notes",ExpressionUUID->"76dec01e-888d-1740-8c43-dd9bc83fd472"],
 
 Cell["\<\
 Vertices correspond between the two sides by identifier, so the same name on \
 both sides means the same vertex, and a name on the output alone means a new \
 one.\
-\>", "Notes",ExpressionUUID->"da0456bf-c55b-6b47-8561-384d08562fa3"],
+\>", "Notes",ExpressionUUID->"fc455098-9180-364f-b373-afd0d3c0c590"],
 
 Cell["\<\
 The shape follows the reference paclet this package grew out of, so that \
 rules written for that one read the same here.\
-\>", "Notes",ExpressionUUID->"7b62e441-e4d0-ba40-a130-00bc19ed016e"],
+\>", "Notes",ExpressionUUID->"2e799845-d1bd-a140-855d-a37371221cee"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"7a3be8fd-d709-5343-b6ee-289542607625"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"3c8d4ec4-36d9-034d-8dd2-4eccf1781cc5"],
 
 Cell["\<\
 Subdividing an edge: the two endpoints are kept, a third vertex is new.\
-\>", "ExampleText",ExpressionUUID->"9bc08ef7-b891-ac4a-90cf-072f0d202c03"],
+\>", "ExampleText",ExpressionUUID->"46fcb3ea-675a-c844-9015-f12bf3f5b14f"],
 
-Cell["sub = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}]", "Input",ExpressionUUID->"c675ffdb-46a4-e447-9169-8ac5dc7deca7"],
+Cell["sub = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}]", "Input",ExpressionUUID->"eaa5016f-3d51-3e41-add6-1e609acaf811"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -183,7 +183,7 @@ Cell[BoxData[
                  TagBox["\"Destroyed: \"", "SummaryItemAnnotation"], 
                  "\[InvisibleSpace]", 
                  TagBox[
-                  RowBox[{"{", "}"}], "SummaryItem"]}]}}, 
+                  RowBox[{"{", "}"}], "SummaryItem"]}]}, {""}}, 
              GridBoxAlignment -> {
               "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
              False, GridBoxItemSize -> {
@@ -219,12 +219,12 @@ Cell[BoxData[
        WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]],
   Editable->False,
   SelectWithContents->True,
-  Selectable->False]], "Output",ExpressionUUID->"a4e5e774-3815-814e-bc56-\
-3c6321cfa829"],
+  Selectable->False]], "Output",ExpressionUUID->"6c145d2b-1600-e84f-8de0-\
+0252a41f8844"],
 
 Cell["\<\
 {sub[\"SharedVertices\"], sub[\"NewVertices\"], sub[\"DeletedVertices\"]}\
-\>", "Input",ExpressionUUID->"50b34386-bb54-4e4d-b9c7-399104b6db0b"],
+\>", "Input",ExpressionUUID->"a5435662-e386-9446-bda9-5e37130b0b9f"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -232,26 +232,26 @@ Cell[BoxData[
    RowBox[{"{", 
     RowBox[{"1", ",", "2"}], "}"}], ",", 
    RowBox[{"{", "3", "}"}], ",", 
-   RowBox[{"{", "}"}]}], "}"}]], "Output",ExpressionUUID->"b1cf754f-0008-e542-\
-b43d-f15c5b7743d5"],
+   RowBox[{"{", "}"}]}], "}"}]], "Output",ExpressionUUID->"6f77f6b0-4392-9343-\
+b632-60bed45003a9"],
 
 Cell["\<\
 A rule that destroys a vertex, by mentioning it on the left only:\
-\>", "ExampleText",ExpressionUUID->"38623fcd-dc96-284c-b0cb-2e3898d12186"],
+\>", "ExampleText",ExpressionUUID->"65874de5-5769-3e4f-b47d-11fe46ebd5f1"],
 
-Cell["HypergraphRule[{{1, 2}}, {{1}}][\"DeletedVertices\"]", "Input",ExpressionUUID->"fd1c14c5-2262-ea46-a781-25b0a6293643"],
+Cell["HypergraphRule[{{1, 2}}, {{1}}][\"DeletedVertices\"]", "Input",ExpressionUUID->"c0c8cbdc-1d23-7744-b223-ba05e5848e83"],
 
 Cell[BoxData[
- RowBox[{"{", "2", "}"}]], "Output",ExpressionUUID->"4b108f87-e63a-1f4e-9041-08c4f7f61d5d"],
+ RowBox[{"{", "2", "}"}]], "Output",ExpressionUUID->"30919d11-efa8-f641-bf55-82e2e772aaaa"],
 
 Cell["\<\
 The sides may carry symmetry types and labels like any hypergraph:\
-\>", "ExampleText",ExpressionUUID->"ad61c381-2405-7741-8c56-709d60bf5dcb"],
+\>", "ExampleText",ExpressionUUID->"179c16b2-9a6a-1b49-9115-011b3a3ed333"],
 
 Cell["\<\
 HypergraphRule[{Edge[{1, 2, 3}, \"Unordered\", \"a\"]}, {Edge[{1, 2}, \
 \"Directed\"]}][\"Input\"]\
-\>", "Input",ExpressionUUID->"a3609acb-fa9b-164c-beb5-72985231d2df"],
+\>", "Input",ExpressionUUID->"b26389e9-6d89-a949-8627-0614240d3980"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -284,13 +284,18 @@ Cell[BoxData[
          GraphicsColor->Hue[0.63, 0.7, 0.5],
          FontColor->Hue[
           0.63, 0.7, 0.5]], {0.5841666136025149, 0.5809470030753335}]}}, 
-     {Opacity[1], 
-      {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[0.95]}],
+     {Opacity[1], {
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
         DiskBox[{0.8768424375680299, 0.8659683851517446}, 
-        Offset[{2., 2.}, {0., 0.}]], 
-       DiskBox[{0.8658339352737859, 0.}, Offset[{2., 2.}, {0., 0.}]], 
-       DiskBox[{0.010498775754916756`, 0.8773698149728941}, 
-        Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+         Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{0.8658339352737859, 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
+       {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+        0.95]}], 
+        DiskBox[{0.010498775754916756`, 0.8773698149728941}, 
+         Offset[{2., 2.}, {0., 0.}]]}}, {InsetBox[
         StyleBox["1",
          StripOnInput->False,
          LineColor->GrayLevel[0],
@@ -319,16 +324,16 @@ Cell[BoxData[
   ImagePadding->20,
   PlotRange->{{0.010498775754916756`, 0.8768424375680299}, {0., 
    0.8773698149728941}},
-  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"7bec6c78-37a3-\
-dd40-bde8-4c655a14815f"],
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"0a63b0b1-3ae7-\
+6640-9313-d721441c5678"],
 
-Cell["Something that is not a hypergraph is refused:", "ExampleText",ExpressionUUID->"5b5c9bf0-ac98-4c47-9d0a-4d086355c2fc"],
+Cell["Something that is not a hypergraph is refused:", "ExampleText",ExpressionUUID->"86badda7-e2a8-804f-8511-f8e638d8d15b"],
 
-Cell["Quiet @ HypergraphRule[{{1, 2}}, \"nope\"]", "Input",ExpressionUUID->"167fec7e-50a9-db4c-bf81-c4c0e644ebc0"],
+Cell["Quiet @ HypergraphRule[{{1, 2}}, \"nope\"]", "Input",ExpressionUUID->"db4236bf-5b7a-c641-9b2a-7cb091c29959"],
 
-Cell[BoxData["$Failed"], "Output",ExpressionUUID->"67dc06c8-40f0-974d-8158-37947b6fbfb2"],
+Cell[BoxData["$Failed"], "Output",ExpressionUUID->"614ee583-7940-a643-924b-2cb128090989"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"5e86117b-056e-5e4b-baaf-afb88b782503"],
+Cell["Source", "NotesSection",ExpressionUUID->"e5028bb6-04b8-b24b-ba66-9587adc8ae28"],
 
 Cell[TextData[{
  "Defined in ",
@@ -339,36 +344,36 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "The rule object",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"5f9cc039-caa7-e64b-b211-36e68a23e59e"],
+}], "Notes",ExpressionUUID->"d2d0f2e1-f860-fd49-bacc-cbf95f1d8f21"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"9ee65ff3-fde6-4043-8517-0b53aacb5c76"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"c4394ad8-ab0f-d145-8384-ecd90029c1c5"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"f81e3ed9-12fb-b54d-83ea-bdfb06a5493f"],
+  ExpressionUUID->"5d3ca7bc-a1de-1b47-82f3-cabdc4b73607"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleMatches", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"63947522-8e0b-074c-bcf3-f1eab6b147f5"],
+  ExpressionUUID->"b5beae35-b989-3540-8c2f-0209d049eb65"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleQ", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "30775850-df4d-b94c-ac63-fd83e9f785bb"],
+  "06b7ef52-ad76-ad4b-aa71-3648a53a89c9"],
  ", ",
  Cell[BoxData[
   StyleBox["Hypergraph", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "3a61b568-75b8-bd48-b3e3-bbddf6261493"],
+  "fd2cf69a-fa97-884a-88f6-f36db059eb10"],
  ", ",
  Cell[BoxData[
   StyleBox["Edge", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "348b50ab-f037-f74e-b524-ba95d431aac1"]
-}], "SeeAlso",ExpressionUUID->"3bfd2fb0-ba09-e049-99ce-0d498d372168"]
+  "9c536670-be33-3e4b-bc15-6e894c88470e"]
+}], "SeeAlso",ExpressionUUID->"8c795bb0-3cf5-bb43-b179-c4668b0fbad5"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"dc3b1e92-c5bd-3645-b316-02820f66faac"
+ExpressionUUID->"c38dc7da-6730-d640-a752-5dad13f73908"
 ]
 (* End of Notebook Content *)
 
@@ -381,33 +386,33 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 91, 0, 70, "ObjectName",ExpressionUUID->"0f2c5aa4-7e7c-d44d-8458-cff7d02c5ae4"],
-Cell[648, 22, 389, 9, 70, "Usage",ExpressionUUID->"1ae00328-556a-f64f-8259-5e2a619470c7"],
-Cell[1031, 33, 98, 0, 70, "NotesSection",ExpressionUUID->"2637d4a7-a061-9746-9203-ecafafb60114"],
-Cell[1132, 35, 217, 3, 70, "Notes",ExpressionUUID->"eee38408-2f19-1a4c-832c-005652d5651b"],
-Cell[1349, 40, 473, 10, 70, "Notes",ExpressionUUID->"58a04b01-9781-e44f-b766-eafe68b99789"],
-Cell[1815, 52, 375, 5, 70, "Notes",ExpressionUUID->"c23533fb-a578-8643-9091-e05412694206"],
-Cell[2188, 59, 246, 4, 70, "Notes",ExpressionUUID->"da0456bf-c55b-6b47-8561-384d08562fa3"],
-Cell[2433, 65, 204, 3, 70, "Notes",ExpressionUUID->"7b62e441-e4d0-ba40-a130-00bc19ed016e"],
-Cell[2637, 70, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"7a3be8fd-d709-5343-b6ee-289542607625"],
-Cell[2737, 72, 159, 2, 70, "ExampleText",ExpressionUUID->"9bc08ef7-b891-ac4a-90cf-072f0d202c03"],
-Cell[2897, 76, 120, 0, 70, "Input",ExpressionUUID->"c675ffdb-46a4-e447-9169-8ac5dc7deca7"],
-Cell[3020, 78, 6692, 144, 70, "Output",ExpressionUUID->"a4e5e774-3815-814e-bc56-3c6321cfa829"],
-Cell[9571, 224, 155, 2, 70, "Input",ExpressionUUID->"50b34386-bb54-4e4d-b9c7-399104b6db0b"],
-Cell[9727, 228, 239, 7, 70, "Output",ExpressionUUID->"b1cf754f-0008-e542-b43d-f15c5b7743d5"],
-Cell[9962, 237, 153, 2, 70, "ExampleText",ExpressionUUID->"38623fcd-dc96-284c-b0cb-2e3898d12186"],
-Cell[10116, 241, 124, 0, 70, "Input",ExpressionUUID->"fd1c14c5-2262-ea46-a781-25b0a6293643"],
-Cell[10243, 243, 106, 1, 70, "Output",ExpressionUUID->"4b108f87-e63a-1f4e-9041-08c4f7f61d5d"],
-Cell[10351, 246, 154, 2, 70, "ExampleText",ExpressionUUID->"ad61c381-2405-7741-8c56-709d60bf5dcb"],
-Cell[10506, 250, 181, 3, 70, "Input",ExpressionUUID->"a3609acb-fa9b-164c-beb5-72985231d2df"],
-Cell[10687, 255, 3218, 67, 70, "Output",ExpressionUUID->"7bec6c78-37a3-dd40-bde8-4c655a14815f"],
-Cell[13841, 324, 124, 0, 70, "ExampleText",ExpressionUUID->"5b5c9bf0-ac98-4c47-9d0a-4d086355c2fc"],
-Cell[13968, 326, 114, 0, 70, "Input",ExpressionUUID->"167fec7e-50a9-db4c-bf81-c4c0e644ebc0"],
-Cell[14085, 328, 89, 0, 70, "Output",ExpressionUUID->"67dc06c8-40f0-974d-8158-37947b6fbfb2"],
-Cell[14177, 330, 85, 0, 70, "NotesSection",ExpressionUUID->"5e86117b-056e-5e4b-baaf-afb88b782503"],
-Cell[14265, 332, 279, 9, 70, "Notes",ExpressionUUID->"5f9cc039-caa7-e64b-b211-36e68a23e59e"],
-Cell[14538, 343, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"9ee65ff3-fde6-4043-8517-0b53aacb5c76"],
-Cell[14630, 345, 811, 20, 70, "SeeAlso",ExpressionUUID->"3bfd2fb0-ba09-e049-99ce-0d498d372168"]
+Cell[554, 20, 91, 0, 70, "ObjectName",ExpressionUUID->"c55681b3-ec49-b24c-b979-941a6753cc7e"],
+Cell[648, 22, 389, 9, 70, "Usage",ExpressionUUID->"77fee413-e1b5-c34b-b709-6e6751c69354"],
+Cell[1031, 33, 98, 0, 70, "NotesSection",ExpressionUUID->"b88fdc76-7bb0-1746-b3cd-dd6487e2e451"],
+Cell[1132, 35, 217, 3, 70, "Notes",ExpressionUUID->"8c3906b1-b8cc-c140-8e47-c6b1c31fe565"],
+Cell[1349, 40, 473, 10, 70, "Notes",ExpressionUUID->"d75e0087-5dd5-4b45-bcb6-99ab9297b206"],
+Cell[1815, 52, 375, 5, 70, "Notes",ExpressionUUID->"76dec01e-888d-1740-8c43-dd9bc83fd472"],
+Cell[2188, 59, 246, 4, 70, "Notes",ExpressionUUID->"fc455098-9180-364f-b373-afd0d3c0c590"],
+Cell[2433, 65, 204, 3, 70, "Notes",ExpressionUUID->"2e799845-d1bd-a140-855d-a37371221cee"],
+Cell[2637, 70, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"3c8d4ec4-36d9-034d-8dd2-4eccf1781cc5"],
+Cell[2737, 72, 159, 2, 70, "ExampleText",ExpressionUUID->"46fcb3ea-675a-c844-9015-f12bf3f5b14f"],
+Cell[2897, 76, 120, 0, 70, "Input",ExpressionUUID->"eaa5016f-3d51-3e41-add6-1e609acaf811"],
+Cell[3020, 78, 6698, 144, 70, "Output",ExpressionUUID->"6c145d2b-1600-e84f-8de0-0252a41f8844"],
+Cell[9577, 224, 155, 2, 70, "Input",ExpressionUUID->"a5435662-e386-9446-bda9-5e37130b0b9f"],
+Cell[9733, 228, 239, 7, 70, "Output",ExpressionUUID->"6f77f6b0-4392-9343-b632-60bed45003a9"],
+Cell[9968, 237, 153, 2, 70, "ExampleText",ExpressionUUID->"65874de5-5769-3e4f-b47d-11fe46ebd5f1"],
+Cell[10122, 241, 124, 0, 70, "Input",ExpressionUUID->"c0c8cbdc-1d23-7744-b223-ba05e5848e83"],
+Cell[10249, 243, 106, 1, 70, "Output",ExpressionUUID->"30919d11-efa8-f641-bf55-82e2e772aaaa"],
+Cell[10357, 246, 154, 2, 70, "ExampleText",ExpressionUUID->"179c16b2-9a6a-1b49-9115-011b3a3ed333"],
+Cell[10512, 250, 181, 3, 70, "Input",ExpressionUUID->"b26389e9-6d89-a949-8627-0614240d3980"],
+Cell[10693, 255, 3422, 72, 70, "Output",ExpressionUUID->"0a63b0b1-3ae7-6640-9313-d721441c5678"],
+Cell[14046, 329, 124, 0, 70, "ExampleText",ExpressionUUID->"86badda7-e2a8-804f-8511-f8e638d8d15b"],
+Cell[14173, 331, 114, 0, 70, "Input",ExpressionUUID->"db4236bf-5b7a-c641-9b2a-7cb091c29959"],
+Cell[14290, 333, 89, 0, 70, "Output",ExpressionUUID->"614ee583-7940-a643-924b-2cb128090989"],
+Cell[14382, 335, 85, 0, 70, "NotesSection",ExpressionUUID->"e5028bb6-04b8-b24b-ba66-9587adc8ae28"],
+Cell[14470, 337, 279, 9, 70, "Notes",ExpressionUUID->"d2d0f2e1-f860-fd49-bacc-cbf95f1d8f21"],
+Cell[14743, 348, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"c4394ad8-ab0f-d145-8384-ecd90029c1c5"],
+Cell[14835, 350, 811, 20, 70, "SeeAlso",ExpressionUUID->"8c795bb0-3cf5-bb43-b179-c4668b0fbad5"]
 }
 ]
 *)

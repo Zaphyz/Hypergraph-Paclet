@@ -83,7 +83,14 @@ source[file_String, section_String] := Cell[
     "Notes"
 ];
 
-page[name_String, usages_List, details_List, examples_List, src_, related_List] := Module[{nb},
+$brokenPages = {};
+
+(* A page is built out of the helpers above, and the examples run in this same kernel, so an
+   example that assigns to a helper's name replaces it. That has cost two pages twice now, both
+   times silently: the clobbered helper returns a Missing, Export refuses to write it, and the
+   run reports success with the page simply absent. Anything unwritable is recorded here and
+   shouted about at the end. *)
+page[name_String, usages_List, details_List, examples_List, src_, related_List] := Module[{nb, out},
     nb = Notebook[
         Flatten[{
             Cell[name, "ObjectName"],
@@ -98,7 +105,13 @@ page[name_String, usages_List, details_List, examples_List, src_, related_List] 
         StyleDefinitions -> "Reference.nb",
         WindowSize -> {800, 750}
     ];
-    Export[FileNameJoin[{$symbolDir, name <> ".nb"}], nb, "NB"];
+    If[ ! FreeQ[nb, _Missing] || ! FreeQ[nb, $evalFailed],
+        AppendTo[$brokenPages, name -> "a helper or an example came back Missing"]
+    ];
+    out = Quiet @ Export[FileNameJoin[{$symbolDir, name <> ".nb"}], nb, "NB"];
+    If[ ! StringQ[out],
+        AppendTo[$brokenPages, name -> "Export refused to write it"]
+    ];
     name
 ];
 
@@ -1091,6 +1104,89 @@ page["HypergraphRuleMatches",
   {"HypergraphRuleApply", "HypergraphRule", "EdgeList"}
 ];
 
+
+
+(* ================= Rewriting systems and causality ================= *)
+
+$cau = "src/Causality.wl";
+
+(* Same hazard as above, and one more particular to this section: a symbol a rule uses as a label
+   variable must stay clear, since the rule holds the symbol itself. *)
+ClearAll[a, b, c, d, e, f, g, h, l, m, s, t, u, v, w, x, y, z, sub, chain, sys, comp, meet];
+
+page["HypergraphRewritingSystem",
+  {usage["HypergraphRewritingSystem[rules, init]", "represents the rewriting system with the given rules started from the hypergraph init."],
+   usage["sys[prop, n]", "gives a property of the evolution carried n generations."]},
+  {note["rules may be one HypergraphRule, a list of them, or plain arrows input -> output, which are converted; init may be anything Hypergraph accepts."],
+   note["Evolving means applying every rule in every way it fits, to every state reached so far. The result is a tree of state occurrences joined by events: a state reached two ways appears twice, since which elements it is made of depends on how it was reached."],
+   noteC[{"The properties are \"Rules\", \"RuleCount\", \"InitialState\", \"States\", \"StateList\", \"StateCount\", \"EventList\", \"EventCount\", \"EvolutionGraph\", \"StatesGraph\", \"BranchialGraph\", \"CausalGraph\", \"CausalEdges\" and \"EvolutionCausalGraph\". ", inline["sys[\"Properties\"]"], " lists them."}],
+   note["The number of generations defaults to 1, so sys[\"CausalGraph\"] and sys[\"CausalGraph\", 1] are the same."],
+   noteC[{"Options are those of ", inline["HypergraphCausalGraph"], ", and are given to the property: \"CausalDependence\", \"TransitiveReduction\", \"CanonicalizeStates\", \"MaxStates\", and the matching options \"Labeled\", \"LabelPatterns\" and \"DistinctVertices\"."}],
+   note["An event of \"EventList\" is an association with \"Rule\" and \"RuleIndex\", which rule fired; \"Generation\"; \"InputState\" and \"OutputState\", indices into \"StateList\"; \"ConsumedEdges\", \"CreatedEdges\", \"MatchedVertices\", \"CreatedVertices\" and \"DestroyedVertices\", the elements it touched, as tokens; and \"Data\", the event HypergraphRuleApply gave."],
+   note["Elements are tracked by token rather than by value, because an edge is an element of a multiset: two edges that look the same are still two elements, and a vertex identifier freed by one event may be handed out again by a later one. A token is minted when an element is created and carried for as long as it survives."],
+   note["\"MaxStates\", by default 2048, stops an evolution that is growing faster than expected and gives HypergraphRewritingSystem::trunc rather than running on."]},
+  {exText["A rule that subdivides an edge, started from one edge:"],
+   input["subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];\nsystem = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]]"],
+   exText["Every edge of every state is a place the rule fits, so the states multiply:"],
+   input["Table[{system[\"StateCount\", g], system[\"EventCount\", g]}, {g, 0, 3}]"],
+   exText["The states of each generation:"],
+   input["system[\"States\", 2]"],
+   exText["What one event did, in the tokens the causal reading uses:"],
+   input["KeyDrop[First @ system[\"EventList\", 1], {\"Rule\", \"Data\"}]"],
+   exText["The evolution as a tree of state occurrences, and the same states merged up to canonical form:"],
+   input["{system[\"EvolutionGraph\", 2], system[\"StatesGraph\", 2]}"]},
+  source[$cau, "The system object"],
+  {"HypergraphCausalGraph", "$CausalDependenceTypes", "HypergraphRule", "HypergraphRuleApply"}
+];
+
+page["HypergraphRewritingSystemQ",
+  {usage["HypergraphRewritingSystemQ[expr]", "gives True if expr is a valid HypergraphRewritingSystem, and False otherwise."]},
+  {note["A valid system is a list of HypergraphRule objects together with a Hypergraph. Anything given in another form is converted when the system is built, so a system that exists at all is valid."],
+   note["It gives False rather than a message on anything else, including $Failed."]},
+  {input["HypergraphRewritingSystemQ @ HypergraphRewritingSystem[{{1, 2}} -> {{2, 1}}, Hypergraph[{{1, 2}}]]"],
+   input["HypergraphRewritingSystemQ /@ {HypergraphRule[{{1, 2}}, {{2, 1}}], $Failed, 7}"]},
+  source[$cau, "The system object"],
+  {"HypergraphRewritingSystem", "HypergraphRuleQ", "HypergraphQ"}
+];
+
+page["HypergraphCausalGraph",
+  {usage["HypergraphCausalGraph[sys, n]", "gives the causal graph of the rewriting system sys evolved n generations."],
+   usage["HypergraphCausalGraph[rules, init, n]", "builds the system first."]},
+  {note["The graph has one vertex per event, numbered as in sys[\"EventList\", n], and an edge from an event to a later one that depends on it."],
+   noteC[{"Two events are dependent when the elements they touch overlap. What counts as an element is the option \"CausalDependence\"; see ", inline["$CausalDependenceTypes"], "."}],
+   note["An event touches what its match covered together with what it created. Along a path that comes to the same thing as the usual created-then-consumed reading, since an edge an event consumed is gone and can only be met again by having been created."],
+   note["Dependence is only asked about between events on one path: the second must act on the state the first produced, or on a descendant of it. In a multiway evolution two events on different branches never meet, whatever they have in common."],
+   note["\"TransitiveReduction\" -> True, the default, leaves only the edges the order does not already imply."],
+   noteC[{"sys[\"CausalEdges\", n] gives the same relation as a list of associations with \"From\", \"To\", \"SharedEdges\" and \"SharedVertices\", which say not only that two events are related but what they had in common."}]},
+  {exText["Subdividing either edge of a two-edge path, and then either edge of the result:"],
+   input["subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];\ntwoEdges = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}, {2, 3}}]];\nHypergraphCausalGraph[twoEdges, 2]"],
+   exText["By default an event depends on an earlier one when they share anything at all. Counting only whole shared edges relates fewer of them:"],
+   input["HypergraphCausalGraph[twoEdges, 2, \"CausalDependence\" -> \"Edges\"]"],
+   exText["The pairs that drop out are the ones whose matches meet only at a vertex:"],
+   input["pairsOf[l_] := {#[\"From\"], #[\"To\"]} & /@ l;\nComplement[pairsOf @ twoEdges[\"CausalEdges\", 2],\n           pairsOf @ twoEdges[\"CausalEdges\", 2, \"CausalDependence\" -> \"Edges\"]]"],
+   input["Select[twoEdges[\"CausalEdges\", 2], #[\"SharedEdges\"] === {} &]"],
+   exText["States and events together, with the causal edges laid over them:"],
+   input["twoEdges[\"EvolutionCausalGraph\", 2]"]},
+  source[$cau, "Causal dependence"],
+  {"$CausalDependenceTypes", "HypergraphRewritingSystem", "HypergraphRuleApply"}
+];
+
+page["$CausalDependenceTypes",
+  {usage["$CausalDependenceTypes", "is the list of values the \"CausalDependence\" option takes."]},
+  {note["\"Elements\", the default, makes two events dependent when what they touch overlaps in anything at all, vertex or edge. It is the weakest reading, and the one the reference paclets take: two rule applications are related when their matched patterns are superposed."],
+   note["\"Edges\" counts only whole shared edges, so two events are related only when one consumed an edge the other made. It is the strictest of the three."],
+   note["\"Vertices\" counts only shared vertices, and is there for the contrast: \"Elements\" is exactly \"Edges\" or \"Vertices\", and the three stand in that relation on every system."],
+   note["Which reading is wanted is a modelling choice, not a fact about the rewriting. Two compositions in disjoint parts of a chain share no arrow but do share the object between them: whether that is a causal connection depends on what the hypergraph is standing for."]},
+  {input["$CausalDependenceTypes"],
+   exText["The three readings on one system, as sets of related pairs:"],
+   input["subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];\ntwoEdges = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}, {2, 3}}]];\npairsOf[l_] := {#[\"From\"], #[\"To\"]} & /@ l;\nAssociationMap[pairsOf @ twoEdges[\"CausalEdges\", 2, \"CausalDependence\" -> #] &, $CausalDependenceTypes]"],
+   exText["Edges and vertices are each a part of elements, and together they are all of it:"],
+   input["With[{byType = pairsOf @ twoEdges[\"CausalEdges\", 2, \"CausalDependence\" -> #] &},\n {SubsetQ[byType[\"Elements\"], byType[\"Edges\"]],\n  SubsetQ[byType[\"Elements\"], byType[\"Vertices\"]],\n  Sort @ byType[\"Elements\"] === Sort @ Union[byType[\"Edges\"], byType[\"Vertices\"]]}]"]},
+  source[$cau, "Causal dependence"],
+  {"HypergraphCausalGraph", "HypergraphRewritingSystem"}
+];
+
+
 (* ================= Guide ================= *)
 
 (* The Guide* styles are defined in Reference.nb but only resolve inside the Documentation
@@ -1147,6 +1243,7 @@ accessors and predicates."],
         pathEntry["src/ArrayAlgebra.wl", "The special arrays, the contraction ArrayMultiply, the \
 entry-by-entry ArrayAdd and ArrayTimes, and FindArrayEquations."],
         pathEntry["src/Rewriting.wl", "HypergraphRule and its application: the matcher, and the \nevents a rewrite produces."],
+        pathEntry["src/Causality.wl", "HypergraphRewritingSystem: the evolution, the tokens that \nfollow an element across a rewrite, and the readings of causal dependence."],
         pathEntry["src/Adjacency.wl", "AdjacencyHypermatrix: the correspondence between edge \nsymmetry types and array symmetries, and the passage from one to the other."],
         pathEntry["src/ArrayGraphics.wl", "The two families of pictures: ArrayGraphics and \
 HypermatrixGraphics in the plane, ArrayGraphics3D and HypermatrixGraphics3D in space, with \
@@ -1157,10 +1254,12 @@ assertion, plus several thousand randomized checks. Run it with wolframscript -f
         pathEntry["tests/ArrayAlgebraExamples.wls", "The same for the special arrays, ArrayMultiply \
 and FindArrayEquations."],
         pathEntry["tests/RewritingExamples.wls", "The same for rewriting, with invariants checked over several hundred events."],
+        pathEntry["tests/CausalityExamples.wls", "The same for rewriting systems and causality."],
         pathEntry["notebooks/HypergraphBasics.nb", "Worked examples with the reasoning behind each \
 design choice."],
         pathEntry["notebooks/HypermatrixBasics.nb", "The same for arrays and hypermatrices."],
         pathEntry["notebooks/RewritingBasics.nb", "The same for rules, matches and events."],
+        pathEntry["notebooks/CausalityBasics.nb", "The same for rewriting systems, evolution and causality."],
         pathEntry["Documentation/English/ReferencePages/Symbols/", "One reference page per exported \
 symbol."],
         pathEntry["Documentation/English/Guides/Hypergraphs.nb", "This guide."],
@@ -1359,13 +1458,36 @@ a rule whose whole input is a single labelled vertex can name what it creates af
         gText["The shape of all this follows the reference paclet, so that rules written for that \
 one read the same here, including the label-variable rules of its chemoid notebooks."],
 
+        gSection["Rewriting systems and causality"],
+        gText["A rewriting system is rules together with a state to start from. Evolving it \
+applies every rule in every way it fits, to every state reached so far, and what comes out is a \
+tree of state occurrences joined by events."],
+        entry["HypergraphRewritingSystem", "rules and an initial state, with the evolution as properties"],
+        entry["HypergraphRewritingSystemQ", "test for a valid system"],
+        entry["HypergraphCausalGraph", "the events, and which of them depended on which"],
+        entry["$CausalDependenceTypes", "the readings of causal dependence on offer"],
+        gText["The properties mirror what the reference paclets give: \"EvolutionGraph\" for the \
+tree of state occurrences, \"StatesGraph\" for the same states merged, \"BranchialGraph\" for \
+the states one step could have reached, and \"CausalGraph\" and \"EvolutionCausalGraph\" for the \
+events and their dependence."],
+        gText["What is not mirrored is that causal dependence here is a choice rather than a \
+fixed meaning. Two events are related when the elements they touch overlap, and the option \
+\"CausalDependence\" says what an element is: anything at all, vertex or edge, which is the \
+weakest reading and the one the reference paclets take, where two rule applications are related \
+as soon as their matched patterns are superposed; or whole edges only, which relates two events \
+just when one consumed an edge the other made. The two readings differ on a real case \
+\[LongDash] two compositions in disjoint parts of a chain share no arrow, but do share the \
+object between them \[LongDash] and which is wanted is a fact about what the hypergraph stands \
+for rather than about the rewriting."],
+        gText["Elements are followed by token rather than by value, since an edge is an element \
+of a multiset and two edges that look the same are still two elements. A causal edge reports not \
+only that two events are related but which elements they had in common."],
+
         gSection["Not yet implemented"],
         gText["The objects, isomorphism, the array algebra, the drawing, the adjacency \
-hypermatrix and the core of rewriting are all in place. What remains of the rewriting is the \
-machinery around it: the generations of states a rule produces, the causal graph of its events, \
-and the conditions under which two events depend on one another or their matches overlap. After \
-that come the plex diagrams that tie rewriting to hypermatrix algebra, and a visual editor for \
-hypergraphs and for rules."]
+hypermatrix, rewriting and the causal machinery are all in place. What remains are the plex \
+diagrams that tie rewriting to hypermatrix algebra, and a visual editor for hypergraphs and for \
+rules."]
     }],
     StyleDefinitions -> "Default.nb",
     WindowSize -> {820, 750}
@@ -1377,6 +1499,8 @@ Print["symbol pages : ", Length @ FileNames["*.nb", $symbolDir]];
 Print["guide pages  : ", Length @ FileNames["*.nb", $guideDir]];
 Print["failed example evaluations: ", Length[$failed]];
 Scan[Print["   ", #] &, $failed];
+Print["pages that could not be written: ", Length[$brokenPages]];
+Scan[Print["   ", #] &, $brokenPages];
 
 
 

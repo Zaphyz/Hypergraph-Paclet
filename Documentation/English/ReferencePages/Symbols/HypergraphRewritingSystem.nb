@@ -1,0 +1,1730 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[     78480,       1721]
+NotebookOptionsPosition[     75193,       1677]
+NotebookOutlinePosition[     75541,       1692]
+CellTagsIndexPosition[     75498,       1689]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["HypergraphRewritingSystem", "ObjectName",ExpressionUUID->"c6373ddc-a6ea-6348-8aec-c9979553fd5d"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"HypergraphRewritingSystem", "[", 
+    RowBox[{"rules", ",", " ", "init"}], "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"4de4115d-dbff-bf47-a1b1-f9068e01e262"],
+ " ",
+ "represents the rewriting system with the given rules started from the \
+hypergraph init."
+}], "Usage",ExpressionUUID->"8aff6f2b-2991-b84d-a941-7c97d3e62a9e"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"sys", "[", 
+    RowBox[{"prop", ",", " ", "n"}], "]"}], "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"03f84b12-f4e2-2944-a1a9-53e8c62993ae"],
+ " ",
+ "gives a property of the evolution carried n generations."
+}], "Usage",ExpressionUUID->"ec446931-7f87-474d-9c7a-2dcbd6f2ae13"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"005e66a1-b3d4-924e-bfab-5606b1332fa6"],
+
+Cell["\<\
+rules may be one HypergraphRule, a list of them, or plain arrows input -> \
+output, which are converted; init may be anything Hypergraph accepts.\
+\>", "Notes",ExpressionUUID->"91027085-b7d6-1041-a557-4e6ddd68c61c"],
+
+Cell["\<\
+Evolving means applying every rule in every way it fits, to every state \
+reached so far. The result is a tree of state occurrences joined by events: a \
+state reached two ways appears twice, since which elements it is made of \
+depends on how it was reached.\
+\>", "Notes",ExpressionUUID->"f9fd212c-7721-314d-a107-e86a8192a906"],
+
+Cell[TextData[{
+ "The properties are \"Rules\", \"RuleCount\", \"InitialState\", \"States\", \
+\"StateList\", \"StateCount\", \"EventList\", \"EventCount\", \
+\"EvolutionGraph\", \"StatesGraph\", \"BranchialGraph\", \"CausalGraph\", \
+\"CausalEdges\" and \"EvolutionCausalGraph\". ",
+ Cell[BoxData[
+  StyleBox[
+   RowBox[{"sys", "[", "\"\<Properties\>\"", "]"}], "InlineCode"]], 
+  "InlineFormula",ExpressionUUID->"0ddb9d0e-c0b6-7c4b-9971-035767971a57"],
+ " lists them."
+}], "Notes",ExpressionUUID->"7a6c43bb-f0b5-b943-91ae-f7e3c4d9329e"],
+
+Cell["\<\
+The number of generations defaults to 1, so sys[\"CausalGraph\"] and \
+sys[\"CausalGraph\", 1] are the same.\
+\>", "Notes",ExpressionUUID->"6c42ce93-d1f1-5143-850b-d4ba62373201"],
+
+Cell[TextData[{
+ "Options are those of ",
+ Cell[BoxData[
+  StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"c971da81-e1ee-5140-8700-ea938a103552"],
+ ", and are given to the property: \"CausalDependence\", \
+\"TransitiveReduction\", \"CanonicalizeStates\", \"MaxStates\", and the \
+matching options \"Labeled\", \"LabelPatterns\" and \"DistinctVertices\"."
+}], "Notes",ExpressionUUID->"bd8ae54f-0e0a-2a41-a3f7-3aed3943334f"],
+
+Cell["\<\
+An event of \"EventList\" is an association with \"Rule\" and \"RuleIndex\", \
+which rule fired; \"Generation\"; \"InputState\" and \"OutputState\", indices \
+into \"StateList\"; \"ConsumedEdges\", \"CreatedEdges\", \"MatchedVertices\", \
+\"CreatedVertices\" and \"DestroyedVertices\", the elements it touched, as \
+tokens; and \"Data\", the event HypergraphRuleApply gave.\
+\>", "Notes",ExpressionUUID->"95604b35-2eff-6d46-8179-bd599b3d20e5"],
+
+Cell["\<\
+Elements are tracked by token rather than by value, because an edge is an \
+element of a multiset: two edges that look the same are still two elements, \
+and a vertex identifier freed by one event may be handed out again by a later \
+one. A token is minted when an element is created and carried for as long as \
+it survives.\
+\>", "Notes",ExpressionUUID->"4a067bec-2a12-554a-86de-6f0b8c330920"],
+
+Cell["\<\
+\"MaxStates\", by default 2048, stops an evolution that is growing faster \
+than expected and gives HypergraphRewritingSystem::trunc rather than running \
+on.\
+\>", "Notes",ExpressionUUID->"7c975766-399f-8842-b92b-c658cd59c202"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"3613836e-753e-194c-a6e0-4a1f8ae4de1a"],
+
+Cell["A rule that subdivides an edge, started from one edge:", "ExampleText",ExpressionUUID->"7c1665a7-6593-cf4f-9970-3d023ca69d95"],
+
+Cell["\<\
+subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];
+system = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]]\
+\>", "Input",ExpressionUUID->"d96327d2-f4a2-2944-9dff-e36ee397226f"],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox["HypergraphRewritingSystem",
+    "SummaryHead"], "[", 
+   DynamicModuleBox[{Typeset`open$$ = False, Typeset`embedState$$ = "Ready"}, 
+    
+    TemplateBox[{
+      PaneSelectorBox[{False -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxOpener"]], 
+              ButtonFunction :> (Typeset`open$$ = True), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              Hue[0.58, 0.7, 0.7], 
+              AbsoluteThickness[1.2], 
+              LineBox[{{0, 1}, {-0.75, 0}}], 
+              LineBox[{{0, 1}, {0.75, 0}}], 
+              LineBox[{{-0.75, 0}, {-1.15, -1}}], 
+              LineBox[{{-0.75, 0}, {-0.35, -1}}], 
+              LineBox[{{0.75, 0}, {0.35, -1}}], 
+              LineBox[{{0.75, 0}, {1.15, -1}}], 
+              Hue[0.11, 0.85, 0.85], 
+              DiskBox[{0, 1}, 0.19], 
+              DiskBox[{-0.75, 0}, 0.19], 
+              DiskBox[{0.75, 0}, 0.19], 
+              DiskBox[{-1.15, -1}, 0.19], 
+              DiskBox[{-0.35, -1}, 0.19], 
+              DiskBox[{0.35, -1}, 0.19], 
+              DiskBox[{1.15, -1}, 0.19]}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.2 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], PlotRangePadding -> 0.3], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Rules: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["1", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Initial state: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{"2", "\" vertices, \"", "1", "\" edges\""}, 
+                   "RowDefault"], "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}], True -> GridBox[{{
+            PaneBox[
+             ButtonBox[
+              DynamicBox[
+               FEPrivate`FrontEndResource["FEBitmaps", "SummaryBoxCloser"]], 
+              ButtonFunction :> (Typeset`open$$ = False), Appearance -> None, 
+              BaseStyle -> {}, Evaluator -> Automatic, Method -> 
+              "Preemptive"], Alignment -> {Center, Center}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.5 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}]], 
+            GraphicsBox[{
+              Hue[0.58, 0.7, 0.7], 
+              AbsoluteThickness[1.2], 
+              LineBox[{{0, 1}, {-0.75, 0}}], 
+              LineBox[{{0, 1}, {0.75, 0}}], 
+              LineBox[{{-0.75, 0}, {-1.15, -1}}], 
+              LineBox[{{-0.75, 0}, {-0.35, -1}}], 
+              LineBox[{{0.75, 0}, {0.35, -1}}], 
+              LineBox[{{0.75, 0}, {1.15, -1}}], 
+              Hue[0.11, 0.85, 0.85], 
+              DiskBox[{0, 1}, 0.19], 
+              DiskBox[{-0.75, 0}, 0.19], 
+              DiskBox[{0.75, 0}, 0.19], 
+              DiskBox[{-1.15, -1}, 0.19], 
+              DiskBox[{-0.35, -1}, 0.19], 
+              DiskBox[{0.35, -1}, 0.19], 
+              DiskBox[{1.15, -1}, 0.19]}, ImageSize -> 
+             Dynamic[{
+               Automatic, 
+                3.2 (CurrentValue["FontCapHeight"]/AbsoluteCurrentValue[
+                 Magnification])}], PlotRangePadding -> 0.3], 
+            GridBox[{{
+               RowBox[{
+                 TagBox["\"Rules: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox["1", "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Initial state: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  
+                  TemplateBox[{"2", "\" vertices, \"", "1", "\" edges\""}, 
+                   "RowDefault"], "SummaryItem"]}]}, {
+               RowBox[{
+                 TagBox["\"Signatures: \"", "SummaryItemAnnotation"], 
+                 "\[InvisibleSpace]", 
+                 TagBox[
+                  RowBox[{"{", 
+                    RowBox[{"{", 
+                    RowBox[{
+                    RowBox[{"{", 
+                    RowBox[{"1", ",", "2"}], "}"}], ",", 
+                    RowBox[{"{", 
+                    RowBox[{"2", ",", "3"}], "}"}]}], "}"}], "}"}], 
+                  "SummaryItem"]}]}}, 
+             GridBoxAlignment -> {
+              "Columns" -> {{Left}}, "Rows" -> {{Automatic}}}, AutoDelete -> 
+             False, GridBoxItemSize -> {
+              "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+             GridBoxSpacings -> {"Columns" -> {{2}}, "Rows" -> {{Automatic}}},
+              BaseStyle -> {
+              ShowStringCharacters -> False, NumberMarks -> False, 
+               PrintPrecision -> 3, ShowSyntaxStyles -> False}]}}, 
+          GridBoxAlignment -> {"Columns" -> {{Left}}, "Rows" -> {{Top}}}, 
+          AutoDelete -> False, 
+          GridBoxItemSize -> {
+           "Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}, 
+          BaselinePosition -> {1, 1}]}, 
+       Dynamic[Typeset`open$$], ImageSize -> Automatic]},
+     "SummaryPanel"],
+    DynamicModuleValues:>{}], "]"}],
+  WolframInstitute`Hypergraphs`HypergraphRewritingSystem[{
+    WolframInstitute`Hypergraphs`HypergraphRule[
+     WolframInstitute`Hypergraphs`Hypergraph[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[2]}, {
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[1], 
+         WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+     WolframInstitute`Hypergraphs`Hypergraph[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[2], 
+       WolframInstitute`Hypergraphs`Vertex[3]}, {
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[1], 
+         WolframInstitute`Hypergraphs`Vertex[3]}, "Directed"], 
+       WolframInstitute`Hypergraphs`Edge[{
+         WolframInstitute`Hypergraphs`Vertex[3], 
+         WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, 
+   WolframInstitute`Hypergraphs`Hypergraph[{
+     WolframInstitute`Hypergraphs`Vertex[1], 
+     WolframInstitute`Hypergraphs`Vertex[2]}, {
+     WolframInstitute`Hypergraphs`Edge[{
+       WolframInstitute`Hypergraphs`Vertex[1], 
+       WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]],
+  Editable->False,
+  SelectWithContents->True,
+  Selectable->False]], "Output",ExpressionUUID->"a2f18f21-65d2-0547-b92c-\
+831cea5b68d6"],
+
+Cell["\<\
+Every edge of every state is a place the rule fits, so the states multiply:\
+\>", "ExampleText",ExpressionUUID->"51391eaa-8096-0248-ac95-d59fed1c9130"],
+
+Cell["\<\
+Table[{system[\"StateCount\", g], system[\"EventCount\", g]}, {g, 0, 3}]\
+\>", "Input",ExpressionUUID->"8a0e7ed0-52e5-2149-b1df-ec7f10364cb4"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"1", ",", "0"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"2", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"4", ",", "3"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"10", ",", "9"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
+"b3db1b25-4a94-9444-83e6-976736acef0b"],
+
+Cell["The states of each generation:", "ExampleText",ExpressionUUID->"8193de96-60e6-844c-9d3b-0d4f4bda4fd4"],
+
+Cell["system[\"States\", 2]", "Input",ExpressionUUID->"eadc2a64-e008-f84e-ac3c-0c995f3fd1f6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    GraphicsBox[
+     NamespaceBox["Hypergraphs",
+      DynamicModuleBox[{Typeset`hg = HoldComplete[
+        WolframInstitute`Hypergraphs`Hypergraph[{
+          WolframInstitute`Hypergraphs`Vertex[1], 
+          WolframInstitute`Hypergraphs`Vertex[2]}, {
+          WolframInstitute`Hypergraphs`Edge[{
+            WolframInstitute`Hypergraphs`Vertex[1], 
+            WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, 
+       {AbsoluteThickness[Medium], Opacity[0.5], 
+        Arrowheads[{{Medium, 0.5}}], 
+        {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+         {Hue[0.63, 0.7, 0.5], Opacity[
+          0.7], {ArrowBox[
+            LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+          {Opacity[1]}}}, 
+        {Opacity[1], 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], DiskBox[{1., 0.}, Offset[{2., 2.}, {0., 0.}]], 
+          DiskBox[{0., 1.2246467991473532`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontColor->GrayLevel[0]], {1., 0.}, 
+           ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontColor->GrayLevel[0]], {0., 1.2246467991473532*^-16}, 
+           ImageScaled[{1.5, 0.4999999999999999}]]}}}]],
+     Background->GrayLevel[1],
+     ImagePadding->20,
+     PlotRange->{{0., 1.}, {-0.16666666666666666`, 0.16666666666666677`}},
+     PlotRangePadding->Scaled[0.02]], "}"}], ",", 
+   RowBox[{"{", 
+    GraphicsBox[
+     NamespaceBox["Hypergraphs",
+      DynamicModuleBox[{Typeset`hg = HoldComplete[
+        WolframInstitute`Hypergraphs`Hypergraph[{
+          WolframInstitute`Hypergraphs`Vertex[1], 
+          WolframInstitute`Hypergraphs`Vertex[2], 
+          WolframInstitute`Hypergraphs`Vertex[
+           \[FormalV][1]]}, {
+          WolframInstitute`Hypergraphs`Edge[{
+            WolframInstitute`Hypergraphs`Vertex[1], 
+            WolframInstitute`Hypergraphs`Vertex[
+             \[FormalV][1]]}, "Directed"], 
+          WolframInstitute`Hypergraphs`Edge[{
+            WolframInstitute`Hypergraphs`Vertex[
+             \[FormalV][1]], 
+            WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, 
+       {AbsoluteThickness[Medium], Opacity[0.5], Arrowheads[{{Medium, 0.5}}], {
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[
+           0.7], {ArrowBox[
+             LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+              2.4492935982947064`*^-16}}]], {}}, 
+           {Opacity[1]}}}, 
+         {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+          {Hue[0.63, 0.7, 0.5], Opacity[
+           0.7], {ArrowBox[
+             LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+           {Opacity[1]}}}}, 
+        {Opacity[1], 
+         {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+          0.95]}], 
+          DiskBox[{0., 3.6739403974420594`*^-16}, Offset[{2., 2.}, {0., 0.}]],
+           DiskBox[{2., 0.}, Offset[{2., 2.}, {0., 0.}]], 
+          DiskBox[{1., 2.4492935982947064`*^-16}, 
+           Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+           StyleBox["1",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
+           ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+           StyleBox["2",
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontColor->GrayLevel[0]], {2., 0.}, 
+           ImageScaled[{-0.5, 0.5000000000000002}]], InsetBox[
+           StyleBox[
+            RowBox[{"\[FormalV]", "(", "1", ")"}],
+            StripOnInput->False,
+            LineColor->GrayLevel[0],
+            FrontFaceColor->GrayLevel[0],
+            BackFaceColor->GrayLevel[0],
+            GraphicsColor->GrayLevel[0],
+            FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
+           ImageScaled[{0.5, -0.5}]]}}}]],
+     Background->GrayLevel[1],
+     ImagePadding->20,
+     PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
+     PlotRangePadding->Scaled[0.02]], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     GraphicsBox[
+      NamespaceBox["Hypergraphs",
+       DynamicModuleBox[{Typeset`hg = HoldComplete[
+         WolframInstitute`Hypergraphs`Hypergraph[{
+           WolframInstitute`Hypergraphs`Vertex[1], 
+           WolframInstitute`Hypergraphs`Vertex[2], 
+           WolframInstitute`Hypergraphs`Vertex[
+            \[FormalV][1]], 
+           WolframInstitute`Hypergraphs`Vertex[
+            \[FormalV][2]]}, {
+           WolframInstitute`Hypergraphs`Edge[{
+             WolframInstitute`Hypergraphs`Vertex[1], 
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][2]]}, "Directed"], 
+           WolframInstitute`Hypergraphs`Edge[{
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][1]], 
+             WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"], 
+           WolframInstitute`Hypergraphs`Edge[{
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][2]], 
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][1]]}, "Directed"]}]]}, 
+        {AbsoluteThickness[Medium], Opacity[0.5], 
+         Arrowheads[{{Medium, 0.5}}], {
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[
+            0.7], {ArrowBox[
+              LineBox[{{0., 6.123233995736766*^-16}, {1., 
+               4.898587196589413*^-16}}]], {}}, 
+            {Opacity[1]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[
+            0.7], {ArrowBox[
+              LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+            {Opacity[1]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[
+            0.7], {ArrowBox[
+              LineBox[{{1., 4.898587196589413*^-16}, {2., 
+               2.4492935982947064`*^-16}}]], {}}, 
+            {Opacity[1]}}}}, 
+         {Opacity[1], 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0., 6.123233995736766*^-16}, Offset[{2., 2.}, {0., 0.}]], 
+           DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]], 
+           DiskBox[{2., 2.4492935982947064`*^-16}, 
+            Offset[{2., 2.}, {0., 0.}]], 
+           DiskBox[{1., 4.898587196589413*^-16}, 
+            Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+            StyleBox["1",
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {0., 6.123233995736766*^-16}, 
+            ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+            StyleBox["2",
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {3., 0.}, 
+            ImageScaled[{-0.5, 0.5000000000000002}]], InsetBox[
+            StyleBox[
+             RowBox[{"\[FormalV]", "(", "1", ")"}],
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {2., 2.4492935982947064*^-16}, 
+            ImageScaled[{-0.5, 0.5000000000000002}]], InsetBox[
+            StyleBox[
+             RowBox[{"\[FormalV]", "(", "2", ")"}],
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {1., 4.898587196589413*^-16}, 
+            ImageScaled[{1.5, 0.49999999999999967}]]}}}]],
+      Background->GrayLevel[1],
+      ImagePadding->20,
+      PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
+      PlotRangePadding->Scaled[0.02]], ",", 
+     GraphicsBox[
+      NamespaceBox["Hypergraphs",
+       DynamicModuleBox[{Typeset`hg = HoldComplete[
+         WolframInstitute`Hypergraphs`Hypergraph[{
+           WolframInstitute`Hypergraphs`Vertex[1], 
+           WolframInstitute`Hypergraphs`Vertex[2], 
+           WolframInstitute`Hypergraphs`Vertex[
+            \[FormalV][1]], 
+           WolframInstitute`Hypergraphs`Vertex[
+            \[FormalV][2]]}, {
+           WolframInstitute`Hypergraphs`Edge[{
+             WolframInstitute`Hypergraphs`Vertex[1], 
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][1]]}, "Directed"], 
+           WolframInstitute`Hypergraphs`Edge[{
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][1]], 
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][2]]}, "Directed"], 
+           WolframInstitute`Hypergraphs`Edge[{
+             WolframInstitute`Hypergraphs`Vertex[
+              \[FormalV][2]], 
+             WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, 
+        {AbsoluteThickness[Medium], Opacity[0.5], 
+         Arrowheads[{{Medium, 0.5}}], {
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[
+            0.7], {ArrowBox[
+              LineBox[{{0., 6.123233995736766*^-16}, {1., 
+               4.898587196589413*^-16}}]], {}}, 
+            {Opacity[1]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[
+            0.7], {ArrowBox[
+              LineBox[{{1., 4.898587196589413*^-16}, {2., 
+               2.4492935982947064`*^-16}}]], {}}, 
+            {Opacity[1]}}}, 
+          {Opacity[1], Arrowheads[{{Small, 0.5}}], 
+           {Hue[0.63, 0.7, 0.5], Opacity[
+            0.7], {ArrowBox[
+              LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+            {Opacity[1]}}}}, 
+         {Opacity[1], 
+          {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], Opacity[
+           0.95]}], 
+           DiskBox[{0., 6.123233995736766*^-16}, Offset[{2., 2.}, {0., 0.}]], 
+           DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]], 
+           DiskBox[{1., 4.898587196589413*^-16}, Offset[{2., 2.}, {0., 0.}]], 
+           DiskBox[{2., 2.4492935982947064`*^-16}, 
+            Offset[{2., 2.}, {0., 0.}]]}, {InsetBox[
+            StyleBox["1",
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {0., 6.123233995736766*^-16}, 
+            ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+            StyleBox["2",
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {3., 0.}, 
+            ImageScaled[{-0.5, 0.5000000000000002}]], InsetBox[
+            StyleBox[
+             RowBox[{"\[FormalV]", "(", "1", ")"}],
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {1., 4.898587196589413*^-16}, 
+            ImageScaled[{1.5, 0.49999999999999967}]], InsetBox[
+            StyleBox[
+             RowBox[{"\[FormalV]", "(", "2", ")"}],
+             StripOnInput->False,
+             LineColor->GrayLevel[0],
+             FrontFaceColor->GrayLevel[0],
+             BackFaceColor->GrayLevel[0],
+             GraphicsColor->GrayLevel[0],
+             FontColor->GrayLevel[0]], {2., 2.4492935982947064*^-16}, 
+            ImageScaled[{-0.5, 0.5000000000000002}]]}}}]],
+      Background->GrayLevel[1],
+      ImagePadding->20,
+      PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
+      PlotRangePadding->Scaled[0.02]]}], "}"}]}], "}"}]], "Output",ExpressionU\
+UID->"1a1bdd84-08f4-b941-aac3-bf7ca4b4708e"],
+
+Cell["What one event did, in the tokens the causal reading uses:", \
+"ExampleText",ExpressionUUID->"03cefa26-0415-0843-a73f-c94691d081aa"],
+
+Cell["KeyDrop[First @ system[\"EventList\", 1], {\"Rule\", \"Data\"}]", \
+"Input",ExpressionUUID->"2d984326-11c6-664a-a7ea-d80f48749412"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"RuleIndex\"\>", "\[Rule]", "1"}], ",", 
+   RowBox[{"\<\"Generation\"\>", "\[Rule]", "1"}], ",", 
+   RowBox[{"\<\"InputState\"\>", "\[Rule]", "1"}], ",", 
+   RowBox[{"\<\"ConsumedEdges\"\>", "\[Rule]", 
+    RowBox[{"{", "1", "}"}]}], ",", 
+   RowBox[{"\<\"CreatedEdges\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"2", ",", "3"}], "}"}]}], ",", 
+   RowBox[{"\<\"MatchedVertices\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{"1", ",", "2"}], "}"}]}], ",", 
+   RowBox[{"\<\"CreatedVertices\"\>", "\[Rule]", 
+    RowBox[{"{", "3", "}"}]}], ",", 
+   RowBox[{"\<\"DestroyedVertices\"\>", "\[Rule]", 
+    RowBox[{"{", "}"}]}], ",", 
+   RowBox[{"\<\"OutputState\"\>", "\[Rule]", "2"}]}], 
+  "\[RightAssociation]"}]], "Output",ExpressionUUID->"8bcabf99-852f-8447-8900-\
+460307aa5cc0"],
+
+Cell["\<\
+The evolution as a tree of state occurrences, and the same states merged up \
+to canonical form:\
+\>", "ExampleText",ExpressionUUID->"9eef375f-b54e-6d47-b822-70b429c42ac4"],
+
+Cell["{system[\"EvolutionGraph\", 2], system[\"StatesGraph\", 2]}", "Input",ExpressionUUID->"b18b45ef-a44f-3f45-95a1-a12c0bdb9ca1"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   GraphicsBox[
+    NamespaceBox["NetworkGraphics",
+     DynamicModuleBox[{Typeset`graph = HoldComplete[
+       Graph[{1, 2, 3, 4}, {{{1, 2}, {2, 3}, {2, 4}}, Null, Automatic}, {
+        GraphLayout -> "LayeredDigraphEmbedding", VertexLabels -> {2 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             Tooltip], 4 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             Tooltip], 1 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             Tooltip], 3 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"]}], Tooltip]}, 
+         VertexSize -> {Medium}, VertexStyle -> {
+           Directive[
+            Hue[0.58, 0.55, 0.92], 
+            EdgeForm[
+             Hue[0.58, 0.8, 0.6]]]}}]]}, 
+      TagBox[GraphicsGroupBox[{
+         {Hue[0.6, 0.7, 0.7], Opacity[0.7], CapForm["Round"], Arrowheads[
+          Medium], 
+          ArrowBox[{
+           DynamicLocation["VertexID$1", Automatic, Center], DynamicLocation[
+            "VertexID$2", Automatic, Center]}], 
+          ArrowBox[{
+           DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
+            "VertexID$3", Automatic, Center]}], 
+          ArrowBox[{
+           DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
+            "VertexID$4", Automatic, Center]}]}, 
+         {Hue[0.58, 0.55, 0.92], EdgeForm[{Hue[0.58, 0.8, 0.6], Opacity[
+          0.7]}], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{0., 2.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$1"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{1., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{0., 1.2246467991473532`*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000001}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 1.2246467991473532`*^-16}, 
+                   ImageScaled[{1.5, 0.4999999999999999}]]}}]], {}, 
+              PlotRange -> {{0., 1.}, {-0.16666666666666666`, 
+               0.16666666666666677`}}, PlotRangePadding -> Scaled[0.02], 
+              ImagePadding -> 20, Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$1"], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{0., 1.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$2"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{0., 3.6739403974420594`*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{2., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{1., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 3.6739403974420594`*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999983`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   2., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "1", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 2.4492935982947064`*^-16}, 
+                   ImageScaled[{0.5, -0.5}]]}}]], {}, 
+              PlotRange -> {{0., 2.}, {-0.3333333333333333, 
+               0.3333333333333337}}, PlotRangePadding -> Scaled[0.02], 
+              ImagePadding -> 20, Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$2"], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{-1., 0.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$3"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{3., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 6.123233995736766*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999983`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   3., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "1", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   2., 2.4492935982947064`*^-16}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "2", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 4.898587196589413*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999967`}]]}}]], {}, 
+              PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+              PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+              Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"]}], "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$3"], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{0., 0.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$4"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{3., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 6.123233995736766*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999983`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   3., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "1", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 4.898587196589413*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999967`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "2", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   2., 2.4492935982947064`*^-16}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]]}}]], {}, 
+              PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+              PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+              Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$4"]}}],
+       MouseAppearanceTag["NetworkGraphics"]],
+      AllowKernelInitialization->False]],
+    DefaultBaseStyle->"NetworkGraphics",
+    FormatType->TraditionalForm,
+    FrameTicks->None], ",", 
+   GraphicsBox[
+    NamespaceBox["NetworkGraphics",
+     DynamicModuleBox[{Typeset`graph = HoldComplete[
+       Graph[{1, 2, 3, 4}, {{{1, 2}, {2, 3}, {2, 4}}, Null}, {
+        GraphLayout -> "LayeredDigraphEmbedding", VertexLabels -> {2 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             Tooltip], 4 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             Tooltip], 1 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             Tooltip], 3 -> Placed[
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"]}], Tooltip]}, 
+         VertexSize -> {Medium}, VertexStyle -> {
+           Directive[
+            Hue[0.58, 0.55, 0.92], 
+            EdgeForm[
+             Hue[0.58, 0.8, 0.6]]]}}]]}, 
+      TagBox[GraphicsGroupBox[{
+         {Hue[0.6, 0.7, 0.7], Opacity[0.7], CapForm["Round"], Arrowheads[
+          Medium], 
+          ArrowBox[{
+           DynamicLocation["VertexID$1", Automatic, Center], DynamicLocation[
+            "VertexID$2", Automatic, Center]}], 
+          ArrowBox[{
+           DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
+            "VertexID$3", Automatic, Center]}], 
+          ArrowBox[{
+           DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
+            "VertexID$4", Automatic, Center]}]}, 
+         {Hue[0.58, 0.55, 0.92], EdgeForm[{Hue[0.58, 0.8, 0.6], Opacity[
+          0.7]}], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{0., 2.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$1"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{1., 0.}, {0., 1.2246467991473532`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{1., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{0., 1.2246467991473532`*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000001}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 1.2246467991473532`*^-16}, 
+                   ImageScaled[{1.5, 0.4999999999999999}]]}}]], {}, 
+              PlotRange -> {{0., 1.}, {-0.16666666666666666`, 
+               0.16666666666666677`}}, PlotRangePadding -> Scaled[0.02], 
+              ImagePadding -> 20, Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$1"], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{0., 1.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$2"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{0., 3.6739403974420594`*^-16}, {1., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{0., 3.6739403974420594`*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{2., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{1., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 3.6739403974420594`*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999983`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   2., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "1", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 2.4492935982947064`*^-16}, 
+                   ImageScaled[{0.5, -0.5}]]}}]], {}, 
+              PlotRange -> {{0., 2.}, {-0.3333333333333333, 
+               0.3333333333333337}}, PlotRangePadding -> Scaled[0.02], 
+              ImagePadding -> 20, Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$2"], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{-1., 0.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$3"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{3., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 6.123233995736766*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999983`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   3., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "1", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   2., 2.4492935982947064`*^-16}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "2", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 4.898587196589413*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999967`}]]}}]], {}, 
+              PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+              PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+              Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"]}], "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$3"], 
+          TagBox[
+           TagBox[
+            TooltipBox[
+             TagBox[DiskBox[{0., 0.}, 0.1],
+              "DynamicName",
+              BoxID -> "VertexID$4"],
+             GraphicsBox[
+              NamespaceBox["Hypergraphs", 
+               DynamicModuleBox[{Typeset`hg = HoldComplete[
+                   WolframInstitute`Hypergraphs`Hypergraph[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[2], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, {
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[1], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][1]], 
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]]}, "Directed"], 
+                    WolframInstitute`Hypergraphs`Edge[{
+                    WolframInstitute`Hypergraphs`Vertex[
+                    \[FormalV][2]], 
+                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, {
+                 Opacity[0.5], 
+                 Arrowheads[{{Medium, 0.5}}], 
+                 AbsoluteThickness[Medium], {{
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
+                    4.898587196589413*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    
+                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
+                    2.4492935982947064`*^-16}}]], {}}, 
+                    Opacity[1], {}}}, {
+                   Opacity[1], 
+                   Arrowheads[{{Small, 0.5}}], {
+                    Directive[
+                    Opacity[0.7], 
+                    Hue[0.63, 0.7, 0.5]], {
+                    ArrowBox[
+                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
+                    Opacity[1], {}}}}, 
+                 Opacity[1], {
+                  Directive[
+                   Hue[0.63, 0.26, 0.89], 
+                   EdgeForm[
+                    Directive[
+                    Hue[0.63, 0.7, 0.33], 
+                    Opacity[0.95]]]], {
+                   DiskBox[{0., 6.123233995736766*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{3., 0.}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{1., 4.898587196589413*^-16}, 
+                    Offset[{2., 2.}]], 
+                   DiskBox[{2., 2.4492935982947064`*^-16}, 
+                    Offset[{2., 2.}]]}}, {
+                  InsetBox[
+                   FormBox[
+                    StyleBox["1", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   0., 6.123233995736766*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999983`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox["2", 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   3., 0.}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "1", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   1., 4.898587196589413*^-16}, 
+                   ImageScaled[{1.5, 0.49999999999999967`}]], 
+                  InsetBox[
+                   FormBox[
+                    StyleBox[
+                    RowBox[{"\[FormalV]", "(", "2", ")"}], 
+                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
+                   2., 2.4492935982947064`*^-16}, 
+                   ImageScaled[{-0.5, 0.5000000000000002}]]}}]], {}, 
+              PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
+              PlotRangePadding -> Scaled[0.02], ImagePadding -> 20, 
+              Background -> GrayLevel[1]]],
+            Annotation[#, 
+             WolframInstitute`Hypergraphs`Hypergraph[{
+               WolframInstitute`Hypergraphs`Vertex[1], 
+               WolframInstitute`Hypergraphs`Vertex[2], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][1]], 
+               WolframInstitute`Hypergraphs`Vertex[
+                \[FormalV][2]]}, {
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[1], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][1]], 
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]]}, "Directed"], 
+               WolframInstitute`Hypergraphs`Edge[{
+                 WolframInstitute`Hypergraphs`Vertex[
+                  \[FormalV][2]], 
+                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
+             "Tooltip"]& ],
+           "DynamicName",
+           BoxID -> "VertexLabelID$4"]}}],
+       MouseAppearanceTag["NetworkGraphics"]],
+      AllowKernelInitialization->False]],
+    DefaultBaseStyle->"NetworkGraphics",
+    FormatType->TraditionalForm,
+    FrameTicks->None]}], "}"}]], "Output",ExpressionUUID->"67337b83-2bf2-a747-\
+8115-9b42f284b38e"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"9a3929d3-f8c4-ae46-b18f-63fce582d2cd"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Causality.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "The system object",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"338e4e35-5e8c-8c49-8ec9-95f953848db1"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"7bce3720-3344-6b4a-a210-d63266ccaf65"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"efb25eb2-cc3d-9044-94c3-9b98bf5ca319"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"ef8d25ba-ee74-394b-bdf9-bd9f4cdcf5bb"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
+  "6d4a4910-480b-3f46-8630-e3363a9414f1"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"419fc72d-be72-3c46-bd69-c103bc6025ca"]
+}], "SeeAlso",ExpressionUUID->"677e7762-fd04-7848-9e44-57f642bbf4d8"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"dc3b1e92-c5bd-3645-b316-02820f66faac"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 102, 0, 70, "ObjectName",ExpressionUUID->"c6373ddc-a6ea-6348-8aec-c9979553fd5d"],
+Cell[659, 22, 403, 9, 70, "Usage",ExpressionUUID->"8aff6f2b-2991-b84d-a941-7c97d3e62a9e"],
+Cell[1056, 33, 344, 8, 70, "Usage",ExpressionUUID->"ec446931-7f87-474d-9c7a-2dcbd6f2ae13"],
+Cell[1395, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"005e66a1-b3d4-924e-bfab-5606b1332fa6"],
+Cell[1496, 45, 228, 3, 70, "Notes",ExpressionUUID->"91027085-b7d6-1041-a557-4e6ddd68c61c"],
+Cell[1724, 50, 344, 5, 70, "Notes",ExpressionUUID->"f9fd212c-7721-314d-a107-e86a8192a906"],
+Cell[2066, 57, 548, 10, 70, "Notes",ExpressionUUID->"7a6c43bb-f0b5-b943-91ae-f7e3c4d9329e"],
+Cell[2607, 69, 191, 3, 70, "Notes",ExpressionUUID->"6c42ce93-d1f1-5143-850b-d4ba62373201"],
+Cell[2798, 74, 468, 8, 70, "Notes",ExpressionUUID->"bd8ae54f-0e0a-2a41-a3f7-3aed3943334f"],
+Cell[3261, 84, 459, 6, 70, "Notes",ExpressionUUID->"95604b35-2eff-6d46-8179-bd599b3d20e5"],
+Cell[3717, 92, 411, 6, 70, "Notes",ExpressionUUID->"4a067bec-2a12-554a-86de-6f0b8c330920"],
+Cell[4125, 100, 242, 4, 70, "Notes",ExpressionUUID->"7c975766-399f-8842-b92b-c658cd59c202"],
+Cell[4366, 106, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"3613836e-753e-194c-a6e0-4a1f8ae4de1a"],
+Cell[4466, 108, 132, 0, 70, "ExampleText",ExpressionUUID->"7c1665a7-6593-cf4f-9970-3d023ca69d95"],
+Cell[4601, 110, 206, 3, 70, "Input",ExpressionUUID->"d96327d2-f4a2-2944-9dff-e36ee397226f"],
+Cell[4807, 115, 7744, 165, 70, "Output",ExpressionUUID->"a2f18f21-65d2-0547-b92c-831cea5b68d6"],
+Cell[12389, 282, 163, 2, 70, "ExampleText",ExpressionUUID->"51391eaa-8096-0248-ac95-d59fed1c9130"],
+Cell[12553, 286, 154, 2, 70, "Input",ExpressionUUID->"8a0e7ed0-52e5-2149-b1df-ec7f10364cb4"],
+Cell[12708, 290, 358, 11, 70, "Output",ExpressionUUID->"b3db1b25-4a94-9444-83e6-976736acef0b"],
+Cell[13058, 303, 108, 0, 70, "ExampleText",ExpressionUUID->"8193de96-60e6-844c-9d3b-0d4f4bda4fd4"],
+Cell[13169, 305, 93, 0, 70, "Input",ExpressionUUID->"eadc2a64-e008-f84e-ac3c-0c995f3fd1f6"],
+Cell[13265, 307, 13172, 289, 70, "Output",ExpressionUUID->"1a1bdd84-08f4-b941-aac3-bf7ca4b4708e"],
+Cell[26151, 598, 139, 1, 70, "ExampleText",ExpressionUUID->"03cefa26-0415-0843-a73f-c94691d081aa"],
+Cell[26292, 601, 138, 1, 70, "Input",ExpressionUUID->"2d984326-11c6-664a-a7ea-d80f48749412"],
+Cell[26432, 604, 875, 20, 70, "Output",ExpressionUUID->"8bcabf99-852f-8447-8900-460307aa5cc0"],
+Cell[27290, 626, 185, 3, 70, "ExampleText",ExpressionUUID->"9eef375f-b54e-6d47-b822-70b429c42ac4"],
+Cell[27475, 631, 131, 0, 70, "Input",ExpressionUUID->"b18b45ef-a44f-3f45-95a1-a12c0bdb9ca1"],
+Cell[27609, 633, 47462, 1009, 70, "Output",ExpressionUUID->"67337b83-2bf2-a747-8115-9b42f284b38e"],
+Cell[74065, 1644, 85, 0, 70, "NotesSection",ExpressionUUID->"9a3929d3-f8c4-ae46-b18f-63fce582d2cd"],
+Cell[74153, 1646, 281, 9, 70, "Notes",ExpressionUUID->"338e4e35-5e8c-8c49-8ec9-95f953848db1"],
+Cell[74428, 1657, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"7bce3720-3344-6b4a-a210-d63266ccaf65"],
+Cell[74520, 1659, 685, 16, 70, "SeeAlso",ExpressionUUID->"677e7762-fd04-7848-9e44-57f642bbf4d8"]
+}
+]
+*)
+
+(* End of internal cache information *)

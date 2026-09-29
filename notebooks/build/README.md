@@ -8,6 +8,7 @@ one of them:
 | `makenb.wls` | `notebooks/HypergraphBasics.nb` |
 | `makehmnb.wls` | `notebooks/HypermatrixBasics.nb` |
 | `makerwnb.wls` | `notebooks/RewritingBasics.nb` |
+| `makecausnb.wls` | `notebooks/CausalityBasics.nb` |
 
 Run one with, from anywhere:
 

@@ -42,8 +42,10 @@ HypergraphRuleApply::usage =
     "rule[hg] is equivalent.\n" <>
     "Each event is an association with \"Hypergraph\", the result; \"MatchVertices\", " <>
     "\"MatchEdges\" and \"MatchEdgePositions\", what was matched; \"NewVertices\" and " <>
-    "\"NewEdges\", what was created; \"DeletedVertices\", what was destroyed; and " <>
-    "\"RuleVertexMap\", the correspondence from the rule's vertices to the hypergraph's.";
+    "\"NewEdges\", what was created; \"DeletedVertices\", what was destroyed; " <>
+    "\"EdgeOrigins\", the host edge position each edge of the result carries over from, or " <>
+    "None where the rule made it; \"LabelBindings\", what the label variables were bound to; " <>
+    "and \"RuleVertexMap\", the correspondence from the rule's vertices to the hypergraph's.";
 
 HypergraphRuleMatches::usage =
     "HypergraphRuleMatches[rule, hg] gives the ways the input of rule sits inside hg, without " <>
@@ -343,7 +345,8 @@ applyMatch[r_, hg_, match_] := Module[{
     hostEdges = EdgeList[hg], hostVertices = VertexList[hg],
     newIDs, deletedIDs, newNames, fullMap,
     matchEdges, matchVertexIDs, keptEdges, newEdges, outputVertices,
-    deletedHostIDs, keptVertices, outputIDs, result
+    deletedHostIDs, keptVertices, outputIDs, result,
+    canonicalVertices, preSort, ordering, keptPositions, edgeOrigins
 },
     newIDs = r["NewVertices"];
     deletedIDs = r["DeletedVertices"];
@@ -386,8 +389,26 @@ applyMatch[r_, hg_, match_] := Module[{
 
     result = Hypergraph[Join[outputVertices, keptVertices], Join[keptEdges, newEdges]];
 
+    (* Where each edge of the result came from. The constructor sorts the edges, so a position in
+       the result says nothing on its own about which host edge, if any, it carries over from --
+       and the causal machinery needs exactly that, since two edges of equal value are still two
+       distinct elements of a multiset. Redoing the constructor's own remapping and sorting here
+       recovers the permutation: entry i is the host edge position that result edge i came from,
+       or None if the rule made it.
+
+       Ordering returns equal elements in increasing index order, so when the rule creates an edge
+       identical to one it leaves alone, the survivor is taken to be the one that was already
+       there. Nothing distinguishes them but the choice has to be made, and made the same way
+       every time. *)
+    canonicalVertices = AssociationThread[VertexID /@ VertexList[result] -> VertexList[result]];
+    preSort = remapEdge[#, canonicalVertices] & /@ Join[keptEdges, newEdges];
+    ordering = Ordering[preSort];
+    keptPositions = Complement[Range[Length[hostEdges]], pos];
+    edgeOrigins = If[# <= Length[keptEdges], keptPositions[[#]], None] & /@ ordering;
+
     <|
         "Hypergraph" -> result,
+        "EdgeOrigins" -> edgeOrigins,
         "MatchVertices" -> matchVertexIDs,
         "MatchEdges" -> matchEdges,
         "MatchEdgePositions" -> pos,

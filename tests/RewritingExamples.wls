@@ -100,7 +100,7 @@ p["=== 3. Applying ==="];
 ev = sub[path2];
 check["one event per match", Length[ev], 2];
 check["the keys of an event", Keys @ First[ev],
-   {"Hypergraph", "MatchVertices", "MatchEdges", "MatchEdgePositions", "NewVertices",
+   {"Hypergraph", "EdgeOrigins", "MatchVertices", "MatchEdges", "MatchEdgePositions", "NewVertices",
     "NewEdges", "DeletedVertices", "RuleVertexMap", "LabelBindings", "Rule"}];
 check["rule[hg] and HypergraphRuleApply agree", sub[path2] === HypergraphRuleApply[sub, path2], True];
 check["subdividing the first edge", ed @ ev[[1, "Hypergraph"]],
@@ -110,6 +110,28 @@ check["subdividing the second", ed @ ev[[2, "Hypergraph"]],
 check["the new vertex is named so as to miss what is already there",
    #["NewVertices"] & /@ ev, {{\[FormalV][1]}, {\[FormalV][1]}}];
 check["and it really is new", MemberQ[vs[path2], \[FormalV][1]], False];
+
+p["-- where each edge of the result came from --"];
+(* "EdgeOrigins" is what lets the causal machinery follow an edge across a rewrite: the
+   constructor sorts the edges, so a position in the result says nothing on its own. *)
+check["one entry per edge of the result",
+   Length /@ (#["EdgeOrigins"] & /@ ev), EdgeCount[#["Hypergraph"]] & /@ ev];
+check["None exactly where the rule made an edge",
+   Count[#["EdgeOrigins"], None] & /@ ev, Length[#["NewEdges"]] & /@ ev];
+check["the kept origins are the host positions the match left alone",
+   Sort @ DeleteCases[First[ev]["EdgeOrigins"], None],
+   Complement[Range[EdgeCount[path2]], First[ev]["MatchEdgePositions"]]];
+check["and each carried-over edge really is the host edge it points at",
+   With[{host = EdgeList[path2]},
+      And @@ MapThread[
+         Function[{o, e}, o === None || (VertexID /@ EdgeVertices[host[[o]]] === VertexID /@ EdgeVertices[e])],
+         {First[ev]["EdgeOrigins"], EdgeList[First[ev]["Hypergraph"]]}]],
+   True];
+(* Duplicate edges are the case this exists for: two edges of equal value are still two
+   elements, and consuming one has to leave the other identifiable. *)
+dupes = Hypergraph[{{1, 2}, {1, 2}, {2, 3}}];
+check["with duplicate edges, consuming one leaves the other's position",
+   DeleteCases[#["EdgeOrigins"], None] & /@ sub[dupes], {{2, 3}, {1, 3}, {1, 2}}];
 
 p["-- what the event says changed --"];
 e1 = First[ev];

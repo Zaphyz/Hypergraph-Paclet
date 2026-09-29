@@ -59,10 +59,10 @@ its input sits inside that hypergraph, and for each of them replacing what was m
 output. This notebook is the tour of that: what a rule is, how matching works and what it depends \
 on, and what an application gives back. Everything below is live output from src/."],
 
-text["What is not here yet is the machinery around rewriting \[LongDash] the generations of \
-states a rule produces, the causal graph of its events, the conditions under which two events \
-depend on one another. That is the next piece of work, and the events described in section 3 are \
-the material it will be built out of."],
+text["The machinery around rewriting \[LongDash] the generations of states a rule produces, \
+the causal graph of its events, the conditions under which two events depend on one another \
+\[LongDash] is built on top of this, out of the events described in section 3. It is in \
+CausalityBasics.nb."],
 
 section["Loading the package"],
 
@@ -515,7 +515,8 @@ three heap associativity, and the middle one having its letters reversed is the 
 Three distinct terms out of one state in two steps, from a rule carrying no labels of its own \
 \[LongDash] every label in the result was carried out of the match by a variable. Which of the \
 three a system reaches, and whether two of the steps could have been taken in either order, is \
-what the causal machinery is for."],
+what the causal machinery is for; section 6 of CausalityBasics.nb runs this same rule as a \
+system."],
 
 section["6.  Worked examples"],
 
@@ -583,9 +584,10 @@ code["First[onlyX[mixed]][\"Hypergraph\"]"],
 section["7.  Scope and limits"],
 
 text["What is here is the core: a rule, the matches of its input, and the events an application \
-produces. What is not here is everything built on top of that \[LongDash] applying a rule over \
-and over to collect the states it reaches, the graph of which event enabled which, and the \
-conditions for two events to be independent."],
+produces. Everything built on top of that \[LongDash] applying a rule over and over to collect \
+the states it reaches, the graph of which event enabled which, and the conditions for two events \
+to be independent \[LongDash] is in CausalityBasics.nb, and HypergraphRewritingSystem is where \
+it starts."],
 
 text["The matcher is a backtracking search over the edges of the input, and makes no attempt to \
 be clever. Subhypergraph matching is hard in general, and the sizes this package is meant for are \
@@ -602,8 +604,7 @@ invariants checked over three hundred events from rules built to match: that the
 carries the input's edges onto the ones the match claims, that the edge counts add up, that \
 nothing reported destroyed survives, and that the edges the rule did not touch are still there."],
 
-text["Next: the generations of states, the causal graph, and the conditions for causal \
-dependence."]
+text["Next: the plex diagrams that tie rewriting to hypermatrix algebra."]
 
 }];
 

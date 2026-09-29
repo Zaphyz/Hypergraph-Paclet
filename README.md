@@ -4,11 +4,12 @@ A Wolfram Language package for hypergraph rewriting and the algebra around it.
 
 Hypergraphs here are multisets of hyperedges, where a hyperedge is a set of vertices
 together with a symmetry type. Vertices and edges carry labels independently. On top of
-that sit hypermatrices — multidimensional arrays with a contraction calculus — and, in
-time, rewrite rules, causal graphs, and the plex diagrams that connect the two halves.
+that sit hypermatrices — multidimensional arrays with a contraction calculus — rewrite
+rules with their causal graphs, and, in time, the plex diagrams that connect the two halves.
 
-> **Status: early.** The object model, isomorphism and the array algebra are implemented,
-> documented and tested. Rewriting itself is not written yet. See [Roadmap](#roadmap).
+> **Status: in progress.** The object model, isomorphism, the array algebra, rewriting and
+> the causal machinery are implemented, documented and tested. What remains is the plex
+> diagrams and the visual editors. See [Roadmap](#roadmap).
 
 ## Loading
 
@@ -191,7 +192,53 @@ vertex can name what it creates after it.
 
 The syntax follows the upstream paclet, so rules written for that one read the same here —
 including the label-variable rules of its chemoid notebooks.
-The syntax follows the upstream paclet, so rules written for that one read the same here.
+
+### Rewriting systems and causality
+
+A system is rules together with a state to start from. Evolving it applies every rule in
+every way it fits, to every state reached so far, and reports the result as a tree of states
+joined by events. The property names follow the upstream `MultiwaySystem`.
+
+```wolfram
+sys = HypergraphRewritingSystem[sub, Hypergraph[{{1, 2}, {2, 3}}]];
+
+sys["EventCount", 2]          (* 8 *)
+sys["EvolutionGraph", 2]      (* the tree of states *)
+sys["CausalGraph", 2]         (* the events, and which depended on which *)
+```
+
+**Causal dependence is an option here, not a fixed meaning.** Two events are related when
+the elements they touch overlap, and `"CausalDependence"` says what an element is:
+
+| Value | Two events are related when |
+| --- | --- |
+| `"Elements"` *(default)* | their matches overlap in anything at all, vertex or edge |
+| `"Edges"` | one consumed a whole edge the other made |
+| `"Vertices"` | their matches share a vertex |
+
+`"Elements"` is the weakest reading and the one the upstream paclets take. `"Edges"` is the
+strictest, and the three stand in a fixed relation: `"Elements"` is exactly `"Edges"` or
+`"Vertices"`, on every system.
+
+The two readings differ on real cases. Subdividing one edge of a path and then the other
+leaves the second event free of anything the first produced — but the two matches do meet at
+the vertex between them:
+
+```wolfram
+pairs[l_] := {#["From"], #["To"]} & /@ l;
+
+Complement[pairs @ sys["CausalEdges", 2],
+           pairs @ sys["CausalEdges", 2, "CausalDependence" -> "Edges"]]
+(* {{1, 4}, {2, 6}} — the pairs that meet only at a vertex *)
+```
+
+Whether that vertex is a channel along which one event can affect the other is a fact about
+what the hypergraph stands for, not about the rewriting, which is why it is a choice.
+`"CausalEdges"` reports not just that two events are related but which elements they had in
+common.
+
+Elements are followed by token rather than by value, since an edge is an element of a
+multiset: two edges that look the same are still two elements.
 
 ### From a hypergraph to a hypermatrix
 
@@ -270,10 +317,12 @@ reasoning behind each design choice.
 | `src/ArrayAlgebra.wl` | Special arrays, `ArrayMultiply`, `ArrayAdd`, `ArrayTimes`, `FindArrayEquations`. |
 | `src/ArrayGraphics.wl` | `ArrayGraphics`, `ArrayGraphics3D`, `HypermatrixGraphics`, `HypermatrixGraphics3D`, `ArrayNesting`. |
 | `src/Rewriting.wl` | `HypergraphRule` and its application: the matcher, and the events a rewrite produces. |
+| `src/Causality.wl` | `HypergraphRewritingSystem`, `HypergraphCausalGraph`: the evolution, element tokens, and the readings of causal dependence. |
 | `src/Adjacency.wl` | `AdjacencyHypermatrix`: the correspondence between edge symmetry types and array symmetries, counting or labelled. |
 | `PacletInfo.wl` | The paclet's description of itself: kernel root, context, and the symbols that load it. |
 | `Documentation/` | Reference pages and guide, with the script that generates them. |
-| `notebooks/` | `HypergraphBasics.nb`, `HypermatrixBasics.nb` and `RewritingBasics.nb`, the review notebooks. |
+| `notebooks/` | `HypergraphBasics.nb`, `HypermatrixBasics.nb`, `RewritingBasics.nb` and `CausalityBasics.nb`, the review notebooks. |
+| `notebooks/build/` | The scripts that generate those notebooks; the notebooks are not hand-edited. |
 | `notebooks/legacy/` | Earlier research notebooks, kept for reference; not part of the package. |
 | `tests/` | The examples as assertions, plus several thousand randomized checks. |
 | `reference/` | Not in version control. Clones of the two upstream paclets, for comparison. |
@@ -287,6 +336,7 @@ wolframscript -file tests/BasicExamples.wls
 wolframscript -file tests/HypermatrixExamples.wls
 wolframscript -file tests/ArrayAlgebraExamples.wls
 wolframscript -file tests/RewritingExamples.wls
+wolframscript -file tests/CausalityExamples.wls
 ```
 
 Every example in the documentation appears here as an assertion, so the two cannot drift
@@ -304,8 +354,9 @@ The plan, in the order it is being built:
       corresponding to the array symmetries. *The passage back is still to come.*
 - [x] **Rewriting rules** — `HypergraphRule`, matching and application, with each rewrite
       reported as an event. *A visual interface for editing a rule is still to come.*
-- [ ] **Rewriting systems and causality** — generations of states, causal graphs, causal
-      dependence of events, conditions for dependence and for overlapping patterns.
+- [x] **Rewriting systems and causality** — `HypergraphRewritingSystem`, generations of
+      states, evolution and states graphs, and causal graphs whose notion of dependence is
+      chosen by option rather than fixed.
 - [ ] **Plex diagrams** — hypermatrix operations specified by labelled hypergraphs, and the
       equivalence between a plex product and a hypergraph rewriting procedure.
 

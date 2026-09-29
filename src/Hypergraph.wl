@@ -531,3 +531,4 @@ Get[FileNameJoin[{DirectoryName[$InputFileName], "ArrayAlgebra.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "ArrayGraphics.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "Adjacency.wl"}]];
 Get[FileNameJoin[{DirectoryName[$InputFileName], "Rewriting.wl"}]];
+Get[FileNameJoin[{DirectoryName[$InputFileName], "Causality.wl"}]];

@@ -18,55 +18,55 @@ WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["EdgeLabel", "ObjectName",ExpressionUUID->"f4a9e058-b7c1-8247-b8c9-c812b814ca36"],
+Cell["EdgeLabel", "ObjectName",ExpressionUUID->"2420ff39-30a5-924b-87ed-141279ca6090"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"EdgeLabel", "[", "e", "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"80eac224-9064-b74b-aa0d-801476a03c0a"],
+  ExpressionUUID->"147c7a1c-42d5-fe47-8b61-36f87c2ea279"],
  " ",
  "gives the label of the hyperedge e, or None if it is unlabelled."
-}], "Usage",ExpressionUUID->"3c3ff470-c8a3-a745-a6eb-1f81f86f020b"],
+}], "Usage",ExpressionUUID->"121e2f3a-4e69-bd4f-a227-ee9a3cbae41e"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"0000421d-056c-bf4b-a295-7d9fdf74f403"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"b06b450b-af55-ff49-8682-6e512637159b"],
 
 Cell["\<\
 Edge labels take part in labelled isomorphism, where they must correspond one \
 to one; see IsomorphicHypergraphQ.\
-\>", "Notes",ExpressionUUID->"3d247797-973f-d141-ad17-c4ea60641aaa"],
+\>", "Notes",ExpressionUUID->"3e691d1b-1c69-e74b-9d14-4fe0068d568d"],
 
 Cell["\<\
 Edge labels and vertex labels are put in correspondence independently of one \
 another.\
-\>", "Notes",ExpressionUUID->"aea0a9e4-5d6f-7847-bb59-b0a11d82a709"],
+\>", "Notes",ExpressionUUID->"a5d5f15d-1582-e14c-846f-ec1d6a5e6c2b"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"195a07c2-0b65-5f49-8d73-9d592e7c2749"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"dcde648f-1338-404f-9965-8c02f2664c64"],
 
 Cell["\<\
 {EdgeLabel[Edge[{1, 2}, \"Directed\", \"f\"]], EdgeLabel[Edge[{1, 2}]]}\
-\>", "Input",ExpressionUUID->"431f9572-6b10-c049-b113-1874cb90d721"],
+\>", "Input",ExpressionUUID->"776b4866-2da7-ce49-8d3e-ff2f65a3420f"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{"\<\"f\"\>", ",", "None"}], "}"}]], "Output",ExpressionUUID->\
-"ac118eaa-97f4-8f40-a857-41125fd1fadc"],
+"f33e5eae-361e-184c-b8d7-3ffe8b24f3b3"],
 
 Cell["\<\
 The labels of a whole hypergraph, in the order of its edge list:\
-\>", "ExampleText",ExpressionUUID->"a224632b-c07c-ca4c-b698-2493019b05c7"],
+\>", "ExampleText",ExpressionUUID->"c23f0c5b-d7fd-f442-a584-484251d12818"],
 
 Cell["\<\
 Hypergraph[{Edge[{1, 2}, \"Directed\", \"f\"], Edge[{2, 3}]}][\"EdgeLabels\"]\
 \
-\>", "Input",ExpressionUUID->"8275e628-8850-e240-a2a5-5b767c201262"],
+\>", "Input",ExpressionUUID->"b11c3aee-17c1-574d-ac9a-879dde4c76dc"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{"None", ",", "\<\"f\"\>"}], "}"}]], "Output",ExpressionUUID->\
-"fe1b1a97-514a-fd4d-8b53-0ecb9f31c8a2"],
+"c30d793c-4af5-0b49-8efb-4efdebac12ff"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"9245609a-e8f1-884f-9765-82125395ceb7"],
+Cell["Source", "NotesSection",ExpressionUUID->"4ba31893-03ec-0e4c-9733-d99103ceb923"],
 
 Cell[TextData[{
  "Defined in ",
@@ -77,32 +77,32 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "Edges",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"87334b67-fd22-0848-b303-9afff687225d"],
+}], "Notes",ExpressionUUID->"79e915d4-f3d4-1343-bddb-52339fffed6a"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"1ce357bb-8021-2b46-b33e-5bfa9585a30a"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"f514abcf-e957-5a4b-9d44-487c6f94d9f8"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["Edge", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "d3393527-ea95-dd45-ae10-7c221bedafd3"],
+  "9dc41a76-088f-384c-b722-c0c95112af4f"],
  ", ",
  Cell[BoxData[
   StyleBox["VertexLabel", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "062174b3-7aba-f143-85f5-7582c91f487e"],
+  "c4a69060-0b3e-f444-beff-9c37bdd89772"],
  ", ",
  Cell[BoxData[
   StyleBox["IsomorphicHypergraphQ", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c6d9aa2f-8b59-3143-ae1c-1b3864f03a43"],
+  ExpressionUUID->"48bc3471-5c9d-3d47-92b1-d2d098c5ec50"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphSkeleton", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"f5ebba14-d781-3c4a-8cc3-8d5c878e5a45"]
-}], "SeeAlso",ExpressionUUID->"107e5188-60c0-4d4c-8778-493b3b9da8bb"]
+  ExpressionUUID->"a1fc9719-d82c-344c-a47c-6afa48fd1718"]
+}], "SeeAlso",ExpressionUUID->"6dfed937-8a54-2d4d-9e15-e2470aa59e7e"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"eb30a193-e9eb-c84f-adad-77ff08f93a51"
+ExpressionUUID->"dc3b1e92-c5bd-3645-b316-02820f66faac"
 ]
 (* End of Notebook Content *)
 
@@ -115,21 +115,21 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 86, 0, 70, "ObjectName",ExpressionUUID->"f4a9e058-b7c1-8247-b8c9-c812b814ca36"],
-Cell[643, 22, 324, 7, 70, "Usage",ExpressionUUID->"3c3ff470-c8a3-a745-a6eb-1f81f86f020b"],
-Cell[963, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"0000421d-056c-bf4b-a295-7d9fdf74f403"],
-Cell[1064, 33, 197, 3, 70, "Notes",ExpressionUUID->"3d247797-973f-d141-ad17-c4ea60641aaa"],
-Cell[1261, 38, 170, 3, 70, "Notes",ExpressionUUID->"aea0a9e4-5d6f-7847-bb59-b0a11d82a709"],
-Cell[1431, 43, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"195a07c2-0b65-5f49-8d73-9d592e7c2749"],
-Cell[1531, 45, 153, 2, 70, "Input",ExpressionUUID->"431f9572-6b10-c049-b113-1874cb90d721"],
-Cell[1685, 49, 144, 3, 70, "Output",ExpressionUUID->"ac118eaa-97f4-8f40-a857-41125fd1fadc"],
-Cell[1829, 54, 152, 2, 70, "ExampleText",ExpressionUUID->"a224632b-c07c-ca4c-b698-2493019b05c7"],
-Cell[1982, 58, 162, 3, 70, "Input",ExpressionUUID->"8275e628-8850-e240-a2a5-5b767c201262"],
-Cell[2144, 63, 144, 3, 70, "Output",ExpressionUUID->"fe1b1a97-514a-fd4d-8b53-0ecb9f31c8a2"],
-Cell[2288, 68, 85, 0, 70, "NotesSection",ExpressionUUID->"9245609a-e8f1-884f-9765-82125395ceb7"],
-Cell[2376, 70, 270, 9, 70, "Notes",ExpressionUUID->"87334b67-fd22-0848-b303-9afff687225d"],
-Cell[2640, 81, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"1ce357bb-8021-2b46-b33e-5bfa9585a30a"],
-Cell[2732, 83, 663, 16, 70, "SeeAlso",ExpressionUUID->"107e5188-60c0-4d4c-8778-493b3b9da8bb"]
+Cell[554, 20, 86, 0, 70, "ObjectName",ExpressionUUID->"2420ff39-30a5-924b-87ed-141279ca6090"],
+Cell[643, 22, 324, 7, 70, "Usage",ExpressionUUID->"121e2f3a-4e69-bd4f-a227-ee9a3cbae41e"],
+Cell[963, 31, 98, 0, 70, "NotesSection",ExpressionUUID->"b06b450b-af55-ff49-8682-6e512637159b"],
+Cell[1064, 33, 197, 3, 70, "Notes",ExpressionUUID->"3e691d1b-1c69-e74b-9d14-4fe0068d568d"],
+Cell[1261, 38, 170, 3, 70, "Notes",ExpressionUUID->"a5d5f15d-1582-e14c-846f-ec1d6a5e6c2b"],
+Cell[1431, 43, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"dcde648f-1338-404f-9965-8c02f2664c64"],
+Cell[1531, 45, 153, 2, 70, "Input",ExpressionUUID->"776b4866-2da7-ce49-8d3e-ff2f65a3420f"],
+Cell[1685, 49, 144, 3, 70, "Output",ExpressionUUID->"f33e5eae-361e-184c-b8d7-3ffe8b24f3b3"],
+Cell[1829, 54, 152, 2, 70, "ExampleText",ExpressionUUID->"c23f0c5b-d7fd-f442-a584-484251d12818"],
+Cell[1982, 58, 162, 3, 70, "Input",ExpressionUUID->"b11c3aee-17c1-574d-ac9a-879dde4c76dc"],
+Cell[2144, 63, 144, 3, 70, "Output",ExpressionUUID->"c30d793c-4af5-0b49-8efb-4efdebac12ff"],
+Cell[2288, 68, 85, 0, 70, "NotesSection",ExpressionUUID->"4ba31893-03ec-0e4c-9733-d99103ceb923"],
+Cell[2376, 70, 270, 9, 70, "Notes",ExpressionUUID->"79e915d4-f3d4-1343-bddb-52339fffed6a"],
+Cell[2640, 81, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"f514abcf-e957-5a4b-9d44-487c6f94d9f8"],
+Cell[2732, 83, 663, 16, 70, "SeeAlso",ExpressionUUID->"6dfed937-8a54-2d4d-9e15-e2470aa59e7e"]
 }
 ]
 *)

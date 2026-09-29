@@ -1,0 +1,210 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 15.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      8249,        201]
+NotebookOptionsPosition[      6136,        169]
+NotebookOutlinePosition[      6484,        184]
+CellTagsIndexPosition[      6441,        181]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["$CausalDependenceTypes", "ObjectName",ExpressionUUID->"0dc42c56-a1e7-7c41-86b6-fba17acd9031"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"b56a9562-b8ad-c649-a22a-fa8c1673b445"],
+ " ",
+ "is the list of values the \"CausalDependence\" option takes."
+}], "Usage",ExpressionUUID->"3295fbd1-9008-5d47-aaf1-4c31f3037a24"],
+
+Cell["Details and Options", "NotesSection",ExpressionUUID->"a2f8ff72-33a2-d749-a20f-eb453bd9f29a"],
+
+Cell["\<\
+\"Elements\", the default, makes two events dependent when what they touch \
+overlaps in anything at all, vertex or edge. It is the weakest reading, and \
+the one the reference paclets take: two rule applications are related when \
+their matched patterns are superposed.\
+\>", "Notes",ExpressionUUID->"3af70b77-deed-0f40-91a6-f0f7967fa030"],
+
+Cell["\<\
+\"Edges\" counts only whole shared edges, so two events are related only when \
+one consumed an edge the other made. It is the strictest of the three.\
+\>", "Notes",ExpressionUUID->"a72f3a40-7bc0-0e4d-baad-326d94b8f37a"],
+
+Cell["\<\
+\"Vertices\" counts only shared vertices, and is there for the contrast: \
+\"Elements\" is exactly \"Edges\" or \"Vertices\", and the three stand in \
+that relation on every system.\
+\>", "Notes",ExpressionUUID->"b8d8f24a-bb45-a64d-9422-ac544129feb8"],
+
+Cell["\<\
+Which reading is wanted is a modelling choice, not a fact about the \
+rewriting. Two compositions in disjoint parts of a chain share no arrow but \
+do share the object between them: whether that is a causal connection depends \
+on what the hypergraph is standing for.\
+\>", "Notes",ExpressionUUID->"3a8e8f2d-2411-254d-ac03-84ed5ea6a36d"],
+
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"472b9139-f4fb-8240-946b-4547c58d3ec4"],
+
+Cell["$CausalDependenceTypes", "Input",ExpressionUUID->"76d41733-c0ab-f147-a740-e513d3f86999"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"Elements\"\>", ",", "\<\"Edges\"\>", ",", "\<\"Vertices\"\>"}],
+   "}"}]], "Output",ExpressionUUID->"cc295cb6-672b-0d46-8c70-55d2e7f5bcb0"],
+
+Cell["The three readings on one system, as sets of related pairs:", \
+"ExampleText",ExpressionUUID->"af951c7f-c63e-474c-80b0-eba6ee50571c"],
+
+Cell["\<\
+subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];
+twoEdges = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}, {2, \
+3}}]];
+pairsOf[l_] := {#[\"From\"], #[\"To\"]} & /@ l;
+AssociationMap[pairsOf @ twoEdges[\"CausalEdges\", 2, \"CausalDependence\" -> \
+#] &, $CausalDependenceTypes]\
+\>", "Input",ExpressionUUID->"90203651-780e-114c-bcb4-09e16e043c61"],
+
+Cell[BoxData[
+ RowBox[{"\[LeftAssociation]", 
+  RowBox[{
+   RowBox[{"\<\"Elements\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "3"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "4"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "5"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "6"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "7"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "8"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"Edges\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "3"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "5"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "7"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "8"}], "}"}]}], "}"}]}], ",", 
+   RowBox[{"\<\"Vertices\"\>", "\[Rule]", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"1", ",", "3"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "4"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"1", ",", "5"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "6"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "7"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"2", ",", "8"}], "}"}]}], "}"}]}]}], 
+  "\[RightAssociation]"}]], "Output",ExpressionUUID->"c3aaf503-74ed-744b-8364-\
+48c5bdf68b6d"],
+
+Cell["\<\
+Edges and vertices are each a part of elements, and together they are all of \
+it:\
+\>", "ExampleText",ExpressionUUID->"304d3b07-f010-9841-b21b-374a21bf073f"],
+
+Cell["\<\
+With[{byType = pairsOf @ twoEdges[\"CausalEdges\", 2, \"CausalDependence\" -> \
+#] &},
+ {SubsetQ[byType[\"Elements\"], byType[\"Edges\"]],
+  SubsetQ[byType[\"Elements\"], byType[\"Vertices\"]],
+  Sort @ byType[\"Elements\"] === Sort @ Union[byType[\"Edges\"], \
+byType[\"Vertices\"]]}]\
+\>", "Input",ExpressionUUID->"665622e2-8c31-7446-9745-66f3359b0bf6"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"True", ",", "True", ",", "True"}], "}"}]], "Output",ExpressionUUID->\
+"9b03fa3d-475b-7c49-a32f-2fcc28c14303"],
+
+Cell["Source", "NotesSection",ExpressionUUID->"78ed214f-ab09-054e-b103-1ae7fee55f77"],
+
+Cell[TextData[{
+ "Defined in ",
+ StyleBox["src/Causality.wl",
+  FontFamily->"Courier",
+  FontWeight->"Plain"],
+ ", section ",
+ "\[OpenCurlyDoubleQuote]",
+ "Causal dependence",
+ "\[CloseCurlyDoubleQuote]."
+}], "Notes",ExpressionUUID->"cf0684bc-5373-5340-8873-c92b78ec505b"],
+
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"5f15777a-f8e8-264b-afae-a2186a103185"],
+
+Cell[TextData[{
+ Cell[BoxData[
+  StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"399e08b2-3e08-f14b-afd7-688735447759"],
+ ", ",
+ Cell[BoxData[
+  StyleBox["HypergraphRewritingSystem", "InlineCode"]], "InlineFormula",
+  ExpressionUUID->"02aa3cf0-61e5-274d-8531-a30e207a63a2"]
+}], "SeeAlso",ExpressionUUID->"a23bba5c-21eb-7149-a4e4-1e34465fb610"]
+},
+WindowSize->{800, 750},
+FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
+StyleDefinitions->"Reference.nb",
+ExpressionUUID->"dc3b1e92-c5bd-3645-b316-02820f66faac"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 99, 0, 70, "ObjectName",ExpressionUUID->"0dc42c56-a1e7-7c41-86b6-fba17acd9031"],
+Cell[656, 22, 303, 6, 70, "Usage",ExpressionUUID->"3295fbd1-9008-5d47-aaf1-4c31f3037a24"],
+Cell[956, 30, 98, 0, 70, "NotesSection",ExpressionUUID->"a2f8ff72-33a2-d749-a20f-eb453bd9f29a"],
+Cell[1057, 32, 355, 5, 70, "Notes",ExpressionUUID->"3af70b77-deed-0f40-91a6-f0f7967fa030"],
+Cell[1410, 39, 233, 3, 70, "Notes",ExpressionUUID->"a72f3a40-7bc0-0e4d-baad-326d94b8f37a"],
+Cell[1643, 44, 265, 4, 70, "Notes",ExpressionUUID->"b8d8f24a-bb45-a64d-9422-ac544129feb8"],
+Cell[1907, 50, 352, 5, 70, "Notes",ExpressionUUID->"3a8e8f2d-2411-254d-ac03-84ed5ea6a36d"],
+Cell[2257, 57, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"472b9139-f4fb-8240-946b-4547c58d3ec4"],
+Cell[2357, 59, 94, 0, 70, "Input",ExpressionUUID->"76d41733-c0ab-f147-a740-e513d3f86999"],
+Cell[2454, 61, 186, 3, 70, "Output",ExpressionUUID->"cc295cb6-672b-0d46-8c70-55d2e7f5bcb0"],
+Cell[2640, 66, 140, 1, 70, "ExampleText",ExpressionUUID->"af951c7f-c63e-474c-80b0-eba6ee50571c"],
+Cell[2782, 69, 381, 7, 70, "Input",ExpressionUUID->"90203651-780e-114c-bcb4-09e16e043c61"],
+Cell[3159, 78, 1488, 45, 70, "Output",ExpressionUUID->"c3aaf503-74ed-744b-8364-48c5bdf68b6d"],
+Cell[4605, 125, 171, 3, 70, "ExampleText",ExpressionUUID->"304d3b07-f010-9841-b21b-374a21bf073f"],
+Cell[4776, 130, 372, 7, 70, "Input",ExpressionUUID->"665622e2-8c31-7446-9745-66f3359b0bf6"],
+Cell[5144, 139, 152, 3, 70, "Output",ExpressionUUID->"9b03fa3d-475b-7c49-a32f-2fcc28c14303"],
+Cell[5296, 144, 85, 0, 70, "NotesSection",ExpressionUUID->"78ed214f-ab09-054e-b103-1ae7fee55f77"],
+Cell[5384, 146, 281, 9, 70, "Notes",ExpressionUUID->"cf0684bc-5373-5340-8873-c92b78ec505b"],
+Cell[5659, 157, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"5f15777a-f8e8-264b-afae-a2186a103185"],
+Cell[5751, 159, 389, 8, 70, "SeeAlso",ExpressionUUID->"a23bba5c-21eb-7149-a4e4-1e34465fb610"]
+}
+]
+*)
+
+(* End of internal cache information *)

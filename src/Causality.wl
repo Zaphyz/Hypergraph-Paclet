@@ -484,11 +484,16 @@ eventPanel[ev_, o_List] := Framed[
 $statePanelAspect = 1;
 $eventPanelAspect = 2.4;
 
+(* The layered layout puts siblings closer together than the vertex size asks for, so the space
+   claimed is a little wider than the panel drawn in it. Without the margin two event panels in
+   one row of a causal graph overlap. *)
+$panelMargin = 1.2;
+
 (* The size a vertex shape function is handed is a radius, and the layout puts vertices a unit
    apart, so a panel drawn at that size comes out half the width it has room for. Twice it, less
    a little, fills the space between neighbours without the frames touching. *)
 panelShapeFunction[panels_, aspect_ : 1] := Function[{pos, name, size},
-    With[{w = 1.84 Min[Flatten[{size}]]},
+    With[{w = 1.84 Min[Flatten[{size}]] / $panelMargin},
         Inset[Lookup[panels, Key[name], ""], pos, Center, {w, w / aspect}]
     ]
 ];
@@ -519,7 +524,7 @@ evolutionProp[e_, "CausalGraph", n_, o_List] := Module[{events = e["Events"], ed
                                $eventPanelAspect],
             Automatic
         ],
-        VertexSize -> If[drawn, $eventPanelAspect, Automatic],
+        VertexSize -> If[drawn, $panelMargin $eventPanelAspect, Automatic],
         VertexLabels -> Table[k -> Placed[eventTooltip[events, k], Tooltip], {k, Length[events]}],
         GraphLayout -> "LayeredDigraphEmbedding",
         VertexStyle -> $eventStyle,
@@ -550,7 +555,7 @@ Module[{states = e["States"], events = e["Events"], drawn},
                                                 Range[Length[states]]],
             Automatic
         ],
-        VertexSize -> If[drawn, 1, Automatic],
+        VertexSize -> If[drawn, $panelMargin, Automatic],
         VertexLabels -> Table[i -> Placed[states[[i, "Hypergraph"]], Tooltip], {i, Length[states]}],
         GraphLayout -> "LayeredDigraphEmbedding",
         VertexStyle -> $stateStyle,
@@ -593,7 +598,7 @@ evolutionProp[e_, "StatesGraph", n_, o_List] := Module[{
         Sequence @@ graphOptions[o],
         VertexShapeFunction -> If[
             drawn, panelShapeFunction @ Map[statePanel[#, o] &, representative], Automatic],
-        VertexSize -> If[drawn, 1, Automatic],
+        VertexSize -> If[drawn, $panelMargin, Automatic],
         VertexLabels -> Table[i -> Placed[representative[i], Tooltip], {i, Length[distinct]}],
         GraphLayout -> "LayeredDigraphEmbedding",
         VertexStyle -> $stateStyle,
@@ -623,7 +628,7 @@ evolutionProp[e_, "BranchialGraph", n_, o_List] := Module[{states = e["States"],
             panelShapeFunction @ AssociationMap[statePanel[states[[#, "Hypergraph"]], o] &, sameGen],
             Automatic
         ],
-        VertexSize -> If[drawn, 1, Automatic],
+        VertexSize -> If[drawn, $panelMargin, Automatic],
         VertexLabels -> Table[i -> Placed[states[[i, "Hypergraph"]], Tooltip], {i, sameGen}],
         VertexStyle -> $stateStyle,
         EdgeStyle -> $branchialStyle,
@@ -672,7 +677,8 @@ evolutionProp[e_, "EvolutionCausalGraph", n_, o_List] := Module[{
         ],
         VertexSize -> If[
             drawn,
-            {{"State", _} -> $statePanelAspect, {"Event", _} -> $eventPanelAspect},
+            {{"State", _} -> $panelMargin $statePanelAspect,
+             {"Event", _} -> $panelMargin $eventPanelAspect},
             Automatic
         ],
         VertexLabels -> Join[

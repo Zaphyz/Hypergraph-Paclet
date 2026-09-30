@@ -120,6 +120,53 @@ note["Asking for the matches without rewriting is the way to see why a rule appl
 it does. When a rule produces more events than expected, it is almost always the matching that is \
 surprising rather than the rewriting."],
 
+subsection["What a rule knows about itself"],
+
+text["A rule answers for its two sides and for what it does to vertices, read off by identifier:"],
+
+code["sub[\"Properties\"]"],
+
+code["AssociationMap[sub, {\"SharedVertices\", \"NewVertices\", \"DeletedVertices\", \"Signature\"}]"],
+
+text["\"Signature\" is the shape of the rule: how many edges and vertices on each side. A rule \
+that contracts rather than grows has it the other way round:"],
+
+code["contract = HypergraphRule[{{1, 2}, {2, 3}}, {{1, 3}}];\n\
+AssociationMap[contract, {\"SharedVertices\", \"NewVertices\", \"DeletedVertices\", \"Signature\"}]"],
+
+note["Vertices correspond between the two sides by identifier, so a name on both sides is the \
+same vertex and a name on the output alone is a new one. That is the whole of the convention, \
+and these three lists are it applied."],
+
+subsection["The matching options"],
+
+text["Three options govern what counts as a match. \"Labeled\" -> False puts labels aside \
+altogether, so a rule written for skeletons applies to a labelled hypergraph:"],
+
+code["labelledPair = Hypergraph[{Edge[{1, 2}, \"Directed\", \"a\"], Edge[{2, 3}, \"Directed\", \"b\"]}];\n\
+{Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, \"Directed\", \"c\"]}, {}], labelledPair],\n \
+ Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, \"Directed\", \"c\"]}, {}], labelledPair,\n \
+    \"Labeled\" -> False]}"],
+
+text["\"LabelPatterns\" -> False reads every label literally, so a bare symbol stops being a \
+variable. Section 4 is about what that option turns on:"],
+
+code["{Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, \"Directed\", w]}, {}], labelledPair],\n \
+ Length @ HypergraphRuleMatches[HypergraphRule[{Edge[{1, 2}, \"Directed\", w]}, {}], labelledPair,\n \
+    \"LabelPatterns\" -> False]}"],
+
+text["\"DistinctVertices\" -> False lets two vertices of the input fall on one vertex of the \
+hypergraph, which is what the next subsection is about:"],
+
+code["{Length @ HypergraphRuleMatches[HypergraphRule[{{1, 2}, {2, 3}}, {}], Hypergraph[{{1, 2}}]],\n \
+ Length @ HypergraphRuleMatches[HypergraphRule[{{1, 2}, {2, 3}}, {}], Hypergraph[{{1, 2}}],\n \
+    \"DistinctVertices\" -> False]}"],
+
+text["A match on its own says only where it sits: which positions of EdgeList it used, how the \
+input's vertices correspond, and what its label variables were bound to."],
+
+code["Keys @ First @ HypergraphRuleMatches[sub, chain]"],
+
 subsection["Symmetry decides how many ways a pattern fits"],
 
 text["A pattern edge and the edge it lies on must have the same symmetry type, and the pattern is \
@@ -191,6 +238,48 @@ text["rule[hg] and HypergraphRuleApply are the same thing, the first being the r
 way of writing it:"],
 
 code["sub[chain] === HypergraphRuleApply[sub, chain]"],
+
+subsection["Every key of an event"],
+
+text["An event is an association, and each of its keys answers one question. Taking a single \
+event and going through them:"],
+
+code["oneEvent = First @ sub[chain];\nKeys[oneEvent]"],
+
+text["What it made, and what it acted on:"],
+
+code["{oneEvent[\"Input\"], oneEvent[\"Hypergraph\"]}"],
+
+text["Where it matched: the positions of EdgeList it covered, those edges themselves, and the \
+vertices under them:"],
+
+code["KeyTake[oneEvent, {\"MatchEdgePositions\", \"MatchEdges\", \"MatchVertices\"}]"],
+
+text["What it created and what it destroyed:"],
+
+code["KeyTake[oneEvent, {\"NewVertices\", \"NewEdges\", \"DeletedVertices\"}]"],
+
+text["How the rule's own vertex names correspond to the hypergraph's, including the names it \
+minted for the vertices it created:"],
+
+code["oneEvent[\"RuleVertexMap\"]"],
+
+text["Where each edge of the result came from: a host edge position, or None where the rule made \
+it. This is the one key that has no counterpart in the reference paclet, and the causal \
+machinery could not be written without it:"],
+
+code["Thread[EdgeList[oneEvent[\"Hypergraph\"]] -> oneEvent[\"EdgeOrigins\"]]"],
+
+text["What the label variables were bound to, and the rule itself:"],
+
+code["{oneEvent[\"LabelBindings\"], oneEvent[\"Rule\"]}"],
+
+note["The reference paclet's events carry \"Hypergraph\", \"MatchVertices\", \"MatchEdges\", \
+\"MatchEdgePositions\", \"NewVertices\", \"NewEdges\", \"DeletedVertices\" and \
+\"RuleVertexMap\", and a rule written for it reads the same here. The three extra keys are \
+\"Input\", without which an event cannot be drawn; \"LabelBindings\", which is the label \
+machinery of section 4; and \"EdgeOrigins\", which is what lets an element be followed across a \
+rewrite."],
 
 subsection["A rule that consumes two edges"],
 
@@ -397,7 +486,7 @@ produced."],
 (* The examples below run in this same kernel, so clear the names first: a symbol that has picked
    up a value somewhere earlier stops being a pattern variable, and the rules go quiet. *)
 (ClearAll[arrow, arrowComp, arrowUnit, chain2, dag, bothDaggered, action, pointed, zigzag, long,
-          a, b, c, d, e, f, g, p, q, r, s, u, x, y, z]; Nothing),
+          a, b, c, d, e, f, g, p, q, r, s, u, w, x, y, z, shown, styled, triangle, here, doubled]; Nothing),
 
 subsection["Composition and the unit"],
 
@@ -518,7 +607,168 @@ three a system reaches, and whether two of the steps could have been taken in ei
 what the causal machinery is for; section 6 of CausalityBasics.nb runs this same rule as a \
 system."],
 
-section["6.  Worked examples"],
+section["6.  Pictures"],
+
+text["A rule is a pair of hypergraphs, and a hypergraph is a thing to look at. Everything in \
+this section is what the causal machinery uses to draw an event as a vertex of a graph, available \
+on its own."],
+
+subsection["A rule"],
+
+text["HypergraphRulePlot draws a rule as its input beside its output. The vertices the two sides \
+share are drawn in the same places, so what the rule does to them can be read off rather than \
+worked out:"],
+
+code["HypergraphRulePlot[sub, \"PanelSize\" -> 140]"],
+
+text["The vertex the rule creates is highlighted on the right. A rule that destroys one \
+highlights it on the left:"],
+
+code["HypergraphRulePlot[contract, \"PanelSize\" -> 140]"],
+
+text["\"Highlight\" -> False leaves both sides plain, and \"SharedCoordinates\" -> False lays \
+them out independently, which is worth seeing once to know what the sharing is doing:"],
+
+code["GraphicsColumn[{\n \
+ HypergraphRulePlot[sub, \"PanelSize\" -> 120, \"Highlight\" -> False],\n \
+ HypergraphRulePlot[sub, \"PanelSize\" -> 120, \"SharedCoordinates\" -> False]}, ImageSize -> 320]"],
+
+note["Without the shared layout the two sides are two separate spring embeddings of nearly the \
+same hypergraph, and they come out differently. The eye reads that difference as something the \
+rule did, which it did not. Sharing the layout costs nothing and removes a whole class of \
+misreading."],
+
+text["Opening the summary box of a rule shows the same picture, so a rule sitting in a variable \
+can be checked without drawing it explicitly:"],
+
+code["sub"],
+
+subsection["An event"],
+
+text["HypergraphEventPlot is the same idea applied to a particular match: what the event acted \
+on with the match highlighted, an arrow, and what it made with the creations highlighted."],
+
+code["shown = Hypergraph[{Edge[{1, 2}], Edge[{2, 3}], Edge[{3, 4}]}];
+\nHypergraphEventPlot[First @ sub[shown], \"PanelSize\" -> 140]"],
+
+text["One picture for every way the rule fits, which is the quickest way to see what a rule is \
+really doing to a hypergraph:"],
+
+code["HypergraphEventPlot[sub, shown, \"PanelSize\" -> 95]"],
+
+text["An event carries the hypergraph it acted on under \"Input\", which is what makes the left \
+half drawable at all \[LongDash] an event that knew only its result could not be drawn:"],
+
+code["First[sub[shown]][\"Input\"] === path3"],
+
+note["Which edges of the result to highlight is read off \"EdgeOrigins\", the record of where \
+each edge of the result came from, rather than by looking for edges equal to \"NewEdges\". In a \
+multiset two edges of equal value are still two edges, so a rule that creates an edge the \
+hypergraph already had would otherwise highlight whichever one happened to sort first."],
+
+code["doubled = Hypergraph[{Edge[{1, 2}], Edge[{1, 2}]}];\n\
+{#[\"EdgeOrigins\"], Flatten @ Position[#[\"EdgeOrigins\"], None]} & @ First[sub[doubled]]"],
+
+code["HypergraphEventPlot[First @ sub[doubled], \"PanelSize\" -> 140]"],
+
+subsection["The four highlight styles"],
+
+text["The styles are four options, named as the reference paclet names them: left for what was \
+matched, right for what was made, and a vertex and an edge style on each side."],
+
+code["HypergraphEventPlot[First @ sub[shown], \"PanelSize\" -> 140,\n \
+ \"HighlightLeftEdgeStyle\" -> Directive[Thick, Blue, EdgeForm[Directive[Blue, Thick]]],\n \
+ \"HighlightLeftVertexStyle\" -> Directive[PointSize[0.03], Blue],\n \
+ \"HighlightRightEdgeStyle\" -> Directive[Thick, Darker[Green], EdgeForm[Directive[Darker[Green], Thick]]],\n \
+ \"HighlightRightVertexStyle\" -> Directive[PointSize[0.03], Darker[Green]]]"],
+
+text["Any option of HypergraphPlot is passed through to both sides, so the two halves can be \
+labelled, sized or restyled together:"],
+
+code["HypergraphEventPlot[First @ sub[shown], \"PanelSize\" -> 140, VertexLabels -> \"Name\",\n \
+ EdgeLabels -> None]"],
+
+subsection["Styling a hypergraph, one element at a time"],
+
+text["All of the above rests on HypergraphPlot taking a style per element. A single directive \
+styles everything:"],
+
+code["styled = Hypergraph[{Edge[{1, 2}], Edge[{2, 3}], Edge[{1, 2}], Edge[{1, 2, 3}]}];\n\
+HypergraphPlot[styled, EdgeStyle -> Directive[Thick, Purple], VertexStyle -> Orange,\n \
+ ImageSize -> 220]"],
+
+text["A list of rules or an Association styles them one at a time. A key may be an element's \
+position, counting from one:"],
+
+code["HypergraphPlot[styled, EdgeStyle -> {1 -> Red, 4 -> Directive[Opacity[0.4], Green]},\n \
+ ImageSize -> 220]"],
+
+text["or the element itself \[LongDash] a vertex identifier, or an edge's list of vertex \
+identifiers:"],
+
+code["HypergraphPlot[styled, EdgeStyle -> {{2, 3} -> Red}, VertexStyle -> {2 -> Orange},\n \
+ ImageSize -> 220]"],
+
+text["or a pattern, which is how a fallback is written. Later rules win, so the general case can \
+be given first and then overridden:"],
+
+code["HypergraphPlot[styled, VertexStyle -> {_ -> Gray, 2 -> Red}, ImageSize -> 220]"],
+
+note["Positions are what a multiset needs. This hypergraph has the edge {1, 2} twice, and only a \
+position can say which of the two to colour \[LongDash] which is exactly what highlighting a \
+match requires, since a match covers particular edges and not every edge that looks like them. \
+Where a vertex is itself named by an integer the identifier wins over the position reading, \
+since that is what anyone writing VertexStyle -> {1 -> Red} means."],
+
+code["{HypergraphPlot[styled, EdgeStyle -> {1 -> Red}, ImageSize -> 190],\n \
+ HypergraphPlot[styled, EdgeStyle -> {3 -> Red}, ImageSize -> 190]}"],
+
+text["An empty list of rules changes nothing, so a list of highlights can be built and passed \
+without checking whether it came out empty:"],
+
+code["HypergraphPlot[styled, EdgeStyle -> {}] === HypergraphPlot[styled]"],
+
+text["\"EdgeLineStyle\" colours the boundary lines and arrowheads rather than the fill, and the \
+two label styles do what their names say:"],
+
+code["HypergraphPlot[styled, \"EdgeLineStyle\" -> Purple, EdgeLabelStyle -> Purple,\n \
+ VertexLabelStyle -> {1 -> Red}, ImageSize -> 240]"],
+
+subsection["Placing the vertices"],
+
+text["VertexCoordinates takes rules, an Association, or a plain list in vertex order:"],
+
+code["HypergraphPlot[Hypergraph[{Edge[{1, 2}], Edge[{2, 3}], Edge[{3, 1}]}],\n \
+ VertexCoordinates -> {{0., 0.}, {1., 0.}, {0.5, 0.9}}, ImageSize -> 200]"],
+
+text["Handing a layout back gives the same layout, which is the property everything else relies \
+on:"],
+
+code["triangle = Hypergraph[{Edge[{1, 2}], Edge[{2, 3}], Edge[{3, 1}]}];\n\
+here = Thread[VertexID /@ VertexList[triangle] -> HypergraphEmbedding[triangle]];\n\
+Chop[HypergraphEmbedding[triangle, VertexCoordinates -> here] - HypergraphEmbedding[triangle]]"],
+
+text["And a different hypergraph can be drawn on it, which is how the two halves of an event come \
+to line up:"],
+
+code["{HypergraphPlot[triangle, ImageSize -> 190],\n \
+ HypergraphPlot[Hypergraph[{Edge[{1, 2}], Edge[{2, 3}]}], VertexCoordinates -> here,\n \
+   ImageSize -> 190]}"],
+
+text["Placing only some of the vertices settles the rest among them rather than laying them out \
+separately. A vertex a rewrite has just inserted into an edge lands between that edge's two ends:"],
+
+code["HypergraphPlot[First[sub[triangle]][\"Hypergraph\"], VertexCoordinates -> here,\n \
+ VertexLabels -> \"Name\", ImageSize -> 240]"],
+
+note["A graph given coordinates for some of its vertices and not others lays out none of them, \
+which is why this is not simply handed to the layout. The given positions are written over the \
+automatic layout and the rest moved repeatedly to the middle of their neighbours until they \
+settle. The helper vertex that stands for a large edge is moved the same way, to the centre of \
+the vertices it serves \[LongDash] left where the automatic layout put it, it would drag the \
+edge's boundary away from them."],
+
+section["7.  Worked examples"],
 
 subsection["Growing a path"],
 
@@ -581,7 +831,7 @@ code["onlyX = HypergraphRule[{Edge[{1, 2}, \"Directed\", \"x\"]},\n \
 
 code["First[onlyX[mixed]][\"Hypergraph\"]"],
 
-section["7.  Scope and limits"],
+section["8.  Scope and limits"],
 
 text["What is here is the core: a rule, the matches of its input, and the events an application \
 produces. Everything built on top of that \[LongDash] applying a rule over and over to collect \

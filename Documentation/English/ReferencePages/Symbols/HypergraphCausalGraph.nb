@@ -10,90 +10,90 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[   2418177,      54178]
-NotebookOptionsPosition[   2415139,      54137]
-NotebookOutlinePosition[   2415487,      54152]
-CellTagsIndexPosition[   2415444,      54149]
+NotebookDataLength[   2419492,      54196]
+NotebookOptionsPosition[   2416454,      54155]
+NotebookOutlinePosition[   2416802,      54170]
+CellTagsIndexPosition[   2416759,      54167]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphCausalGraph", "ObjectName",ExpressionUUID->"407fcd57-cba3-c749-bfd2-0caa03c1320e"],
+Cell["HypergraphCausalGraph", "ObjectName",ExpressionUUID->"96231956-d03d-c442-a8cc-7f558a4c6351"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphCausalGraph", "[", 
     RowBox[{"sys", ",", " ", "n"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"56b35b07-6097-1e4a-9154-659f36fbb481"],
+  ExpressionUUID->"4deb89bd-e9e4-504c-bf42-c4a42e7453d0"],
  " ",
  "gives the causal graph of the rewriting system sys evolved n generations."
-}], "Usage",ExpressionUUID->"950ea496-adf3-274b-8655-9d09ad0f26c9"],
+}], "Usage",ExpressionUUID->"94dfa66a-8fc8-f240-9c5a-4ff9af08fdb1"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphCausalGraph", "[", 
     RowBox[{"rules", ",", " ", "init", ",", " ", "n"}], "]"}], "InlineCode"]],
-   "InlineFormula",ExpressionUUID->"7e681b4b-8072-d247-97f3-143b2129189d"],
+   "InlineFormula",ExpressionUUID->"eb685b95-c049-6449-bbdc-388c2b2e2fa2"],
  " ",
  "builds the system first."
-}], "Usage",ExpressionUUID->"b8880f1b-c8da-a845-a394-09de0810702a"],
+}], "Usage",ExpressionUUID->"1836d09c-1500-6a43-9f80-3ed45fa57b98"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"2e17e518-0390-4b45-8e21-90eb14cd4a41"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"51e967d9-6536-574d-8b30-10d40b58a72a"],
 
 Cell["\<\
 The graph has one vertex per event, numbered as in sys[\"EventList\", n], and \
 an edge from an event to a later one that depends on it.\
-\>", "Notes",ExpressionUUID->"b131bda2-d61b-0744-bac2-8f554f099682"],
+\>", "Notes",ExpressionUUID->"7c840d62-6b2a-0642-b216-e93f51b6f1b7"],
 
 Cell[TextData[{
  "Two events are dependent when the elements they touch overlap. What counts \
 as an element is the option \"CausalDependence\"; see ",
  Cell[BoxData[
   StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"d8d543d6-f405-5e46-ac2b-9c155935abba"],
+  ExpressionUUID->"a961022b-f9df-e340-a67e-f5fad3d90444"],
  "."
-}], "Notes",ExpressionUUID->"31edb90e-4032-224e-bc4f-bf81549f0e8a"],
+}], "Notes",ExpressionUUID->"1d351428-f818-f547-8de8-17552cbb5e09"],
 
 Cell["\<\
 An event touches what its match covered together with what it created. Along \
 a path that comes to the same thing as the usual created-then-consumed \
 reading, since an edge an event consumed is gone and can only be met again by \
 having been created.\
-\>", "Notes",ExpressionUUID->"c9c5c744-d27a-0e4e-94b6-5270cb0b34fd"],
+\>", "Notes",ExpressionUUID->"4c02672a-4e1f-2942-91df-1750f6bc93f8"],
 
 Cell["\<\
 Dependence is only asked about between events on one path: the second must \
 act on the state the first produced, or on a descendant of it. In a multiway \
 evolution two events on different branches never meet, whatever they have in \
 common.\
-\>", "Notes",ExpressionUUID->"61379265-a010-8949-b8da-939b13991ea5"],
+\>", "Notes",ExpressionUUID->"ffa76733-2100-1344-ba4b-25137dadadc5"],
 
 Cell["\<\
 \"TransitiveReduction\" -> True, the default, leaves only the edges the order \
 does not already imply.\
-\>", "Notes",ExpressionUUID->"cccd65a9-b3e5-5444-a79e-1be6999753c3"],
+\>", "Notes",ExpressionUUID->"3ce43dd9-625f-ff43-a78a-b5f41a45069d"],
 
 Cell["\<\
 sys[\"CausalEdges\", n] gives the same relation as a list of associations \
 with \"From\", \"To\", \"SharedEdges\" and \"SharedVertices\", which say not \
 only that two events are related but what they had in common.\
-\>", "Notes",ExpressionUUID->"41f5d9a5-8a2f-a242-90c8-801366616847"],
+\>", "Notes",ExpressionUUID->"c927ccd6-28bc-f64e-b30e-fa4044077075"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"23118c7a-d98c-4245-9337-a697f5452362"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"7501b4be-06b6-e54a-a23c-16c4f507f546"],
 
 Cell["\<\
 Subdividing either edge of a two-edge path, and then either edge of the \
 result:\
-\>", "ExampleText",ExpressionUUID->"e1955a7b-4c56-b34e-bfc9-ea94d64dbb32"],
+\>", "ExampleText",ExpressionUUID->"538ef0f2-f6e9-3344-83ff-2af5bddb198d"],
 
 Cell["\<\
 subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];
 twoEdges = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}, {2, \
 3}}]];
 HypergraphCausalGraph[twoEdges, 2]\
-\>", "Input",ExpressionUUID->"6ae216d2-8e1f-6645-bf7e-2371dbddbca8"],
+\>", "Input",ExpressionUUID->"f5d830af-eeb2-0147-8a3a-2fe17826bbfd"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -321,8 +321,9 @@ Cell[BoxData[
           WolframInstitute`Hypergraphs`Private`pos$, 
            WolframInstitute`Hypergraphs`Private`name$, 
            WolframInstitute`Hypergraphs`Private`size$}, 
-          With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-               Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+          With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+              WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
            Inset[
             Lookup[<|1 -> Framed[
                 Graphics[{{}, {{
@@ -1513,7 +1514,6 @@ Cell[BoxData[
                     RGBColor[1, 0, 0], 
                     Thickness[Large]]]], {
                     Arrow[
-                    
                     Line[{{1., 4.898587196589413*^-16}, {2., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -1900,7 +1900,7 @@ Cell[BoxData[
             WolframInstitute`Hypergraphs`Private`pos$, Center, {
             WolframInstitute`Hypergraphs`Private`w$, 
              WolframInstitute`Hypergraphs`Private`w$/2.4}]]]}, 
-       VertexSize -> {2.4}, VertexStyle -> {
+       VertexSize -> {2.88}, VertexStyle -> {
          Directive[
           Hue[0.11, 1, 0.97], 
           EdgeForm[{
@@ -2062,7 +2062,7 @@ Cell[BoxData[
                 Opacity[0.6], 
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
-              StripOnInput->False], {1.37501, -2.12503}, Center, {1.6560441600000004, 0.6900184000000003}],
+              StripOnInput->False], {1.37501, -2.12503}, Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$1"],
            TagBox[
@@ -2348,7 +2348,7 @@ Cell[BoxData[
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
               StripOnInput->False], {1.3750099999999998, -0.37501000000000007},
-              Center, {1.6560441600000004, 0.6900184000000003}],
+              Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$2"],
            TagBox[
@@ -2649,7 +2649,7 @@ Cell[BoxData[
                 Opacity[0.6], 
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
-              StripOnInput->False], {0.37501000000000007, -3.12503}, Center, {1.6560441600000004, 0.6900184000000003}],
+              StripOnInput->False], {0.37501000000000007, -3.12503}, Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$3"],
            TagBox[
@@ -2989,7 +2989,7 @@ Cell[BoxData[
                 Opacity[0.6], 
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
-              StripOnInput->False], {1.37501, -3.12503}, Center, {1.6560441600000004, 0.6900184000000003}],
+              StripOnInput->False], {1.37501, -3.12503}, Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$4"],
            TagBox[
@@ -3329,7 +3329,7 @@ Cell[BoxData[
                 Opacity[0.6], 
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
-              StripOnInput->False], {2.37501, -3.12503}, Center, {1.6560441600000004, 0.6900184000000003}],
+              StripOnInput->False], {2.37501, -3.12503}, Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$5"],
            TagBox[
@@ -3669,7 +3669,7 @@ Cell[BoxData[
                 Opacity[0.6], 
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
-              StripOnInput->False], {0.37500999999999984, -1.37501}, Center, {1.6560441600000004, 0.6900184000000003}],
+              StripOnInput->False], {0.37500999999999984, -1.37501}, Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$6"],
            TagBox[
@@ -4008,7 +4008,7 @@ Cell[BoxData[
                 Opacity[0.6], 
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
-              StripOnInput->False], {1.3750099999999998, -1.37501}, Center, {1.6560441600000004, 0.6900184000000003}],
+              StripOnInput->False], {1.3750099999999998, -1.37501}, Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$7"],
            TagBox[
@@ -4348,7 +4348,7 @@ Cell[BoxData[
                 Opacity[0.6], 
                 Hue[0.62, 0.45, 0.6]],
               RoundingRadius->3,
-              StripOnInput->False], {2.3750099999999996, -1.37501}, Center, {1.6560441600000004, 0.6900184000000003}],
+              StripOnInput->False], {2.3750099999999996, -1.37501}, Center, {1.6560441600000007, 0.6900184000000003}],
             "DynamicName",
             BoxID -> "VertexID$8"],
            TagBox[
@@ -4542,17 +4542,17 @@ Cell[BoxData[
   Background->GrayLevel[1],
   DefaultBaseStyle->"NetworkGraphics",
   FormatType->TraditionalForm,
-  FrameTicks->None]], "Output",ExpressionUUID->"aa040a4a-1815-4a42-92fe-\
-ca12f7a9fb20"],
+  FrameTicks->None]], "Output",ExpressionUUID->"22f7a3e7-fbc9-8946-8d0f-\
+e7f950fcbcd6"],
 
 Cell["\<\
 By default an event depends on an earlier one when they share anything at \
 all. Counting only whole shared edges relates fewer of them:\
-\>", "ExampleText",ExpressionUUID->"51d0200c-5d6a-1444-99b5-218f05accd9a"],
+\>", "ExampleText",ExpressionUUID->"4ba31f5d-fe73-894b-bc92-90c2181b2b4b"],
 
 Cell["\<\
 HypergraphCausalGraph[twoEdges, 2, \"CausalDependence\" -> \"Edges\"]\
-\>", "Input",ExpressionUUID->"c3884502-1617-504f-9021-a2dba04f6ee4"],
+\>", "Input",ExpressionUUID->"3505f0eb-b16c-c445-8561-2f3807444047"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -4780,8 +4780,9 @@ Cell[BoxData[
           WolframInstitute`Hypergraphs`Private`pos$, 
            WolframInstitute`Hypergraphs`Private`name$, 
            WolframInstitute`Hypergraphs`Private`size$}, 
-          With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-               Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+          With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+              WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
            Inset[
             Lookup[<|1 -> Framed[
                 Graphics[{{}, {{
@@ -6359,7 +6360,7 @@ Cell[BoxData[
             WolframInstitute`Hypergraphs`Private`pos$, Center, {
             WolframInstitute`Hypergraphs`Private`w$, 
              WolframInstitute`Hypergraphs`Private`w$/2.4}]]]}, 
-       VertexSize -> {2.4}, VertexStyle -> {
+       VertexSize -> {2.88}, VertexStyle -> {
          Directive[
           Hue[0.11, 1, 0.97], 
           EdgeForm[{
@@ -9000,19 +9001,19 @@ Cell[BoxData[
   Background->GrayLevel[1],
   DefaultBaseStyle->"NetworkGraphics",
   FormatType->TraditionalForm,
-  FrameTicks->None]], "Output",ExpressionUUID->"5f2012b1-d31f-7844-a7c5-\
-b38b784617a0"],
+  FrameTicks->None]], "Output",ExpressionUUID->"38a5898b-7617-5b46-9084-\
+217d2a042d50"],
 
 Cell["\<\
 The pairs that drop out are the ones whose matches meet only at a vertex:\
-\>", "ExampleText",ExpressionUUID->"463f5647-6adc-2046-9343-3cd0d4284acf"],
+\>", "ExampleText",ExpressionUUID->"d167bc75-e8f1-3942-a326-6ddfbc02fae5"],
 
 Cell["\<\
 pairsOf[l_] := {#[\"From\"], #[\"To\"]} & /@ l;
 Complement[pairsOf @ twoEdges[\"CausalEdges\", 2],
            pairsOf @ twoEdges[\"CausalEdges\", 2, \"CausalDependence\" -> \
 \"Edges\"]]\
-\>", "Input",ExpressionUUID->"3b6ceb58-4c1b-1141-a444-111073fac24d"],
+\>", "Input",ExpressionUUID->"31b4bcf8-dcd4-4e4a-a58e-b9e331768639"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -9021,11 +9022,11 @@ Cell[BoxData[
     RowBox[{"1", ",", "4"}], "}"}], ",", 
    RowBox[{"{", 
     RowBox[{"2", ",", "6"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
-"8b170796-b666-dc4e-acc9-05aa5d26aa01"],
+"54a57f2b-4f95-604c-bec4-2aa01eb8aa9e"],
 
 Cell["\<\
 Select[twoEdges[\"CausalEdges\", 2], #[\"SharedEdges\"] === {} &]\
-\>", "Input",ExpressionUUID->"d6b8113e-7164-0f43-8fe4-17c03d2ce4c4"],
+\>", "Input",ExpressionUUID->"d241595e-1861-6842-8659-9d0ec552d064"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -9046,13 +9047,13 @@ Cell[BoxData[
       RowBox[{"{", "}"}]}], ",", 
      RowBox[{"\<\"SharedVertices\"\>", "\[Rule]", 
       RowBox[{"{", "2", "}"}]}]}], "\[RightAssociation]"}]}], "}"}]], "Output",\
-ExpressionUUID->"f87698ee-5dc1-f241-b386-1900c4e11752"],
+ExpressionUUID->"82a0a0af-5dfa-4c46-9350-0de9cd36131a"],
 
 Cell["\<\
 States and events together, with the causal edges laid over them:\
-\>", "ExampleText",ExpressionUUID->"23a390d9-f3d3-f643-a2c2-a78345ce7aac"],
+\>", "ExampleText",ExpressionUUID->"c82007a5-0226-1747-a318-5979307fb82f"],
 
-Cell["twoEdges[\"EvolutionCausalGraph\", 2]", "Input",ExpressionUUID->"20c0157f-b5d6-1240-82dc-b703cb75ece5"],
+Cell["twoEdges[\"EvolutionCausalGraph\", 2]", "Input",ExpressionUUID->"79afe3de-0410-4a4d-b8c1-c335d733ea5c"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -9503,8 +9504,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -11843,8 +11845,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -14183,8 +14186,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -16523,8 +16527,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -17557,7 +17562,6 @@ Cell[BoxData[
                     RGBColor[1, 0, 0], 
                     Thickness[Large]]]], {
                     Arrow[
-                    
                     Line[{{1., 2.4492935982947064`*^-16}, {1.5, 
                     1.2246467991473532`*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -18047,7 +18051,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{0., 6.123233995736766*^-16}, {1., 
                     4.898587196589413*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -18863,8 +18866,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -20409,6 +20413,7 @@ Cell[BoxData[
                     RGBColor[1, 0, 0], 
                     Thickness[Large]]]], {
                     Arrow[
+                    
                     Line[{{1., 4.898587196589413*^-16}, {2., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
@@ -20605,6 +20610,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
+                    
                     Line[{{1., 4.898587196589413*^-16}, {2., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -20889,7 +20895,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{0., 6.123233995736766*^-16}, {1., 
                     4.898587196589413*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -21094,6 +21099,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
+                    
                     Line[{{0., 6.123233995736766*^-16}, {1., 
                     4.898587196589413*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -21200,8 +21206,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -21878,6 +21885,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
+                    
                     Line[{{0., 7.347880794884119*^-16}, {1., 
                     6.123233995736766*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -23539,8 +23547,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -24125,7 +24134,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{0., 7.347880794884119*^-16}, {1., 
                     6.123233995736766*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -25879,8 +25887,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -26493,6 +26502,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
+                    
                     Line[{{2., 4.898587196589413*^-16}, {3., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
@@ -28218,8 +28228,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -28832,7 +28843,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{2., 4.898587196589413*^-16}, {3., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
@@ -30558,8 +30568,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -32898,8 +32909,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -33932,7 +33944,6 @@ Cell[BoxData[
                     RGBColor[1, 0, 0], 
                     Thickness[Large]]]], {
                     Arrow[
-                    
                     Line[{{1., 2.4492935982947064`*^-16}, {1.5, 
                     1.2246467991473532`*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -34422,7 +34433,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{0., 6.123233995736766*^-16}, {1., 
                     4.898587196589413*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -34735,6 +34745,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
+                    
                     Line[{{1., 4.898587196589413*^-16}, {2., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -35237,8 +35248,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -37265,7 +37277,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{0., 6.123233995736766*^-16}, {1., 
                     4.898587196589413*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -37577,8 +37588,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -39917,8 +39929,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -40503,7 +40516,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{0., 7.347880794884119*^-16}, {1., 
                     6.123233995736766*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -40531,6 +40543,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
+                    
                     Line[{{2., 4.898587196589413*^-16}, {3., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
@@ -42256,8 +42269,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -44596,8 +44610,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -45210,7 +45225,6 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
-                    
                     Line[{{2., 4.898587196589413*^-16}, {3., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}}, 
@@ -46936,8 +46950,9 @@ Cell[BoxData[
            WolframInstitute`Hypergraphs`Private`pos$, 
             WolframInstitute`Hypergraphs`Private`name$, 
             WolframInstitute`Hypergraphs`Private`size$}, 
-           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 Min[
-                Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]}, 
+           With[{WolframInstitute`Hypergraphs`Private`w$ = 1.84 (Min[
+                 Flatten[{WolframInstitute`Hypergraphs`Private`size$}]]/
+               WolframInstitute`Hypergraphs`Private`$panelMargin)}, 
             Inset[
              Lookup[<|{"State", 1} -> Framed[
                  Graphics[{
@@ -48773,6 +48788,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     Arrow[
+                    
                     Line[{{1., 4.898587196589413*^-16}, {2., 
                     2.4492935982947064`*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -49271,13 +49287,13 @@ Cell[BoxData[
              WolframInstitute`Hypergraphs`Private`pos$, Center, {
              WolframInstitute`Hypergraphs`Private`w$, 
               WolframInstitute`Hypergraphs`Private`w$/2.4}]]]}, 
-       VertexSize -> {{"Event", 2} -> 2.4, {"Event", 7} -> 2.4, {"State", 7} -> 
-         1, {"Event", 8} -> 2.4, {"Event", 5} -> 2.4, {"Event", 1} -> 
-         2.4, {"State", 1} -> 1, {"State", 6} -> 1, {"State", 2} -> 
-         1, {"Event", 6} -> 2.4, {"State", 4} -> 1, {"Event", 4} -> 
-         2.4, {"State", 8} -> 1, {"State", 3} -> 1, {"Event", 3} -> 
-         2.4, {"State", 5} -> 1, {"State", 9} -> 1}, 
-       VertexStyle -> {{"State", 5} -> Directive[
+       VertexSize -> {{"Event", 2} -> 2.88, {"Event", 7} -> 
+         2.88, {"State", 7} -> 1.2, {"Event", 8} -> 2.88, {"Event", 5} -> 
+         2.88, {"Event", 1} -> 2.88, {"State", 1} -> 1.2, {"State", 6} -> 
+         1.2, {"State", 2} -> 1.2, {"Event", 6} -> 2.88, {"State", 4} -> 
+         1.2, {"Event", 4} -> 2.88, {"State", 8} -> 1.2, {"State", 3} -> 
+         1.2, {"Event", 3} -> 2.88, {"State", 5} -> 1.2, {"State", 9} -> 1.2},
+        VertexStyle -> {{"State", 5} -> Directive[
            Opacity[0.7], 
            Hue[0.62, 0.45, 0.87]], {"Event", 7} -> Directive[
            Hue[0.11, 1, 0.97], 
@@ -50385,6 +50401,7 @@ Cell[BoxData[
                    Opacity[0.7], 
                    Hue[0.63, 0.7, 0.5]], {
                    ArrowBox[
+                    
                     LineBox[{{2., 4.898587196589413*^-16}, {3., 
                     2.4492935982947064`*^-16}}]], {}}, 
                   Opacity[1], {}}}, {
@@ -50762,8 +50779,7 @@ Cell[BoxData[
                  Arrowheads[{{Medium, 0.5}}], {
                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
                    {Hue[0.63, 0.7, 0.5], Opacity[
-                    0.7], {
-                    ArrowBox[
+                    0.7], {ArrowBox[
                     LineBox[{{0., 7.347880794884119*^-16}, {1., 
                     6.123233995736766*^-16}}]], {}}, 
                     {Opacity[1]}}}, 
@@ -51108,7 +51124,6 @@ Cell[BoxData[
                    Opacity[0.7], 
                    Hue[0.63, 0.7, 0.5]], {
                    ArrowBox[
-                    
                     LineBox[{{1., 6.123233995736766*^-16}, {2., 
                     4.898587196589413*^-16}}]], {}}, 
                   Opacity[1], {}}}, {
@@ -51878,6 +51893,7 @@ Cell[BoxData[
                     ImagePadding->{{7., 7.}, {7., 7.}},
                     ImageSize->90,
                     PlotInteractivity:>True,
+                    
                     PlotRange->{{0., 2.}, {-0.3333333333333333, 
                     0.3333333333333337}},
                     PlotRangePadding->Scaled[0.02]], {146.25, -47.24999999999999},
@@ -53614,6 +53630,7 @@ Cell[BoxData[
                     Opacity[0.7], 
                     Hue[0.63, 0.7, 0.5]], {
                     ArrowBox[
+                    
                     LineBox[{{0., 7.347880794884119*^-16}, {1., 
                     6.123233995736766*^-16}}]], {}}, 
                     Opacity[1], {}}}, {
@@ -53894,6 +53911,7 @@ Cell[BoxData[
                     PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
                     PlotRangePadding->Scaled[0.02]], {146.25, -47.25}, 
                    ImageScaled[{0.5, 0.5}], {90., 90.},
+                   
                    BaseStyle->{
                     Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
                 AspectRatio->1,
@@ -54103,10 +54121,10 @@ Cell[BoxData[
   Background->GrayLevel[1],
   DefaultBaseStyle->"NetworkGraphics",
   FormatType->TraditionalForm,
-  FrameTicks->None]], "Output",ExpressionUUID->"cb8ce715-ba45-d24f-9c58-\
-11a670f70932"],
+  FrameTicks->None]], "Output",ExpressionUUID->"96b355cd-bd90-b340-b404-\
+ce4303d1ad4a"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"8a1fd3d0-c680-8a4d-82b6-7e2bf49f484a"],
+Cell["Source", "NotesSection",ExpressionUUID->"41b09f07-36d2-6645-bc88-2fa18dd00e64"],
 
 Cell[TextData[{
  "Defined in ",
@@ -54117,28 +54135,28 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "Causal dependence",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"06e0e51b-7e1d-884d-82d1-04ff5a42c90b"],
+}], "Notes",ExpressionUUID->"1cde2aef-117e-0040-b8a9-3395635cef50"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"fd061d09-453d-f549-a07a-1361a39f0c6f"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"1674af93-c983-f041-a829-4f87666bc180"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c922cbf2-9641-df4a-875e-77dc45071238"],
+  ExpressionUUID->"07f52073-f466-6945-8eae-a00426281585"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRewritingSystem", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"e97595f9-d949-a84f-8199-a83f135da670"],
+  ExpressionUUID->"084acae2-e81a-2749-97e3-8b1d08263251"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"98fd2e6d-3650-f842-8904-25857d238bda"]
-}], "SeeAlso",ExpressionUUID->"abc21c41-00f6-6f45-a761-d0349c699259"]
+  ExpressionUUID->"d9c574e5-bc63-6e47-99b1-7cb798dd93e8"]
+}], "SeeAlso",ExpressionUUID->"efac3ada-6c3e-5444-ad97-15b13e27edd4"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"c38dc7da-6730-d640-a752-5dad13f73908"
+ExpressionUUID->"2ded3ccc-7ea3-6846-a6c9-db2701d1865c"
 ]
 (* End of Notebook Content *)
 
@@ -54151,35 +54169,35 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 98, 0, 70, "ObjectName",ExpressionUUID->"407fcd57-cba3-c749-bfd2-0caa03c1320e"],
-Cell[655, 22, 378, 8, 70, "Usage",ExpressionUUID->"950ea496-adf3-274b-8655-9d09ad0f26c9"],
-Cell[1028, 32, 349, 8, 70, "Usage",ExpressionUUID->"b8880f1b-c8da-a845-a394-09de0810702a"],
-Cell[1372, 42, 98, 0, 70, "NotesSection",ExpressionUUID->"2e17e518-0390-4b45-8e21-90eb14cd4a41"],
-Cell[1473, 44, 219, 3, 70, "Notes",ExpressionUUID->"b131bda2-d61b-0744-bac2-8f554f099682"],
-Cell[1692, 49, 375, 7, 70, "Notes",ExpressionUUID->"31edb90e-4032-224e-bc4f-bf81549f0e8a"],
-Cell[2063, 58, 337, 5, 70, "Notes",ExpressionUUID->"c9c5c744-d27a-0e4e-94b6-5270cb0b34fd"],
-Cell[2398, 65, 327, 5, 70, "Notes",ExpressionUUID->"61379265-a010-8949-b8da-939b13991ea5"],
-Cell[2723, 72, 186, 3, 70, "Notes",ExpressionUUID->"cccd65a9-b3e5-5444-a79e-1be6999753c3"],
-Cell[2909, 77, 300, 4, 70, "Notes",ExpressionUUID->"41f5d9a5-8a2f-a242-90c8-801366616847"],
-Cell[3208, 83, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"23118c7a-d98c-4245-9337-a697f5452362"],
-Cell[3308, 85, 170, 3, 70, "ExampleText",ExpressionUUID->"e1955a7b-4c56-b34e-bfc9-ea94d64dbb32"],
-Cell[3478, 90, 256, 5, 70, "Input",ExpressionUUID->"6ae216d2-8e1f-6645-bf7e-2371dbddbca8"],
-Cell[3732, 97, 211547, 4448, 70, "Output",ExpressionUUID->"aa040a4a-1815-4a42-92fe-ca12f7a9fb20"],
-Cell[210834, 4547, 225, 3, 70, "ExampleText",ExpressionUUID->"51d0200c-5d6a-1444-99b5-218f05accd9a"],
-Cell[211059, 4552, 151, 2, 70, "Input",ExpressionUUID->"c3884502-1617-504f-9021-a2dba04f6ee4"],
-Cell[211211, 4556, 211388, 4447, 70, "Output",ExpressionUUID->"5f2012b1-d31f-7844-a7c5-b38b784617a0"],
-Cell[418155, 9005, 161, 2, 70, "ExampleText",ExpressionUUID->"463f5647-6adc-2046-9343-3cd0d4284acf"],
-Cell[418317, 9009, 271, 5, 70, "Input",ExpressionUUID->"3b6ceb58-4c1b-1141-a444-111073fac24d"],
-Cell[418586, 9016, 235, 7, 70, "Output",ExpressionUUID->"8b170796-b666-dc4e-acc9-05aa5d26aa01"],
-Cell[418817, 9025, 147, 2, 70, "Input",ExpressionUUID->"d6b8113e-7164-0f43-8fe4-17c03d2ce4c4"],
-Cell[418965, 9029, 829, 19, 70, "Output",ExpressionUUID->"f87698ee-5dc1-f241-b386-1900c4e11752"],
-Cell[419778, 9050, 153, 2, 70, "ExampleText",ExpressionUUID->"23a390d9-f3d3-f643-a2c2-a78345ce7aac"],
-Cell[419932, 9054, 109, 0, 70, "Input",ExpressionUUID->"20c0157f-b5d6-1240-82dc-b703cb75ece5"],
-Cell[420044, 9056, 2039153, 45050, 70, "Output",ExpressionUUID->"cb8ce715-ba45-d24f-9c58-11a670f70932"],
-Cell[2414150, 54108, 85, 0, 70, "NotesSection",ExpressionUUID->"8a1fd3d0-c680-8a4d-82b6-7e2bf49f484a"],
-Cell[2414238, 54110, 281, 9, 70, "Notes",ExpressionUUID->"06e0e51b-7e1d-884d-82d1-04ff5a42c90b"],
-Cell[2414513, 54121, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"fd061d09-453d-f549-a07a-1361a39f0c6f"],
-Cell[2414605, 54123, 542, 12, 70, "SeeAlso",ExpressionUUID->"abc21c41-00f6-6f45-a761-d0349c699259"]
+Cell[554, 20, 98, 0, 70, "ObjectName",ExpressionUUID->"96231956-d03d-c442-a8cc-7f558a4c6351"],
+Cell[655, 22, 378, 8, 70, "Usage",ExpressionUUID->"94dfa66a-8fc8-f240-9c5a-4ff9af08fdb1"],
+Cell[1028, 32, 349, 8, 70, "Usage",ExpressionUUID->"1836d09c-1500-6a43-9f80-3ed45fa57b98"],
+Cell[1372, 42, 98, 0, 70, "NotesSection",ExpressionUUID->"51e967d9-6536-574d-8b30-10d40b58a72a"],
+Cell[1473, 44, 219, 3, 70, "Notes",ExpressionUUID->"7c840d62-6b2a-0642-b216-e93f51b6f1b7"],
+Cell[1692, 49, 375, 7, 70, "Notes",ExpressionUUID->"1d351428-f818-f547-8de8-17552cbb5e09"],
+Cell[2063, 58, 337, 5, 70, "Notes",ExpressionUUID->"4c02672a-4e1f-2942-91df-1750f6bc93f8"],
+Cell[2398, 65, 327, 5, 70, "Notes",ExpressionUUID->"ffa76733-2100-1344-ba4b-25137dadadc5"],
+Cell[2723, 72, 186, 3, 70, "Notes",ExpressionUUID->"3ce43dd9-625f-ff43-a78a-b5f41a45069d"],
+Cell[2909, 77, 300, 4, 70, "Notes",ExpressionUUID->"c927ccd6-28bc-f64e-b30e-fa4044077075"],
+Cell[3208, 83, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"7501b4be-06b6-e54a-a23c-16c4f507f546"],
+Cell[3308, 85, 170, 3, 70, "ExampleText",ExpressionUUID->"538ef0f2-f6e9-3344-83ff-2af5bddb198d"],
+Cell[3478, 90, 256, 5, 70, "Input",ExpressionUUID->"f5d830af-eeb2-0147-8a3a-2fe17826bbfd"],
+Cell[3732, 97, 211595, 4448, 70, "Output",ExpressionUUID->"22f7a3e7-fbc9-8946-8d0f-e7f950fcbcd6"],
+Cell[210882, 4547, 225, 3, 70, "ExampleText",ExpressionUUID->"4ba31f5d-fe73-894b-bc92-90c2181b2b4b"],
+Cell[211107, 4552, 151, 2, 70, "Input",ExpressionUUID->"3505f0eb-b16c-c445-8561-2f3807444047"],
+Cell[211259, 4556, 211458, 4448, 70, "Output",ExpressionUUID->"38a5898b-7617-5b46-9084-217d2a042d50"],
+Cell[418272, 9006, 161, 2, 70, "ExampleText",ExpressionUUID->"d167bc75-e8f1-3942-a326-6ddfbc02fae5"],
+Cell[418434, 9010, 271, 5, 70, "Input",ExpressionUUID->"31b4bcf8-dcd4-4e4a-a58e-b9e331768639"],
+Cell[418703, 9017, 235, 7, 70, "Output",ExpressionUUID->"54a57f2b-4f95-604c-bec4-2aa01eb8aa9e"],
+Cell[418934, 9026, 147, 2, 70, "Input",ExpressionUUID->"d241595e-1861-6842-8659-9d0ec552d064"],
+Cell[419082, 9030, 829, 19, 70, "Output",ExpressionUUID->"82a0a0af-5dfa-4c46-9350-0de9cd36131a"],
+Cell[419895, 9051, 153, 2, 70, "ExampleText",ExpressionUUID->"c82007a5-0226-1747-a318-5979307fb82f"],
+Cell[420049, 9055, 109, 0, 70, "Input",ExpressionUUID->"79afe3de-0410-4a4d-b8c1-c335d733ea5c"],
+Cell[420161, 9057, 2040368, 45067, 70, "Output",ExpressionUUID->"96b355cd-bd90-b340-b404-ce4303d1ad4a"],
+Cell[2415465, 54126, 85, 0, 70, "NotesSection",ExpressionUUID->"41b09f07-36d2-6645-bc88-2fa18dd00e64"],
+Cell[2415553, 54128, 281, 9, 70, "Notes",ExpressionUUID->"1cde2aef-117e-0040-b8a9-3395635cef50"],
+Cell[2415828, 54139, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"1674af93-c983-f041-a829-4f87666bc180"],
+Cell[2415920, 54141, 542, 12, 70, "SeeAlso",ExpressionUUID->"efac3ada-6c3e-5444-ad97-15b13e27edd4"]
 }
 ]
 *)

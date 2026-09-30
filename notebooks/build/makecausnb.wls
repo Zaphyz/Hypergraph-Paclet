@@ -76,7 +76,7 @@ Needs[\"WolframInstitute`Hypergraphs`\"]",
    symbols used below as label variables. *)
 (ClearAll[a, b, c, d, e, f, g, p, q, r, s, u, x, y, z,
           subdivide, twoEdges, system, chain4, chainSys, comp, unit, arrow, catSys,
-          zig, zigSys, long, pairsOf, byType, strict, flip]; Nothing),
+          zig, zigSys, long, pairsOf, byType, strict, flip, labelledStart, onlyA]; Nothing),
 
 section["1.  A system is rules and a state to start from"],
 
@@ -223,19 +223,82 @@ code["pairsOf @ twoEdges[\"CausalEdges\", 1]"],
 
 section["5.  The graphs"],
 
-text["States alone, as the tree and as the merged graph; the states one step could have reached; \
-the events and their dependence; and both together:"],
+text["Six graphs come out of one evolution, each answering a different question. All of them draw \
+their states and events as pictures, carry the object they stand for as a tooltip, and take the \
+options of Graph on top of the options of the system."],
 
-code["twoEdges[\"EvolutionGraph\", 2]"],
+subsection["EvolutionGraph \[LongDash] the tree of what happened"],
 
-code["twoEdges[\"StatesGraph\", 2]"],
+text["One vertex per state occurrence, one edge per event. Nothing is merged, so a state reached \
+two ways appears twice:"],
 
-code["twoEdges[\"BranchialGraph\", 1]"],
+code["twoEdges[\"EvolutionGraph\", 2, ImageSize -> 460, \"PanelSize\" -> 80]"],
 
-code["twoEdges[\"EvolutionCausalGraph\", 2]"],
+subsection["StatesGraph \[LongDash] the same states, merged"],
 
-text["Every vertex carries the state or the event it stands for as a tooltip, so a graph can be \
-read by pointing at it."],
+text["Equal states become one vertex, which is what closes the tree into a graph:"],
+
+code["twoEdges[\"StatesGraph\", 2, ImageSize -> 460, \"PanelSize\" -> 80]"],
+
+text["What counts as equal is \"CanonicalizeStates\". By default it is up to canonical form, so \
+two states differing only in what their vertices are called are one. Comparing them as written \
+merges far less:"],
+
+code["{VertexCount @ twoEdges[\"StatesGraph\", 2, \"StateRendering\" -> False],\n \
+ VertexCount @ twoEdges[\"StatesGraph\", 2, \"CanonicalizeStates\" -> False,\n \
+    \"StateRendering\" -> False]}"],
+
+note["A rewrite names the vertices it creates after what is already there, so two branches that \
+reach the same shape rarely reach it under the same names. Without canonicalizing, a states graph \
+of a growing rule barely merges anything and is just the tree again."],
+
+subsection["BranchialGraph \[LongDash] what one step could have done"],
+
+text["The states of a single generation, joined when they came from the same state:"],
+
+code["twoEdges[\"BranchialGraph\", 1, ImageSize -> 400, \"PanelSize\" -> 90]"],
+
+code["twoEdges[\"BranchialGraph\", 2, ImageSize -> 460, \"PanelSize\" -> 60]"],
+
+subsection["CausalGraph \[LongDash] which event depended on which"],
+
+text["One vertex per event, drawn as the match highlighted in what was there and the creations \
+highlighted in what came of it:"],
+
+code["twoEdges[\"CausalGraph\", 2, ImageSize -> 540, \"PanelSize\" -> 70]"],
+
+text["\"TransitiveReduction\" is on by default, leaving only the edges the order does not already imply. Two generations of this rule happen to have nothing implied; three have plenty:"],
+
+code["Table[{n,
+    EdgeCount @ twoEdges[\"CausalGraph\", n, \"EventRendering\" -> False],
+    EdgeCount @ twoEdges[\"CausalGraph\", n, \"TransitiveReduction\" -> False,
+       \"EventRendering\" -> False]}, {n, 2, 3}]"],
+
+note["Thirty edges against forty-eight at three generations. The eighteen the reduction removes are the ones saying that an event depends on something it already depends on through another event, which is true and adds nothing to the picture."],
+
+subsection["EvolutionCausalGraph \[LongDash] states and events together"],
+
+text["State to event to state, with the causal edges laid over them in red. Events are the wide \
+panels, states the square ones:"],
+
+code["twoEdges[\"EvolutionCausalGraph\", 2, ImageSize -> 560, \"PanelSize\" -> 55]"],
+
+subsection["TokenEventGraph \[LongDash] the elements themselves"],
+
+text["An event takes the elements it consumed and gives the ones it created, so a causal \
+dependence becomes a path through an element rather than something inferred:"],
+
+code["twoEdges[\"TokenEventGraph\", 1, ImageSize -> 520, \"PanelSize\" -> 55]"],
+
+text["Which elements appear is the same \"CausalDependence\" option. Under \"Edges\" the vertex \
+tokens are gone, so the dependence that ran only through a shared vertex has nothing to run along:"],
+
+code["twoEdges[\"TokenEventGraph\", 1, \"CausalDependence\" -> \"Edges\", ImageSize -> 440,\n \
+ \"PanelSize\" -> 55]"],
+
+note["This is section 4's contrast made visible. Two events joined in the token-event graph under \
+\"Elements\" but not under \"Edges\" are exactly the pairs whose matches meet at a vertex and \
+nowhere else."],
 
 section["6.  Systems from the reference notebooks"],
 
@@ -277,8 +340,9 @@ arguably the honest one \[LongDash] the composites meet at that object and can b
 further through it \[LongDash] while for a system where the arrows are the only carriers of \
 influence the first is. The rewriting does not decide; the option lets the model decide."],
 
-code["{chainSys[\"CausalGraph\", 2],\n \
- chainSys[\"CausalGraph\", 2, \"CausalDependence\" -> \"Edges\"]}"],
+code["{chainSys[\"CausalGraph\", 2, ImageSize -> 340, \"PanelSize\" -> 45],\n \
+ chainSys[\"CausalGraph\", 2, \"CausalDependence\" -> \"Edges\",\n \
+   ImageSize -> 340, \"PanelSize\" -> 45]}"],
 
 subsection["Zig-zag composition"],
 
@@ -407,7 +471,7 @@ text["\"StateRendering\" and \"EventRendering\" settle the question either way, 
 
 subsection["Keeping track of the options"],
 
-text["There are enough options now that they are kept in one registry, with their defaults:"],
+text["There are enough options now that they are kept in one registry, with their defaults. Each of them is shown at work at the end of this section:"],
 
 code["$HypergraphRewritingOptions"],
 
@@ -424,6 +488,92 @@ text["The held option is used without being repeated, and an option given to a p
 wins over it. What is in force for a particular system:"],
 
 code["FilterRules[strict[\"Options\"], {\"CausalDependence\", \"PanelSize\", \"MaxDrawnVertices\"}]"],
+
+subsection["Every option, and what it changes"],
+
+text["The registry, in the three groups it falls into. Four options govern the evolution, three \
+govern what is made of it, and five govern how it is drawn:"],
+
+code["Column[{\n \
+ Row[{\"evolution:  \", Keys @ Association @ Take[$HypergraphRewritingOptions, 4]}],\n \
+ Row[{\"causality:  \", Keys @ Association @ Take[$HypergraphRewritingOptions, {5, 7}]}],\n \
+ Row[{\"drawing:    \", Keys @ Association @ Take[$HypergraphRewritingOptions, -5]}]}]"],
+
+text["\"MaxStates\" stops an evolution that is growing faster than expected rather than running on, and gives HypergraphRewritingSystem::trunc saying which generation it stopped in. Six generations of this rule would be tens of thousands of states; the limit cuts it off at forty, against ten at three generations:"],
+
+code["{Quiet @ HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]][
+     \"StateCount\", 6, \"MaxStates\" -> 40],
+  HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]][\"StateCount\", 3]}"],
+
+text["\"Labeled\", \"LabelPatterns\" and \"DistinctVertices\" are the matching options of \
+HypergraphRuleApply, passed through to every rule application the evolution makes:"],
+
+code["labelledStart = Hypergraph[{Edge[{1, 2}, \"Directed\", \"a\"], Edge[{2, 3}, \"Directed\", \"b\"]}];\n\
+onlyA = HypergraphRewritingSystem[HypergraphRule[{Edge[{1, 2}, \"Directed\", \"a\"]}, {{2, 1}}],\n \
+                                 labelledStart];\n\
+{onlyA[\"EventCount\", 1], onlyA[\"EventCount\", 1, \"Labeled\" -> False]}"],
+
+text["\"PanelSize\" is how many pixels wide each picture is drawn, and \
+\"HypergraphPlotOptions\" is passed to every hypergraph inside a vertex \[LongDash] which is how \
+to get the vertex names back, or to restyle what is drawn:"],
+
+code["twoEdges[\"EvolutionGraph\", 1, ImageSize -> 380, \"PanelSize\" -> 130,\n \
+ \"HypergraphPlotOptions\" -> {VertexLabels -> \"Name\"}]"],
+
+code["twoEdges[\"EvolutionGraph\", 1, ImageSize -> 380, \"PanelSize\" -> 110,\n \
+ \"HypergraphPlotOptions\" -> {EdgeStyle -> Directive[Thick, Darker[Green]],\n \
+                            VertexStyle -> Darker[Green], AspectRatio -> Automatic}]"],
+
+text["Because the options of Graph come too, the ordinary graph knobs all work:"],
+
+code["twoEdges[\"CausalGraph\", 2, \"EventRendering\" -> False, ImageSize -> 300,\n \
+ VertexLabels -> Automatic, VertexSize -> Medium, GraphLayout -> \"SpringEmbedding\"]"],
+
+subsection["Holding options on the system"],
+
+text["A system can carry the options that describe it, so they are not retyped on every call:"],
+
+code["strict = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}, {2, 3}}],\n \
+ \"CausalDependence\" -> \"Edges\", \"PanelSize\" -> 70];\nstrict"],
+
+code["{Length @ strict[\"CausalEdges\", 2],\n \
+ Length @ strict[\"CausalEdges\", 2, \"CausalDependence\" -> \"Elements\"]}"],
+
+text["Four pairs by the held option, six when the call overrides it. What is in force for a \
+system, the ones it holds and the defaults for the rest:"],
+
+code["FilterRules[strict[\"Options\"],\n \
+ {\"CausalDependence\", \"PanelSize\", \"MaxDrawnVertices\", \"TransitiveReduction\"}]"],
+
+text["The two-argument form is the same object with no options held:"],
+
+code["HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]] ===\n \
+ HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}], {}]"],
+
+note["Options are held on the system rather than only passed to properties because there are \
+twelve of them and most describe the system rather than the question being asked of it. Which \
+reading of causal dependence a model uses is a fact about the model; how many generations to \
+evolve is a fact about the question."],
+
+subsection["A labelled system, drawn"],
+
+text["Nothing about the drawing is particular to unlabelled hypergraphs. The composition rule of \
+section 6, with the labels shown:"],
+
+code["chainSys[\"EvolutionGraph\", 1, ImageSize -> 620, \"PanelSize\" -> 150,\n \
+ \"HypergraphPlotOptions\" -> {EdgeLabels -> Automatic, AspectRatio -> Automatic}]"],
+
+text["And its causal graph, where the two events that meet only at an object are the pair the \
+stricter reading drops:"],
+
+code["chainSys[\"CausalGraph\", 2, ImageSize -> 900, \"PanelSize\" -> 110,\n \
+ \"HypergraphPlotOptions\" -> {EdgeLabels -> Automatic, AspectRatio -> Automatic}]"],
+
+note["A panel is squared by default, which is the shape the insets are sized for. A hypergraph \
+that lays out as a line \[LongDash] a chain of arrows is the usual case \[LongDash] then sits as \
+a thin band in the middle of a lot of white, and at small panel sizes its labels become \
+unreadable. AspectRatio -> Automatic in \"HypergraphPlotOptions\" lets the panel take the shape \
+of what is in it, which is what makes these two legible."],
 
 section["8.  Scope and limits"],
 

@@ -401,5 +401,71 @@ check["  the directed pair, by contrast, really is two edges",
 check["an empty hypergraph is simple", SimpleHypergraphQ @ Hypergraph[{}], True];
 check["anything else is not a hypergraph", SimpleHypergraphQ[{1, 2}], False];
 p[];
+p["=== Labels are pushed off what they name ==="];
+(* Where each edge label was placed is sown as it is drawn, so the placement can be checked
+   rather than looked at. *)
+labelPositions[hg_] := First[Reap[HypergraphPlot[hg], "EdgeLabelPosition"][[2]], {}];
+vertexPositions[hg_] := AssociationThread[VertexID /@ VertexList[hg] -> HypergraphEmbedding[hg]];
+distanceToSegment[p_, {a_, b_}] := With[{d = b - a},
+   If[Norm[d] < 10^-10, Norm[p - a],
+      Norm[p - (a + Clip[(p - a) . d / d . d, {0, 1}] d)]]];
+
+triangle = Hypergraph[{
+   Edge[{1, 2}, "Directed", "ab"], Edge[{2, 3}, "Directed", "bc"], Edge[{3, 1}, "Directed", "ca"],
+   Edge[{1}, "Directed", "p"], Edge[{2}, "Directed", "q"], Edge[{3}, "Directed", "r"]}];
+triPos = labelPositions[triangle];
+triVerts = vertexPositions[triangle];
+triScale = Max[Norm[#1 - #2] & @@@ Subsets[Values[triVerts], {2}]];
+
+check["one sown position per edge", Length[triPos], EdgeCount[triangle]];
+(* EdgeList is sorted, so which positions are the sides and which the points has to be read off
+   rather than assumed. *)
+binaryAt = Flatten @ Position[EdgeList[triangle], _ ? (Length[EdgeVertices[#]] === 2 &), {1}, Heads -> False];
+unaryAt = Flatten @ Position[EdgeList[triangle], _ ? (Length[EdgeVertices[#]] === 1 &), {1}, Heads -> False];
+check["three sides and three points", {Length[binaryAt], Length[unaryAt]}, {3, 3}];
+check["no binary label sits on its own edge",
+   AllTrue[binaryAt,
+      distanceToSegment[triPos[[#]], Lookup[triVerts, VertexID /@ EdgeVertices[EdgeList[triangle][[#]]]]] >
+         0.02 triScale &],
+   True];
+(* Outside the triangle means further from its middle than the point of the edge nearest that
+   middle: a side label pushed outward, never inward. *)
+centre = Mean[Values[triVerts]];
+check["and every binary label is outside the triangle, not inside it",
+   AllTrue[binaryAt,
+      Norm[triPos[[#]] - centre] >
+         Norm[Mean[Lookup[triVerts, VertexID /@ EdgeVertices[EdgeList[triangle][[#]]]]] - centre] &],
+   True];
+check["every unary label is pushed off its vertex",
+   AllTrue[unaryAt,
+      Norm[triPos[[#]] - First @ Lookup[triVerts, VertexID /@ EdgeVertices[EdgeList[triangle][[#]]]]] >
+         0.01 triScale &],
+   True];
+check["  and outward, away from the middle",
+   AllTrue[unaryAt,
+      Norm[triPos[[#]] - centre] >
+         Norm[First @ Lookup[triVerts, VertexID /@ EdgeVertices[EdgeList[triangle][[#]]]] - centre] &],
+   True];
+
+p["-- a chain, where both sides of a line are equally open --"];
+chainHg = Hypergraph[{Edge[{1, 2}, "Directed", "f"], Edge[{2, 3}, "Directed", "g"]}];
+chainPos = labelPositions[chainHg];
+chainVerts = vertexPositions[chainHg];
+check["neither label sits on the line",
+   AllTrue[Range[2],
+      distanceToSegment[chainPos[[#]],
+         Lookup[chainVerts, VertexID /@ EdgeVertices[EdgeList[chainHg][[#]]]]] > 0.01 &],
+   True];
+
+p["-- the drawing itself still comes out --"];
+check["labelled hypergraphs plot",
+   Head /@ {HypergraphPlot[triangle], HypergraphPlot[chainHg]}, {Graphics, Graphics}];
+check["so do unlabelled ones", Head @ HypergraphPlot[Hypergraph[{{1, 2}, {2, 3}}]], Graphics];
+check["and ones with nothing but an empty edge",
+   Head @ HypergraphPlot[Hypergraph[{Edge[{}, "Unordered", "e"]}]], Graphics];
+check["a Placed label keeps the offset it was given",
+   Head @ HypergraphPlot[Hypergraph[{Edge[{1, 2}, "Directed", Placed["x", {0, 0}]]}]], Graphics];
+
+p[];
 p[If[$fails === 0, "=== ALL CHECKS PASSED ===", "=== " <> ToString[$fails] <> " CHECK(S) FAILED ==="]];
 

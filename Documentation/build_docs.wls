@@ -418,6 +418,9 @@ page["HypergraphPlot",
    note["Positions are what a multiset needs: two edges of equal value are still two edges, and only a position can say which of them to style. Where a vertex is itself named by an integer the identifier wins over the position reading."],
    note["VertexLabelStyle and \"EdgeLineStyle\" take the same forms."],
    note["VertexCoordinates places vertices explicitly, as rules id -> {x, y}, an Association, or a plain list in vertex order. Vertices left unplaced are settled among the placed ones rather than laid out separately, so a hypergraph can be drawn on the layout of another \[LongDash] which is how the two halves of an event come to line up."],
+   note["Labels are drawn clear of what they name. The label of a binary hyperedge is pushed at right angles to the line between its vertices, so it never sits on the edge; the label of a unary hyperedge is pushed out past the vertex it encircles, and past that vertex's own label; every other label is pushed in whatever direction leaves the most room."],
+   note["The direction is a sum over the nearby drawn points of the vector away from each, weighted by the inverse square of its distance, so that what is close decides and what is far only breaks ties. In a triangle this puts every label outside the triangle."],
+   note["A label given as Placed[lab, offset] keeps the offset it was given, and is not pushed."],
   source[$plot, "HypergraphPlot"],
   {"Hypergraph", "HypergraphEmbedding", "HypergraphLargeQ", "EdgeSymmetry"}
 ];

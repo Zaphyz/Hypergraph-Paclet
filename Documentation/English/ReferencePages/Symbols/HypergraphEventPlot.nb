@@ -10,86 +10,86 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[     37467,        844]
-NotebookOptionsPosition[     35048,        809]
-NotebookOutlinePosition[     35396,        824]
-CellTagsIndexPosition[     35353,        821]
+NotebookDataLength[     37762,        850]
+NotebookOptionsPosition[     35343,        815]
+NotebookOutlinePosition[     35691,        830]
+CellTagsIndexPosition[     35648,        827]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphEventPlot", "ObjectName",ExpressionUUID->"27260279-44dd-454b-826a-4753cb198b96"],
+Cell["HypergraphEventPlot", "ObjectName",ExpressionUUID->"325c66c0-0ea1-244a-b9b1-a131b5940862"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphEventPlot", "[", "event", "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"87f9af53-c4c9-ed40-b4ca-44f658d9fc9d"],
+  "InlineFormula",ExpressionUUID->"8ad40c68-c4cf-e54f-88db-3ac7afb6af05"],
  " ",
  "draws a rewriting event: what it acted on with the match highlighted, an \
 arrow, and what it made with the created vertices and edges highlighted."
-}], "Usage",ExpressionUUID->"4515edc3-3810-e146-8982-eadb96e44979"],
+}], "Usage",ExpressionUUID->"7531eb89-8b7d-104e-bd1d-1cf63630f0f4"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphEventPlot", "[", 
     RowBox[{"rule", ",", " ", "hg"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"03818788-6844-dc46-a669-92cd6d3cf29c"],
+  ExpressionUUID->"095075a3-9be1-b746-97e3-2a758609e3fa"],
  " ",
  "gives one picture for every way rule matches hg."
-}], "Usage",ExpressionUUID->"cacafdff-79ea-ad42-9cfa-b15124ff1947"],
+}], "Usage",ExpressionUUID->"9ba89ef4-3d62-c549-8bf4-903e0d909a24"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"86f94d56-d395-214f-accb-415163db7e95"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"9f667bac-cbcf-4e45-8bbe-eb9d1cfc7e8f"],
 
 Cell["\<\
 An event is an association of the kind HypergraphRuleApply gives. Its \"Input\
 \" key is the hypergraph the event acted on, which is what makes the left \
 half drawable.\
-\>", "Notes",ExpressionUUID->"2fa3865a-fc50-a148-94a1-d33c82874cee"],
+\>", "Notes",ExpressionUUID->"1b3a4340-6492-7f4d-b2b3-21f7687685d4"],
 
 Cell["\<\
 Both halves are drawn on the same layout, so that a vertex which did not move \
 does not appear to. A vertex the event created has no place in that layout \
 and is settled among its neighbours, which puts a vertex inserted into an \
 edge between that edge's ends.\
-\>", "Notes",ExpressionUUID->"5d1c7f30-6791-f64f-a111-3879a2ac8384"],
+\>", "Notes",ExpressionUUID->"f091b545-3a7b-df4a-ade7-d198b1809299"],
 
 Cell["\<\
 The created edges are found from \"EdgeOrigins\" rather than by looking for \
 edges equal to \"NewEdges\": in a multiset two edges of equal value are still \
 two edges, and searching by value would highlight one that was merely carried \
 over.\
-\>", "Notes",ExpressionUUID->"6b4b11f1-d463-6e49-9645-c45655a6a257"],
+\>", "Notes",ExpressionUUID->"209a4c79-3692-fc47-b6c3-8623de070399"],
 
 Cell[TextData[{
  "The highlight styles, \"PanelSize\" and \"SharedCoordinates\" are as in ",
  Cell[BoxData[
   StyleBox["HypergraphRulePlot", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"dd7fc1d6-c3c0-1744-ac4f-b7f6cf75aa32"],
+  ExpressionUUID->"1e66073d-e64e-6c46-aeef-701fb11a28af"],
  "."
-}], "Notes",ExpressionUUID->"7fe88eeb-0aa1-db4d-a2fb-9d06f713dd70"],
+}], "Notes",ExpressionUUID->"e5f7d0ca-b633-684c-b066-774ee967ab3d"],
 
 Cell[TextData[{
  "This is the picture a rewriting system draws for an event vertex of its ",
  Cell[BoxData[
   StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"489a8d14-7aeb-194f-adbe-28133c910ddb"],
+  ExpressionUUID->"dcdc38c6-361c-1741-9865-9a6bcbb981b6"],
  "."
-}], "Notes",ExpressionUUID->"d36b42b9-a0dd-9b4e-a423-2b134ea82b00"],
+}], "Notes",ExpressionUUID->"483f9747-ab99-b943-b641-cca2ca4f684b"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"02b7ef86-aec6-d647-92b0-bdeece904d93"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"4c8a4e6e-6179-3d4f-b1a1-da22197fe5bb"],
 
 Cell["\<\
 Subdividing one edge of a path. The matched edge is red on the left, the two \
 edges that replaced it are red on the right:\
-\>", "ExampleText",ExpressionUUID->"2d2ea57f-f92f-0548-9461-6e6951c90968"],
+\>", "ExampleText",ExpressionUUID->"d6fdc6c7-233c-6349-993d-b0889cb59c00"],
 
 Cell["\<\
 event = First @ HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}][Hypergraph[{{1, \
 2}, {2, 3}}]];
 HypergraphEventPlot[event, \"PanelSize\" -> 130]\
-\>", "Input",ExpressionUUID->"bba10d60-86f5-1445-93fd-5f777b01795e"],
+\>", "Input",ExpressionUUID->"52d3ea22-d7be-2941-bbda-b9fc19ece5b6"],
 
 Cell[BoxData[
  GraphicsBox[{{}, {InsetBox[
@@ -133,8 +133,9 @@ Cell[BoxData[
            FrontFaceColor->GrayLevel[0],
            BackFaceColor->GrayLevel[0],
            GraphicsColor->GrayLevel[0],
-           FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-          ImageScaled[{0.5, -0.5}]], InsetBox[
+           FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, NCache[
+          ImageScaled[{Rational[1, 2], Rational[-1, 2]}], 
+           ImageScaled[{0.5, -0.5}]]], InsetBox[
           StyleBox["3",
            StripOnInput->False,
            LineColor->GrayLevel[0],
@@ -146,12 +147,12 @@ Cell[BoxData[
       Background->GrayLevel[1],
       DefaultBaseStyle->{"PlotGraphics", "Graphics"},
       DisplayFunction->Identity,
-      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImagePadding->{{19., 19.}, {34., 34.}},
       ImageSize->130,
       PlotInteractivity:>True,
       PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-      PlotRangePadding->Scaled[0.02]], {65., -36.75000000000001}, 
-     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+      PlotRangePadding->Scaled[0.02]], {65., -46.55000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 88.66666666666669},
      BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
     InsetBox[
      GraphicsBox[
@@ -163,12 +164,12 @@ Cell[BoxData[
         0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
       DefaultBaseStyle->{"PlotGraphics", "Graphics"},
       DisplayFunction->Identity,
-      ImagePadding->{{0., 1.}, {20., 20.}},
+      ImagePadding->{{0., 1.}, {34., 34.}},
       ImageSize->NCache[
         Rational[65, 4], 16.25],
       PlotInteractivity:>True,
-      PlotRangePadding->0.6], {138.125, -36.75000000000001}, 
-     ImageScaled[{0.5, 0.5}], {16.25, 70.00000000000001},
+      PlotRangePadding->0.6], {138.125, -46.55000000000001}, 
+     ImageScaled[{0.5, 0.5}], {16.25, 88.66666666666669},
      BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
     InsetBox[
      GraphicsBox[
@@ -216,7 +217,7 @@ Cell[BoxData[
            BackFaceColor->GrayLevel[0],
            GraphicsColor->GrayLevel[0],
            FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
-          ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+          ImageScaled[{1.5, 0.4999999999999999}]], InsetBox[
           StyleBox["2",
            StripOnInput->False,
            LineColor->GrayLevel[0],
@@ -224,7 +225,7 @@ Cell[BoxData[
            BackFaceColor->GrayLevel[0],
            GraphicsColor->GrayLevel[0],
            FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-          ImageScaled[{-0.5, 0.4999999999999999}]], InsetBox[
+          ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
           StyleBox["3",
            StripOnInput->False,
            LineColor->GrayLevel[0],
@@ -245,25 +246,25 @@ Cell[BoxData[
       Background->GrayLevel[1],
       DefaultBaseStyle->{"PlotGraphics", "Graphics"},
       DisplayFunction->Identity,
-      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImagePadding->{{34., 34.}, {34., 34.}},
       ImageSize->130,
       PlotInteractivity:>True,
       PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-      PlotRangePadding->Scaled[0.02]], {211.25, -36.75000000000001}, 
-     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+      PlotRangePadding->Scaled[0.02]], {211.25, -46.55000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 88.66666666666669},
      BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
-  ImageSize->{276.25, 73.50000000000001},
+  ImageSize->{276.25, 93.10000000000002},
   Method->{"IgnoreImageSizeAutomaticLimit" -> True},
-  PlotRange->{{0, 276.25}, {-73.50000000000001, 0}},
-  PlotRangePadding->Automatic]], "Output",ExpressionUUID->"f9452238-735b-1b43-\
-a214-75e24bb4e4d4"],
+  PlotRange->{{0, 276.25}, {-93.10000000000002, 0}},
+  PlotRangePadding->Automatic]], "Output",ExpressionUUID->"7d21f85d-b2d6-5f48-\
+9764-4bac0465f341"],
 
-Cell["One picture for each way the rule fits:", "ExampleText",ExpressionUUID->"afa79a19-9efd-e144-ac47-fe9e6ecd1a19"],
+Cell["One picture for each way the rule fits:", "ExampleText",ExpressionUUID->"7e79a0df-70d3-9443-ab10-32ccb2fcfcf9"],
 
 Cell["\<\
 HypergraphEventPlot[HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}], \
 Hypergraph[{{1, 2}, {2, 3}}], \"PanelSize\" -> 100]\
-\>", "Input",ExpressionUUID->"44ca1fdf-5f97-9d43-9572-dbcc813ee311"],
+\>", "Input",ExpressionUUID->"eebeed55-a395-3c4a-a65d-75339fcfa682"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -309,8 +310,9 @@ Cell[BoxData[
              FrontFaceColor->GrayLevel[0],
              BackFaceColor->GrayLevel[0],
              GraphicsColor->GrayLevel[0],
-             FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-            ImageScaled[{0.5, -0.5}]], InsetBox[
+             FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, NCache[
+            ImageScaled[{Rational[1, 2], Rational[-1, 2]}], 
+             ImageScaled[{0.5, -0.5}]]], InsetBox[
             StyleBox["3",
              StripOnInput->False,
              LineColor->GrayLevel[0],
@@ -322,12 +324,12 @@ Cell[BoxData[
         Background->GrayLevel[1],
         DefaultBaseStyle->{"PlotGraphics", "Graphics"},
         DisplayFunction->Identity,
-        ImagePadding->{{20., 20.}, {20., 20.}},
+        ImagePadding->{{19., 19.}, {34., 34.}},
         ImageSize->100,
         PlotInteractivity:>True,
         PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-        PlotRangePadding->Scaled[0.02]], {50., -31.500000000000007}, 
-       ImageScaled[{0.5, 0.5}], {100., 60.000000000000014},
+        PlotRangePadding->Scaled[0.02]], {50., -41.30000000000001}, 
+       ImageScaled[{0.5, 0.5}], {100., 78.66666666666669},
        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
       InsetBox[
        GraphicsBox[
@@ -339,12 +341,12 @@ Cell[BoxData[
           0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
         DefaultBaseStyle->{"PlotGraphics", "Graphics"},
         DisplayFunction->Identity,
-        ImagePadding->{{0., 1.}, {20., 20.}},
+        ImagePadding->{{0., 1.}, {34., 34.}},
         ImageSize->NCache[
           Rational[25, 2], 12.5],
         PlotInteractivity:>True,
-        PlotRangePadding->0.6], {106.25, -31.500000000000007}, 
-       ImageScaled[{0.5, 0.5}], {12.5, 60.000000000000014},
+        PlotRangePadding->0.6], {106.25, -41.30000000000001}, 
+       ImageScaled[{0.5, 0.5}], {12.5, 78.66666666666669},
        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
       InsetBox[
        GraphicsBox[
@@ -360,7 +362,8 @@ Cell[BoxData[
             {Opacity[1]}}}, 
           {Opacity[1], Arrowheads[{{Small, 0.5}}], 
            {Hue[0.63, 0.7, 0.5], Opacity[
-            0.7], {ArrowBox[
+            0.7], {
+             ArrowBox[
               LineBox[{{1., 2.4492935982947064`*^-16}, {2., 0.}}]], {}}, 
             {Opacity[1]}}}, 
           {Opacity[1], Arrowheads[{{Small, 0.5}}], 
@@ -392,7 +395,7 @@ Cell[BoxData[
              BackFaceColor->GrayLevel[0],
              GraphicsColor->GrayLevel[0],
              FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
-            ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+            ImageScaled[{1.5, 0.4999999999999999}]], InsetBox[
             StyleBox["2",
              StripOnInput->False,
              LineColor->GrayLevel[0],
@@ -400,7 +403,7 @@ Cell[BoxData[
              BackFaceColor->GrayLevel[0],
              GraphicsColor->GrayLevel[0],
              FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-            ImageScaled[{-0.5, 0.4999999999999999}]], InsetBox[
+            ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
             StyleBox["3",
              StripOnInput->False,
              LineColor->GrayLevel[0],
@@ -421,17 +424,17 @@ Cell[BoxData[
         Background->GrayLevel[1],
         DefaultBaseStyle->{"PlotGraphics", "Graphics"},
         DisplayFunction->Identity,
-        ImagePadding->{{20., 20.}, {20., 20.}},
+        ImagePadding->{{34., 34.}, {34., 34.}},
         ImageSize->100,
         PlotInteractivity:>True,
         PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-        PlotRangePadding->Scaled[0.02]], {162.5, -31.500000000000007}, 
-       ImageScaled[{0.5, 0.5}], {100., 60.000000000000014},
+        PlotRangePadding->Scaled[0.02]], {162.5, -41.30000000000001}, 
+       ImageScaled[{0.5, 0.5}], {100., 78.66666666666669},
        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
     
-    ImageSize->{212.5, 63.000000000000014`},
+    ImageSize->{212.5, 82.60000000000002},
     Method->{"IgnoreImageSizeAutomaticLimit" -> True},
-    PlotRange->{{0, 212.5}, {-63.000000000000014`, 0}},
+    PlotRange->{{0, 212.5}, {-82.60000000000002, 0}},
     PlotRangePadding->Automatic], ",", 
    GraphicsBox[{{}, {InsetBox[
        GraphicsBox[
@@ -474,8 +477,9 @@ Cell[BoxData[
              FrontFaceColor->GrayLevel[0],
              BackFaceColor->GrayLevel[0],
              GraphicsColor->GrayLevel[0],
-             FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-            ImageScaled[{0.5, -0.5}]], InsetBox[
+             FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, NCache[
+            ImageScaled[{Rational[1, 2], Rational[-1, 2]}], 
+             ImageScaled[{0.5, -0.5}]]], InsetBox[
             StyleBox["3",
              StripOnInput->False,
              LineColor->GrayLevel[0],
@@ -487,12 +491,12 @@ Cell[BoxData[
         Background->GrayLevel[1],
         DefaultBaseStyle->{"PlotGraphics", "Graphics"},
         DisplayFunction->Identity,
-        ImagePadding->{{20., 20.}, {20., 20.}},
+        ImagePadding->{{19., 19.}, {34., 34.}},
         ImageSize->100,
         PlotInteractivity:>True,
         PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-        PlotRangePadding->Scaled[0.02]], {50., -31.500000000000007}, 
-       ImageScaled[{0.5, 0.5}], {100., 60.000000000000014},
+        PlotRangePadding->Scaled[0.02]], {50., -41.30000000000001}, 
+       ImageScaled[{0.5, 0.5}], {100., 78.66666666666669},
        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
       InsetBox[
        GraphicsBox[
@@ -504,12 +508,12 @@ Cell[BoxData[
           0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
         DefaultBaseStyle->{"PlotGraphics", "Graphics"},
         DisplayFunction->Identity,
-        ImagePadding->{{0., 1.}, {20., 20.}},
+        ImagePadding->{{0., 1.}, {34., 34.}},
         ImageSize->NCache[
           Rational[25, 2], 12.5],
         PlotInteractivity:>True,
-        PlotRangePadding->0.6], {106.25, -31.500000000000007}, 
-       ImageScaled[{0.5, 0.5}], {12.5, 60.000000000000014},
+        PlotRangePadding->0.6], {106.25, -41.30000000000001}, 
+       ImageScaled[{0.5, 0.5}], {12.5, 78.66666666666669},
        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
       InsetBox[
        GraphicsBox[
@@ -565,7 +569,7 @@ Cell[BoxData[
              BackFaceColor->GrayLevel[0],
              GraphicsColor->GrayLevel[0],
              FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-            ImageScaled[{1.5, 0.4999999999999995}]], InsetBox[
+            ImageScaled[{1.5, 0.49999999999999967}]], InsetBox[
             StyleBox["3",
              StripOnInput->False,
              LineColor->GrayLevel[0],
@@ -573,7 +577,8 @@ Cell[BoxData[
              BackFaceColor->GrayLevel[0],
              GraphicsColor->GrayLevel[0],
              FontColor->GrayLevel[0]], {2., 0.}, 
-            ImageScaled[{-0.5, 0.5000000000000002}]], InsetBox[
+            ImageScaled[{-0.4999999999999999, 0.5000000000000002}]], 
+           InsetBox[
             StyleBox[
              RowBox[{"\[FormalV]", "(", "1", ")"}],
              StripOnInput->False,
@@ -586,21 +591,21 @@ Cell[BoxData[
         Background->GrayLevel[1],
         DefaultBaseStyle->{"PlotGraphics", "Graphics"},
         DisplayFunction->Identity,
-        ImagePadding->{{20., 20.}, {20., 20.}},
+        ImagePadding->{{34., 34.}, {34., 34.}},
         ImageSize->100,
         PlotInteractivity:>True,
         PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-        PlotRangePadding->Scaled[0.02]], {162.5, -31.500000000000007}, 
-       ImageScaled[{0.5, 0.5}], {100., 60.000000000000014},
+        PlotRangePadding->Scaled[0.02]], {162.5, -41.30000000000001}, 
+       ImageScaled[{0.5, 0.5}], {100., 78.66666666666669},
        BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
     
-    ImageSize->{212.5, 63.000000000000014`},
+    ImageSize->{212.5, 82.60000000000002},
     Method->{"IgnoreImageSizeAutomaticLimit" -> True},
-    PlotRange->{{0, 212.5}, {-63.000000000000014`, 0}},
+    PlotRange->{{0, 212.5}, {-82.60000000000002, 0}},
     PlotRangePadding->Automatic]}], "}"}]], "Output",ExpressionUUID->\
-"39110e4c-b0a6-104f-8481-f809b7dc6825"],
+"5fbd89e1-e488-a342-b7ca-c6de710c153d"],
 
-Cell["The highlight colour is an option:", "ExampleText",ExpressionUUID->"6f091031-dccf-604b-9faa-475e5afc86a6"],
+Cell["The highlight colour is an option:", "ExampleText",ExpressionUUID->"b2255c19-5fc9-df41-b082-ef77d190f6b7"],
 
 Cell["\<\
 HypergraphEventPlot[event, \"PanelSize\" -> 130,
@@ -609,7 +614,7 @@ EdgeForm[Directive[Blue, Thick]]],
  \"HighlightRightEdgeStyle\" -> Directive[Thick, Blue, \
 EdgeForm[Directive[Blue, Thick]]],
  \"HighlightRightVertexStyle\" -> Directive[PointSize[0.02], Blue]]\
-\>", "Input",ExpressionUUID->"a1adaf6e-63b6-504f-ac98-7820d92026f1"],
+\>", "Input",ExpressionUUID->"04dcc88c-aa38-a742-a33b-1eb7ee41e4b6"],
 
 Cell[BoxData[
  GraphicsBox[{{}, {InsetBox[
@@ -653,8 +658,9 @@ Cell[BoxData[
            FrontFaceColor->GrayLevel[0],
            BackFaceColor->GrayLevel[0],
            GraphicsColor->GrayLevel[0],
-           FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-          ImageScaled[{0.5, -0.5}]], InsetBox[
+           FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, NCache[
+          ImageScaled[{Rational[1, 2], Rational[-1, 2]}], 
+           ImageScaled[{0.5, -0.5}]]], InsetBox[
           StyleBox["3",
            StripOnInput->False,
            LineColor->GrayLevel[0],
@@ -666,12 +672,12 @@ Cell[BoxData[
       Background->GrayLevel[1],
       DefaultBaseStyle->{"PlotGraphics", "Graphics"},
       DisplayFunction->Identity,
-      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImagePadding->{{19., 19.}, {34., 34.}},
       ImageSize->130,
       PlotInteractivity:>True,
       PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-      PlotRangePadding->Scaled[0.02]], {65., -36.75000000000001}, 
-     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+      PlotRangePadding->Scaled[0.02]], {65., -46.55000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 88.66666666666669},
      BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
     InsetBox[
      GraphicsBox[
@@ -683,12 +689,12 @@ Cell[BoxData[
         0.2991, -0.1848}, {-1., -0.1848}, {-1., 0.1848}}}]},
       DefaultBaseStyle->{"PlotGraphics", "Graphics"},
       DisplayFunction->Identity,
-      ImagePadding->{{0., 1.}, {20., 20.}},
+      ImagePadding->{{0., 1.}, {34., 34.}},
       ImageSize->NCache[
         Rational[65, 4], 16.25],
       PlotInteractivity:>True,
-      PlotRangePadding->0.6], {138.125, -36.75000000000001}, 
-     ImageScaled[{0.5, 0.5}], {16.25, 70.00000000000001},
+      PlotRangePadding->0.6], {138.125, -46.55000000000001}, 
+     ImageScaled[{0.5, 0.5}], {16.25, 88.66666666666669},
      BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}], 
     InsetBox[
      GraphicsBox[
@@ -736,7 +742,7 @@ Cell[BoxData[
            BackFaceColor->GrayLevel[0],
            GraphicsColor->GrayLevel[0],
            FontColor->GrayLevel[0]], {0., 3.6739403974420594*^-16}, 
-          ImageScaled[{1.5, 0.49999999999999983}]], InsetBox[
+          ImageScaled[{1.5, 0.4999999999999999}]], InsetBox[
           StyleBox["2",
            StripOnInput->False,
            LineColor->GrayLevel[0],
@@ -744,7 +750,7 @@ Cell[BoxData[
            BackFaceColor->GrayLevel[0],
            GraphicsColor->GrayLevel[0],
            FontColor->GrayLevel[0]], {1., 2.4492935982947064*^-16}, 
-          ImageScaled[{-0.5, 0.4999999999999999}]], InsetBox[
+          ImageScaled[{-0.5, 0.5000000000000001}]], InsetBox[
           StyleBox["3",
            StripOnInput->False,
            LineColor->GrayLevel[0],
@@ -765,20 +771,20 @@ Cell[BoxData[
       Background->GrayLevel[1],
       DefaultBaseStyle->{"PlotGraphics", "Graphics"},
       DisplayFunction->Identity,
-      ImagePadding->{{20., 20.}, {20., 20.}},
+      ImagePadding->{{34., 34.}, {34., 34.}},
       ImageSize->130,
       PlotInteractivity:>True,
       PlotRange->{{0., 2.}, {-0.3333333333333333, 0.3333333333333337}},
-      PlotRangePadding->Scaled[0.02]], {211.25, -36.75000000000001}, 
-     ImageScaled[{0.5, 0.5}], {130., 70.00000000000001},
+      PlotRangePadding->Scaled[0.02]], {211.25, -46.55000000000001}, 
+     ImageScaled[{0.5, 0.5}], {130., 88.66666666666669},
      BaseStyle->{Graphics3DBoxOptions -> {SphericalRegion -> False}}]}, {}},
-  ImageSize->{276.25, 73.50000000000001},
+  ImageSize->{276.25, 93.10000000000002},
   Method->{"IgnoreImageSizeAutomaticLimit" -> True},
-  PlotRange->{{0, 276.25}, {-73.50000000000001, 0}},
-  PlotRangePadding->Automatic]], "Output",ExpressionUUID->"3bf2f535-6541-d44b-\
-ad89-302f17bbcd9d"],
+  PlotRange->{{0, 276.25}, {-93.10000000000002, 0}},
+  PlotRangePadding->Automatic]], "Output",ExpressionUUID->"02ab0954-8e85-a14e-\
+b33f-760bbd46f846"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"94b8ce74-449e-a44e-a613-427c3dc742e0"],
+Cell["Source", "NotesSection",ExpressionUUID->"0c65905f-be4f-ad49-806a-e68abaeadaa8"],
 
 Cell[TextData[{
  "Defined in ",
@@ -789,28 +795,28 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "Events",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"02c8cb7f-9029-d448-a59b-613bcb9d1982"],
+}], "Notes",ExpressionUUID->"7ba2f03e-acae-2d44-93fe-93081d78fa00"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"9b71b330-7484-4b42-9368-4ea8233eae5a"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"0c199675-a8fc-4b41-9416-00e853884d05"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphRulePlot", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"27d8d6ef-faff-eb47-864a-f67094b7efab"],
+  ExpressionUUID->"05384621-1953-e84c-acf0-92ede9552fc6"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"6e110f70-b3e2-7149-879f-925aec438424"],
+  ExpressionUUID->"4288dee4-9a8c-5641-bdb7-9cc8bfbf9f80"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c8163ab5-79db-044b-809b-3bcfbbb4152d"]
-}], "SeeAlso",ExpressionUUID->"ae1ed75e-10b2-d949-9f9b-1b5583169e91"]
+  ExpressionUUID->"d1d0ba4d-d98e-fc4c-952c-85fe469fe7b2"]
+}], "SeeAlso",ExpressionUUID->"79a57c25-b759-ec40-b08b-1ed5288178e4"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"2ded3ccc-7ea3-6846-a6c9-db2701d1865c"
+ExpressionUUID->"911e7e89-6ae1-cc45-bec1-b355f4c8024d"
 ]
 (* End of Notebook Content *)
 
@@ -823,29 +829,29 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 96, 0, 70, "ObjectName",ExpressionUUID->"27260279-44dd-454b-826a-4753cb198b96"],
-Cell[653, 22, 422, 8, 70, "Usage",ExpressionUUID->"4515edc3-3810-e146-8982-eadb96e44979"],
-Cell[1070, 32, 353, 8, 70, "Usage",ExpressionUUID->"cacafdff-79ea-ad42-9cfa-b15124ff1947"],
-Cell[1418, 42, 98, 0, 70, "NotesSection",ExpressionUUID->"86f94d56-d395-214f-accb-415163db7e95"],
-Cell[1519, 44, 253, 4, 70, "Notes",ExpressionUUID->"2fa3865a-fc50-a148-94a1-d33c82874cee"],
-Cell[1771, 50, 348, 5, 70, "Notes",ExpressionUUID->"5d1c7f30-6791-f64f-a111-3879a2ac8384"],
-Cell[2117, 57, 328, 5, 70, "Notes",ExpressionUUID->"6b4b11f1-d463-6e49-9645-c45655a6a257"],
-Cell[2443, 64, 311, 6, 70, "Notes",ExpressionUUID->"7fe88eeb-0aa1-db4d-a2fb-9d06f713dd70"],
-Cell[2751, 72, 314, 6, 70, "Notes",ExpressionUUID->"d36b42b9-a0dd-9b4e-a423-2b134ea82b00"],
-Cell[3062, 80, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"02b7ef86-aec6-d647-92b0-bdeece904d93"],
-Cell[3162, 82, 212, 3, 70, "ExampleText",ExpressionUUID->"2d2ea57f-f92f-0548-9461-6e6951c90968"],
-Cell[3374, 87, 224, 4, 70, "Input",ExpressionUUID->"bba10d60-86f5-1445-93fd-5f777b01795e"],
-Cell[3597, 93, 7418, 165, 70, "Output",ExpressionUUID->"f9452238-735b-1b43-a214-75e24bb4e4d4"],
-Cell[10853, 260, 117, 0, 70, "ExampleText",ExpressionUUID->"afa79a19-9efd-e144-ac47-fe9e6ecd1a19"],
-Cell[10973, 262, 200, 3, 70, "Input",ExpressionUUID->"44ca1fdf-5f97-9d43-9572-dbcc813ee311"],
-Cell[11173, 267, 15474, 333, 70, "Output",ExpressionUUID->"39110e4c-b0a6-104f-8481-f809b7dc6825"],
-Cell[26317, 602, 112, 0, 70, "ExampleText",ExpressionUUID->"6f091031-dccf-604b-9faa-475e5afc86a6"],
-Cell[26432, 604, 386, 7, 70, "Input",ExpressionUUID->"a1adaf6e-63b6-504f-ac98-7820d92026f1"],
-Cell[26814, 613, 7418, 165, 70, "Output",ExpressionUUID->"3bf2f535-6541-d44b-ad89-302f17bbcd9d"],
-Cell[34070, 780, 85, 0, 70, "NotesSection",ExpressionUUID->"94b8ce74-449e-a44e-a613-427c3dc742e0"],
-Cell[34158, 782, 278, 9, 70, "Notes",ExpressionUUID->"02c8cb7f-9029-d448-a59b-613bcb9d1982"],
-Cell[34430, 793, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"9b71b330-7484-4b42-9368-4ea8233eae5a"],
-Cell[34522, 795, 534, 12, 70, "SeeAlso",ExpressionUUID->"ae1ed75e-10b2-d949-9f9b-1b5583169e91"]
+Cell[554, 20, 96, 0, 70, "ObjectName",ExpressionUUID->"325c66c0-0ea1-244a-b9b1-a131b5940862"],
+Cell[653, 22, 422, 8, 70, "Usage",ExpressionUUID->"7531eb89-8b7d-104e-bd1d-1cf63630f0f4"],
+Cell[1070, 32, 353, 8, 70, "Usage",ExpressionUUID->"9ba89ef4-3d62-c549-8bf4-903e0d909a24"],
+Cell[1418, 42, 98, 0, 70, "NotesSection",ExpressionUUID->"9f667bac-cbcf-4e45-8bbe-eb9d1cfc7e8f"],
+Cell[1519, 44, 253, 4, 70, "Notes",ExpressionUUID->"1b3a4340-6492-7f4d-b2b3-21f7687685d4"],
+Cell[1771, 50, 348, 5, 70, "Notes",ExpressionUUID->"f091b545-3a7b-df4a-ade7-d198b1809299"],
+Cell[2117, 57, 328, 5, 70, "Notes",ExpressionUUID->"209a4c79-3692-fc47-b6c3-8623de070399"],
+Cell[2443, 64, 311, 6, 70, "Notes",ExpressionUUID->"e5f7d0ca-b633-684c-b066-774ee967ab3d"],
+Cell[2751, 72, 314, 6, 70, "Notes",ExpressionUUID->"483f9747-ab99-b943-b641-cca2ca4f684b"],
+Cell[3062, 80, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"4c8a4e6e-6179-3d4f-b1a1-da22197fe5bb"],
+Cell[3162, 82, 212, 3, 70, "ExampleText",ExpressionUUID->"d6fdc6c7-233c-6349-993d-b0889cb59c00"],
+Cell[3374, 87, 224, 4, 70, "Input",ExpressionUUID->"52d3ea22-d7be-2941-bbda-b9fc19ece5b6"],
+Cell[3597, 93, 7486, 166, 70, "Output",ExpressionUUID->"7d21f85d-b2d6-5f48-9764-4bac0465f341"],
+Cell[10920, 261, 117, 0, 70, "ExampleText",ExpressionUUID->"7e79a0df-70d3-9443-ab10-32ccb2fcfcf9"],
+Cell[11040, 263, 200, 3, 70, "Input",ExpressionUUID->"eebeed55-a395-3c4a-a65d-75339fcfa682"],
+Cell[11240, 268, 15639, 337, 70, "Output",ExpressionUUID->"5fbd89e1-e488-a342-b7ca-c6de710c153d"],
+Cell[26545, 607, 112, 0, 70, "ExampleText",ExpressionUUID->"b2255c19-5fc9-df41-b082-ef77d190f6b7"],
+Cell[26660, 609, 386, 7, 70, "Input",ExpressionUUID->"04dcc88c-aa38-a742-a33b-1eb7ee41e4b6"],
+Cell[27042, 618, 7486, 166, 70, "Output",ExpressionUUID->"02ab0954-8e85-a14e-b33f-760bbd46f846"],
+Cell[34365, 786, 85, 0, 70, "NotesSection",ExpressionUUID->"0c65905f-be4f-ad49-806a-e68abaeadaa8"],
+Cell[34453, 788, 278, 9, 70, "Notes",ExpressionUUID->"7ba2f03e-acae-2d44-93fe-93081d78fa00"],
+Cell[34725, 799, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"0c199675-a8fc-4b41-9416-00e853884d05"],
+Cell[34817, 801, 534, 12, 70, "SeeAlso",ExpressionUUID->"79a57c25-b759-ec40-b08b-1ed5288178e4"]
 }
 ]
 *)

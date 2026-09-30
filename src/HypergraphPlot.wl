@@ -61,6 +61,52 @@ edgeStyleForArity[n_] := Which[n === 0, $nullEdgeStyle, n === 2, $binaryEdgeStyl
 
 
 (* ::Subsection:: *)
+(*Pushing a label off the drawing*)
+
+
+(* A label sitting on the thing it names is unreadable, so every label is pushed away from
+   whatever is drawn around it. The direction is the one that leaves the most room: a sum over
+   the nearby drawn points of the vector away from each, weighted by the inverse square of its
+   distance so that what is close decides and what is far only breaks ties.
+
+   In a triangle this puts every label outside the triangle, which is the behaviour to check it
+   against: the two other corners push a corner's label outward, and the opposite corner pushes a
+   side's label outward. *)
+
+$labelNeighbours = 14;
+
+(* How far past a vertex and its label the label of a unary edge is stepped, in points. *)
+$unaryLabelGap = 15;
+
+awayDirection[p_, obstacles_List, scale_] := Module[{near, deltas, weights, v, soft},
+    If[obstacles === {} || ! VectorQ[p, NumericQ], Return[{0, 1}, Module]];
+    soft = (0.02 Replace[scale, Except[_ ? Positive] -> 1])^2;
+    near = Nearest[obstacles, p, UpTo[$labelNeighbours]];
+    deltas = (p - #) & /@ near;
+    weights = 1 / (Norm[#]^2 + soft) & /@ deltas;
+    v = Total[MapThread[Times, {deltas, weights}]];
+    If[! VectorQ[v, NumericQ] || Norm[v] < 10^-10, {0, 1}, Normalize[v]]
+];
+
+(* For a binary edge the direction is made perpendicular to the edge before it is used, so the
+   label leaves the line rather than sliding along it. Of the two perpendiculars the one that
+   agrees with the open direction is taken; where the two sides are equally crowded, as with a
+   single edge on its own, the fallback is away from the middle of the drawing. *)
+perpendicularAway[p_, from_, to_, obstacles_List, scale_, centre_] := Module[{t, n, d, s},
+    t = to - from;
+    If[! VectorQ[t, NumericQ] || Norm[t] < 10^-10,
+        Return[awayDirection[p, obstacles, scale], Module]];
+    n = Normalize[{- t[[2]], t[[1]]}];
+    d = awayDirection[p, obstacles, scale];
+    s = d . n;
+    If[ Abs[s] < 10^-3,
+        With[{c = p - centre}, If[VectorQ[c, NumericQ] && c . n < 0, - n, n]],
+        If[s < 0, - n, n]
+    ]
+];
+
+
+(* ::Subsection:: *)
 (*Styling one element at a time*)
 
 
@@ -211,7 +257,7 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
     vertexSize = OptionValue[VertexSize],
     nullEdges, longEdges, ws, graph,
     vertexEmbedding, edgeEmbedding,
-    allPoints, bounds, corner, center, range, size,
+    allPoints, labelObstacles, labelRoom, bounds, corner, center, range, size,
     vertexLabelOffsets,
     vertexStyles, edgeStyles, edgeLineStyles, vertexLabelStyles, edgeLabelStyles,
     givenCoordinates,
@@ -358,13 +404,41 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
     range = #2 - #1 & @@@ bounds;
     size = Min[range];
     If[size == 0, size = 1];
-    vertexLabelOffsets = - 2 Normalize[Mean[Threaded[#] - Nearest[allPoints, #, 5]]] & /@ vertexEmbedding;
+    vertexLabelOffsets = - 2 awayDirection[#, allPoints, size] & /@ vertexEmbedding;
 
-    makeEdge[edge_, label_, symm_, i_, initPrimitive_, lines_ : {}] := Block[{
+    (* Where the vertex labels will land, near enough. Edge labels are pushed away from these as
+       well as from the drawing, so that the label of a unary edge and the label of the vertex it
+       sits on do not both take the same way out and end up on top of one another. *)
+    (* Room to reserve at the edges of the image for the labels, in points. *)
+    labelRoom = Block[{shown, longest, unaryLabelled},
+        shown = DeleteCases[Join[labels, vertexLabelSpecs], None | Inherited];
+        If[ shown === {},
+            12,
+            longest = Max[StringLength[ToString[#, InputForm]] & /@ shown];
+            unaryLabelled = AnyTrue[
+                Thread[{edges, labels}],
+                Length[First[#]] === 1 && ! MatchQ[Last[#], None | Inherited] &];
+            Min[80, 14 + 5 Min[longest, 10] + If[unaryLabelled, $unaryLabelGap, 0]]
+        ]
+    ];
+
+    labelObstacles = Join[
+        allPoints,
+        MapThread[
+            If[ #2 === None || #2 === Inherited,
+                Nothing,
+                #1 - 0.5 * 0.09 size * Take[#3, UpTo[2]]
+            ] &,
+            {Values[vertexEmbedding], vertexLabelSpecs,
+             Lookup[vertexLabelOffsets, Keys[vertexEmbedding]]}
+        ]
+    ];
+
+    makeEdge[edge_, label_, symm_, i_, initPrimitive_, lines_ : {}, clearance_ : 0] := Block[{
         primitive = Chop @ If[RegionQ[initPrimitive],
             DiscretizeRegion[#, MaxCellMeasure -> 0.1] &,
             DiscretizeGraphics @* ReplaceAll[Arrow[l_] :> l]] @ initPrimitive,
-        pos, labelPrimitive
+        pos, labelPos, labelPrimitive, away, ends
     },
         (* RegionCentroid can fail on a FilledCurve of B-splines, in which case the reference
            leaves pos symbolic and every label and badge lands nowhere. Fall back to the mean of
@@ -376,19 +450,39 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
                 Except[{_ ? NumericQ, _ ? NumericQ}] :> corner
             ]
         ];
-        If[ Length[edge] == 2,
-            pos += With[{points = Sort[MeshCoordinates[
-                    If[RegionQ[primitive], DiscretizeRegion, DiscretizeGraphics][primitive, MaxCellMeasure -> .1]]][[{1, -1}]]},
-                0.03 size Normalize[
-                    If[TrueQ[VectorAngle[#, pos - center] > Pi], #, - #] & [
-                        Subtract @@ RotationTransform[Pi / 2, pos][points]]]
-            ]
+        (* Which way to leave. A binary edge is left at right angles, so the label clears the line
+           rather than sliding along it; a unary edge is left radially, so the label clears the
+           disk drawn around its vertex; anything else simply takes the open direction. *)
+        ends = DeleteMissing @ Lookup[vertexEmbedding, edge];
+        away = Which[
+            Length[edge] === 2 && Length[ends] === 2 && DuplicateFreeQ[edge],
+            perpendicularAway[pos, First[ends], Last[ends], labelObstacles, size, center],
+            (* A unary edge is read off the drawing alone. Its label sits on a vertex, and the
+               label of that vertex is the nearest thing there is, so counting it would swamp
+               everything else and send the label back into the middle of the drawing. The two
+               are kept apart by putting one further out along the same ray than the other, not
+               by sending them different ways. *)
+            Length[edge] === 1,
+            awayDirection[pos, allPoints, size],
+            True,
+            awayDirection[pos, labelObstacles, size]
         ];
-        If[Length[edge] == 1, pos += 0.03 size];
+
+        (* The anchor moves off the drawing by whatever clearance the caller asked for -- the
+           radius of the disk of a unary edge, or a step across the line of a binary one -- and
+           the label is then hung off that anchor rather than centred on it, so that it is the
+           whole label that clears and not just its middle. A label given a Placed offset keeps
+           the offset it was given. *)
+        pos += clearance away;
+        (* The label of a unary edge is stepped out beyond the vertex label as well as beyond the
+           disk. How far that is depends on the size of the text rather than on the drawing, so
+           the step is taken in printer's points; the badge and the sown position stay where they
+           were, in plot coordinates. *)
+        labelPos = If[Length[edge] === 1, Offset[$unaryLabelGap away, pos], pos];
         labelPrimitive = Replace[label, {
             None | Inherited -> {},
-            Placed[placedLabel_, offset_] :> Text[Replace[placedLabel, None -> ""], pos, offset],
-            l_ :> Text[l, pos]
+            Placed[placedLabel_, offset_] :> Text[Replace[placedLabel, None -> ""], labelPos, offset],
+            l_ :> Text[l, labelPos, - 1.15 away]
         }];
         primitive = If[ arrowsQ[symm],
             {initPrimitive,
@@ -421,7 +515,7 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
                     0, Circle[Lookup[edgeEmbedding, \[FormalN][j]], Offset[400 r / size]],
                     1, Disk[First[emb], Offset[400 r / size]]
                 ];
-                makeEdge[edge, label, symm, i, primitive]
+                makeEdge[edge, label, symm, i, primitive, {}, 1.5 r]
             ],
             2, Block[{points = Lookup[edgeEmbedding, DirectedEdge @@ edge], curve},
                 curve = With[{c = Lookup[totalCounts, Key[#], 0] + 1},
@@ -430,7 +524,8 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
                 ] & @ edge;
                 primitive = If[arrowsQ[symm], Arrow, Identity] @
                     If[DuplicateFreeQ[edge] && total == 1, MapAt[#[[{1, -1}]] &, curve, {1}], curve];
-                {Opacity[1], Arrowheads[{{Small, .5}}], makeEdge[edge, label, symm, i, primitive]}
+                {Opacity[1], Arrowheads[{{Small, .5}}],
+                 makeEdge[edge, label, symm, i, primitive, {}, 0.035 size]}
             ],
             _, Block[{coords = Lookup[vertexEmbedding, edge], counts = <||>, points, curves, ordering, lines = {}},
                 If[ DuplicateFreeQ[edge],
@@ -498,8 +593,11 @@ HypergraphPlot[hg_Hypergraph ? HypergraphQ, opts : OptionsPattern[]] := Enclose 
            labels still have somewhere to sit. *)
         PlotRangePadding -> Scaled[.02],
         (* ImagePadding -> All does not reserve room for Text primitives, and drops the outermost
-           labels altogether; a fixed margin wide enough for a label of a few characters does. *)
-        ImagePadding -> 20,
+           labels altogether, so the margin has to be worked out here. Labels are pushed outward
+           now, and the label of a unary edge is pushed past the vertex label as well, so a fixed
+           twenty points clipped them. The room asked for grows with the longest label there is,
+           and with whether anything is stepped out past a vertex. *)
+        ImagePadding -> labelRoom,
         Background -> $plotBackground
     ]
 ];

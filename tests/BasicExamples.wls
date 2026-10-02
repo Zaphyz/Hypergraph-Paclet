@@ -467,5 +467,33 @@ check["a Placed label keeps the offset it was given",
    Head @ HypergraphPlot[Hypergraph[{Edge[{1, 2}, "Directed", Placed["x", {0, 0}]]}]], Graphics];
 
 p[];
+p["=== An identifier inside another identifier ==="];
+(* A rewrite names the vertices it creates \[FormalV][1], \[FormalV][2], ... beside vertices
+   often named 1, 2, ..., so an edge {1, \[FormalV][1]} is the ordinary case rather than a
+   contrived one. The vertex invariant used to locate a vertex in such an edge with Position at
+   every level, which found the identifier 1 both as itself and inside \[FormalV][1]; two
+   isomorphic hypergraphs then got different invariants and different canonical forms, and the
+   isomorphism test said no. Everything that merges states up to isomorphism depended on it. *)
+pathA = Hypergraph[{{1, \[FormalV][1]}, {\[FormalV][1], 2}, {2, \[FormalV][2]}, {\[FormalV][2], 3}}];
+pathB = Hypergraph[{{1, \[FormalV][3]}, {\[FormalV][3], 2}, {2, \[FormalV][4]}, {\[FormalV][4], 3}}];
+plain = Hypergraph[{{1, 2}, {2, 3}, {3, 4}, {4, 5}}];
+check["two namings of one path are isomorphic", IsomorphicHypergraphQ[pathA, pathB], True];
+check["  and have the same canonical form",
+   CanonicalHypergraph[pathA] === CanonicalHypergraph[pathB], True];
+check["  and are the same path as one named by plain integers",
+   CanonicalHypergraph[pathA] === CanonicalHypergraph[plain], True];
+check["an isomorphism is found", AssociationQ @ FindHypergraphIsomorphism[pathA, pathB], True];
+check["the skeleton agrees too",
+   CanonicalHypergraph[pathA, "Labeled" -> False] === CanonicalHypergraph[pathB, "Labeled" -> False],
+   True];
+(* The same, in the setting it actually arises in: subdividing a two-edge path twice always
+   gives a four-edge path, however the two subdivisions were chosen. *)
+subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];
+twice = Catenate[subdivide /@ (#["Hypergraph"] & /@ subdivide[Hypergraph[{{1, 2}, {2, 3}}]])];
+check["every way of subdividing twice gives the same hypergraph",
+   Length @ DeleteDuplicates[CanonicalHypergraph[#["Hypergraph"]] & /@ twice], 1];
+check["  and there were several ways", Length[twice], 6];
+
+p[];
 p[If[$fails === 0, "=== ALL CHECKS PASSED ===", "=== " <> ToString[$fails] <> " CHECK(S) FAILED ==="]];
 

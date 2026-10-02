@@ -18,82 +18,82 @@ WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphCausalGraph", "ObjectName",ExpressionUUID->"45044a9c-2b91-7a40-b0f5-d9cd19724580"],
+Cell["HypergraphCausalGraph", "ObjectName",ExpressionUUID->"b5e02fb6-14a7-d44f-81ce-487e94bb4b75"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphCausalGraph", "[", 
     RowBox[{"sys", ",", " ", "n"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"df65d5bf-37b1-7a49-b173-5249fb0a1be0"],
+  ExpressionUUID->"facd1fec-785b-9046-89b3-c400c11db8ee"],
  " ",
  "gives the causal graph of the rewriting system sys evolved n generations."
-}], "Usage",ExpressionUUID->"5b85ec7c-8755-e346-8783-304652a5b27d"],
+}], "Usage",ExpressionUUID->"e9ae16fb-f872-2f4d-a185-2aef2282024c"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphCausalGraph", "[", 
     RowBox[{"rules", ",", " ", "init", ",", " ", "n"}], "]"}], "InlineCode"]],
-   "InlineFormula",ExpressionUUID->"287452c0-d10e-3046-9d82-94d155cca90b"],
+   "InlineFormula",ExpressionUUID->"53c277fb-6cba-984d-ba85-6224095ca14b"],
  " ",
  "builds the system first."
-}], "Usage",ExpressionUUID->"d77b4856-357e-b34c-a1b8-5c8328dc2ae2"],
+}], "Usage",ExpressionUUID->"4ebff403-5fdc-1045-ae07-cbfbf9c371a1"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"06a7e6ca-4bcf-5b4c-9142-a4599b6d38be"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"1c98f360-3bab-f64a-98e9-a69513403fae"],
 
 Cell["\<\
 The graph has one vertex per event, numbered as in sys[\"EventList\", n], and \
 an edge from an event to a later one that depends on it.\
-\>", "Notes",ExpressionUUID->"589e58b8-2deb-0740-bde9-3731e95cbdca"],
+\>", "Notes",ExpressionUUID->"a69e17f5-94c8-2248-b473-7359494de24d"],
 
 Cell[TextData[{
  "Two events are dependent when the elements they touch overlap. What counts \
 as an element is the option \"CausalDependence\"; see ",
  Cell[BoxData[
   StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"dbec19c6-edb8-d746-980d-76d3836e62e3"],
+  ExpressionUUID->"56a7af0a-6d78-1644-a1d8-6e73231e71b3"],
  "."
-}], "Notes",ExpressionUUID->"ae94e782-6b1e-c64f-b8c2-eb9cf3f3b956"],
+}], "Notes",ExpressionUUID->"dfd0b064-a27f-db4c-afb7-0b41c60c0035"],
 
 Cell["\<\
 An event touches what its match covered together with what it created. Along \
 a path that comes to the same thing as the usual created-then-consumed \
 reading, since an edge an event consumed is gone and can only be met again by \
 having been created.\
-\>", "Notes",ExpressionUUID->"5c9251b4-ffd6-bb47-b115-477bc5347a24"],
+\>", "Notes",ExpressionUUID->"a56ef284-8220-2745-9aaf-cb7000fddd34"],
 
 Cell["\<\
 Dependence is only asked about between events on one path: the second must \
 act on the state the first produced, or on a descendant of it. In a multiway \
 evolution two events on different branches never meet, whatever they have in \
 common.\
-\>", "Notes",ExpressionUUID->"1cc1aa90-297b-1746-b96b-93af8106af24"],
+\>", "Notes",ExpressionUUID->"51178dc3-849f-9b4c-af33-aa6846cc585a"],
 
 Cell["\<\
 \"TransitiveReduction\" -> True, the default, leaves only the edges the order \
 does not already imply.\
-\>", "Notes",ExpressionUUID->"3fda9026-2a50-a146-8def-f554b59811d9"],
+\>", "Notes",ExpressionUUID->"23327465-c1c8-e048-bb3a-ccd323b3754c"],
 
 Cell["\<\
 sys[\"CausalEdges\", n] gives the same relation as a list of associations \
 with \"From\", \"To\", \"SharedEdges\" and \"SharedVertices\", which say not \
 only that two events are related but what they had in common.\
-\>", "Notes",ExpressionUUID->"9c2b3840-c5fa-0748-8688-cf44fd5250cf"],
+\>", "Notes",ExpressionUUID->"81afecc3-2ff9-d040-b606-5bbcffaa79b7"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"de421ba2-c9b4-6f40-b930-bda20f83b1df"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"5d1e9101-01c7-aa44-b879-5cf524fcc4ba"],
 
 Cell["\<\
 Subdividing either edge of a two-edge path, and then either edge of the \
 result:\
-\>", "ExampleText",ExpressionUUID->"996df08a-ab7b-2340-b97a-c6c5677d9ac5"],
+\>", "ExampleText",ExpressionUUID->"537d544f-6910-4b4b-b689-362403b5181a"],
 
 Cell["\<\
 subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];
 twoEdges = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}, {2, \
 3}}]];
 HypergraphCausalGraph[twoEdges, 2]\
-\>", "Input",ExpressionUUID->"7fbdc47b-15e4-204e-8346-31b93f3dc806"],
+\>", "Input",ExpressionUUID->"d9c04bc3-4202-f04c-a6a4-479d8b3e06da"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -4571,17 +4571,17 @@ Cell[BoxData[
   Background->GrayLevel[1],
   DefaultBaseStyle->"NetworkGraphics",
   FormatType->TraditionalForm,
-  FrameTicks->None]], "Output",ExpressionUUID->"99a218fd-7cc7-a84c-8044-\
-17b5d8e8bbb7"],
+  FrameTicks->None]], "Output",ExpressionUUID->"a69df7eb-5f71-ce45-aa94-\
+70e9957c5385"],
 
 Cell["\<\
 By default an event depends on an earlier one when they share anything at \
 all. Counting only whole shared edges relates fewer of them:\
-\>", "ExampleText",ExpressionUUID->"df8ad35c-7512-144d-beaa-15135a7c4242"],
+\>", "ExampleText",ExpressionUUID->"e906b336-3f28-6744-8430-e5b1c7a33cf8"],
 
 Cell["\<\
 HypergraphCausalGraph[twoEdges, 2, \"CausalDependence\" -> \"Edges\"]\
-\>", "Input",ExpressionUUID->"92b12979-edc0-314e-8e50-e5c63ca6fec5"],
+\>", "Input",ExpressionUUID->"6b1e3f2e-80ed-3a48-9baa-e288641c0111"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -9058,19 +9058,19 @@ Cell[BoxData[
   Background->GrayLevel[1],
   DefaultBaseStyle->"NetworkGraphics",
   FormatType->TraditionalForm,
-  FrameTicks->None]], "Output",ExpressionUUID->"2ae12d2d-5dfd-fa4a-8f23-\
-ccb6b2bd2a33"],
+  FrameTicks->None]], "Output",ExpressionUUID->"bb20954d-e065-f64c-8ad6-\
+94c40a5b9dc6"],
 
 Cell["\<\
 The pairs that drop out are the ones whose matches meet only at a vertex:\
-\>", "ExampleText",ExpressionUUID->"ba7df4f2-3fb0-954a-b705-f6dcf12b1cc7"],
+\>", "ExampleText",ExpressionUUID->"b7d10976-3177-4644-b282-d1b2fecd6c8e"],
 
 Cell["\<\
 pairsOf[l_] := {#[\"From\"], #[\"To\"]} & /@ l;
 Complement[pairsOf @ twoEdges[\"CausalEdges\", 2],
            pairsOf @ twoEdges[\"CausalEdges\", 2, \"CausalDependence\" -> \
 \"Edges\"]]\
-\>", "Input",ExpressionUUID->"c0a4cdf5-c4ba-ba41-8cd2-149bf5d4a6a2"],
+\>", "Input",ExpressionUUID->"5b3faf67-3941-d740-859a-c6189805f412"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -9079,11 +9079,11 @@ Cell[BoxData[
     RowBox[{"1", ",", "4"}], "}"}], ",", 
    RowBox[{"{", 
     RowBox[{"2", ",", "6"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
-"11d72b62-ab51-0940-a24e-397ea3943d59"],
+"3fd6a87f-189f-ba45-8194-0a53126684d9"],
 
 Cell["\<\
 Select[twoEdges[\"CausalEdges\", 2], #[\"SharedEdges\"] === {} &]\
-\>", "Input",ExpressionUUID->"f9da0d3a-1436-4645-8809-f07b8f69717f"],
+\>", "Input",ExpressionUUID->"f57e8d9a-b17b-1d46-b903-e33c60c27b60"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -9104,13 +9104,13 @@ Cell[BoxData[
       RowBox[{"{", "}"}]}], ",", 
      RowBox[{"\<\"SharedVertices\"\>", "\[Rule]", 
       RowBox[{"{", "2", "}"}]}]}], "\[RightAssociation]"}]}], "}"}]], "Output",\
-ExpressionUUID->"5f1d90e3-3ae8-5c45-aaad-12e46cbd8c7f"],
+ExpressionUUID->"2807fed7-7cc6-814e-ae7e-3a54fc29307d"],
 
 Cell["\<\
 States and events together, with the causal edges laid over them:\
-\>", "ExampleText",ExpressionUUID->"55ed389e-f058-eb42-ac9c-85886a1c3212"],
+\>", "ExampleText",ExpressionUUID->"b72cb628-41cd-9445-922d-67c97789f32f"],
 
-Cell["twoEdges[\"EvolutionCausalGraph\", 2]", "Input",ExpressionUUID->"aea52332-52a2-044e-abe9-e9cb16632484"],
+Cell["twoEdges[\"EvolutionCausalGraph\", 2]", "Input",ExpressionUUID->"2676e1ee-84dd-274a-a9d8-72ea2f1be8f4"],
 
 Cell[BoxData[
  GraphicsBox[
@@ -54238,10 +54238,10 @@ Cell[BoxData[
   Background->GrayLevel[1],
   DefaultBaseStyle->"NetworkGraphics",
   FormatType->TraditionalForm,
-  FrameTicks->None]], "Output",ExpressionUUID->"8c6278d7-8392-b542-85b5-\
-ee7829161c04"],
+  FrameTicks->None]], "Output",ExpressionUUID->"5617bc11-eed2-f847-9ff2-\
+4cede2bdc4aa"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"76ca49f7-1ed0-3743-9921-8bd9c04107ce"],
+Cell["Source", "NotesSection",ExpressionUUID->"8ca6b3f0-8930-d04b-8da6-3f3312d67cbe"],
 
 Cell[TextData[{
  "Defined in ",
@@ -54252,28 +54252,28 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "Causal dependence",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"4d2e5f7f-aa9d-a54c-9907-364beb3d5c7a"],
+}], "Notes",ExpressionUUID->"ebb74396-4da6-5649-95ad-cfb74c75b7c5"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"a16a0ba8-9c1c-094c-9491-68fafc171c09"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"e78ffe7f-9c9f-a14e-b057-f381ecead271"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"82a22108-5088-344c-9b7d-3abe49940ffb"],
+  ExpressionUUID->"c5fe9883-7248-3d48-a236-62b7262c2d09"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRewritingSystem", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"91ac16dc-cc8a-8a42-9da0-b11d624deaa4"],
+  ExpressionUUID->"70414aa1-9dce-d64a-8421-35af42fc84b0"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"3c79c6bd-528a-6740-a3bf-ed47d2da97af"]
-}], "SeeAlso",ExpressionUUID->"c2105704-91a7-4442-b4f8-0d4e59ba6dd8"]
+  ExpressionUUID->"2dc676dc-fd8e-6d42-a84c-2d64a4b76a6a"]
+}], "SeeAlso",ExpressionUUID->"3a2cda04-6174-c841-b137-5130074d286d"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"911e7e89-6ae1-cc45-bec1-b355f4c8024d"
+ExpressionUUID->"2ccf7efd-705b-6746-a88b-977919343839"
 ]
 (* End of Notebook Content *)
 
@@ -54286,35 +54286,35 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 98, 0, 70, "ObjectName",ExpressionUUID->"45044a9c-2b91-7a40-b0f5-d9cd19724580"],
-Cell[655, 22, 378, 8, 70, "Usage",ExpressionUUID->"5b85ec7c-8755-e346-8783-304652a5b27d"],
-Cell[1028, 32, 349, 8, 70, "Usage",ExpressionUUID->"d77b4856-357e-b34c-a1b8-5c8328dc2ae2"],
-Cell[1372, 42, 98, 0, 70, "NotesSection",ExpressionUUID->"06a7e6ca-4bcf-5b4c-9142-a4599b6d38be"],
-Cell[1473, 44, 219, 3, 70, "Notes",ExpressionUUID->"589e58b8-2deb-0740-bde9-3731e95cbdca"],
-Cell[1692, 49, 375, 7, 70, "Notes",ExpressionUUID->"ae94e782-6b1e-c64f-b8c2-eb9cf3f3b956"],
-Cell[2063, 58, 337, 5, 70, "Notes",ExpressionUUID->"5c9251b4-ffd6-bb47-b115-477bc5347a24"],
-Cell[2398, 65, 327, 5, 70, "Notes",ExpressionUUID->"1cc1aa90-297b-1746-b96b-93af8106af24"],
-Cell[2723, 72, 186, 3, 70, "Notes",ExpressionUUID->"3fda9026-2a50-a146-8def-f554b59811d9"],
-Cell[2909, 77, 300, 4, 70, "Notes",ExpressionUUID->"9c2b3840-c5fa-0748-8688-cf44fd5250cf"],
-Cell[3208, 83, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"de421ba2-c9b4-6f40-b930-bda20f83b1df"],
-Cell[3308, 85, 170, 3, 70, "ExampleText",ExpressionUUID->"996df08a-ab7b-2340-b97a-c6c5677d9ac5"],
-Cell[3478, 90, 256, 5, 70, "Input",ExpressionUUID->"7fbdc47b-15e4-204e-8346-31b93f3dc806"],
-Cell[3732, 97, 212653, 4477, 70, "Output",ExpressionUUID->"99a218fd-7cc7-a84c-8044-17b5d8e8bbb7"],
-Cell[211911, 4576, 225, 3, 70, "ExampleText",ExpressionUUID->"df8ad35c-7512-144d-beaa-15135a7c4242"],
-Cell[212136, 4581, 151, 2, 70, "Input",ExpressionUUID->"92b12979-edc0-314e-8e50-e5c63ca6fec5"],
-Cell[212288, 4585, 212496, 4476, 70, "Output",ExpressionUUID->"2ae12d2d-5dfd-fa4a-8f23-ccb6b2bd2a33"],
-Cell[420311, 9063, 161, 2, 70, "ExampleText",ExpressionUUID->"ba7df4f2-3fb0-954a-b705-f6dcf12b1cc7"],
-Cell[420473, 9067, 271, 5, 70, "Input",ExpressionUUID->"c0a4cdf5-c4ba-ba41-8cd2-149bf5d4a6a2"],
-Cell[420742, 9074, 235, 7, 70, "Output",ExpressionUUID->"11d72b62-ab51-0940-a24e-397ea3943d59"],
-Cell[420973, 9083, 147, 2, 70, "Input",ExpressionUUID->"f9da0d3a-1436-4645-8809-f07b8f69717f"],
-Cell[421121, 9087, 829, 19, 70, "Output",ExpressionUUID->"5f1d90e3-3ae8-5c45-aaad-12e46cbd8c7f"],
-Cell[421934, 9108, 153, 2, 70, "ExampleText",ExpressionUUID->"55ed389e-f058-eb42-ac9c-85886a1c3212"],
-Cell[422088, 9112, 109, 0, 70, "Input",ExpressionUUID->"aea52332-52a2-044e-abe9-e9cb16632484"],
-Cell[422200, 9114, 2042550, 45127, 70, "Output",ExpressionUUID->"8c6278d7-8392-b542-85b5-ee7829161c04"],
-Cell[2419626, 54243, 85, 0, 70, "NotesSection",ExpressionUUID->"76ca49f7-1ed0-3743-9921-8bd9c04107ce"],
-Cell[2419714, 54245, 281, 9, 70, "Notes",ExpressionUUID->"4d2e5f7f-aa9d-a54c-9907-364beb3d5c7a"],
-Cell[2419989, 54256, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"a16a0ba8-9c1c-094c-9491-68fafc171c09"],
-Cell[2420081, 54258, 542, 12, 70, "SeeAlso",ExpressionUUID->"c2105704-91a7-4442-b4f8-0d4e59ba6dd8"]
+Cell[554, 20, 98, 0, 70, "ObjectName",ExpressionUUID->"b5e02fb6-14a7-d44f-81ce-487e94bb4b75"],
+Cell[655, 22, 378, 8, 70, "Usage",ExpressionUUID->"e9ae16fb-f872-2f4d-a185-2aef2282024c"],
+Cell[1028, 32, 349, 8, 70, "Usage",ExpressionUUID->"4ebff403-5fdc-1045-ae07-cbfbf9c371a1"],
+Cell[1372, 42, 98, 0, 70, "NotesSection",ExpressionUUID->"1c98f360-3bab-f64a-98e9-a69513403fae"],
+Cell[1473, 44, 219, 3, 70, "Notes",ExpressionUUID->"a69e17f5-94c8-2248-b473-7359494de24d"],
+Cell[1692, 49, 375, 7, 70, "Notes",ExpressionUUID->"dfd0b064-a27f-db4c-afb7-0b41c60c0035"],
+Cell[2063, 58, 337, 5, 70, "Notes",ExpressionUUID->"a56ef284-8220-2745-9aaf-cb7000fddd34"],
+Cell[2398, 65, 327, 5, 70, "Notes",ExpressionUUID->"51178dc3-849f-9b4c-af33-aa6846cc585a"],
+Cell[2723, 72, 186, 3, 70, "Notes",ExpressionUUID->"23327465-c1c8-e048-bb3a-ccd323b3754c"],
+Cell[2909, 77, 300, 4, 70, "Notes",ExpressionUUID->"81afecc3-2ff9-d040-b606-5bbcffaa79b7"],
+Cell[3208, 83, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"5d1e9101-01c7-aa44-b879-5cf524fcc4ba"],
+Cell[3308, 85, 170, 3, 70, "ExampleText",ExpressionUUID->"537d544f-6910-4b4b-b689-362403b5181a"],
+Cell[3478, 90, 256, 5, 70, "Input",ExpressionUUID->"d9c04bc3-4202-f04c-a6a4-479d8b3e06da"],
+Cell[3732, 97, 212653, 4477, 70, "Output",ExpressionUUID->"a69df7eb-5f71-ce45-aa94-70e9957c5385"],
+Cell[211911, 4576, 225, 3, 70, "ExampleText",ExpressionUUID->"e906b336-3f28-6744-8430-e5b1c7a33cf8"],
+Cell[212136, 4581, 151, 2, 70, "Input",ExpressionUUID->"6b1e3f2e-80ed-3a48-9baa-e288641c0111"],
+Cell[212288, 4585, 212496, 4476, 70, "Output",ExpressionUUID->"bb20954d-e065-f64c-8ad6-94c40a5b9dc6"],
+Cell[420311, 9063, 161, 2, 70, "ExampleText",ExpressionUUID->"b7d10976-3177-4644-b282-d1b2fecd6c8e"],
+Cell[420473, 9067, 271, 5, 70, "Input",ExpressionUUID->"5b3faf67-3941-d740-859a-c6189805f412"],
+Cell[420742, 9074, 235, 7, 70, "Output",ExpressionUUID->"3fd6a87f-189f-ba45-8194-0a53126684d9"],
+Cell[420973, 9083, 147, 2, 70, "Input",ExpressionUUID->"f57e8d9a-b17b-1d46-b903-e33c60c27b60"],
+Cell[421121, 9087, 829, 19, 70, "Output",ExpressionUUID->"2807fed7-7cc6-814e-ae7e-3a54fc29307d"],
+Cell[421934, 9108, 153, 2, 70, "ExampleText",ExpressionUUID->"b72cb628-41cd-9445-922d-67c97789f32f"],
+Cell[422088, 9112, 109, 0, 70, "Input",ExpressionUUID->"2676e1ee-84dd-274a-a9d8-72ea2f1be8f4"],
+Cell[422200, 9114, 2042550, 45127, 70, "Output",ExpressionUUID->"5617bc11-eed2-f847-9ff2-4cede2bdc4aa"],
+Cell[2419626, 54243, 85, 0, 70, "NotesSection",ExpressionUUID->"8ca6b3f0-8930-d04b-8da6-3f3312d67cbe"],
+Cell[2419714, 54245, 281, 9, 70, "Notes",ExpressionUUID->"ebb74396-4da6-5649-95ad-cfb74c75b7c5"],
+Cell[2419989, 54256, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"e78ffe7f-9c9f-a14e-b057-f381ecead271"],
+Cell[2420081, 54258, 542, 12, 70, "SeeAlso",ExpressionUUID->"3a2cda04-6174-c841-b137-5130074d286d"]
 }
 ]
 *)

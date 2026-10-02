@@ -18,54 +18,54 @@ WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["ArrayGraphics3D", "ObjectName",ExpressionUUID->"a55e786f-6e45-7044-ab6a-4fdd7968dee5"],
+Cell["ArrayGraphics3D", "ObjectName",ExpressionUUID->"1081d8ea-8bce-1d4c-b636-5856a8f8d532"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayGraphics3D", "[", "arr", "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"711a6bb6-9885-1347-8882-4bdf4b0eab8c"],
+  "InlineFormula",ExpressionUUID->"d339b295-706d-8a44-b10c-c247a8a0594e"],
  " ",
  "draws the array arr as cubes arranged in space."
-}], "Usage",ExpressionUUID->"d323f93f-3c3f-c64e-88c5-80aafbc39bd6"],
+}], "Usage",ExpressionUUID->"5ecbbd27-779d-c945-b605-85dd7ac5df32"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"ArrayGraphics3D", "[", 
     RowBox[{"arr", ",", " ", "opts"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"7ac46dac-5ff3-ce40-8d8a-82940b5a2a8a"],
+  ExpressionUUID->"0317e246-29e5-af44-88a5-ae647bc135d6"],
  " ",
  "draws it with the given options."
-}], "Usage",ExpressionUUID->"22fd22a7-634c-5f43-8d53-1d588c206b49"],
+}], "Usage",ExpressionUUID->"9121a7e9-f587-f147-9042-b19917404dc9"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"68681559-6284-ee4c-bf99-9d06a2de6bf6"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"d6575ed3-5e7b-5847-bb75-8ecacef4b8d1"],
 
 Cell["\<\
 An array of order one is drawn as a line of cubes, one of order two as a \
 plane of them, and one of order three as a lattice. The entry at index tuple \
 (i, j, k) sits at the point {i, j, k}, an index the array does not have \
 standing at one.\
-\>", "Notes",ExpressionUUID->"a6e3fc27-45ab-c743-b038-c46424476292"],
+\>", "Notes",ExpressionUUID->"81d0b703-e10c-db44-8270-40bc47ba93d0"],
 
 Cell["\<\
 An array of higher order is drawn by tiling: the inner block of indices is \
 drawn as a lattice, and the outer block repeats that lattice through space, \
 shifted by its own extent and a gap. Everything ends up in one picture, since \
 space has no room for pictures inset into pictures.\
-\>", "Notes",ExpressionUUID->"57d73bbb-ea8e-5549-b10c-b2a3225a4c17"],
+\>", "Notes",ExpressionUUID->"3df8198c-d0da-b64b-b0cc-01009909153b"],
 
 Cell[TextData[{
  "The result is always a three-dimensional ",
  Cell[BoxData[
   StyleBox["Graphics3D", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "e1408122-9ebb-6c49-a598-788db8899d52"],
+  "4a38f350-5ca1-4a47-aeae-249a7a285235"],
  ". For plane pictures at every order see ",
  Cell[BoxData[
   StyleBox["ArrayGraphics", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "cc9f9ddc-b513-1147-94e2-468449fdc962"],
+  "11c5d6c2-0b82-af4a-b71d-f234a3742d4a"],
  "."
-}], "Notes",ExpressionUUID->"c58b7125-4d31-d243-aa71-a7cae77bbb17"],
+}], "Notes",ExpressionUUID->"656da10b-dcd4-9746-a43b-5b6e2d3b3512"],
 
 Cell[TextData[{
  Cell[BoxData[
@@ -73,7 +73,7 @@ Cell[TextData[{
    RowBox[{"\"\<Nesting\>\"", " ", "->", " ", 
     RowBox[{"{", 
      RowBox[{"k1", ",", " ", "k2", ",", " ", "..."}], "}"}]}], "InlineCode"]],
-   "InlineFormula",ExpressionUUID->"ec456ac9-7dca-5046-8350-f985c4f094dd"],
+   "InlineFormula",ExpressionUUID->"4cdbc200-d7ce-2a47-ba31-c748938690a7"],
  " says how to split the indices: the blocks must sum to the order of the \
 array and each must be one, two or three, space holding no more at a time. \
 The default uses ",
@@ -81,47 +81,47 @@ The default uses ",
   StyleBox[
    RowBox[{"ArrayNesting", "[", 
     RowBox[{"n", ",", " ", "3"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"c706df7d-a3ba-424d-b6f0-bc483732ea5b"],
+  ExpressionUUID->"a2174c50-0d81-364a-a76b-2dc95c424bd9"],
  "."
-}], "Notes",ExpressionUUID->"12b94d48-04da-914c-ac76-c52ccb7d5e8d"],
+}], "Notes",ExpressionUUID->"84224466-ab5b-344b-bb05-843f68016fcd"],
 
 Cell["\<\
 The cubes have translucent faces and no outline, so that the entries behind \
 them can still be read; an outline on every cube of a lattice reads as a mesh \
 rather than as a set of cells.\
-\>", "Notes",ExpressionUUID->"199a32e7-4453-914c-bd89-8f9d43fac36a"],
+\>", "Notes",ExpressionUUID->"6653ccc6-418b-6c41-b4a2-d025e583e422"],
 
 Cell[TextData[{
  "A gnomon in the near corner marks as many axes as the picture uses; ",
  Cell[BoxData[
   StyleBox[
    RowBox[{"\"\<Gnomon\>\"", " ", "->", " ", "False"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"5fdf6a9f-2b78-fe41-ab12-503b54af66c6"],
+  "InlineFormula",ExpressionUUID->"cf278dd7-a3ac-1844-9b4d-067928298b49"],
  " drops it. ",
  Cell[BoxData[
   StyleBox[
    RowBox[{"\"\<Indices\>\"", " ", "->", " ", "\"\<Colored\>\""}], 
    "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "a9f606b2-f456-9b4e-b3e5-c4a81571fd67"],
+  "3f1190b9-86bb-4945-bfe0-5cef47a28982"],
  " gives each axis a colour of its own."
-}], "Notes",ExpressionUUID->"5f67b57d-a025-024e-afdb-774b66aeeb49"],
+}], "Notes",ExpressionUUID->"5e021941-a8ca-b747-9a4a-d95da5bd4458"],
 
 Cell["\<\
 The reference implementation this package grew out of drew only the \
 order-three case, and called such a picture a cubix; the name is not kept, \
 but the look of it is.\
-\>", "Notes",ExpressionUUID->"d1cf66be-31bf-624e-9fdb-923398d423dc"],
+\>", "Notes",ExpressionUUID->"f58e827a-0e5f-e540-bf01-23437e971fde"],
 
-Cell["The other options are shared with ArrayGraphics.", "Notes",ExpressionUUID->"6a483b10-cc4b-b547-8466-c27634ee5b32"],
+Cell["The other options are shared with ArrayGraphics.", "Notes",ExpressionUUID->"fdef882d-0d37-084b-b308-ab7d14d635c2"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"96c47160-b072-2644-a7da-110739634283"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"04983e25-7c93-704d-8db9-6bf963a2aeaf"],
 
 Cell["At order one a line of cubes, at order two a plane of them:", \
-"ExampleText",ExpressionUUID->"aad6a397-6467-d94b-8a22-f03d309bc746"],
+"ExampleText",ExpressionUUID->"8405d25a-8023-8240-9aef-98d0cae0e5e8"],
 
 Cell["\<\
 {ArrayGraphics3D[{1, 2, 3, 4}], ArrayGraphics3D[{{1, 2, 3}, {4, 5, 6}}]}\
-\>", "Input",ExpressionUUID->"47c60bc7-af5e-8a43-9d68-a321bcd786e4"],
+\>", "Input",ExpressionUUID->"32909ee3-2998-c946-b903-e70dbadffee1"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -291,11 +291,11 @@ Cell[BoxData[
     Lighting->"Neutral",
     PlotRange->{{0, 2.7}, {0, 3.7}, {0, 1.7}},
     PlotRangePadding->Scaled[0.02]]}], "}"}]], "Output",ExpressionUUID->\
-"7c94defd-8e1f-0d4f-a47d-8d3446d81ee1"],
+"0df34be2-9716-2849-9d30-087167147260"],
 
-Cell["At order three, the full lattice:", "ExampleText",ExpressionUUID->"577ced7c-1b2a-db45-b5ee-4798548539ce"],
+Cell["At order three, the full lattice:", "ExampleText",ExpressionUUID->"cc4aa3c6-ca49-af4c-96e2-c56183609e19"],
 
-Cell["ArrayGraphics3D[Array[#1 + #2 + #3 &, {3, 3, 3}]]", "Input",ExpressionUUID->"ab5c003a-a057-ca47-be7d-194c5a406943"],
+Cell["ArrayGraphics3D[Array[#1 + #2 + #3 &, {3, 3, 3}]]", "Input",ExpressionUUID->"9c75c4fa-95e1-8f4f-b3f8-16c1e4b4a6b9"],
 
 Cell[BoxData[
  Graphics3DBox[{{{
@@ -638,15 +638,15 @@ Cell[BoxData[
   ImageSize->162,
   Lighting->"Neutral",
   PlotRange->{{0, 3.7}, {0, 3.7}, {0, 3.7}},
-  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"81a0d128-074e-\
-2349-8e6a-a47e564170f3"],
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"8125b96a-10a2-\
+c049-a1f2-c8dd698b8fe5"],
 
 Cell["\<\
 Above that the lattices are tiled through space. A 4-array is a line of them:\
 \
-\>", "ExampleText",ExpressionUUID->"743b4978-85ff-f944-a47f-e30324f71ae1"],
+\>", "ExampleText",ExpressionUUID->"cd3a678d-db79-4c47-ba7f-9f111181cd23"],
 
-Cell["ArrayGraphics3D[Array[#1 + #2 + #3 + #4 &, {2, 2, 2, 2}]]", "Input",ExpressionUUID->"04a152c9-673e-9642-93bb-1e00b05aba2a"],
+Cell["ArrayGraphics3D[Array[#1 + #2 + #3 + #4 &, {2, 2, 2, 2}]]", "Input",ExpressionUUID->"1adc0652-df39-b840-86ab-4f485862bea1"],
 
 Cell[BoxData[
  Graphics3DBox[{{{{
@@ -869,14 +869,14 @@ Cell[BoxData[
   ImageSize->265,
   Lighting->"Neutral",
   PlotRange->{{0, 5.6}, {0, 2.7}, {0, 2.7}},
-  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"c4ebecf5-27c3-\
-0248-a26d-b0f18fb42e61"],
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"5b664fe4-1119-\
+b54f-9c3f-356ecbc35ff3"],
 
-Cell["\[Ellipsis] and a 5-array a plane of them:", "ExampleText",ExpressionUUID->"2c91bef5-5274-8345-8d67-acf222a55694"],
+Cell["\[Ellipsis] and a 5-array a plane of them:", "ExampleText",ExpressionUUID->"bc167c09-a9c9-5040-8ef3-1602fe81fd36"],
 
 Cell["\<\
 ArrayGraphics3D[Array[Mod[#1 + #2 + #3 + #4 + #5, 7] &, {2, 2, 2, 2, 2}]]\
-\>", "Input",ExpressionUUID->"6f203e8d-564a-4747-a4e0-ddc628e2fb4e"],
+\>", "Input",ExpressionUUID->"cc66b7f2-f888-f24f-9594-2c7202dabc36"],
 
 Cell[BoxData[
  Graphics3DBox[{{{{
@@ -1275,14 +1275,14 @@ Cell[BoxData[
   ImageSize->265,
   Lighting->"Neutral",
   PlotRange->{{0, 5.6}, {0, 5.6}, {0, 2.7}},
-  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"57bd3c95-ef03-\
-344e-a4d0-9c2392904faf"],
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"176479ef-4eb8-\
+2d47-aa44-40686b681c6a"],
 
-Cell["Colouring the axes says which index runs which way:", "ExampleText",ExpressionUUID->"b35d6847-fd3e-ef49-9ef9-7c4d71f8bbfc"],
+Cell["Colouring the axes says which index runs which way:", "ExampleText",ExpressionUUID->"22a848b4-0469-4649-85cd-d893c2952957"],
 
 Cell["\<\
 ArrayGraphics3D[Array[#1 #2 #3 &, {2, 2, 2}], \"Indices\" -> \"Colored\"]\
-\>", "Input",ExpressionUUID->"dbe15ef2-c46f-9542-b2ce-a2778ed1f857"],
+\>", "Input",ExpressionUUID->"76332824-5bc6-1f45-9878-edb5be91c2bb"],
 
 Cell[BoxData[
  Graphics3DBox[{{{
@@ -1417,19 +1417,19 @@ Cell[BoxData[
   ImageSize->120,
   Lighting->"Neutral",
   PlotRange->{{0, 2.7}, {0, 2.7}, {0, 2.7}},
-  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"bd19aabd-e62b-\
-be47-95c5-8f403bc92e9c"],
+  PlotRangePadding->Scaled[0.02]]], "Output",ExpressionUUID->"00afd0ff-9f90-\
+af47-8e25-f2790e969673"],
 
 Cell["A block of four indices has nowhere to go, and is refused:", \
-"ExampleText",ExpressionUUID->"b43da0b1-98b9-2d4c-8577-eeb76f662664"],
+"ExampleText",ExpressionUUID->"9d4232cc-cff1-cf4b-aa62-81b5994e1320"],
 
 Cell["\<\
 Quiet @ ArrayGraphics3D[Array[1 &, {2, 2, 2, 2}], \"Nesting\" -> {4}]\
-\>", "Input",ExpressionUUID->"c1a14042-d61d-c34e-83b9-0a937923ae14"],
+\>", "Input",ExpressionUUID->"f34ed523-eb40-a044-9226-d4b050df769e"],
 
-Cell[BoxData["$Failed"], "Output",ExpressionUUID->"aa962ec0-27e4-2645-a348-1415a7de3604"],
+Cell[BoxData["$Failed"], "Output",ExpressionUUID->"fa2c09f8-ba8c-1f4e-a333-c107b171d88a"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"5dd0d6cc-5d9e-0e4f-a23a-278019c4c9ea"],
+Cell["Source", "NotesSection",ExpressionUUID->"8063abf7-65c8-cf4d-a120-57cb70cf6b21"],
 
 Cell[TextData[{
  "Defined in ",
@@ -1440,32 +1440,32 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "The spatial family",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"fd79a001-be79-3c4a-a7b4-6b6b9e4b3378"],
+}], "Notes",ExpressionUUID->"9fe66a8d-9dbc-3e46-8936-32033663fd71"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"3a8e6f1d-2b8e-874d-9d8b-1e302df80119"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"53585a5d-1b6b-2f41-82c2-e38b6c547f0e"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["ArrayGraphics", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "f10e1021-d6ad-4d44-acba-e81bf1d68346"],
+  "2ba0acb9-09a1-7c49-ba10-ec5460db0789"],
  ", ",
  Cell[BoxData[
   StyleBox["ArrayNesting", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "51a7a0cd-c732-2345-840c-4fce14ec25aa"],
+  "3d329111-15b0-1647-8476-2d4b666b5d29"],
  ", ",
  Cell[BoxData[
   StyleBox["HypermatrixGraphics3D", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"0da7d5b7-5bf2-a745-9312-b149b0de7c8a"],
+  ExpressionUUID->"33caf71d-a7f7-4a44-91c5-a0cc42bbaa90"],
  ", ",
  Cell[BoxData[
   StyleBox["ArrayObject", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "5956bf50-5776-0545-a075-45e03fdf792a"]
-}], "SeeAlso",ExpressionUUID->"a4cd3a36-1973-d348-b201-f40109ea22cf"]
+  "b93ec457-e1d7-954e-ae27-4cbf7a70a030"]
+}], "SeeAlso",ExpressionUUID->"ee7fce91-1201-a742-b1b6-8aac687ddd1e"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"911e7e89-6ae1-cc45-bec1-b355f4c8024d"
+ExpressionUUID->"2ccf7efd-705b-6746-a88b-977919343839"
 ]
 (* End of Notebook Content *)
 
@@ -1478,41 +1478,41 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 92, 0, 70, "ObjectName",ExpressionUUID->"a55e786f-6e45-7044-ab6a-4fdd7968dee5"],
-Cell[649, 22, 315, 7, 70, "Usage",ExpressionUUID->"d323f93f-3c3f-c64e-88c5-80aafbc39bd6"],
-Cell[960, 31, 334, 8, 70, "Usage",ExpressionUUID->"22fd22a7-634c-5f43-8d53-1d588c206b49"],
-Cell[1289, 41, 98, 0, 70, "NotesSection",ExpressionUUID->"68681559-6284-ee4c-bf99-9d06a2de6bf6"],
-Cell[1390, 43, 329, 5, 70, "Notes",ExpressionUUID->"a6e3fc27-45ab-c743-b038-c46424476292"],
-Cell[1717, 50, 371, 5, 70, "Notes",ExpressionUUID->"57d73bbb-ea8e-5549-b10c-b2a3225a4c17"],
-Cell[2086, 57, 456, 10, 70, "Notes",ExpressionUUID->"c58b7125-4d31-d243-aa71-a7cae77bbb17"],
-Cell[2535, 69, 717, 16, 70, "Notes",ExpressionUUID->"12b94d48-04da-914c-ac76-c52ccb7d5e8d"],
-Cell[3239, 87, 272, 4, 70, "Notes",ExpressionUUID->"199a32e7-4453-914c-bd89-8f9d43fac36a"],
-Cell[3510, 93, 591, 13, 70, "Notes",ExpressionUUID->"5f67b57d-a025-024e-afdb-774b66aeeb49"],
-Cell[4091, 108, 253, 4, 70, "Notes",ExpressionUUID->"d1cf66be-31bf-624e-9fdb-923398d423dc"],
-Cell[4343, 114, 120, 0, 70, "Notes",ExpressionUUID->"6a483b10-cc4b-b547-8466-c27634ee5b32"],
-Cell[4466, 116, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"96c47160-b072-2644-a7da-110739634283"],
-Cell[4566, 118, 140, 1, 70, "ExampleText",ExpressionUUID->"aad6a397-6467-d94b-8a22-f03d309bc746"],
-Cell[4708, 121, 154, 2, 70, "Input",ExpressionUUID->"47c60bc7-af5e-8a43-9d68-a321bcd786e4"],
-Cell[4863, 125, 7005, 168, 70, "Output",ExpressionUUID->"7c94defd-8e1f-0d4f-a47d-8d3446d81ee1"],
-Cell[11703, 295, 111, 0, 70, "ExampleText",ExpressionUUID->"577ced7c-1b2a-db45-b5ee-4798548539ce"],
-Cell[11817, 297, 121, 0, 70, "Input",ExpressionUUID->"ab5c003a-a057-ca47-be7d-194c5a406943"],
-Cell[11941, 299, 13884, 342, 70, "Output",ExpressionUUID->"81a0d128-074e-2349-8e6a-a47e564170f3"],
-Cell[25486, 643, 168, 3, 70, "ExampleText",ExpressionUUID->"743b4978-85ff-f944-a47f-e30324f71ae1"],
-Cell[25654, 648, 129, 0, 70, "Input",ExpressionUUID->"04a152c9-673e-9642-93bb-1e00b05aba2a"],
-Cell[25786, 650, 9385, 222, 70, "Output",ExpressionUUID->"c4ebecf5-27c3-0248-a26d-b0f18fb42e61"],
-Cell[34952, 874, 120, 0, 70, "ExampleText",ExpressionUUID->"2c91bef5-5274-8345-8d67-acf222a55694"],
-Cell[35075, 876, 155, 2, 70, "Input",ExpressionUUID->"6f203e8d-564a-4747-a4e0-ddc628e2fb4e"],
-Cell[35231, 880, 16837, 398, 70, "Output",ExpressionUUID->"57bd3c95-ef03-344e-a4d0-9c2392904faf"],
-Cell[51673, 1280, 129, 0, 70, "ExampleText",ExpressionUUID->"b35d6847-fd3e-ef49-9ef9-7c4d71f8bbfc"],
-Cell[51805, 1282, 155, 2, 70, "Input",ExpressionUUID->"dbe15ef2-c46f-9542-b2ce-a2778ed1f857"],
-Cell[51961, 1286, 5519, 134, 70, "Output",ExpressionUUID->"bd19aabd-e62b-be47-95c5-8f403bc92e9c"],
-Cell[57349, 1422, 139, 1, 70, "ExampleText",ExpressionUUID->"b43da0b1-98b9-2d4c-8577-eeb76f662664"],
-Cell[57490, 1425, 151, 2, 70, "Input",ExpressionUUID->"c1a14042-d61d-c34e-83b9-0a937923ae14"],
-Cell[57642, 1429, 89, 0, 70, "Output",ExpressionUUID->"aa962ec0-27e4-2645-a348-1415a7de3604"],
-Cell[57734, 1431, 85, 0, 70, "NotesSection",ExpressionUUID->"5dd0d6cc-5d9e-0e4f-a23a-278019c4c9ea"],
-Cell[57822, 1433, 286, 9, 70, "Notes",ExpressionUUID->"fd79a001-be79-3c4a-a7b4-6b6b9e4b3378"],
-Cell[58102, 1444, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"3a8e6f1d-2b8e-874d-9d8b-1e302df80119"],
-Cell[58194, 1446, 666, 16, 70, "SeeAlso",ExpressionUUID->"a4cd3a36-1973-d348-b201-f40109ea22cf"]
+Cell[554, 20, 92, 0, 70, "ObjectName",ExpressionUUID->"1081d8ea-8bce-1d4c-b636-5856a8f8d532"],
+Cell[649, 22, 315, 7, 70, "Usage",ExpressionUUID->"5ecbbd27-779d-c945-b605-85dd7ac5df32"],
+Cell[960, 31, 334, 8, 70, "Usage",ExpressionUUID->"9121a7e9-f587-f147-9042-b19917404dc9"],
+Cell[1289, 41, 98, 0, 70, "NotesSection",ExpressionUUID->"d6575ed3-5e7b-5847-bb75-8ecacef4b8d1"],
+Cell[1390, 43, 329, 5, 70, "Notes",ExpressionUUID->"81d0b703-e10c-db44-8270-40bc47ba93d0"],
+Cell[1717, 50, 371, 5, 70, "Notes",ExpressionUUID->"3df8198c-d0da-b64b-b0cc-01009909153b"],
+Cell[2086, 57, 456, 10, 70, "Notes",ExpressionUUID->"656da10b-dcd4-9746-a43b-5b6e2d3b3512"],
+Cell[2535, 69, 717, 16, 70, "Notes",ExpressionUUID->"84224466-ab5b-344b-bb05-843f68016fcd"],
+Cell[3239, 87, 272, 4, 70, "Notes",ExpressionUUID->"6653ccc6-418b-6c41-b4a2-d025e583e422"],
+Cell[3510, 93, 591, 13, 70, "Notes",ExpressionUUID->"5e021941-a8ca-b747-9a4a-d95da5bd4458"],
+Cell[4091, 108, 253, 4, 70, "Notes",ExpressionUUID->"f58e827a-0e5f-e540-bf01-23437e971fde"],
+Cell[4343, 114, 120, 0, 70, "Notes",ExpressionUUID->"fdef882d-0d37-084b-b308-ab7d14d635c2"],
+Cell[4466, 116, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"04983e25-7c93-704d-8db9-6bf963a2aeaf"],
+Cell[4566, 118, 140, 1, 70, "ExampleText",ExpressionUUID->"8405d25a-8023-8240-9aef-98d0cae0e5e8"],
+Cell[4708, 121, 154, 2, 70, "Input",ExpressionUUID->"32909ee3-2998-c946-b903-e70dbadffee1"],
+Cell[4863, 125, 7005, 168, 70, "Output",ExpressionUUID->"0df34be2-9716-2849-9d30-087167147260"],
+Cell[11703, 295, 111, 0, 70, "ExampleText",ExpressionUUID->"cc4aa3c6-ca49-af4c-96e2-c56183609e19"],
+Cell[11817, 297, 121, 0, 70, "Input",ExpressionUUID->"9c75c4fa-95e1-8f4f-b3f8-16c1e4b4a6b9"],
+Cell[11941, 299, 13884, 342, 70, "Output",ExpressionUUID->"8125b96a-10a2-c049-a1f2-c8dd698b8fe5"],
+Cell[25486, 643, 168, 3, 70, "ExampleText",ExpressionUUID->"cd3a678d-db79-4c47-ba7f-9f111181cd23"],
+Cell[25654, 648, 129, 0, 70, "Input",ExpressionUUID->"1adc0652-df39-b840-86ab-4f485862bea1"],
+Cell[25786, 650, 9385, 222, 70, "Output",ExpressionUUID->"5b664fe4-1119-b54f-9c3f-356ecbc35ff3"],
+Cell[34952, 874, 120, 0, 70, "ExampleText",ExpressionUUID->"bc167c09-a9c9-5040-8ef3-1602fe81fd36"],
+Cell[35075, 876, 155, 2, 70, "Input",ExpressionUUID->"cc66b7f2-f888-f24f-9594-2c7202dabc36"],
+Cell[35231, 880, 16837, 398, 70, "Output",ExpressionUUID->"176479ef-4eb8-2d47-aa44-40686b681c6a"],
+Cell[51673, 1280, 129, 0, 70, "ExampleText",ExpressionUUID->"22a848b4-0469-4649-85cd-d893c2952957"],
+Cell[51805, 1282, 155, 2, 70, "Input",ExpressionUUID->"76332824-5bc6-1f45-9878-edb5be91c2bb"],
+Cell[51961, 1286, 5519, 134, 70, "Output",ExpressionUUID->"00afd0ff-9f90-af47-8e25-f2790e969673"],
+Cell[57349, 1422, 139, 1, 70, "ExampleText",ExpressionUUID->"9d4232cc-cff1-cf4b-aa62-81b5994e1320"],
+Cell[57490, 1425, 151, 2, 70, "Input",ExpressionUUID->"f34ed523-eb40-a044-9226-d4b050df769e"],
+Cell[57642, 1429, 89, 0, 70, "Output",ExpressionUUID->"fa2c09f8-ba8c-1f4e-a333-c107b171d88a"],
+Cell[57734, 1431, 85, 0, 70, "NotesSection",ExpressionUUID->"8063abf7-65c8-cf4d-a120-57cb70cf6b21"],
+Cell[57822, 1433, 286, 9, 70, "Notes",ExpressionUUID->"9fe66a8d-9dbc-3e46-8936-32033663fd71"],
+Cell[58102, 1444, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"53585a5d-1b6b-2f41-82c2-e38b6c547f0e"],
+Cell[58194, 1446, 666, 16, 70, "SeeAlso",ExpressionUUID->"ee7fce91-1201-a742-b1b6-8aac687ddd1e"]
 }
 ]
 *)

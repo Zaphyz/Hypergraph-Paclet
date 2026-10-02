@@ -343,8 +343,14 @@ vertexInvariant[hg_, labeledQ_][v_] := With[{
                 EdgeSymmetry[e],
                 If[labeledQ, eMult[EdgeLabel[e]], None],
                 If[ EdgeSymmetry[e] === "Directed",
-                    Flatten @ Position[edgeIDs[e], id],
-                    Count[edgeIDs[e], id]
+                    (* Level one and no heads: an identifier may be a subexpression of another
+                       one in the same edge, and the default Position would find it there too.
+                       An edge {1, \[FormalV][1]} -- which is what every subdivision produces --
+                       would report vertex 1 at positions {1} and {2, 1}, giving two isomorphic
+                       hypergraphs different invariants and so different canonical forms.
+                       Verbatim, because an identifier may itself be a pattern. *)
+                    Flatten @ Position[edgeIDs[e], Verbatim[id], {1}, Heads -> False],
+                    Count[edgeIDs[e], Verbatim[id]]
                 ]
             }
         ]

@@ -10,50 +10,50 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       154,          7]
-NotebookDataLength[    123148,       2723]
-NotebookOptionsPosition[    119857,       2679]
-NotebookOutlinePosition[    120205,       2694]
-CellTagsIndexPosition[    120162,       2691]
+NotebookDataLength[    109874,       2429]
+NotebookOptionsPosition[    106583,       2385]
+NotebookOutlinePosition[    106931,       2400]
+CellTagsIndexPosition[    106888,       2397]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
-Cell["HypergraphRewritingSystem", "ObjectName",ExpressionUUID->"17bd415d-b7dc-3548-93f6-1c013c3cbc4b"],
+Cell["HypergraphRewritingSystem", "ObjectName",ExpressionUUID->"377b9bf4-df68-d34e-aa8b-21b357e694a7"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"HypergraphRewritingSystem", "[", 
     RowBox[{"rules", ",", " ", "init"}], "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"9f2117f9-762a-3f41-801c-f5d1d6fa0f69"],
+  "InlineFormula",ExpressionUUID->"fee1b5e6-0028-ae4c-85c0-4ad7b95a2ef8"],
  " ",
  "represents the rewriting system with the given rules started from the \
 hypergraph init."
-}], "Usage",ExpressionUUID->"b5e48c2a-db57-6943-8177-453e3fc4b66b"],
+}], "Usage",ExpressionUUID->"49048846-20ee-c84d-8e66-7e4671eac5b8"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"sys", "[", 
     RowBox[{"prop", ",", " ", "n"}], "]"}], "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"d6a3936a-9c63-244e-a2e7-a16972a97419"],
+  ExpressionUUID->"2a5ef1c7-1787-804a-be32-913d777c8bc2"],
  " ",
  "gives a property of the evolution carried n generations."
-}], "Usage",ExpressionUUID->"01a01125-c54b-754b-b8f3-875047de9af1"],
+}], "Usage",ExpressionUUID->"8196b39b-9df7-a64e-a5bd-b6d77887bf5b"],
 
-Cell["Details and Options", "NotesSection",ExpressionUUID->"4333a13f-8b84-2e4b-87fe-80b39e9d08ac"],
+Cell["Details and Options", "NotesSection",ExpressionUUID->"a1c1e236-6447-0a4b-b0d7-76c75e5dbf5c"],
 
 Cell["\<\
 rules may be one HypergraphRule, a list of them, or plain arrows input -> \
 output, which are converted; init may be anything Hypergraph accepts.\
-\>", "Notes",ExpressionUUID->"ff53be89-b2f3-f44a-9010-0b3ca1a77c67"],
+\>", "Notes",ExpressionUUID->"4e93a650-f3f9-1f4c-b319-8caaca4d2428"],
 
 Cell["\<\
 Evolving means applying every rule in every way it fits, to every state \
 reached so far. The result is a tree of state occurrences joined by events: a \
 state reached two ways appears twice, since which elements it is made of \
 depends on how it was reached.\
-\>", "Notes",ExpressionUUID->"2fef5a2c-6984-7549-8422-9734beff530a"],
+\>", "Notes",ExpressionUUID->"d89d03ab-e0ae-8747-a899-c14cb01a59dd"],
 
 Cell[TextData[{
  "The properties are \"Rules\", \"RuleCount\", \"InitialState\", \"States\", \
@@ -63,24 +63,24 @@ Cell[TextData[{
  Cell[BoxData[
   StyleBox[
    RowBox[{"sys", "[", "\"\<Properties\>\"", "]"}], "InlineCode"]], 
-  "InlineFormula",ExpressionUUID->"41175579-2b68-5246-af22-3492acaeaeab"],
+  "InlineFormula",ExpressionUUID->"f0580694-255d-1c48-b0c5-f75bf801dd37"],
  " lists them."
-}], "Notes",ExpressionUUID->"9768b8b4-39f0-034f-be8d-1f0ecef36ede"],
+}], "Notes",ExpressionUUID->"6ac7af6a-71d1-5f47-90e4-d452182679ab"],
 
 Cell["\<\
 The number of generations defaults to 1, so sys[\"CausalGraph\"] and \
 sys[\"CausalGraph\", 1] are the same.\
-\>", "Notes",ExpressionUUID->"25b9b359-21fb-a643-b25d-6782401ed3e9"],
+\>", "Notes",ExpressionUUID->"80c292d6-45c3-7c4d-8064-50028e595adc"],
 
 Cell[TextData[{
  "Options are those of ",
  Cell[BoxData[
   StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"b47199ec-4ebd-c64c-995b-93506b86a5fe"],
+  ExpressionUUID->"eecc4cf0-7fbe-7641-8ffe-e3843e812186"],
  ", and are given to the property: \"CausalDependence\", \
 \"TransitiveReduction\", \"CanonicalizeStates\", \"MaxStates\", and the \
 matching options \"Labeled\", \"LabelPatterns\" and \"DistinctVertices\"."
-}], "Notes",ExpressionUUID->"40317dab-fc4a-6b44-98f2-c297b9221d89"],
+}], "Notes",ExpressionUUID->"fb45f627-ed2d-5541-a20a-d7c84fef65d1"],
 
 Cell["\<\
 An event of \"EventList\" is an association with \"Rule\" and \"RuleIndex\", \
@@ -88,7 +88,7 @@ which rule fired; \"Generation\"; \"InputState\" and \"OutputState\", indices \
 into \"StateList\"; \"ConsumedEdges\", \"CreatedEdges\", \"MatchedVertices\", \
 \"CreatedVertices\" and \"DestroyedVertices\", the elements it touched, as \
 tokens; and \"Data\", the event HypergraphRuleApply gave.\
-\>", "Notes",ExpressionUUID->"ed483881-60a0-6f4a-b854-987b712d027e"],
+\>", "Notes",ExpressionUUID->"d4d9befe-2232-894a-81e2-a99eb237e326"],
 
 Cell["\<\
 Elements are tracked by token rather than by value, because an edge is an \
@@ -96,22 +96,22 @@ element of a multiset: two edges that look the same are still two elements, \
 and a vertex identifier freed by one event may be handed out again by a later \
 one. A token is minted when an element is created and carried for as long as \
 it survives.\
-\>", "Notes",ExpressionUUID->"7404188a-7b71-b04b-b603-92e94d5d727a"],
+\>", "Notes",ExpressionUUID->"42cabc3e-d1f5-9b4d-bdba-a2f18fcf80d7"],
 
 Cell["\<\
 \"MaxStates\", by default 2048, stops an evolution that is growing faster \
 than expected and gives HypergraphRewritingSystem::trunc rather than running \
 on.\
-\>", "Notes",ExpressionUUID->"0485e60a-fd3d-104d-a8a0-da3c3f23a304"],
+\>", "Notes",ExpressionUUID->"918f7cdc-c75e-7a49-ad19-c7df3bcfa14c"],
 
-Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"21a88a98-3707-e148-9b30-5fd3d9b64d43"],
+Cell["Examples", "PrimaryExamplesSection",ExpressionUUID->"898b9d40-dd46-b844-93c8-7f5f46dea29c"],
 
-Cell["A rule that subdivides an edge, started from one edge:", "ExampleText",ExpressionUUID->"c306bfe2-2e11-fd46-913a-aa9688633feb"],
+Cell["A rule that subdivides an edge, started from one edge:", "ExampleText",ExpressionUUID->"febc33fb-2a9e-df43-893e-14a899ad8055"],
 
 Cell["\<\
 subdivide = HypergraphRule[{{1, 2}}, {{1, 3}, {3, 2}}];
 system = HypergraphRewritingSystem[subdivide, Hypergraph[{{1, 2}}]]\
-\>", "Input",ExpressionUUID->"05d53772-f717-304a-950d-e14a2688d941"],
+\>", "Input",ExpressionUUID->"ddb547a0-5a36-8349-83f9-edb0e19cdad7"],
 
 Cell[BoxData[
  InterpretationBox[
@@ -277,16 +277,16 @@ Cell[BoxData[
        WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], {}],
   Editable->False,
   SelectWithContents->True,
-  Selectable->False]], "Output",ExpressionUUID->"50305e07-09df-c44b-a13c-\
-fade7750f2e3"],
+  Selectable->False]], "Output",ExpressionUUID->"ce68bda8-7fd6-7d4c-b60f-\
+a10075738304"],
 
 Cell["\<\
 Every edge of every state is a place the rule fits, so the states multiply:\
-\>", "ExampleText",ExpressionUUID->"4ee72d23-9bf0-3b41-9320-886bb202bc18"],
+\>", "ExampleText",ExpressionUUID->"7bf519eb-6a37-644e-890e-9d7bdd728d1e"],
 
 Cell["\<\
 Table[{system[\"StateCount\", g], system[\"EventCount\", g]}, {g, 0, 3}]\
-\>", "Input",ExpressionUUID->"16c703fc-9fe1-fa46-96b7-5c95ff5b4c6b"],
+\>", "Input",ExpressionUUID->"b4be462f-3dd3-2042-8472-03965fb32cf8"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -299,11 +299,11 @@ Cell[BoxData[
     RowBox[{"4", ",", "3"}], "}"}], ",", 
    RowBox[{"{", 
     RowBox[{"10", ",", "9"}], "}"}]}], "}"}]], "Output",ExpressionUUID->\
-"151093d9-4982-4f49-98af-1ab923bb7e14"],
+"b84ac7f4-9f82-c34b-b12c-f5ed0e983a72"],
 
-Cell["The states of each generation:", "ExampleText",ExpressionUUID->"533dba02-79d2-4f46-b53a-aa43420d15ca"],
+Cell["The states of each generation:", "ExampleText",ExpressionUUID->"4192abba-830d-864d-8d93-7e47607110c8"],
 
-Cell["system[\"States\", 2]", "Input",ExpressionUUID->"b2a56fcd-5aef-474c-91ad-926caef646a6"],
+Cell["system[\"States\", 2]", "Input",ExpressionUUID->"baca4d16-ed17-eb42-8790-74c4db148683"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -614,13 +614,13 @@ Cell[BoxData[
       ImagePadding->34,
       PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
       PlotRangePadding->Scaled[0.02]]}], "}"}]}], "}"}]], "Output",ExpressionU\
-UID->"1d55e7f6-f81d-514d-a606-2519447f9338"],
+UID->"fead9e51-4c26-364a-a8aa-dc78a4da92bc"],
 
 Cell["What one event did, in the tokens the causal reading uses:", \
-"ExampleText",ExpressionUUID->"a5acf0de-29e9-d14f-96db-2f877e86e253"],
+"ExampleText",ExpressionUUID->"a463b036-8248-1a4e-8c5a-e24877166385"],
 
 Cell["KeyDrop[First @ system[\"EventList\", 1], {\"Rule\", \"Data\"}]", \
-"Input",ExpressionUUID->"a1dbcd00-81a5-644e-b726-fc75f669ff60"],
+"Input",ExpressionUUID->"16350db2-2fb4-4c47-b1b7-515016bc3636"],
 
 Cell[BoxData[
  RowBox[{"\[LeftAssociation]", 
@@ -641,15 +641,15 @@ Cell[BoxData[
    RowBox[{"\<\"DestroyedVertices\"\>", "\[Rule]", 
     RowBox[{"{", "}"}]}], ",", 
    RowBox[{"\<\"OutputState\"\>", "\[Rule]", "2"}]}], 
-  "\[RightAssociation]"}]], "Output",ExpressionUUID->"622927c0-8fba-0243-95b7-\
-d2dda00c6691"],
+  "\[RightAssociation]"}]], "Output",ExpressionUUID->"83ac83c5-b277-644e-b577-\
+9dcdb6760964"],
 
 Cell["\<\
 The evolution as a tree of state occurrences, and the same states merged up \
 to canonical form:\
-\>", "ExampleText",ExpressionUUID->"69094c65-d836-c64e-994c-3276975f3f46"],
+\>", "ExampleText",ExpressionUUID->"579860d6-46a7-6c4b-be71-a40ccfcc8571"],
 
-Cell["{system[\"EvolutionGraph\", 2], system[\"StatesGraph\", 2]}", "Input",ExpressionUUID->"c0c5e0bd-78ee-1140-b396-0cdfb5820b6d"],
+Cell["{system[\"EvolutionGraph\", 2], system[\"StatesGraph\", 2]}", "Input",ExpressionUUID->"f63789d3-17ac-9e42-91c9-8af364eea695"],
 
 Cell[BoxData[
  RowBox[{"{", 
@@ -1651,7 +1651,7 @@ Cell[BoxData[
    GraphicsBox[
     NamespaceBox["NetworkGraphics",
      DynamicModuleBox[{Typeset`graph = HoldComplete[
-       Graph[{1, 2, 3, 4}, {{{1, 2}, {2, 3}, {2, 4}}, Null}, {
+       Graph[{1, 2, 3}, {{{1, 2}, {2, 3}}, Null}, {
         AspectRatio -> Automatic, Background -> GrayLevel[1], EdgeStyle -> {
            Hue[0.75, 0, 0.35]}, GraphLayout -> "LayeredDigraphEmbedding", 
          PerformanceGoal -> "Quality", VertexLabels -> {2 -> Placed[
@@ -1667,27 +1667,6 @@ Cell[BoxData[
                WolframInstitute`Hypergraphs`Edge[{
                  WolframInstitute`Hypergraphs`Vertex[
                   \[FormalV][1]], 
-                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
-             Tooltip], 4 -> Placed[
-             WolframInstitute`Hypergraphs`Hypergraph[{
-               WolframInstitute`Hypergraphs`Vertex[1], 
-               WolframInstitute`Hypergraphs`Vertex[2], 
-               WolframInstitute`Hypergraphs`Vertex[
-                \[FormalV][1]], 
-               WolframInstitute`Hypergraphs`Vertex[
-                \[FormalV][2]]}, {
-               WolframInstitute`Hypergraphs`Edge[{
-                 WolframInstitute`Hypergraphs`Vertex[1], 
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][1]]}, "Directed"], 
-               WolframInstitute`Hypergraphs`Edge[{
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][1]], 
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][2]]}, "Directed"], 
-               WolframInstitute`Hypergraphs`Edge[{
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][2]], 
                  WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
              Tooltip], 1 -> Placed[
              WolframInstitute`Hypergraphs`Hypergraph[{
@@ -1895,80 +1874,6 @@ Cell[BoxData[
                    FrameStyle -> Directive[
                     Opacity[0.6], 
                     Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
-                  3], 4 -> Framed[
-                  Graphics[{
-                    Opacity[0.5], 
-                    Arrowheads[{{Medium, 0.5}}], 
-                    AbsoluteThickness[Medium], {{
-                    Opacity[1], 
-                    Arrowheads[{{Small, 0.5}}], {
-                    Directive[
-                    Opacity[0.7], 
-                    Hue[0.63, 0.7, 0.5]], {
-                    Arrow[
-                    
-                    Line[{{0., 6.123233995736766*^-16}, {1., 
-                    4.898587196589413*^-16}}]], {}}, 
-                    Opacity[1], {}}}, {
-                    Opacity[1], 
-                    Arrowheads[{{Small, 0.5}}], {
-                    Directive[
-                    Opacity[0.7], 
-                    Hue[0.63, 0.7, 0.5]], {
-                    Arrow[
-                    
-                    Line[{{1., 4.898587196589413*^-16}, {2., 
-                    2.4492935982947064`*^-16}}]], {}}, 
-                    Opacity[1], {}}}, {
-                    Opacity[1], 
-                    Arrowheads[{{Small, 0.5}}], {
-                    Directive[
-                    Opacity[0.7], 
-                    Hue[0.63, 0.7, 0.5]], {
-                    Arrow[
-                    Line[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
-                    Opacity[1], {}}}}, 
-                    Opacity[1], {{
-                    Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                    Disk[{0., 6.123233995736766*^-16}, 
-                    Offset[{2., 2.}]]}, {
-                    Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                    Disk[{3., 0.}, 
-                    Offset[{2., 2.}]]}, {
-                    Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                    Disk[{1., 4.898587196589413*^-16}, 
-                    Offset[{2., 2.}]]}, {
-                    Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                    Disk[{2., 2.4492935982947064`*^-16}, 
-                    Offset[{2., 2.}]]}}, {}}, {
-                   AspectRatio -> 1, ImageSize -> 90, ImagePadding -> 7, 
-                    Background -> None}, 
-                   PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
-                   PlotRangePadding -> Scaled[0.02], ImagePadding -> 12, 
-                   Background -> GrayLevel[1]], Background -> GrayLevel[0.99],
-                   FrameStyle -> Directive[
-                    Opacity[0.6], 
-                    Hue[0.62, 0.45, 0.6]], FrameMargins -> 0, RoundingRadius -> 
                   3]|>, 
                Key[WolframInstitute`Hypergraphs`Private`name$], ""], 
               WolframInstitute`Hypergraphs`Private`pos$, Center, {
@@ -1986,10 +1891,7 @@ Cell[BoxData[
             "VertexID$2", Automatic, Center]}], 
           ArrowBox[{
            DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
-            "VertexID$3", Automatic, Center]}], 
-          ArrowBox[{
-           DynamicLocation["VertexID$2", Automatic, Center], DynamicLocation[
-            "VertexID$4", Automatic, Center]}]}, 
+            "VertexID$3", Automatic, Center]}]}, 
          {Hue[0.62, 0.45, 0.87], Opacity[0.7], EdgeForm[{GrayLevel[0], 
           Opacity[0.7]}], 
           TagBox[
@@ -2298,7 +2200,7 @@ Cell[BoxData[
                   Opacity[0.6], 
                   Hue[0.62, 0.45, 0.6]],
                 RoundingRadius->3,
-                StripOnInput->False], {-1., 0.}, Center, {0.92, 0.92}],
+                StripOnInput->False], {0., 0.}, Center, {0.92, 0.92}],
               "DynamicName",
               BoxID -> "VertexID$3"],
              GraphicsBox[
@@ -2439,212 +2341,16 @@ Cell[BoxData[
                  WolframInstitute`Hypergraphs`Vertex[
                   \[FormalV][1]]}, "Directed"]}], "Tooltip"]& ],
            "DynamicName",
-           BoxID -> "VertexLabelID$3"], 
-          TagBox[
-           TagBox[
-            TooltipBox[
-             TagBox[InsetBox[
-               FrameBox[
-                GraphicsBox[
-                 {AbsoluteThickness[Medium], Opacity[0.5], 
-                  Arrowheads[{{Medium, 0.5}}], {
-                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
-                    {Hue[0.63, 0.7, 0.5], Opacity[
-                    0.7], {ArrowBox[
-                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
-                    4.898587196589413*^-16}}]], {}}, 
-                    {Opacity[1]}}}, 
-                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
-                    {Hue[0.63, 0.7, 0.5], Opacity[
-                    0.7], {ArrowBox[
-                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
-                    2.4492935982947064`*^-16}}]], {}}, 
-                    {Opacity[1]}}}, 
-                   {Opacity[1], Arrowheads[{{Small, 0.5}}], 
-                    {Hue[0.63, 0.7, 0.5], Opacity[
-                    0.7], {ArrowBox[
-                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
-                    {Opacity[1]}}}}, 
-                  {Opacity[1], {
-                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]}], 
-                    DiskBox[{0., 6.123233995736766*^-16}, 
-                    Offset[{2., 2.}, {0., 0.}]]}, 
-                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]}], 
-                    DiskBox[{3., 0.}, Offset[{2., 2.}, {0., 0.}]]}, 
-                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]}], 
-                    DiskBox[{1., 4.898587196589413*^-16}, 
-                    Offset[{2., 2.}, {0., 0.}]]}, 
-                    {Hue[0.63, 0.26, 0.89], EdgeForm[{Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]}], 
-                    DiskBox[{2., 2.4492935982947064`*^-16}, 
-                    Offset[{2., 2.}, {0., 0.}]]}}, {}}},
-                 AspectRatio->1,
-                 Background->None,
-                 ImagePadding->7,
-                 ImageSize->90,
-                 PlotRange->{{0., 3.}, {-0.5, 0.5000000000000007}},
-                 PlotRangePadding->Scaled[0.02]],
-                Background->GrayLevel[0.99],
-                FrameMargins->0,
-                FrameStyle->Directive[
-                  Opacity[0.6], 
-                  Hue[0.62, 0.45, 0.6]],
-                RoundingRadius->3,
-                StripOnInput->False], {0., 0.}, Center, {0.92, 0.92}],
-              "DynamicName",
-              BoxID -> "VertexID$4"],
-             GraphicsBox[
-              NamespaceBox["Hypergraphs", 
-               DynamicModuleBox[{Typeset`hg = HoldComplete[
-                   WolframInstitute`Hypergraphs`Hypergraph[{
-                    WolframInstitute`Hypergraphs`Vertex[1], 
-                    WolframInstitute`Hypergraphs`Vertex[2], 
-                    WolframInstitute`Hypergraphs`Vertex[
-                    \[FormalV][1]], 
-                    WolframInstitute`Hypergraphs`Vertex[
-                    \[FormalV][2]]}, {
-                    WolframInstitute`Hypergraphs`Edge[{
-                    WolframInstitute`Hypergraphs`Vertex[1], 
-                    WolframInstitute`Hypergraphs`Vertex[
-                    \[FormalV][1]]}, "Directed"], 
-                    WolframInstitute`Hypergraphs`Edge[{
-                    WolframInstitute`Hypergraphs`Vertex[
-                    \[FormalV][1]], 
-                    WolframInstitute`Hypergraphs`Vertex[
-                    \[FormalV][2]]}, "Directed"], 
-                    WolframInstitute`Hypergraphs`Edge[{
-                    WolframInstitute`Hypergraphs`Vertex[
-                    \[FormalV][2]], 
-                    WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}]]}, {
-                 Opacity[0.5], 
-                 Arrowheads[{{Medium, 0.5}}], 
-                 AbsoluteThickness[Medium], {{
-                   Opacity[1], 
-                   Arrowheads[{{Small, 0.5}}], {
-                    Directive[
-                    Opacity[0.7], 
-                    Hue[0.63, 0.7, 0.5]], {
-                    ArrowBox[
-                    
-                    LineBox[{{0., 6.123233995736766*^-16}, {1., 
-                    4.898587196589413*^-16}}]], {}}, 
-                    Opacity[1], {}}}, {
-                   Opacity[1], 
-                   Arrowheads[{{Small, 0.5}}], {
-                    Directive[
-                    Opacity[0.7], 
-                    Hue[0.63, 0.7, 0.5]], {
-                    ArrowBox[
-                    
-                    LineBox[{{1., 4.898587196589413*^-16}, {2., 
-                    2.4492935982947064`*^-16}}]], {}}, 
-                    Opacity[1], {}}}, {
-                   Opacity[1], 
-                   Arrowheads[{{Small, 0.5}}], {
-                    Directive[
-                    Opacity[0.7], 
-                    Hue[0.63, 0.7, 0.5]], {
-                    ArrowBox[
-                    LineBox[{{2., 2.4492935982947064`*^-16}, {3., 0.}}]], {}}, 
-                    Opacity[1], {}}}}, 
-                 Opacity[1], {{
-                   Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                   DiskBox[{0., 6.123233995736766*^-16}, 
-                    Offset[{2., 2.}]]}, {
-                   Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                   DiskBox[{3., 0.}, 
-                    Offset[{2., 2.}]]}, {
-                   Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                   DiskBox[{1., 4.898587196589413*^-16}, 
-                    Offset[{2., 2.}]]}, {
-                   Directive[
-                    Hue[0.63, 0.26, 0.89], 
-                    EdgeForm[
-                    Directive[
-                    Hue[0.63, 0.7, 0.33], 
-                    Opacity[0.95]]]], 
-                   DiskBox[{2., 2.4492935982947064`*^-16}, 
-                    Offset[{2., 2.}]]}}, {
-                  InsetBox[
-                   FormBox[
-                    StyleBox["1", 
-                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
-                   0., 6.123233995736766*^-16}, 
-                   ImageScaled[{1.5, 0.49999999999999983`}]], 
-                  InsetBox[
-                   FormBox[
-                    StyleBox["2", 
-                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
-                   3., 0.}, 
-                   ImageScaled[{-0.5, 0.5000000000000002}]], 
-                  InsetBox[
-                   FormBox[
-                    StyleBox[
-                    RowBox[{"\[FormalV]", "(", "1", ")"}], 
-                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
-                   1., 4.898587196589413*^-16}, 
-                   ImageScaled[{1.5, 0.4999999999999995}]], 
-                  InsetBox[
-                   FormBox[
-                    StyleBox[
-                    RowBox[{"\[FormalV]", "(", "2", ")"}], 
-                    GrayLevel[0], StripOnInput -> False], TraditionalForm], {
-                   2., 2.4492935982947064`*^-16}, 
-                   ImageScaled[{-0.5, 0.5000000000000002}]]}}]], {}, 
-              PlotRange -> {{0., 3.}, {-0.5, 0.5000000000000007}}, 
-              PlotRangePadding -> Scaled[0.02], ImagePadding -> 34, 
-              Background -> GrayLevel[1]]],
-            Annotation[#, 
-             WolframInstitute`Hypergraphs`Hypergraph[{
-               WolframInstitute`Hypergraphs`Vertex[1], 
-               WolframInstitute`Hypergraphs`Vertex[2], 
-               WolframInstitute`Hypergraphs`Vertex[
-                \[FormalV][1]], 
-               WolframInstitute`Hypergraphs`Vertex[
-                \[FormalV][2]]}, {
-               WolframInstitute`Hypergraphs`Edge[{
-                 WolframInstitute`Hypergraphs`Vertex[1], 
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][1]]}, "Directed"], 
-               WolframInstitute`Hypergraphs`Edge[{
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][1]], 
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][2]]}, "Directed"], 
-               WolframInstitute`Hypergraphs`Edge[{
-                 WolframInstitute`Hypergraphs`Vertex[
-                  \[FormalV][2]], 
-                 WolframInstitute`Hypergraphs`Vertex[2]}, "Directed"]}], 
-             "Tooltip"]& ],
-           "DynamicName",
-           BoxID -> "VertexLabelID$4"]}}],
+           BoxID -> "VertexLabelID$3"]}}],
        MouseAppearanceTag["NetworkGraphics"]],
       AllowKernelInitialization->False]],
     Background->GrayLevel[1],
     DefaultBaseStyle->"NetworkGraphics",
     FormatType->TraditionalForm,
-    FrameTicks->None]}], "}"}]], "Output",ExpressionUUID->"5c49837a-061e-344d-\
-a19e-6cfe9a04e0dd"],
+    FrameTicks->None]}], "}"}]], "Output",ExpressionUUID->"51cda611-17d8-6642-\
+91ac-652c1b61ba4f"],
 
-Cell["Source", "NotesSection",ExpressionUUID->"ae8031ac-4667-f94e-a489-a7b2161edd02"],
+Cell["Source", "NotesSection",ExpressionUUID->"7ad86c13-155f-e542-91e8-4a3911cbcf2c"],
 
 Cell[TextData[{
  "Defined in ",
@@ -2655,32 +2361,32 @@ Cell[TextData[{
  "\[OpenCurlyDoubleQuote]",
  "The system object",
  "\[CloseCurlyDoubleQuote]."
-}], "Notes",ExpressionUUID->"3dd5ee68-1a67-ac40-8612-bcc54d84fd13"],
+}], "Notes",ExpressionUUID->"521fa60b-bebc-4e46-a5c9-51c3bb49f75e"],
 
-Cell["See Also", "SeeAlsoSection",ExpressionUUID->"625fa59e-17fe-6243-bf2b-5ad06d3d8097"],
+Cell["See Also", "SeeAlsoSection",ExpressionUUID->"198f5778-5d44-2d4d-9259-fad267fb33d9"],
 
 Cell[TextData[{
  Cell[BoxData[
   StyleBox["HypergraphCausalGraph", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"a90b64a1-92c6-4145-a870-7eed688c3eba"],
+  ExpressionUUID->"fc913590-f7a0-df4d-8ca6-538a5f090ea5"],
  ", ",
  Cell[BoxData[
   StyleBox["$CausalDependenceTypes", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"3f4a2472-0ec4-a246-9dea-f61cbb79f59d"],
+  ExpressionUUID->"1c8f2159-4616-ac44-96a3-4f43fe8df9f8"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRule", "InlineCode"]], "InlineFormula",ExpressionUUID->
-  "098316c5-248a-ac42-b5a7-d0e154c25db3"],
+  "f8320f1b-96ec-4943-ac49-043215c9b1df"],
  ", ",
  Cell[BoxData[
   StyleBox["HypergraphRuleApply", "InlineCode"]], "InlineFormula",
-  ExpressionUUID->"28c67777-bd7c-664c-8fd3-3c87db420135"]
-}], "SeeAlso",ExpressionUUID->"a58cf734-3eb6-e14e-81df-e3b5114b525c"]
+  ExpressionUUID->"706176b6-85ab-c44b-83a2-c3cc6a9f3218"]
+}], "SeeAlso",ExpressionUUID->"29e0ca15-283b-8e41-9614-f16fb9af8278"]
 },
 WindowSize->{800, 750},
 FrontEndVersion->"15.0 for Microsoft Windows (64-bit) (July 2, 2026)",
 StyleDefinitions->"Reference.nb",
-ExpressionUUID->"911e7e89-6ae1-cc45-bec1-b355f4c8024d"
+ExpressionUUID->"2ccf7efd-705b-6746-a88b-977919343839"
 ]
 (* End of Notebook Content *)
 
@@ -2693,38 +2399,38 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[554, 20, 102, 0, 70, "ObjectName",ExpressionUUID->"17bd415d-b7dc-3548-93f6-1c013c3cbc4b"],
-Cell[659, 22, 403, 9, 70, "Usage",ExpressionUUID->"b5e48c2a-db57-6943-8177-453e3fc4b66b"],
-Cell[1056, 33, 344, 8, 70, "Usage",ExpressionUUID->"01a01125-c54b-754b-b8f3-875047de9af1"],
-Cell[1395, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"4333a13f-8b84-2e4b-87fe-80b39e9d08ac"],
-Cell[1496, 45, 228, 3, 70, "Notes",ExpressionUUID->"ff53be89-b2f3-f44a-9010-0b3ca1a77c67"],
-Cell[1724, 50, 344, 5, 70, "Notes",ExpressionUUID->"2fef5a2c-6984-7549-8422-9734beff530a"],
-Cell[2066, 57, 548, 10, 70, "Notes",ExpressionUUID->"9768b8b4-39f0-034f-be8d-1f0ecef36ede"],
-Cell[2607, 69, 191, 3, 70, "Notes",ExpressionUUID->"25b9b359-21fb-a643-b25d-6782401ed3e9"],
-Cell[2798, 74, 468, 8, 70, "Notes",ExpressionUUID->"40317dab-fc4a-6b44-98f2-c297b9221d89"],
-Cell[3261, 84, 459, 6, 70, "Notes",ExpressionUUID->"ed483881-60a0-6f4a-b854-987b712d027e"],
-Cell[3717, 92, 411, 6, 70, "Notes",ExpressionUUID->"7404188a-7b71-b04b-b603-92e94d5d727a"],
-Cell[4125, 100, 242, 4, 70, "Notes",ExpressionUUID->"0485e60a-fd3d-104d-a8a0-da3c3f23a304"],
-Cell[4366, 106, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"21a88a98-3707-e148-9b30-5fd3d9b64d43"],
-Cell[4466, 108, 132, 0, 70, "ExampleText",ExpressionUUID->"c306bfe2-2e11-fd46-913a-aa9688633feb"],
-Cell[4601, 110, 206, 3, 70, "Input",ExpressionUUID->"05d53772-f717-304a-950d-e14a2688d941"],
-Cell[4807, 115, 7748, 165, 70, "Output",ExpressionUUID->"50305e07-09df-c44b-a13c-fade7750f2e3"],
-Cell[12393, 282, 163, 2, 70, "ExampleText",ExpressionUUID->"4ee72d23-9bf0-3b41-9320-886bb202bc18"],
-Cell[12557, 286, 154, 2, 70, "Input",ExpressionUUID->"16c703fc-9fe1-fa46-96b7-5c95ff5b4c6b"],
-Cell[12712, 290, 358, 11, 70, "Output",ExpressionUUID->"151093d9-4982-4f49-98af-1ab923bb7e14"],
-Cell[13062, 303, 108, 0, 70, "ExampleText",ExpressionUUID->"533dba02-79d2-4f46-b53a-aa43420d15ca"],
-Cell[13173, 305, 93, 0, 70, "Input",ExpressionUUID->"b2a56fcd-5aef-474c-91ad-926caef646a6"],
-Cell[13269, 307, 14194, 309, 70, "Output",ExpressionUUID->"1d55e7f6-f81d-514d-a606-2519447f9338"],
-Cell[27157, 618, 139, 1, 70, "ExampleText",ExpressionUUID->"a5acf0de-29e9-d14f-96db-2f877e86e253"],
-Cell[27298, 621, 138, 1, 70, "Input",ExpressionUUID->"a1dbcd00-81a5-644e-b726-fc75f669ff60"],
-Cell[27438, 624, 875, 20, 70, "Output",ExpressionUUID->"622927c0-8fba-0243-95b7-d2dda00c6691"],
-Cell[28296, 646, 185, 3, 70, "ExampleText",ExpressionUUID->"69094c65-d836-c64e-994c-3276975f3f46"],
-Cell[28481, 651, 131, 0, 70, "Input",ExpressionUUID->"c0c5e0bd-78ee-1140-b396-0cdfb5820b6d"],
-Cell[28615, 653, 92102, 1991, 70, "Output",ExpressionUUID->"5c49837a-061e-344d-a19e-6cfe9a04e0dd"],
-Cell[118729, 2646, 85, 0, 70, "NotesSection",ExpressionUUID->"ae8031ac-4667-f94e-a489-a7b2161edd02"],
-Cell[118817, 2648, 281, 9, 70, "Notes",ExpressionUUID->"3dd5ee68-1a67-ac40-8612-bcc54d84fd13"],
-Cell[119092, 2659, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"625fa59e-17fe-6243-bf2b-5ad06d3d8097"],
-Cell[119184, 2661, 685, 16, 70, "SeeAlso",ExpressionUUID->"a58cf734-3eb6-e14e-81df-e3b5114b525c"]
+Cell[554, 20, 102, 0, 70, "ObjectName",ExpressionUUID->"377b9bf4-df68-d34e-aa8b-21b357e694a7"],
+Cell[659, 22, 403, 9, 70, "Usage",ExpressionUUID->"49048846-20ee-c84d-8e66-7e4671eac5b8"],
+Cell[1056, 33, 344, 8, 70, "Usage",ExpressionUUID->"8196b39b-9df7-a64e-a5bd-b6d77887bf5b"],
+Cell[1395, 43, 98, 0, 70, "NotesSection",ExpressionUUID->"a1c1e236-6447-0a4b-b0d7-76c75e5dbf5c"],
+Cell[1496, 45, 228, 3, 70, "Notes",ExpressionUUID->"4e93a650-f3f9-1f4c-b319-8caaca4d2428"],
+Cell[1724, 50, 344, 5, 70, "Notes",ExpressionUUID->"d89d03ab-e0ae-8747-a899-c14cb01a59dd"],
+Cell[2066, 57, 548, 10, 70, "Notes",ExpressionUUID->"6ac7af6a-71d1-5f47-90e4-d452182679ab"],
+Cell[2607, 69, 191, 3, 70, "Notes",ExpressionUUID->"80c292d6-45c3-7c4d-8064-50028e595adc"],
+Cell[2798, 74, 468, 8, 70, "Notes",ExpressionUUID->"fb45f627-ed2d-5541-a20a-d7c84fef65d1"],
+Cell[3261, 84, 459, 6, 70, "Notes",ExpressionUUID->"d4d9befe-2232-894a-81e2-a99eb237e326"],
+Cell[3717, 92, 411, 6, 70, "Notes",ExpressionUUID->"42cabc3e-d1f5-9b4d-bdba-a2f18fcf80d7"],
+Cell[4125, 100, 242, 4, 70, "Notes",ExpressionUUID->"918f7cdc-c75e-7a49-ad19-c7df3bcfa14c"],
+Cell[4366, 106, 97, 0, 70, "PrimaryExamplesSection",ExpressionUUID->"898b9d40-dd46-b844-93c8-7f5f46dea29c"],
+Cell[4466, 108, 132, 0, 70, "ExampleText",ExpressionUUID->"febc33fb-2a9e-df43-893e-14a899ad8055"],
+Cell[4601, 110, 206, 3, 70, "Input",ExpressionUUID->"ddb547a0-5a36-8349-83f9-edb0e19cdad7"],
+Cell[4807, 115, 7748, 165, 70, "Output",ExpressionUUID->"ce68bda8-7fd6-7d4c-b60f-a10075738304"],
+Cell[12393, 282, 163, 2, 70, "ExampleText",ExpressionUUID->"7bf519eb-6a37-644e-890e-9d7bdd728d1e"],
+Cell[12557, 286, 154, 2, 70, "Input",ExpressionUUID->"b4be462f-3dd3-2042-8472-03965fb32cf8"],
+Cell[12712, 290, 358, 11, 70, "Output",ExpressionUUID->"b84ac7f4-9f82-c34b-b12c-f5ed0e983a72"],
+Cell[13062, 303, 108, 0, 70, "ExampleText",ExpressionUUID->"4192abba-830d-864d-8d93-7e47607110c8"],
+Cell[13173, 305, 93, 0, 70, "Input",ExpressionUUID->"baca4d16-ed17-eb42-8790-74c4db148683"],
+Cell[13269, 307, 14194, 309, 70, "Output",ExpressionUUID->"fead9e51-4c26-364a-a8aa-dc78a4da92bc"],
+Cell[27157, 618, 139, 1, 70, "ExampleText",ExpressionUUID->"a463b036-8248-1a4e-8c5a-e24877166385"],
+Cell[27298, 621, 138, 1, 70, "Input",ExpressionUUID->"16350db2-2fb4-4c47-b1b7-515016bc3636"],
+Cell[27438, 624, 875, 20, 70, "Output",ExpressionUUID->"83ac83c5-b277-644e-b577-9dcdb6760964"],
+Cell[28296, 646, 185, 3, 70, "ExampleText",ExpressionUUID->"579860d6-46a7-6c4b-be71-a40ccfcc8571"],
+Cell[28481, 651, 131, 0, 70, "Input",ExpressionUUID->"f63789d3-17ac-9e42-91c9-8af364eea695"],
+Cell[28615, 653, 78534, 1697, 70, "Output",ExpressionUUID->"51cda611-17d8-6642-91ac-652c1b61ba4f"],
+Cell[105455, 2352, 85, 0, 70, "NotesSection",ExpressionUUID->"7ad86c13-155f-e542-91e8-4a3911cbcf2c"],
+Cell[105543, 2354, 281, 9, 70, "Notes",ExpressionUUID->"521fa60b-bebc-4e46-a5c9-51c3bb49f75e"],
+Cell[105818, 2365, 89, 0, 70, "SeeAlsoSection",ExpressionUUID->"198f5778-5d44-2d4d-9259-fad267fb33d9"],
+Cell[105910, 2367, 685, 16, 70, "SeeAlso",ExpressionUUID->"29e0ca15-283b-8e41-9614-f16fb9af8278"]
 }
 ]
 *)

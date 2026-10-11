@@ -3,7 +3,13 @@
 # Re-create with:
 #   git clone https://github.com/WolframInstitute/Hypergraph.git reference/Hypergraph
 #   git clone https://github.com/WolframInstitute/Multicomputation.git reference/Multicomputation
-reference/
+reference/*
+# The research files under reference/ are not clones of anything and exist nowhere else, so
+# they are tracked. HypergraphMinicourse.wl is left out at 4.2 MB.
+!reference/Chemoids.wl
+!reference/PlexAlgebra.wl
+!reference/HypergraphAlgebras.wl
+!reference/ArrayAlgebra.wl
 
 # Paclet build products. Anchored: an unanchored build/ also swallows notebooks/build/,
 # which holds the notebook generators and is tracked.

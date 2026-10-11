@@ -362,7 +362,8 @@ reasoning behind each design choice.
 | `notebooks/build/` | The scripts that generate those notebooks; the notebooks are not hand-edited. |
 | `notebooks/legacy/` | Earlier research notebooks, kept for reference; not part of the package. |
 | `tests/` | The examples as assertions, plus several thousand randomized checks. |
-| `reference/` | Not in version control. Clones of the two upstream paclets, for comparison. |
+| `notes/` | Working notes: decisions and their reasons, standing instructions, and traps already paid for once. |
+| `reference/` | The four research files are tracked; the two upstream clones and the 4.2 MB minicourse are not. |
 
 ## Tests
 

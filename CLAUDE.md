@@ -8,6 +8,8 @@ Terms to be used in the naming of main functions and objects: vertex, edge (shor
 
 Guiding principle for all development: this system is meant to be visual and easy for a human to read. The whole point of hypergraphs is that they are easily renderable as diagrams, and that is the point of this package. Therefore, in as many instances as possible, hypergraphs must be presented as graphic elements rather than as expressions. Every notebook example and every documentation example illustrating a piece of functionality should use a small hypergraph and show it drawn. This is not a matter of presentation: it is what makes the correctness of the system reviewable at all. An example whose output is a count, a list of vertex identifiers, or a raw Hypergraph expression gives the reader nothing to check; the same example drawn does. Where a cell must show structure — a list of keys, a count, an association — the picture belongs beside it or in the cell before, so that the number can be checked against the thing it describes. Prefer several small hypergraphs drawn over one large one.
 
+Working notes are kept in notes/: decisions and their reasons, standing instructions, and the traps that have already cost time once. Read notes/README.md at the start of a session on a machine that has no memory of this project.
+
 A content index to follow when developing the project:
 
 1. Hypermatrices

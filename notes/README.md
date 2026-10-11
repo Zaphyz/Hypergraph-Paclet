@@ -19,7 +19,7 @@ re-export it here when it changes.
 | [Rule symbols must stay clear](rule-symbols-must-stay-clear.md) | A label variable in a `HypergraphRule` is a global symbol. Assigning to it later makes the rule contain itself and blows the recursion limit. Looks like a package bug; is not. |
 | [New package design](new-package-design.md) | The object model of the rewrite, which `System` names are reserved, and three Wolfram Language traps it hit. |
 | [Hypergraph Paclet baseline](hypergraph-paclet-baseline.md) | What the two upstream paclets provide, the two label-related gaps this project was started to close, and the state `src/` began in. |
-| [WL dev toolchain](wl-dev-toolchain.md) | How to run things here: `.wls` files rather than a kernel session, where the notebook generators live, and the two traps in regenerating notebooks. |
+| [WL dev toolchain](wl-dev-toolchain.md) | How to run things on Windows and on the Mac: `.wls` files rather than a kernel session, where the notebook generators live, and the two traps in regenerating notebooks. |
 | [Where things stand](where-things-stand.md) | A running account of what is done and what comes next. The git log is the authority on what changed; this is the authority on why. |
 
 ## Where the rest of the story is

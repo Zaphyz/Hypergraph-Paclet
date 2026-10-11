@@ -1,18 +1,35 @@
 ---
 name: where-things-stand
-description: "State of the Hypergraph Paclet rewrite at the end of 2026-09-18, and what comes next"
+description: "State of the Hypergraph Paclet as of 2026-10-11 (matched to the git log through 4ea8a45), and what comes next"
 metadata: 
   node_type: memory
   type: project
   originSessionId: 10479b59-77e7-4aef-9db2-6f32fa61072a
-  modified: 2026-09-18T21:36:48.551Z
+  modified: 2026-10-11T00:00:00.000Z
 ---
+
+**Where it stands on 2026-10-11**, matched against the git log (15 commits, the last code
+commit `78cb1e8` on 2026-10-02). Sections 1–4 of the content index are built: hypermatrices,
+hypergraphs, rewriting rules, and rewriting systems with causality. Not started: section 5,
+plex diagrams; the two visual editors (hypergraph and rule); and the passage from a hypermatrix
+back to a hypergraph. Alongside `src/` there is a parallel rewriting stack with tracelet analysis
+in `experimental/`, not yet adopted or dropped.
+
+- `src/` is nine files; `Hypergraph.wl` is the entry point and loads the other eight.
+- 57 public symbols, one reference page each, plus the guide `Documentation/English/Guides/Hypergraphs.nb`.
+- Seven suites, all passing on both machines: `tests/` Basic, Hypermatrix, ArrayAlgebra,
+  Rewriting, Causality; `experimental/tests/` RewritingSystems, Tracelet.
+- Four review notebooks in `notebooks/` (Hypergraph, Hypermatrix, Rewriting, Causality), built
+  by the generators in `notebooks/build/`; two more in `experimental/notebooks/`.
+
+The rest of this note runs in date order from the first milestone. Where a later paragraph
+supersedes an earlier one it says so, and the earlier one is marked.
 
 As of 2026-09-18 the first milestone is complete and `tests/BasicExamples.wls` passes from a
 clean kernel. Files that matter:
 
-- `src/Hypergraph.wl` — core objects, isomorphism and `SimpleHypergraphQ`; loads the other four
-  src files at its end, so one `Get` of this file brings in the whole package. It is the entry
+- `src/Hypergraph.wl` — core objects, isomorphism and `SimpleHypergraphQ`; loads the other src
+  files at its end (four then, eight now), so one `Get` of this file brings in the whole package. It is the entry
   point despite the name, which is why `PacletInfo.wl` has to pair the context with its file.
 - `src/HypergraphPlot.wl` — plotting and the default graphical display.
 - `src/Hypermatrix.wl` — `ArrayObject`, `GenerateSymbolicArray`, `Hypermatrix` and their
@@ -39,34 +56,54 @@ clean kernel. Files that matter:
 - `tests/BasicExamples.wls`, `tests/HypermatrixExamples.wls`, `tests/ArrayAlgebraExamples.wls` —
   the examples as assertions plus several thousand randomized checks each.
 - `notebooks/HypergraphBasics.nb` — the review notebook, built by a generator kept in the session
-  scratchpad (not in the project). The generator evaluates each cell in the kernel and boxes the
+  scratchpad (not in the project). *Superseded 2026-09-29: the generators are tracked in
+  `notebooks/build/`.* The generator evaluates each cell in the kernel and boxes the
   result by hand; `NotebookEvaluate` from a script formats in OutputForm and loses every graphic.
 
-The project is a git repository, branch `main`, with `reference/` gitignored — the two upstream
-clones and the four moved research `.wl` files stay on disk but out of history (their contents
-remain in the initial commit). `Documentation/` is tracked, notebooks and all: they are what a
+The project is a git repository, branch `main`. *`reference/` was gitignored wholesale until
+2026-10-11; since `f10cbb8` the four research `.wl` files there are tracked and only the two
+upstream clones and `HypergraphMinicourse.wl` (4.2 MB) stay out.* `Documentation/` is tracked, notebooks and all: they are what a
 reader opens, and a paclet is installed rather than built. Only the search index is ignored.
-Four commits so far: `e553df5` (hypergraph core, isomorphism, plotting) on 2026-09-18,
-`9415f05` (arrays, hypermatrices, array algebra, documentation) just after midnight on
-2026-09-19, `7732451` (README and LICENSE) on 2026-09-21, and `9dcc839` (the drawing layer, the
-adjacency bridge, the array unification, and the paclet) on 2026-09-25 — 62 files, +24093/-6624.
-Working tree clean; `main` is **one commit ahead of `origin/main`**, so `9dcc839` still needs
-pushing from GitHub Desktop.
+The history, fifteen commits as of 2026-10-11, all pushed:
+
+| commit | date | what |
+| --- | --- | --- |
+| `e553df5` | 09-18 | hypergraph core, isomorphism, plotting |
+| `9415f05` | 09-19 | arrays, hypermatrices, array algebra, documentation |
+| `7732451` | 09-21 | README and LICENSE |
+| `9dcc839` | 09-24 | the drawing layer, the adjacency bridge, the array unification, the paclet |
+| `ff66961` | 09-24 | "Large Update", no message: the rewriting core, `src/Rewriting.wl` and its suite |
+| `928d92e` | 09-29 | labels as pattern variables in rewriting |
+| `670ac52` | 09-29 | the reference notebooks' rules in RewritingBasics |
+| `f53624f` | 09-29 | track the notebook generators (the `/build/` anchoring) |
+| `f065e89` | 09-30 | rewriting systems and causality, dependence as an option |
+| `e41ffed` | 09-30 | multiway graphs drawn as the reference notebooks do |
+| `60f8af5` | 09-30 | both notebooks extended over every option and picture |
+| `a6575f8` | 09-30 | every label pushed clear of what it names |
+| `78cb1e8` | 10-02 | tracelet analysis, and the isomorphism bug it uncovered |
+| `f10cbb8` | 10-11 | portability: `notes/` and the research files tracked |
+| `4ea8a45` | 10-11 | the toolchain note gains a macOS section |
+
+(The 9dcc839 date was written here earlier as 09-25; the log says 2026-09-24 14:12 +0300.)
 
 Published 2026-09-21 to `https://github.com/Zaphyz/Hypergraph-Paclet`, **private** (the
-unauthenticated GitHub API returns 404 for it). The user pushed the first two commits
-themselves from GitHub Desktop. `git push` from the Bash tool fails — GitHub Desktop's
+unauthenticated GitHub API returns 404 for it). *On 2026-10-11 the same request returned 200 and
+an unauthenticated fetch worked: the repository is now **public**. When or why that changed is
+not recorded.* The user pushed the first two commits
+themselves from GitHub Desktop. On the Windows machine `git push` from the Bash tool fails — GitHub Desktop's
 credentials are not reachable from that shell, so pushes are the user's to make from the
-Desktop app.
+Desktop app. The same holds on the MacBook (checked 2026-10-11): there is no GitHub credential
+in the Keychain, `gh` is not installed, and GitHub Desktop is. Fetching works only because the
+repository is public. Commit from the shell; the user pushes from GitHub Desktop.
 
 Licensing: MIT, `Copyright (c) 2026 Carlos Zapata-Carratalá`, chosen because both upstream
 paclets are MIT. `LICENSE` reproduces the upstream MIT notice for
 `WolframInstitute/Hypergraph` (© 2023 Nikolay Murzin), since the drawing code in
 `src/HypergraphPlot.wl` reuses parts of its implementation.
 
-All four commits are authored `Carlos Zapata Carratala <c.zapata.carratala@gmail.com>`, a
-personal address. Raised twice and left as-is; harmless while the repo is private, but it
-becomes visible in the history if it is ever made public. Rewriting it means a force-push.
+All fifteen commits are authored `Carlos Zapata Carratala <c.zapata.carratala@gmail.com>`, a
+personal address. Raised twice and left as-is while the repo was private. *It is public now (see above), so the
+address is visible in the history.* Rewriting it means a force-push.
 
 `.gitattributes` decides line endings for the repo, because the git bundled with GitHub Desktop
 sets `core.autocrlf=true` system-wide: everything is `text=auto eol=lf`, with `*.nb` and `*.cdf`
@@ -128,7 +165,7 @@ ones cancel. Result: `{perp, dot}` on 2 arguments gives exactly involutivity and
 anti-homomorphism. What survives is a basis, not a canonical set. An identity is still verified at
 one dimension only (`"Dimension"`, default 2).
 
-Documentation is 40 reference pages plus the guide, all generated by `Documentation/build_docs.wls`,
+Documentation is 40 reference pages plus the guide (57 by 2026-10-11, still one per symbol), all generated by `Documentation/build_docs.wls`,
 which evaluates every example at build time; coverage is checked by comparing the page filenames
 against `Names["WolframInstitute`Hypergraphs`*"]`.
 
@@ -214,7 +251,8 @@ direction (hypermatrix → hypergraph) is **not** implemented; the round-trip re
 Arrays still display as summary boxes by default; `ArrayGraphics` has to be called. Whether a small
 array should draw itself the way a `Hypergraph` does was deliberately left alone, not decided.
 
-Next up: rewriting rules, then the causal machinery, then plex diagrams. Further prototypes are in
+Next up: rewriting rules, then the causal machinery, then plex diagrams. *(The first two are
+done — rules on 2026-09-24/29, causality on 2026-09-30; see the end of this note.)* Further prototypes are in
 `reference/ArrayAlgebra.wl` (ZigZag, Blades, TriForce, Boat, plex diagrams, Lie brackets) and
 `reference/PlexAlgebra.wl`. Known rough edge worth fixing when the hypergraph drawing code is next
 touched: an edge of arity zero lays out as an isolated point and stretches the plot range badly
@@ -265,6 +303,10 @@ now `subsection`. Rule for any of these generators: **no helper may share a name
 an example assigns to**, since both live in one kernel. Symptom: headers render as small empty
 boxes, and nothing is reported wrong.
 
+It bit a **third** time on 2026-09-30, losing the same two documentation pages. Since `f065e89`
+`build_docs.wls` refuses to report success when a page could not be written, so in the doc
+build it now fails loudly. The notebook generators have no such check.
+
 Labels became pattern variables in rewriting on 2026-09-26, after reading `reference/Chemoids.wl`.
 A label on a rule's **input** is read three ways: a bare `Symbol` is a **variable** (matches
 anything, binds, and every later occurrence must agree), `None` is a wildcard binding nothing, and
@@ -288,3 +330,63 @@ with no edges** — binds the vertex label, creates a vertex carrying it and an 
 `Subscript["1", p]`), and the dagger (reverses the edge, labels it `(f†)`, and twice gives
 `((f†)†)` unreduced — deliberately not simplified, since whether the daggers cancel is a fact
 about the algebra, not about rewriting).
+
+## Since 2026-09-29
+
+**The reference rules** (`670ac52`). RewritingBasics section 5 runs the rules of
+`reference/Chemoids.wl` on the label machinery: composition and the unit, the dagger as an
+antihomomorphism, an action mixing a unary and a binary edge, and zig-zag composition, whose
+three second-step results are the three bracketings of heap associativity. None of them asserts
+a law; each produces both sides from one state, which is the material the causal machinery works
+on. Pinned in `tests/RewritingExamples.wls` §7.
+
+**Rewriting systems and causality** (`f065e89`, `src/Causality.wl`).
+`HypergraphRewritingSystem[rules, init]`, evolved by applying every rule in every way to every
+state reached. Properties mirror the reference `MultiwaySystem`: `"EvolutionGraph"`,
+`"StatesGraph"`, `"BranchialGraph"`, `"CausalGraph"`, `"EvolutionCausalGraph"`, `"CausalEdges"`,
+`"EventList"`, `"States"`. Causal dependence is an option, `"Elements"` (default) / `"Edges"` /
+`"Vertices"`; why is in [[causal-dependence-is-an-option]]. Elements are followed by token, not
+value, which is why events now carry `"EdgeOrigins"`. Dependence is asked only along a path:
+events on different branches are alternatives, not history. The evolution is a tree of state
+occurrences; `"StatesGraph"` merges them, by canonical form unless `"CanonicalizeStates" -> False`.
+
+**Drawing** (`e41ffed`, `60f8af5`, `a6575f8`). States and events are pictures, in the
+Wolfram Physics Project colours copied into the source. `HypergraphPlot` gained `VertexStyle`,
+`EdgeStyle`, `VertexLabelStyle`, `"EdgeLineStyle"` and `VertexCoordinates`; `src/RewritingGraphics.wl`
+adds `HypergraphRulePlot` and `HypergraphEventPlot`. New property `"TokenEventGraph"`. Options
+became a registry, `$HypergraphRewritingOptions`, in three groups, and a system can hold its own.
+The measurement traps are in [[multiway-rendering]]. Then both notebooks were extended over every
+option (RewritingBasics 68 → 104 cells, CausalityBasics 50 → 68), with `$panelMargin` fixing
+overlapping event panels. Then every label was pushed clear of what it names, by inverse-square
+repulsion with special cases for binary and unary edges, and `ImagePadding` grows to match.
+
+**The experimental stack and tracelets** (`78cb1e8`, `experimental/`). A second rewriting stack,
+context ``WolframInstitute`HypergraphRewriting``, built on one idea: an edge is a token with an
+identity. Its causal graph needs no overlap or ancestry test. What it deliberately lacks is
+dependence through a shared vertex, and that is the real thing to weigh between the two stacks;
+`experimental/README.md` sets out the comparison. `TraceletAnalysis.wl` follows Behr (ACT 2019,
+arXiv:1904.12829) for the extraction half; FETA, the generative half, is not implemented.
+
+**A foundation bug the tracelets uncovered** (same commit). The vertex invariant in
+`src/Hypergraph.wl` found a vertex with `Position` at every level, so in an edge
+`{1, \[FormalV][1]}` vertex 1 appeared twice. Isomorphic hypergraphs then got different canonical
+forms. Every merge up to isomorphism was affected, in both stacks: two subdivision steps gave eight
+states where there are three. Fixed, pinned in `tests/BasicExamples.wls`, and the documentation
+and all six notebooks rebuilt.
+
+**Portability** (`f10cbb8`, `4ea8a45`). `notes/` and the four small research files are tracked,
+so the project moves between machines. On 2026-10-11 it was cloned to the MacBook; all seven
+suites passed on the first run. See [[wl-dev-toolchain]].
+
+## Next
+
+Open, in the order of the content index:
+
+- **Plex diagrams** (section 5): hypermatrix operations specified by labelled hypergraphs, and the
+  equivalence between a plex product and a hypergraph rewriting procedure. Prototypes are in
+  `reference/PlexAlgebra.wl` and `reference/ArrayAlgebra.wl`.
+- **The visual editors**, for a hypergraph and for a rule.
+- **Hypermatrix → hypergraph**, the inverse of `AdjacencyHypermatrix`; the round-trip reader still
+  lives only in `tests/HypermatrixExamples.wls` §10.
+- **Adopt or drop `experimental/`**, settling the vertex-dependence question with it.
+- The arity-zero layout rough edge noted above has no fix recorded in the log.

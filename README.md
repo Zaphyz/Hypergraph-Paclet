@@ -13,7 +13,7 @@ rules with their causal graphs, and, in time, the plex diagrams that connect the
 
 ## Loading
 
-The two notebooks in `notebooks/` load the package themselves: they carry an initialization
+The four notebooks in `notebooks/` load the package themselves: they carry an initialization
 cell that the front end evaluates on opening, so every symbol is ready before you read
 anything. Nothing needs installing and nothing is copied — the repository itself is what
 gets loaded, so an edit to `src/` is picked up next time.
@@ -30,7 +30,7 @@ directory, registers it permanently — and because `PacletInfo.wl` declares the
 symbols, any one of them then loads the package on first use, in any notebook, with no
 `Needs` at all.
 
-A plain `Get` of the entry file still works, and pulls in the other five source files:
+A plain `Get` of the entry file still works, and pulls in the other eight source files:
 
 ```wolfram
 Get[FileNameJoin[{"<path to this repository>", "src", "Hypergraph.wl"}]]
@@ -340,14 +340,14 @@ with:
 wolframscript -file Documentation/build_docs.wls
 ```
 
-The two notebooks in `notebooks/` are the discursive counterpart: worked examples with the
+The four notebooks in `notebooks/` are the discursive counterpart: worked examples with the
 reasoning behind each design choice.
 
 ## Repository layout
 
 | Path | |
 | --- | --- |
-| `src/Hypergraph.wl` | `Vertex`, `Edge`, `Hypergraph`, accessors, skeletons, canonical form and isomorphism. Loads the other six at its end. |
+| `src/Hypergraph.wl` | `Vertex`, `Edge`, `Hypergraph`, accessors, skeletons, canonical form and isomorphism. Loads the other eight at its end. |
 | `src/HypergraphPlot.wl` | `HypergraphPlot`, `HypergraphEmbedding`, and the default graphical display. |
 | `src/Hypermatrix.wl` | `ArrayObject`, `GenerateSymbolicArray`, `Hypermatrix` and their accessors. |
 | `src/ArrayAlgebra.wl` | Special arrays, `ArrayMultiply`, `ArrayAdd`, `ArrayTimes`, `FindArrayEquations`. |
